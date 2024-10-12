@@ -1,0 +1,148 @@
+version: '3.8'
+services:
+  # Landing
+  asse.landing:
+    build:
+      context: ./asse-landing
+      dockerfile: Dockerfile
+    container_name: asse.landing
+    ports:
+      - "8080:80"
+    networks:
+      - asse_net
+    restart: always
+
+  # Front-End App
+  asse.app-fe:
+    build:
+      context: ./asse-frontend
+      dockerfile: Dockerfile
+    container_name: asse.app-fe
+    ports:
+      - "80:80"
+    networks:
+      - asse_net
+    restart: always
+
+  # Back-End API
+  asse.api:
+    build:
+      context: ./asse-backend 
+      dockerfile: Dockerfile
+    container_name: asse.api
+    env_file:
+      - .env
+    networks:
+      - asse_net
+    ports:
+      - "1337:1337"
+    restart: always
+
+  # Redis
+  asse.redis:
+    image: redis:7
+    container_name: asse.redis
+    networks:
+      - asse_net
+    ports:
+      - "6379:6379"
+    restart: always
+
+  # PostgreSQL
+  asse.postgres:
+    image: postgres:17
+    container_name: asse.postgres
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - asse_net
+    restart: always
+
+networks:
+  asse_net:
+  
+volumes:
+  pgdata:
+
+# version: '3.8'
+# services:
+#   # PostgreSQL Database Container
+#   postgres:
+#     image: postgres:latest
+#     container_name: postgres-container
+#     environment:
+#       POSTGRES_DB: mydatabase
+#       POSTGRES_USER: myuser
+#       POSTGRES_PASSWORD: mypassword
+#     volumes:
+#       - pgdata:/var/lib/postgresql/data
+#     networks:
+#       - asse_net
+#     restart: always
+
+#   # Redis Container
+#   redis:
+#     image: redis:latest
+#     container_name: redis-container
+#     networks:
+#       - asse_net
+#     ports:
+#       - "6379:6379"
+#     restart: always
+
+#   # Backend Container
+  # backend:
+  #   build:
+  #     context: ./asse-backend  # Path to the directory containing the Dockerfile for the backend
+  #     dockerfile: Dockerfile  # Optional: specify the Dockerfile name if different
+  #   container_name: backend-container
+  #   environment:
+  #     DATABASE_HOST: postgres
+  #     DATABASE_PORT: 5432
+  #     DATABASE_USER: myuser
+  #     DATABASE_PASSWORD: mypassword
+  #     DATABASE_NAME: mydatabase
+  #     REDIS_HOST: redis  # Connect to the Redis container
+  #     REDIS_PORT: 6379
+  #   depends_on:
+  #     - postgres
+  #     - redis
+  #   networks:
+  #     - my_network
+  #   ports:
+  #     - "8000:8000"  # Replace with your backend port
+  #   restart: always
+
+#   # Application Frontend Container
+#   app-frontend:
+#     image: app-frontend-image:latest
+#     container_name: app-frontend-container
+#     environment:
+#       BACKEND_API_URL: http://backend:8000  # Backend API URL for internal network
+#     networks:
+#       - asse_net
+#     ports:
+#       - "3000:3000"  # Replace with your frontend port
+#     depends_on:
+#       - backend
+#     restart: always
+
+#   # Landing Page Frontend Container
+#   frontend-landing:
+#     image: frontend-landing-image:latest
+#     container_name: frontend-landing-container
+#     networks:
+#       - asse_net
+#     ports:
+#       - "8080:8080"  # Replace with your landing page frontend port
+#     restart: always
+
+# networks:
+#   asse_net:
+
+# volumes:
+#   pgdata:
