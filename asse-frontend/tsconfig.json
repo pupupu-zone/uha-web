@@ -25,6 +25,9 @@
       "@api": ["./src/core/api/index"],
       "@api/*": ["./src/core/api/*"],
 
+      "@store": ["./src/core/store/index"],
+      "@store/*": ["./src/core/store/*"],
+
       "@core": ["./src/core"],
       "@core/*": ["./src/core/*"],
 

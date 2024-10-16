@@ -1,9 +1,16 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-
 import AppRoot from '@core/Root';
 
-const container = document.getElementById('root');
-const root = createRoot(container!);
+async function render() {
+	const container = document.getElementById('root') as HTMLElement;
+	const root = createRoot(container);
 
-root.render(<AppRoot />);
+	root.render(
+		<React.StrictMode>
+			<AppRoot />
+		</React.StrictMode>
+	);
+}
+
+render();

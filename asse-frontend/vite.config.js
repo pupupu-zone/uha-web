@@ -31,19 +31,20 @@ function renderChunks(deps) {
 	return chunks;
 }
 
+const proxyConfig = {
+	'/api': {
+		target: process.env.VITE_REACT_APP_API_URL,
+		changeOrigin: true,
+		// withCredentials: false,
+		rewrite: (path) => path.replace(/^\/api/, '')
+	}
+};
+
 const config = ({ mode }) => {
 	process.env = {
 		...process.env,
 		...loadEnv(mode, process.cwd()),
 		VITE_BUILD_TIME: buildTime
-	};
-
-	const proxyConfig = {
-		'/api': {
-			target: process.env.VITE_REACT_APP_API_URL,
-			changeOrigin: false,
-			withCredentials: false
-		}
 	};
 
 	return defineConfig({
@@ -63,6 +64,8 @@ const config = ({ mode }) => {
 		resolve: {
 			alias: {
 				'@src': fileURLToPath(new URL('./src', import.meta.url)),
+				'@api': fileURLToPath(new URL('./src/core/api', import.meta.url)),
+				'@store': fileURLToPath(new URL('./src/core/store', import.meta.url)),
 				'@core': fileURLToPath(new URL('./src/core', import.meta.url)),
 				'@routes': fileURLToPath(new URL('./src/core/routes', import.meta.url)),
 				'@ui': fileURLToPath(new URL('./src/ui', import.meta.url)),

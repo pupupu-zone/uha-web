@@ -1,18 +1,5 @@
-## Asse (Cape Fox)
-
-<!-- image by url -->
-![Cape Fox or asse](https://upload.wikimedia.org/wikipedia/commons/8/87/Vulpes_chama_%28Etosha%29.jpg)
-
-```sh
-# Create docker network to share
-docker network create asse
-
-# Start psql container
-
-# Start redis container
-
-# Start backend container
-
-# Start fe-app container
-
-# Start landing container
+- [] Сделать запрос с asse.fe к asse.api
+- [] Обменяться данными с redis
+- [] Обменяться данными с pg
+- [] Создать поддомены api, about
+- [] Настроить nginx чтобы траффик шёл на :6500 для about, :6700 для api, :6600 для asse.app
