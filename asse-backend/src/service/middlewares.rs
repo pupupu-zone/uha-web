@@ -27,9 +27,10 @@ impl Middlewares {
 
     fn get_cors() -> Cors {
         let cors_conf = Cors::default()
-            .allow_any_origin()
-            // .allowed_origin(&settings.frontend_url)
-            .allowed_methods(vec!["GET", "POST", "PATCH", "DELETE"])
+            // .allow_any_origin()
+            .allowed_origin("https://app.subsawwy.com")
+            .allowed_origin("https://www.app.subsawwy.com")
+            .allow_any_method()
             .allowed_headers(vec![
                 actix_web::http::header::AUTHORIZATION,
                 actix_web::http::header::ACCEPT,
