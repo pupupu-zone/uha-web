@@ -1,6 +1,9 @@
-name: Build All-in-One
+name: Build Backend
 
 on:
+  push:
+    paths:
+      - asse-backend/**
   workflow_dispatch:
   workflow_call:
     secrets:

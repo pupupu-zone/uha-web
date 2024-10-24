@@ -1,6 +1,9 @@
 name: Build Landing
 
 on:
+  push:
+    paths:
+      - asse-landing/**
   workflow_dispatch:
   workflow_call:
     secrets:

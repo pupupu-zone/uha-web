@@ -1,6 +1,9 @@
 name: Build Frontend Web App
 
 on:
+  push:
+    paths:
+      - asse-frontend/**
   workflow_dispatch:
   workflow_call:
     secrets:
