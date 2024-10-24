@@ -10,7 +10,7 @@ use routes::health;
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     service::service_logger::init_logger();
-    log::info!("Main bootstrap tanuki server starts");
+    log::info!("Main bootstrap subsawwy server starts");
 
     let env_config = service::env::EnvConfig::new();
 

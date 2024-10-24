@@ -83,12 +83,12 @@ const config = ({ mode }) => {
 			}
 		},
 		server: {
-			port: 3000,
+			port: 4200,
 			open: true,
 			proxy: proxyConfig
 		},
 		preview: {
-			port: 3030,
+			port: 4230,
 			proxy: proxyConfig
 		}
 	});

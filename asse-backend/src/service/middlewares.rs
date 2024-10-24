@@ -26,7 +26,7 @@ impl Middlewares {
     }
 
     fn get_cors() -> Cors {
-        Cors::default()
+        let cors_conf = Cors::default()
             .allow_any_origin()
             // .allowed_origin(&settings.frontend_url)
             .allowed_methods(vec!["GET", "POST", "PATCH", "DELETE"])
@@ -37,7 +37,9 @@ impl Middlewares {
             .allowed_header(actix_web::http::header::CONTENT_TYPE)
             .expose_headers(&[actix_web::http::header::CONTENT_DISPOSITION])
             .supports_credentials()
-            .max_age(3600)
+            .max_age(3600);
+
+        cors_conf
     }
 
     pub fn new() -> Middlewares {
