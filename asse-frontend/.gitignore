@@ -5,7 +5,7 @@
 /.pnp
 .pnp.js
 /.yarn-cache
-
+.env
 # testing
 /coverage
 
