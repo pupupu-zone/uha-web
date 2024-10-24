@@ -1,0 +1,36 @@
+name: Build All-in-One
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    secrets:
+      DOCKER_REGISTRY_USERNAME:
+        required: true
+      DOCKER_REGISTRY_PASSWORD:
+        required: true
+
+jobs:
+  build-api:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Log in to registry
+      uses: docker/login-action@v2
+      with:
+        registry: registry.keireira.com
+        username: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+        password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+         
+    - name: Build
+      working-directory: ./asse-backend
+      run: |
+        docker build --file Dockerfile \
+          --tag "registry.keireira.com/subsawwy.backend:latest" . \
+          --build-arg API_HOSTNAME=$API_HOSTNAME \
+          --build-arg API_PORT=$API_PORT
+
+    - name: Publish
+      run: docker push "registry.keireira.com/subsawwy.backend:latest" 

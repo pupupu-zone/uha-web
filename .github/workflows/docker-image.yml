@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Build All-in-One
 
 on:
   workflow_dispatch:
@@ -26,10 +26,10 @@ jobs:
          
     - name: Build
       working-directory: ./asse-frontend
-      run: docker build --file Dockerfile --tag "registry.keireira.com/asse.fe:latest" .
+      run: docker build --file Dockerfile --tag "registry.keireira.com/subsawwy.web-app:latest" .
 
     - name: Publish
-      run: docker push "registry.keireira.com/asse.fe:latest" 
+      run: docker push "registry.keireira.com/subsawwy.web-app:latest" 
 
   build-api:
     runs-on: ubuntu-latest
@@ -49,12 +49,12 @@ jobs:
       working-directory: ./asse-backend
       run: |
         docker build --file Dockerfile \
-          --tag "registry.keireira.com/asse.be:latest" . \
+          --tag "registry.keireira.com/subsawwy.backend:latest" . \
           --build-arg API_HOSTNAME=$API_HOSTNAME \
           --build-arg API_PORT=$API_PORT
 
     - name: Publish
-      run: docker push "registry.keireira.com/asse.be:latest" 
+      run: docker push "registry.keireira.com/subsawwy.backend:latest" 
 
   build-landing:
     runs-on: ubuntu-latest
@@ -72,7 +72,7 @@ jobs:
          
     - name: Build
       working-directory: ./asse-landing
-      run: docker build --file Dockerfile --tag "registry.keireira.com/asse.landing:latest" .
+      run: docker build --file Dockerfile --tag "registry.keireira.com/subsawwy:landing:latest" .
 
     - name: Publish
-      run: docker push "registry.keireira.com/asse.landing:latest" 
+      run: docker push "registry.keireira.com/subsawwy:landing:latest" 
