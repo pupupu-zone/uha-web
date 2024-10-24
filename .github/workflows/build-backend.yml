@@ -31,9 +31,9 @@ jobs:
       working-directory: ./asse-backend
       run: |
         docker build --file Dockerfile \
-          --tag "registry.keireira.com/subsawwy.backend:latest" . \
+          --tag "registry.keireira.com/subsawwy-backend:latest" . \
           --build-arg API_HOSTNAME=$API_HOSTNAME \
           --build-arg API_PORT=$API_PORT
 
     - name: Publish
-      run: docker push "registry.keireira.com/subsawwy.backend:latest" 
+      run: docker push "registry.keireira.com/subsawwy-backend:latest" 

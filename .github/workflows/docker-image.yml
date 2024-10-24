@@ -25,11 +25,11 @@ jobs:
         password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
          
     - name: Build
-      working-directory: ./asse-frontend
-      run: docker build --file Dockerfile --tag "registry.keireira.com/subsawwy.frontend:latest" .
+      working-directory: ./asse-web
+      run: docker build --file Dockerfile --tag "registry.keireira.com/subsawwy-web:latest" .
 
     - name: Publish
-      run: docker push "registry.keireira.com/subsawwy.frontend:latest" 
+      run: docker push "registry.keireira.com/subsawwy-web:latest" 
 
   build-api:
     runs-on: ubuntu-latest
@@ -49,12 +49,12 @@ jobs:
       working-directory: ./asse-backend
       run: |
         docker build --file Dockerfile \
-          --tag "registry.keireira.com/subsawwy.backend:latest" . \
+          --tag "registry.keireira.com/subsawwy-backend:latest" . \
           --build-arg API_HOSTNAME=$API_HOSTNAME \
           --build-arg API_PORT=$API_PORT
 
     - name: Publish
-      run: docker push "registry.keireira.com/subsawwy.backend:latest" 
+      run: docker push "registry.keireira.com/subsawwy-backend:latest" 
 
   build-landing:
     runs-on: ubuntu-latest
@@ -72,7 +72,7 @@ jobs:
          
     - name: Build
       working-directory: ./asse-landing
-      run: docker build --file Dockerfile --tag "registry.keireira.com/subsawwy.landing:latest" .
+      run: docker build --file Dockerfile --tag "registry.keireira.com/subsawwy-landing:latest" .
 
     - name: Publish
-      run: docker push "registry.keireira.com/subsawwy.landing:latest" 
+      run: docker push "registry.keireira.com/subsawwy-landing:latest" 

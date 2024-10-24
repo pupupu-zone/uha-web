@@ -1,10 +1,10 @@
 services:
   # Landing
-  asse.landing:
+  subsawwy.landing:
     build:
       context: ./asse-landing
       dockerfile: Dockerfile
-    container_name: asse.landing
+    container_name: subsawwy-landing
     ports:
       - "127.0.0.1:6500:80"
     networks:
@@ -12,11 +12,11 @@ services:
     restart: always
 
   # Front-End App
-  asse.app-fe:
+  subsawwy.web:
     build:
-      context: ./asse-frontend
+      context: ./asse-web
       dockerfile: Dockerfile
-    container_name: asse.app-fe
+    container_name: subsawwy-web
     ports:
       - "127.0.0.1:6600:80"
     networks:
@@ -24,11 +24,11 @@ services:
     restart: always
 
   # Back-End API
-  asse.api:
+  subsawwy.backend:
     build:
       context: ./asse-backend
       dockerfile: Dockerfile
-    container_name: asse.api
+    container_name: subsawwy-backend
     env_file:
       - .env  # Use an .env file for sensitive data
     depends_on:

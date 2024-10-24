@@ -3,7 +3,7 @@ name: Build Frontend Web App
 on:
   push:
     paths:
-      - asse-frontend/**
+      - asse-web/**
   workflow_dispatch:
   workflow_call:
     secrets:
@@ -28,8 +28,8 @@ jobs:
         password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
          
     - name: Build
-      working-directory: ./asse-frontend
-      run: docker build --file Dockerfile --tag "registry.keireira.com/subsawwy.frontend:latest" .
+      working-directory: ./asse-web
+      run: docker build --file Dockerfile --tag "registry.keireira.com/subsawwy-web:latest" .
 
     - name: Publish
-      run: docker push "registry.keireira.com/subsawwy.frontend:latest" 
+      run: docker push "registry.keireira.com/subsawwy-web:latest" 
