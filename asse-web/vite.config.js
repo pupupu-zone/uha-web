@@ -74,7 +74,7 @@ const config = ({ mode }) => {
 				registerType: 'autoUpdate',
 				injectRegister: false,
 				injectManifest: {
-					globPatterns: ['**/*.{js,css,html,svg,png,ico}']
+					globPatterns: ['**/*.{js,css,html,svg,png,ico,ttf,woff,woff2}']
 				},
 				pwaAssets: {
 					disabled: false,
