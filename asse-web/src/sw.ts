@@ -28,7 +28,7 @@ self.addEventListener('activate', async () => {
 
 self.addEventListener('fetch', (event) => {
 	if (event.request.url.endsWith('/sw/health')) {
-		console.log(`[SW]: It's alive`);
+		console.log(`[SW]: It's alive (${import.meta.env.VITE_BUILD_TIME})`);
 
 		event.respondWith(new Response({ status: 200 }));
 	}

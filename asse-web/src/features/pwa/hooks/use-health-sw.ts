@@ -4,8 +4,6 @@ const sendHealthEvent = () => fetch('/sw/health');
 
 const useHealthSW = () => {
 	useEffect(() => {
-		if (Notification.permission !== 'granted') return;
-
 		sendHealthEvent();
 
 		window.addEventListener('online', sendHealthEvent);
@@ -13,7 +11,7 @@ const useHealthSW = () => {
 		return () => {
 			window.removeEventListener('online', sendHealthEvent);
 		};
-	}, [Notification.permission]);
+	}, []);
 };
 
 export default useHealthSW;
