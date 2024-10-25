@@ -21,7 +21,7 @@ const Notifications = () => {
 				<SmallText>Ваш браузер не поддерживает push-уведомления</SmallText>
 
 				<Actions>
-					<Button onPress={notification.acceptFate}>Понятно</Button>
+					<Button onPress={() => notification.acceptFate()}>Понятно</Button>
 				</Actions>
 			</Root>
 		);
