@@ -6,11 +6,7 @@ async function render() {
 	const container = document.getElementById('root') as HTMLElement;
 	const root = createRoot(container);
 
-	root.render(
-		<React.StrictMode>
-			<AppRoot />
-		</React.StrictMode>
-	);
+	root.render(<AppRoot />);
 }
 
 render();
