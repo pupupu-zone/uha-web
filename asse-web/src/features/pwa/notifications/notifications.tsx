@@ -14,7 +14,7 @@ const Notifications = () => {
 		notification.begForPermissions();
 	};
 
-	if (!notification.isApiAvailable) {
+	if (!notification.isApiAvailable && !notification.isFateAccepted) {
 		return (
 			<Root>
 				<H3>Push-уведомления</H3>
