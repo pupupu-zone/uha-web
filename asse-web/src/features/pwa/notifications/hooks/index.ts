@@ -1,2 +1,1 @@
-export { default as useRequestPermissions } from './use-request-permissions';
-export { default as useCheckApiAvailability } from './use-api-availability';
+export { default as useNotificationPermission } from './use-notifications';
