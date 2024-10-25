@@ -15,14 +15,16 @@ const Notifications = () => {
 	};
 
 	if (!notification.isApiAvailable) {
-		<Root>
-			<H3>Push-уведомления</H3>
-			<SmallText>Ваш браузер не поддерживает push-уведомления</SmallText>
+		return (
+			<Root>
+				<H3>Push-уведомления</H3>
+				<SmallText>Ваш браузер не поддерживает push-уведомления</SmallText>
 
-			<Actions>
-				<Button onPress={notification.acceptFate}>Понятно</Button>
-			</Actions>
-		</Root>;
+				<Actions>
+					<Button onPress={notification.acceptFate}>Понятно</Button>
+				</Actions>
+			</Root>
+		);
 	}
 
 	if (notification.status === 'prompt' && !isHidden) {
