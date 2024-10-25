@@ -57,6 +57,7 @@ const useNotificationPermission = () => {
 	};
 
 	return {
+		isApiAvailable,
 		status: permStatus,
 		begForPermissions: requestPermission,
 
