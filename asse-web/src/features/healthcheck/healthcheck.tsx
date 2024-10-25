@@ -7,7 +7,7 @@ const HealthCheck = () => {
 
 	return (
 		<div>
-			<h1>HealthCheck</h1>
+			<h1>API health</h1>
 
 			<p>{result.currentData?.text}</p>
 
