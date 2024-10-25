@@ -1,5 +1,6 @@
 const ROUTES = {
-	ROOT: '/'
+	ROOT: '/',
+	LOGOUT: '/logout'
 };
 
 export const createRoute = (route: string, params: object, search?: string) => {

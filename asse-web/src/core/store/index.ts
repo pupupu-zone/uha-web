@@ -1,22 +1,18 @@
-import { combineReducers, configureStore, ConfigureStoreOptions } from '@reduxjs/toolkit';
+import { configureStore, ConfigureStoreOptions } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
-import api from '@api';
-
-import healthCheckReducer from '@features/healthcheck/gearbox';
+import API from '@api';
+import rootReducer from './root-reducer';
 
 export const createStore = (options?: ConfigureStoreOptions['preloadedState'] | undefined) => {
-	const rootReducer = combineReducers({
-		health_check: healthCheckReducer,
-		[api.reducerPath]: api.reducer
-	});
-
 	const configure = configureStore({
 		reducer: rootReducer,
 		middleware: (getDefaultMiddleware) => {
-			const defaultMiddlewares = getDefaultMiddleware();
+			const defaultMiddlewares = getDefaultMiddleware({
+				serializableCheck: false
+			});
 
-			return [...defaultMiddlewares, api.middleware];
+			return [...defaultMiddlewares, API.middleware];
 		},
 		...options
 	});

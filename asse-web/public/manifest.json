@@ -1,0 +1,43 @@
+{
+  "short_name": "Subsawwy",
+  "name": "Subsawwy — Subscription Manager",
+  "description": "Subsawwy is a subscription manager that helps you keep track of all your subscriptions in one place.",
+  "theme_color": "#EF5777",
+  "background_color": "#EF5777",
+  "display": "standalone",
+  "id": "subsawwy-5702b80f-4bcc-4efe-8403-85f7febf90a0",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48 72x72 96x96 144x144 192x192 256x256",
+      "type": "image/x-icon",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/pwa-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/pwa-maskable-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/pwa-maskable-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

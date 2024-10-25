@@ -1,4 +1,5 @@
 import { fileURLToPath } from 'url';
+import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig, loadEnv } from 'vite';
 
 import svgr from 'vite-plugin-svgr';
@@ -6,6 +7,7 @@ import react from '@vitejs/plugin-react-swc';
 import templateLiteralPlugin from './vite-plugin-minify-template-literals/index.cjs';
 
 import { dependencies } from './package.json';
+import manifest from './public/manifest.json';
 
 const buildTime = new Date().toLocaleDateString('ru-RU', {
 	timeZoneName: 'short',
@@ -24,10 +26,12 @@ const globalVendorPackages = [
 
 function renderChunks(deps) {
 	let chunks = {};
+
 	Object.keys(deps).forEach((key) => {
 		if (globalVendorPackages.includes(key)) return;
 		chunks[key] = [key];
 	});
+
 	return chunks;
 }
 
@@ -60,7 +64,32 @@ const config = ({ mode }) => {
 				}
 			}
 		},
-		plugins: [svgr(), react(), templateLiteralPlugin()],
+		plugins: [
+			svgr(),
+			react(),
+			VitePWA({
+				strategies: 'injectManifest',
+				srcDir: 'src',
+				filename: 'sw.ts',
+				registerType: 'autoUpdate',
+				injectRegister: false,
+				injectManifest: {
+					globPatterns: ['**/*.{js,css,html,svg,png,ico}']
+				},
+				pwaAssets: {
+					disabled: false,
+					config: true
+				},
+				devOptions: {
+					enabled: process.env.NODE_ENV === 'development',
+					navigateFallback: 'index.html',
+					suppressWarnings: false,
+					type: 'module'
+				},
+				manifest
+			}),
+			templateLiteralPlugin()
+		],
 		resolve: {
 			alias: {
 				'@src': fileURLToPath(new URL('./src', import.meta.url)),
@@ -76,10 +105,8 @@ const config = ({ mode }) => {
 				'@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
 				'@fonts': fileURLToPath(new URL('./src/assets/fonts', import.meta.url)),
 				'@yup': fileURLToPath(new URL('./src/utils/yup', import.meta.url)),
-				'@validations': fileURLToPath(new URL('./src/utils/validations', import.meta.url)),
 				'@features': fileURLToPath(new URL('./src/features', import.meta.url)),
-				'@pages': fileURLToPath(new URL('./src/pages', import.meta.url)),
-				'@navbar': fileURLToPath(new URL('./src/features/navbar', import.meta.url))
+				'@pages': fileURLToPath(new URL('./src/pages', import.meta.url))
 			}
 		},
 		server: {

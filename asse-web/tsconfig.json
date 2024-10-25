@@ -7,17 +7,25 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "react-jsx",
     "downlevelIteration": true,
-    "noEmit": true,
-    "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
-    "strict": true,
     "sourceMap": false,
 
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+
+    // custom paths
     "baseUrl": ".",
     "paths": {
       "@src/*": ["./src/*"],
@@ -62,6 +70,6 @@
       "@pages/*": ["./src/pages/*"]
     }
   },
-
-  "include": ["src"]
+  "include": ["src"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
