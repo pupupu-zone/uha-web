@@ -4,8 +4,7 @@ pub mod service;
 
 use log;
 extern crate diesel;
-use actix_web::{self, App, HttpServer};
-use routes::health;
+use actix_web::{self, web, App, HttpServer};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -14,7 +13,25 @@ async fn main() -> std::io::Result<()> {
 
     let env_config = service::env::EnvConfig::new();
 
+    let tel_subscriber = service::telemetry::get_subscriber(env_config.with_debug);
+    service::telemetry::init_subscriber(tel_subscriber);
+
+    service::in_deploy_migrations::run_migrations(
+        env_config.db_url.clone(),
+        env_config.with_migration,
+    );
+
     tracing::event!(target: "backend", tracing::Level::INFO, "Listening on http://{}:{}", env_config.hostname, env_config.port);
+
+    let data_providers = async {
+        let pool: service::data_providers::WebDataPool =
+            service::data_providers::WebDataPool::new().await.into();
+
+        pool
+    }
+    .await;
+
+    let data_providers = web::Data::new(data_providers);
 
     HttpServer::new(move || {
         let middlewares = service::middlewares::Middlewares::new();
@@ -24,7 +41,8 @@ async fn main() -> std::io::Result<()> {
             .wrap(middlewares.cors)
             .wrap(middlewares.compress)
             .wrap(middlewares.logger)
-            .service(health::_routes::get_routes())
+            .app_data(data_providers.clone())
+            .service(routes::health::_routes::get_routes())
     })
     .bind((env_config.hostname, env_config.port))?
     .workers(1)
