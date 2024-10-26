@@ -1,29 +1,14 @@
 import { useEffect, useState } from 'react';
 
-const useCheckApiAvailability = () => {
-	const [isAvailable, setAvailability] = useState<boolean | null>();
-
-	useEffect(() => {
-		if (
-			typeof navigator === 'undefined' ||
-			!navigator.permissions ||
-			!('Notification' in window) ||
-			!('PushManager' in window) ||
-			!('serviceWorker' in navigator)
-		) {
-			setAvailability(false);
-		} else {
-			setAvailability(true);
-		}
-	}, []);
-
-	return isAvailable;
-};
+import useCheckApiAvailability from './use-check-api';
+import useManageWebPushSubscription from './use-manage-webpush';
 
 const useNotificationPermission = () => {
 	const isApiAvailable = useCheckApiAvailability();
 	const [permStatus, setPermStatus] = useState('');
+	const [initialStatus, setInitialStatus] = useState('');
 	const [isFateAccepted, setFaith] = useState(window.localStorage.getItem('fate_accepted') === 'true');
+	const webpsuh = useManageWebPushSubscription();
 
 	useEffect(() => {
 		if (!isApiAvailable) return;
@@ -34,8 +19,12 @@ const useNotificationPermission = () => {
 	useEffect(() => {
 		if (permStatus === 'prompt') {
 			window.localStorage.removeItem('fate_accepted');
+		} else if (permStatus === 'granted' && initialStatus !== permStatus) {
+			webpsuh.createSubscription();
+		} else if (permStatus === 'granted') {
+			webpsuh.updateSubscription();
 		}
-	}, [permStatus]);
+	}, [permStatus, initialStatus]);
 
 	const getStatus = async () => {
 		const permissionStatus = await navigator.permissions.query({ name: 'notifications' });
@@ -47,10 +36,11 @@ const useNotificationPermission = () => {
 		};
 
 		setPermStatus(permissionStatus.state);
+		setInitialStatus(permissionStatus.state);
 	};
 
 	const requestPermission = async () => {
-		if (!isApiAvailable) return;
+		if (!isApiAvailable || Notification?.permission !== 'default' || permStatus !== 'prompt') return;
 
 		const permission = await Notification.requestPermission();
 
@@ -58,8 +48,8 @@ const useNotificationPermission = () => {
 	};
 
 	const acceptFate = () => {
-		setFaith(true);
 		window.localStorage.setItem('fate_accepted', 'true');
+		setFaith(true);
 	};
 
 	return {

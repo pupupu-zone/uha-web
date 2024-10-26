@@ -6,7 +6,7 @@ const healthCheckApi = API.injectEndpoints({
 	endpoints: (build) => ({
 		getHealthCheck: build.query<HealthResponseT, void>({
 			query: () => ({
-				url: `/heartbeat`,
+				url: `/health/heartbeat`,
 				method: 'GET'
 			}),
 			providesTags: ['HealthCheck']
