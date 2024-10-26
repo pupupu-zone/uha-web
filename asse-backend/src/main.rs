@@ -1,5 +1,6 @@
 pub mod errors;
 pub mod routes;
+pub mod schema;
 pub mod service;
 pub mod types;
 pub mod utils;
@@ -7,7 +8,7 @@ pub mod utils;
 use log;
 extern crate diesel;
 use actix_web::{self, web, App, HttpServer};
-use routes::{auth, health};
+use routes::{apps, auth, health, subscriptions, users};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -48,6 +49,9 @@ async fn main() -> std::io::Result<()> {
             .app_data(data_providers.clone())
             .service(health::_routes::get_routes())
             .service(auth::_routes::get_routes())
+            .service(users::_routes::get_routes())
+            .service(subscriptions::_routes::get_routes())
+            .service(apps::_routes::get_routes())
     })
     .bind((env_config.hostname, env_config.port))?
     .workers(1)

@@ -37,15 +37,14 @@ CREATE TABLE "user_auth" (
   "id" UUID NOT NULL DEFAULT gen_random_uuid(),
   "email" TEXT NOT NULL UNIQUE,
   "password" TEXT NOT NULL,
-  "is_staff" BOOLEAN DEFAULT false,
-  "is_superuser" BOOLEAN DEFAULT false,
+  "is_staff" BOOLEAN NOT NULL DEFAULT false,
+  "is_superuser" BOOLEAN NOT NULL DEFAULT false,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   "updated_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  "is_active" BOOLEAN DEFAULT false,
-  "is_deleted" BOOLEAN DEFAULT false,
+  "is_active" BOOLEAN NOT NULL DEFAULT false,
+  "is_deleted" BOOLEAN NOT NULL DEFAULT false,
 
   PRIMARY KEY ("id")
-
 );
 CREATE INDEX "user_auth_email_index" ON "user_auth"("email");
 

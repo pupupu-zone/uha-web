@@ -41,12 +41,12 @@ diesel::table! {
         id -> Uuid,
         email -> Text,
         password -> Text,
-        is_staff -> Nullable<Bool>,
-        is_superuser -> Nullable<Bool>,
+        is_staff -> Bool,
+        is_superuser -> Bool,
         created_at -> Timestamptz,
         updated_at -> Timestamptz,
-        is_active -> Nullable<Bool>,
-        is_deleted -> Nullable<Bool>,
+        is_active -> Bool,
+        is_deleted -> Bool,
     }
 }
 
