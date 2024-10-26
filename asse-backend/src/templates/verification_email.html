@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }}</title>
+  </head>
+
+  <body>
+    <p>Hello,</p>
+
+    <p>Follow this link to verify your e-mail address.</p>
+
+    <a
+      href="{{ confirmation_link }}"
+      target="_blank"
+      data-saferedirecturl="https://www.google.com/url?q={{ confirmation_link }}"
+    >
+      <strong>Verify email address</strong>
+    </a>
+
+    <p>If you didn’t ask to verify this address, you can ignore this email.</p>
+    <p>Thanks,</p>
+
+    <p>Your Tanuki Health's CEO</p>
+  </body>
+</html>

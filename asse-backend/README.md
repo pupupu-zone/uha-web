@@ -52,3 +52,16 @@ cargo install diesel_cli --no-default-features --features postgres
 
 diesel migration run
 ```
+
+### New migration
+```sh
+diesel migration generate <migration_name>
+
+# fill up.sql & down.sql
+
+# Apply migrations
+diesel migration run
+
+# Revert migrations
+diesel migration revert
+```

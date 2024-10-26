@@ -2,6 +2,7 @@ use actix_cors::Cors;
 use actix_governor::governor::clock::QuantaInstant;
 use actix_governor::governor::middleware::NoOpMiddleware;
 use actix_governor::{Governor, GovernorConfigBuilder, PeerIpKeyExtractor};
+use actix_session::{storage::CookieSessionStore, SessionMiddleware};
 use actix_web::middleware::{Compress, Logger};
 
 pub struct Middlewares {
@@ -9,6 +10,7 @@ pub struct Middlewares {
     pub compress: Compress,
     pub logger: Logger,
     pub governor: Governor<PeerIpKeyExtractor, NoOpMiddleware<QuantaInstant>>,
+    pub session: SessionMiddleware<CookieSessionStore>,
 }
 
 impl Middlewares {
@@ -43,12 +45,34 @@ impl Middlewares {
         cors_conf
     }
 
+    fn get_session() -> SessionMiddleware<CookieSessionStore> {
+        let envs = crate::service::env::EnvConfig::new();
+        let secret_key = actix_web::cookie::Key::from(envs.hmac_secret.as_bytes());
+
+        if envs.with_debug {
+            actix_session::SessionMiddleware::builder(
+                actix_session::storage::CookieSessionStore::default(),
+                secret_key.clone(),
+            )
+            .cookie_http_only(true)
+            .cookie_same_site(actix_web::cookie::SameSite::None)
+            .cookie_secure(true)
+            .build()
+        } else {
+            actix_session::SessionMiddleware::new(
+                actix_session::storage::CookieSessionStore::default(),
+                secret_key.clone(),
+            )
+        }
+    }
+
     pub fn new() -> Middlewares {
         Middlewares {
             cors: Middlewares::get_cors(),
             compress: Compress::default(),
             logger: Logger::default(),
             governor: Middlewares::get_governor(),
+            session: Middlewares::get_session(),
         }
     }
 }

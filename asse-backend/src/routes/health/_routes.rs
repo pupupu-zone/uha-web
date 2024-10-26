@@ -1,12 +1,14 @@
-use super::db_check;
 use super::heartbeat;
+use super::psql_check;
+use super::redis_check;
 
 use actix_web::{web, Scope};
 
 pub fn get_routes() -> Scope {
-    let health_routes = web::scope("/")
+    let health_routes = web::scope("/service")
         .service(web::resource("/heartbeat").route(web::get().to(heartbeat)))
-        .service(web::resource("/db").route(web::get().to(db_check)));
+        .service(web::resource("/psql").route(web::get().to(psql_check)))
+        .service(web::resource("/redis").route(web::get().to(redis_check)));
 
     health_routes
 }

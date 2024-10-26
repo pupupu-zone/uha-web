@@ -14,6 +14,14 @@ pub struct PostgresConfig {
 }
 
 #[derive(Debug, Clone)]
+pub struct SMTPConfig {
+    pub server: String,
+    pub port: u16,
+    pub username: String,
+    pub token: String,
+}
+
+#[derive(Debug, Clone)]
 pub struct EnvConfig {
     // Base
     pub port: u16,
@@ -25,6 +33,13 @@ pub struct EnvConfig {
     // Params
     pub with_migration: bool,
     pub with_debug: bool,
+    // Secrets
+    pub secret_key: String,
+    pub token_expiration: i64,
+    pub hmac_secret: String,
+    // E-Mail
+    pub email_from: String,
+    pub smtp: SMTPConfig,
 }
 
 impl EnvConfig {
@@ -48,6 +63,26 @@ impl EnvConfig {
             // Additional params
             with_migration: with_migration == "MIGRATION",
             with_debug: with_debug == "DEBUG",
+
+            // Secrets
+            secret_key: env::var("SECRET_KEY").expect("SECRET_KEY must be set"),
+            token_expiration: env::var("TOKEN_EXPIRATION")
+                .expect("TOKEN_EXPIRATION must be set")
+                .parse::<i64>()
+                .expect("TOKEN_EXPIRATION must be a number"),
+            hmac_secret: env::var("HMAC_SECRET").expect("HMAC_SECRET must be set"),
+
+            // E-Mail
+            email_from: env::var("EMAIL_FROM").expect("EMAIL_FROM must be set"),
+            smtp: SMTPConfig {
+                server: env::var("SMTP_SERVER").expect("SMTP_SERVER must be set"),
+                port: env::var("SMTP_PORT")
+                    .expect("SMTP_PORT must be set")
+                    .parse::<u16>()
+                    .expect("SMTP_PORT must be a number"),
+                username: env::var("SMTP_USERNAME").expect("SMTP_USERNAME must be set"),
+                token: env::var("SMTP_TOKEN").expect("SMTP_TOKEN must be set"),
+            },
         }
     }
 }

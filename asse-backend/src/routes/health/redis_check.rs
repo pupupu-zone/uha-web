@@ -7,11 +7,11 @@ pub struct HealthResponse {
 }
 
 #[tracing::instrument]
-pub async fn db_check() -> actix_web::HttpResponse {
+pub async fn redis_check() -> actix_web::HttpResponse {
     tracing::event!(target: "backend", tracing::Level::DEBUG, "Accessing DAMIR-TEST-DB.");
 
     actix_web::HttpResponse::Ok().json(HealthResponse {
         is_healthy: true,
-        text: "Application is safe and healthy.".to_string(),
+        text: "Redis is OK".to_string(),
     })
 }

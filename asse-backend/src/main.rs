@@ -1,10 +1,13 @@
 pub mod errors;
 pub mod routes;
 pub mod service;
+pub mod types;
+pub mod utils;
 
 use log;
 extern crate diesel;
 use actix_web::{self, web, App, HttpServer};
+use routes::{auth, health};
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -41,8 +44,10 @@ async fn main() -> std::io::Result<()> {
             .wrap(middlewares.cors)
             .wrap(middlewares.compress)
             .wrap(middlewares.logger)
+            .wrap(middlewares.session)
             .app_data(data_providers.clone())
-            .service(routes::health::_routes::get_routes())
+            .service(health::_routes::get_routes())
+            .service(auth::_routes::get_routes())
     })
     .bind((env_config.hostname, env_config.port))?
     .workers(1)
