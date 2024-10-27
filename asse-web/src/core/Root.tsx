@@ -23,7 +23,7 @@ const Root = () => (
 
 				<ProgressiveUnit />
 
-				{import.meta.env.DEV && <TanStackRouterDevtools />}
+				{import.meta.env.DEV && <TanStackRouterDevtools initialIsOpen={false} position="bottom-right" />}
 			</PersistGate>
 		</Provider>
 	</>
