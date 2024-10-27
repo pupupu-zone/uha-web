@@ -1,12 +1,26 @@
 import React from 'react';
-import { createRoot } from 'react-dom/client';
-import AppRoot from '@core/Root';
+import ReactDOM from 'react-dom/client';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
 
-async function render() {
-	const container = document.getElementById('root') as HTMLElement;
-	const root = createRoot(container);
+import routeTree from '@routes';
 
-	root.render(<AppRoot />);
+// Set up a Router instance
+const router = createRouter({
+	routeTree,
+	defaultPreload: 'intent'
+});
+
+// Register things for typesafety
+declare module '@tanstack/react-router' {
+	interface Register {
+		router: typeof router;
+	}
 }
 
-render();
+const rootElement = document.getElementById('root')!;
+
+if (!rootElement.innerHTML) {
+	const root = ReactDOM.createRoot(rootElement);
+
+	root.render(<RouterProvider router={router} />);
+}

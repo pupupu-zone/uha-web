@@ -1,16 +1,14 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
+import { Outlet } from '@tanstack/react-router';
 import { PersistGate } from 'redux-persist/integration/react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
-import store from './store';
-import ROUTES from '@routes';
 import ProgressiveUnit from '@features/pwa';
-
-const MainPage = React.lazy(() => import('@pages/main'));
 import { FontStyles, ResetStyles, GeneralStyles } from '@core/styles';
 
+import store from './store';
 const persistor = persistStore(store);
 
 const Root = () => (
@@ -21,17 +19,10 @@ const Root = () => (
 
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
-				<BrowserRouter>
-					<React.Suspense fallback={<>...</>}>
-						<Routes>
-							<Route path={ROUTES.ROOT} element={<MainPage />} />
+				<Outlet />
 
-							<Route path="*" element={<Navigate to={ROUTES.ROOT} replace />} />
-						</Routes>
-
-						<ProgressiveUnit />
-					</React.Suspense>
-				</BrowserRouter>
+				<ProgressiveUnit />
+				<TanStackRouterDevtools />
 			</PersistGate>
 		</Provider>
 	</>

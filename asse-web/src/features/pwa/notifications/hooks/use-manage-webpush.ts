@@ -1,10 +1,10 @@
 const useManageWebPushSubscription = () => {
 	const updateSubscription = async () => {
-		alert('updateSubscription');
+		// alert('updateSubscription');
 	};
 
 	const createSubscription = async () => {
-		alert('createSubscription');
+		// alert('createSubscription');
 	};
 
 	return {

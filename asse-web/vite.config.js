@@ -4,6 +4,7 @@ import { defineConfig, loadEnv } from 'vite';
 
 import svgr from 'vite-plugin-svgr';
 import react from '@vitejs/plugin-react-swc';
+import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import templateLiteralPlugin from './vite-plugin-minify-template-literals/index.cjs';
 
 import { dependencies } from './package.json';
@@ -15,14 +16,7 @@ const buildTime = new Date().toLocaleDateString('ru-RU', {
 	minute: '2-digit'
 });
 
-const globalVendorPackages = [
-	'react',
-	'react-dom',
-	'react-router',
-	'react-router-dom',
-	'styled-components',
-	'typescript'
-];
+const globalVendorPackages = ['react', 'react-dom', '@tanstack/react-router', 'styled-components', 'typescript'];
 
 function renderChunks(deps) {
 	let chunks = {};
@@ -65,6 +59,12 @@ const config = ({ mode }) => {
 			}
 		},
 		plugins: [
+			TanStackRouterVite({
+				routesDirectory: './src/core/routes',
+				quoteStyle: 'single',
+				enableRouteGeneration: false,
+				autoCodeSplitting: true
+			}),
 			svgr(),
 			react(),
 			VitePWA({

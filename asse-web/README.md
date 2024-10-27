@@ -2,7 +2,7 @@
 
 ### Stack
 * **[React@18](https://react.dev/)**
-* **[React Router@6](https://reactrouter.com/)**
+* **[@tanstack/react-router@1](https://tanstack.com/router/latest)**
 * **[Styled Components@6](https://styled-components.com/)**
 * **[Redux Toolkit@2](https://redux-toolkit.js.org/)**
 * **[Vite@5](https://vite.dev/)**

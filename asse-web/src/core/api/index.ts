@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery, retry, FetchArgs } from '@reduxjs/toolkit/query/react';
 import { RootState } from '@store';
-import ROUTES from '@routes';
+// import ROUTES from '@routes';
 import { isPlainObject } from '@utils';
 
 type PrepareHeaders = (headers: Headers) => Headers;
@@ -59,7 +59,7 @@ const baseQuery = fetchBaseQuery({
 		switch (response.status) {
 			case 401: {
 				console.error('Ошибка авторизации');
-				window.location.assign(ROUTES.LOGOUT);
+				window.location.assign('/logout');
 				break;
 			}
 

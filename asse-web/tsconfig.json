@@ -40,6 +40,7 @@
       "@core/*": ["./src/core/*"],
 
       "@routes": ["./src/core/routes"],
+      "@routes": ["./src/core/routes/*"],
 
       "@ui": ["./src/ui/index"],
       "@ui/*": ["./src/ui/*"],
