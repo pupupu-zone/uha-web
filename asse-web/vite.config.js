@@ -99,6 +99,7 @@ const config = ({ mode }) => {
 				'@core': fileURLToPath(new URL('./src/core', import.meta.url)),
 				'@ui': fileURLToPath(new URL('./src/ui', import.meta.url)),
 				'@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
+				'@yup': fileURLToPath(new URL('./src/utils/yup', import.meta.url)),
 				'@icons': fileURLToPath(new URL('./src/assets/icons', import.meta.url)),
 				'@images': fileURLToPath(new URL('./src/assets/images', import.meta.url)),
 				'@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),

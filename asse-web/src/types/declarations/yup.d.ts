@@ -5,5 +5,6 @@ declare module 'yup' {
 		startsWith(code: string, msg?: string): yup.StringSchema;
 		ascii(msg?: string): yup.StringSchema;
 		hex(msg?: string): yup.StringSchema;
+		email(msg?: string): yup.StringSchema;
 	}
 }

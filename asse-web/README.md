@@ -3,6 +3,7 @@
 ### Stack
 * **[React@18](https://react.dev/)**
 * **[@tanstack/react-router@1](https://tanstack.com/router/latest)**
+* **[@tanstack/form@0](https://tanstack.com/form/latest)**
 * **[Styled Components@6](https://styled-components.com/)**
 * **[Redux Toolkit@2](https://redux-toolkit.js.org/)**
 * **[Vite@5](https://vite.dev/)**
