@@ -50,6 +50,7 @@ const config = ({ mode }) => {
 			minify: 'terser',
 			sourcemap: false,
 			rollupOptions: {
+				external: ['chokidar'],
 				output: {
 					manualChunks: {
 						vendor: globalVendorPackages,
