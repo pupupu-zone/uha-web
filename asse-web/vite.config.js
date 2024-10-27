@@ -63,7 +63,7 @@ const config = ({ mode }) => {
 				routesDirectory: './src/core/routes',
 				quoteStyle: 'single',
 				enableRouteGeneration: true,
-				autoCodeSplitting: true
+				autoCodeSplitting: false
 			}),
 			svgr(),
 			react(),
@@ -96,15 +96,12 @@ const config = ({ mode }) => {
 				'@api': fileURLToPath(new URL('./src/core/api', import.meta.url)),
 				'@store': fileURLToPath(new URL('./src/core/store', import.meta.url)),
 				'@core': fileURLToPath(new URL('./src/core', import.meta.url)),
-				'@routes': fileURLToPath(new URL('./src/core/routes', import.meta.url)),
 				'@ui': fileURLToPath(new URL('./src/ui', import.meta.url)),
 				'@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
-				'@hooks': fileURLToPath(new URL('./src/utils/hooks', import.meta.url)),
 				'@icons': fileURLToPath(new URL('./src/assets/icons', import.meta.url)),
 				'@images': fileURLToPath(new URL('./src/assets/images', import.meta.url)),
 				'@assets': fileURLToPath(new URL('./src/assets', import.meta.url)),
 				'@fonts': fileURLToPath(new URL('./src/assets/fonts', import.meta.url)),
-				'@yup': fileURLToPath(new URL('./src/utils/yup', import.meta.url)),
 				'@features': fileURLToPath(new URL('./src/features', import.meta.url)),
 				'@pages': fileURLToPath(new URL('./src/pages', import.meta.url))
 			}

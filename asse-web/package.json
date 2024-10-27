@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "type": "module",
   "scripts": {
@@ -19,7 +19,6 @@
     "@piotr-cz/redux-persist-idb-storage": "^1.1.3",
     "@reduxjs/toolkit": "^2.3.0",
     "@tanstack/react-router": "^1.77.0",
-    "@tanstack/router-devtools": "^1.77.0",
     "@tanstack/router-plugin": "^1.76.4",
     "react": "^18.3.1",
     "react-aria": "^3.35.1",
@@ -34,6 +33,7 @@
     "typescript": "^5.6.3"
   },
   "devDependencies": {
+    "@tanstack/router-devtools": "^1.77.0",
     "@storybook/addon-essentials": "^8.3.5",
     "@storybook/addon-interactions": "^8.3.5",
     "@storybook/addon-links": "^8.3.5",
@@ -68,7 +68,7 @@
     "stylelint-config-standard": "^36.0.1",
     "stylelint-order": "^6.0.4",
     "terser": "^5.34.1",
-    "vite": "link:@tanstack/router-plugin/vite",
+    "vite": "5.4.10",
     "vite-plugin-pwa": "^0.20.5",
     "vite-plugin-svgr": "^4.2.0",
     "workbox-core": "^7.1.0",

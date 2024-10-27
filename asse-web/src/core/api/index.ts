@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery, retry, FetchArgs } from '@reduxjs/toolkit/query/react';
 import { RootState } from '@store';
-// import ROUTES from '@routes';
 import { isPlainObject } from '@utils';
 
 type PrepareHeaders = (headers: Headers) => Headers;
