@@ -62,7 +62,7 @@ const config = ({ mode }) => {
 			TanStackRouterVite({
 				routesDirectory: './src/core/routes',
 				quoteStyle: 'single',
-				enableRouteGeneration: false,
+				enableRouteGeneration: true,
 				autoCodeSplitting: true
 			}),
 			svgr(),
