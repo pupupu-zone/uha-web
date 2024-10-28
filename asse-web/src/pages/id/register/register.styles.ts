@@ -25,8 +25,8 @@ export default styled.div<{ $gradients: string[] }>`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	min-width: 100vw;
-	min-height: 100vh;
+	min-width: 50vw;
+	min-height: 50vw;
 	position: relative;
 
 	z-index: 1;
