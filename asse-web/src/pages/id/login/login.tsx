@@ -18,46 +18,42 @@ const LoginUnit = () => {
 				noValidate
 			>
 				<form.Field name="email">
-					{(field) => {
-						return (
-							<>
-								<label htmlFor={field.name}>E-Mail</label> <br />
-								<input
-									id={field.name}
-									name={field.name}
-									value={field.state.value}
-									type="email"
-									onChange={(e) => {
-										field.handleChange(e.target.value);
-									}}
-								/>
-								<br />
-								{field.state.meta.errors ? <em role="alert">{field.state.meta.errors.join(', ')}</em> : null}
-							</>
-						);
-					}}
+					{(field) => (
+						<>
+							<label htmlFor={field.name}>E-Mail</label> <br />
+							<input
+								id={field.name}
+								name={field.name}
+								value={field.state.value}
+								type="email"
+								onChange={(e) => {
+									field.handleChange(e.target.value);
+								}}
+							/>
+							<br />
+							{field.state.meta.errors ? <em role="alert">{field.state.meta.errors.join(', ')}</em> : null}
+						</>
+					)}
 				</form.Field>
 
 				<hr />
 				<form.Field name="password">
-					{(field) => {
-						return (
-							<>
-								<label htmlFor={field.name}>Password</label> <br />
-								<input
-									id={field.name}
-									name={field.name}
-									value={field.state.value}
-									type="password"
-									onChange={(e) => {
-										field.handleChange(e.target.value);
-									}}
-								/>
-								<br />
-								{field.state.meta.errors ? <em role="alert">{field.state.meta.errors.join(', ')}</em> : null}
-							</>
-						);
-					}}
+					{(field) => (
+						<>
+							<label htmlFor={field.name}>Password</label> <br />
+							<input
+								id={field.name}
+								name={field.name}
+								value={field.state.value}
+								type="password"
+								onChange={(e) => {
+									field.handleChange(e.target.value);
+								}}
+							/>
+							<br />
+							{field.state.meta.errors ? <em role="alert">{field.state.meta.errors.join(', ')}</em> : null}
+						</>
+					)}
 				</form.Field>
 
 				<form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
