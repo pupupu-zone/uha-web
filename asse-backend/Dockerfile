@@ -13,7 +13,7 @@ WORKDIR /app
 RUN cargo build --release
 
 # Stage 2
-FROM debian:bullseye-slim
+FROM debian:bookworm-slim
 
 COPY ./migrations ./migrations
 RUN apt-get update && apt-get -y install ca-certificates libssl-dev && rm -rf /var/lib/apt/lists/*
