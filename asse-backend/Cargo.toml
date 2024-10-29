@@ -1,12 +1,12 @@
 [package]
-name = "asse_backend"
+name = "subsawwy_backend"
 version = "0.1.0"
 authors = ["Alena Dzhukich <github@alena.red>"]
 edition = "2021"
 
 [[bin]]
 edition = "2021"
-name = "asse_backend"
+name = "subsawwy_backend"
 path = "src/main.rs"
 
 [dependencies]

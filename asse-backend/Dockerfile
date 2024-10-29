@@ -1,7 +1,11 @@
-# Stage 1
-FROM rust:1.81-alpine AS build-stage
+# Stage 1: Build Stage
+FROM rust:1.82-bookworm AS build-stage
 
-RUN apk add openssl-dev musl-dev postgresql-dev
+RUN apt update && \
+  apt install -y --no-install-recommends \
+  libssl-dev \
+  musl-tools \
+  libpq-dev
 
 COPY . /app
 WORKDIR /app
@@ -13,8 +17,8 @@ FROM alpine:latest
 
 RUN apk --no-cache add ca-certificates openssl
 
-COPY --from=build-stage /app/target/release/asse_backend /usr/local/bin/asse_backend
+COPY --from=build-stage /app/target/release/subsawwy_backend /usr/local/bin/subsawwy_backend
 
 # start app
-CMD ["asse_backend"]
+CMD ["subsawwy_backend"]
 EXPOSE 1337
