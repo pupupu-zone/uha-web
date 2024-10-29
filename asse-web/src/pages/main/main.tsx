@@ -8,7 +8,7 @@ import Root from './main.styles';
 const Main = () => {
 	return (
 		<Root>
-			<h1>Welcome to the app</h1>
+			<h1>Hello</h1>
 
 			<HealthCheck />
 
