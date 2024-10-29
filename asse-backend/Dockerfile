@@ -13,12 +13,13 @@ WORKDIR /app
 RUN cargo build --release
 
 # Stage 2
-FROM alpine:latest
+FROM debian:bullseye-slim
 
-RUN apk --no-cache add ca-certificates openssl
+COPY ./migrations ./migrations
+RUN apt-get update && apt-get -y install ca-certificates libssl-dev && rm -rf /var/lib/apt/lists/*
 
-COPY --from=build-stage /app/target/release/subsawwy_backend /usr/local/bin/subsawwy_backend
+RUN apt-get update && apt-get install libpq5 -y
+COPY --from=build-stage /app/target/release/subsawwy_backend /usr/bin
 
-# start app
 CMD ["subsawwy_backend"]
 EXPOSE 1337
