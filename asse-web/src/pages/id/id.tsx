@@ -1,12 +1,6 @@
 import React from 'react';
 import { Outlet, Link } from '@tanstack/react-router';
 
-// import RegisterUnit from './register';
-// import ResetPasswordUnit from './reset-password';
-// import SetNewPasswordUnit from './set-new-password';
-// import TwoFactorUnit from './two-factor/two-factor';
-// import VerifyEmailUnit from './verify-email';
-
 const AuthPage = () => {
 	return (
 		<div

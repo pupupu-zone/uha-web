@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { Link } from '@tanstack/react-router';
+
 import HealthCheck from '@features/healthcheck';
 import Root from './main.styles';
 
@@ -9,6 +11,8 @@ const Main = () => {
 			<h1>Welcome to the app</h1>
 
 			<HealthCheck />
+
+			<Link to="/id/register">Register</Link>
 		</Root>
 	);
 };
