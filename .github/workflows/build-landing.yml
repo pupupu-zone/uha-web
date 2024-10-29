@@ -1,4 +1,4 @@
-name: Build Landing
+name: subsawwy-landing-build
 
 on:
   push:

@@ -1,4 +1,4 @@
-name: Build Frontend Web App
+name: subsawwy-web-build
 
 on:
   push:

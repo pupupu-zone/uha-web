@@ -12,7 +12,7 @@ const Main = () => {
 
 			<HealthCheck />
 
-			<Link to="/id/register">Register</Link>
+			<Link to="/id/register">Register!1</Link>
 		</Root>
 	);
 };

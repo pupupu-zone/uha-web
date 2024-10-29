@@ -1,4 +1,4 @@
-name: Build Backend
+name: subsawwy-backend-build
 
 on:
   push:
