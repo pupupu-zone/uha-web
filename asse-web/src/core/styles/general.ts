@@ -18,7 +18,6 @@ const General = createGlobalStyle`
 		display: flex;
 		flex-direction: column;
 		width: 100vw;
-		height: 100%;
 		min-height: 100%;
 		margin: 0 auto;
 	}

@@ -5,12 +5,10 @@ const AuthPage = () => {
 	return (
 		<div
 			style={{
-				display: 'flex',
-				flexDirection: 'column',
+				display: 'grid',
 				alignItems: 'center',
 				justifyContent: 'center',
-				minHeight: '100vh',
-				gap: '60px'
+				minHeight: '100vh'
 			}}
 		>
 			AUTH PAGE <Outlet />

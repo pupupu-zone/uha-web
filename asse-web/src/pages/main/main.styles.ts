@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 export default styled.div`
-	display: flex;
-	flex-direction: column;
+	display: grid;
 	gap: 20px;
 	align-items: center;
 	justify-content: center;
