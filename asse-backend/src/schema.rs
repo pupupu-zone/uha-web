@@ -11,11 +11,27 @@ pub mod sql_types {
 }
 
 diesel::table! {
-    subscription_apps (id) {
+    applications (id) {
         id -> Uuid,
         name -> Text,
         description -> Nullable<Text>,
         logo_url -> Nullable<Text>,
+    }
+}
+
+diesel::table! {
+    use diesel::sql_types::*;
+    use super::sql_types::Theme;
+
+    settings (id) {
+        id -> Uuid,
+        user_id -> Uuid,
+        name -> Text,
+        avatar_url -> Nullable<Text>,
+        theme -> Theme,
+        #[max_length = 3]
+        default_currency -> Bpchar,
+        do_recalc -> Nullable<Bool>,
     }
 }
 
@@ -37,7 +53,7 @@ diesel::table! {
 }
 
 diesel::table! {
-    user_auth (id) {
+    users (id) {
         id -> Uuid,
         email -> Text,
         password -> Text,
@@ -50,29 +66,13 @@ diesel::table! {
     }
 }
 
-diesel::table! {
-    use diesel::sql_types::*;
-    use super::sql_types::Theme;
-
-    user_profiles (id) {
-        id -> Uuid,
-        user_id -> Uuid,
-        name -> Text,
-        avatar_url -> Nullable<Text>,
-        theme -> Theme,
-        #[max_length = 3]
-        default_currency -> Bpchar,
-        do_recalc -> Nullable<Bool>,
-    }
-}
-
-diesel::joinable!(subscriptions -> subscription_apps (app_id));
-diesel::joinable!(subscriptions -> user_auth (user_id));
-diesel::joinable!(user_profiles -> user_auth (user_id));
+diesel::joinable!(settings -> users (user_id));
+diesel::joinable!(subscriptions -> applications (app_id));
+diesel::joinable!(subscriptions -> users (user_id));
 
 diesel::allow_tables_to_appear_in_same_query!(
-    subscription_apps,
+    applications,
+    settings,
     subscriptions,
-    user_auth,
-    user_profiles,
+    users,
 );

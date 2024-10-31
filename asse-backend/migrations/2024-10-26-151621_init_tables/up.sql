@@ -33,7 +33,7 @@ CREATE INDEX "subscriptions_app_id_index" ON "subscriptions"("app_id");
 --
 -- USER AUTH
 --
-CREATE TABLE "user_auth" (
+CREATE TABLE "users" (
   "id" UUID NOT NULL DEFAULT gen_random_uuid(),
   "email" TEXT NOT NULL UNIQUE,
   "password" TEXT NOT NULL,
@@ -46,11 +46,11 @@ CREATE TABLE "user_auth" (
 
   PRIMARY KEY ("id")
 );
-CREATE INDEX "user_auth_email_index" ON "user_auth"("email");
+CREATE INDEX "users_email_index" ON "users"("email");
 
 
 --
--- USER PROFILES
+-- USER SETTINGS
 --
 CREATE TYPE "theme" AS ENUM (
   'system',
@@ -58,7 +58,7 @@ CREATE TYPE "theme" AS ENUM (
   'light'
 );
 
-CREATE TABLE "user_profiles" (
+CREATE TABLE "settings" (
   "id" UUID NOT NULL DEFAULT gen_random_uuid(),
   "user_id" UUID NOT NULL UNIQUE,
   "name" TEXT NOT NULL,
@@ -69,13 +69,13 @@ CREATE TABLE "user_profiles" (
 
   PRIMARY KEY ("id")
 );
-CREATE INDEX "user_profiles_user_id_index" ON "user_profiles"("user_id");
+CREATE INDEX "settings_user_id_index" ON "settings"("user_id");
 
 
 --
 -- SUBSCRIPTION APPS
 --
-CREATE TABLE "subscription_apps"(
+CREATE TABLE "applications"(
   "id" UUID NOT NULL DEFAULT gen_random_uuid(),
   "name" TEXT NOT NULL,
   "description" TEXT NULL,
@@ -85,8 +85,8 @@ CREATE TABLE "subscription_apps"(
 );
 
 
-ALTER TABLE "user_auth" ADD CONSTRAINT "user_auth_email_unique" UNIQUE("email");
-ALTER TABLE "user_profiles" ADD CONSTRAINT "user_profiles_user_id_unique" UNIQUE("user_id");
-ALTER TABLE "user_profiles" ADD CONSTRAINT "user_profiles_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "user_auth"("id");
-ALTER TABLE "subscriptions" ADD CONSTRAINT "subscriptions_app_id_foreign" FOREIGN KEY("app_id") REFERENCES "subscription_apps"("id");
-ALTER TABLE "subscriptions" ADD CONSTRAINT "subscriptions_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "user_auth"("id");
+ALTER TABLE "users" ADD CONSTRAINT "users_email_unique" UNIQUE("email");
+ALTER TABLE "settings" ADD CONSTRAINT "settings_user_id_unique" UNIQUE("user_id");
+ALTER TABLE "settings" ADD CONSTRAINT "settings_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "users"("id");
+ALTER TABLE "subscriptions" ADD CONSTRAINT "subscriptions_app_id_foreign" FOREIGN KEY("app_id") REFERENCES "applications"("id");
+ALTER TABLE "subscriptions" ADD CONSTRAINT "subscriptions_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "users"("id");
