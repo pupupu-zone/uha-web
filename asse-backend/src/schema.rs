@@ -48,7 +48,7 @@ diesel::table! {
         comment -> Nullable<Text>,
         #[max_length = 255]
         currency -> Varchar,
-        price -> Int8,
+        price -> Money,
     }
 }
 
