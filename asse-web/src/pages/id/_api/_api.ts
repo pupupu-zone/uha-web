@@ -33,7 +33,7 @@ const idApi = API.injectEndpoints({
 		// Register
 		register: build.query<RegisterResT, RegisterReqT>({
 			query: (body) => ({
-				url: '/auth/sign-in',
+				url: '/auth/sign-up',
 				method: 'POST',
 				body
 			})

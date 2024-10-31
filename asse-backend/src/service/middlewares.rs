@@ -30,7 +30,7 @@ impl Middlewares {
     fn get_cors() -> Cors {
         let cors_conf = Cors::default()
             // .allow_any_origin()
-            // .allowed_origin("http://localhost:4200")
+            .allowed_origin("http://localhost:4200")
             .allowed_origin("https://app.subsawwy.com")
             .allowed_origin("https://www.app.subsawwy.com")
             .allow_any_method()

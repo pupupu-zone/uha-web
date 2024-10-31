@@ -3628,6 +3628,7 @@ dependencies = [
  "log",
  "minijinja",
  "native-tls",
+ "once_cell",
  "openssl",
  "pasetors",
  "postgres-openssl",

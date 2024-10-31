@@ -40,6 +40,7 @@ pub struct EnvConfig {
     // E-Mail
     pub email_from: String,
     pub smtp: SMTPConfig,
+    pub app_url: String,
 }
 
 impl EnvConfig {
@@ -83,6 +84,7 @@ impl EnvConfig {
                 username: env::var("SMTP_USERNAME").expect("SMTP_USERNAME must be set"),
                 token: env::var("SMTP_TOKEN").expect("SMTP_TOKEN must be set"),
             },
+            app_url: env::var("APP_URL").expect("APP_URL must be set"),
         }
     }
 }
