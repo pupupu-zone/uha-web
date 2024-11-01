@@ -6,8 +6,6 @@ use lettre::{AsyncSmtpTransport, AsyncTransport, Tokio1Executor};
 use minijinja::Environment;
 use r2d2_redis::RedisConnectionManager;
 
-use load_file::load_str;
-
 pub async fn send_email(
     subject: String,
     name: String,
@@ -21,8 +19,7 @@ pub async fn send_email(
     let mut minijinja_env = Environment::new();
 
     // Add templates to minijinja
-    let template_path = format!("../templates/{}.html", template_name);
-    let active_template = load_str!(&template_path);
+    let active_template = include_str!("../templates/verification_email.html");
     minijinja_env
         .add_template("verification_email", active_template)
         .unwrap();
