@@ -1,7 +1,7 @@
 [package]
 name = "subsawwy_backend"
 version = "0.1.0"
-authors = ["Alena Dzhukich <github@alena.red>"]
+authors = ["Aljóna Dzhukich <github@alena.red>"]
 edition = "2021"
 
 [[bin]]
@@ -75,6 +75,4 @@ sqlx = { version = "0.8.2", features = [
   "runtime-tokio-rustls",
   "chrono",
 ] }
-once_cell = "1.20.2"
-load_file = "1.0.1"
 include_dir = "0.7.4"
