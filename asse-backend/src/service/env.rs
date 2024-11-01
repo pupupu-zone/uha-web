@@ -1,5 +1,4 @@
 use dotenvy::dotenv;
-use log;
 use std::env;
 
 #[derive(Debug, Clone)]
@@ -46,7 +45,6 @@ pub struct EnvConfig {
 impl EnvConfig {
     pub fn new() -> EnvConfig {
         dotenv().ok();
-        log::info!("[+] Reading ENV configuration.");
 
         let with_migration = env::var("MIGRATION").unwrap_or("NOPE".to_string());
         let with_debug = env::var("DEBUG").unwrap_or("NOPE".to_string());

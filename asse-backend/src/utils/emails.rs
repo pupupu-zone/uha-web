@@ -6,6 +6,8 @@ use lettre::{AsyncSmtpTransport, AsyncTransport, Tokio1Executor};
 use minijinja::Environment;
 use r2d2_redis::RedisConnectionManager;
 
+use load_file::load_str;
+
 pub async fn send_email(
     subject: String,
     name: String,
@@ -19,14 +21,10 @@ pub async fn send_email(
     let mut minijinja_env = Environment::new();
 
     // Add templates to minijinja
-    let verification_email_template = include_str!("../templates/verification_email.html");
+    let template_path = format!("../templates/{}.html", template_name);
+    let active_template = load_str!(&template_path);
     minijinja_env
-        .add_template("verification_email", verification_email_template)
-        .unwrap();
-
-    let reset_email_template = include_str!("../templates/reset_email.html");
-    minijinja_env
-        .add_template("reset_email", reset_email_template)
+        .add_template("verification_email", active_template)
         .unwrap();
 
     // Set up the recipient of e-mail
@@ -44,11 +42,11 @@ pub async fn send_email(
     let confirmation_link = {
         if template_name == "reset_email.html" {
             format!(
-                "{}/auth/change-password?token={}",
+                "{}/id/set-new-password?token={}",
                 envs.app_url, issued_token,
             )
         } else {
-            format!("{}/auth/validate?token={}", envs.app_url, issued_token,)
+            format!("{}/id/verify-email?token={}", envs.app_url, issued_token,)
         }
     };
 
@@ -99,13 +97,13 @@ pub async fn send_email(
     let smtp_creds = Credentials::new(envs.smtp.username.clone(), envs.smtp.token.clone());
     // create mailer
     let mailer: AsyncSmtpTransport<Tokio1Executor> =
-        AsyncSmtpTransport::<Tokio1Executor>::relay(&envs.smtp.server)
+        AsyncSmtpTransport::<Tokio1Executor>::starttls_relay(&envs.smtp.server)
             .unwrap()
             .credentials(smtp_creds)
             .build();
 
     // Send the email
-    match mailer.send(email).await {
+    let mat = match mailer.send(email).await {
         Ok(_) => {
             let success_msg = format!("Email sent to {}", email_to);
             tracing::event!(target: "backend", tracing::Level::INFO, success_msg);
@@ -119,5 +117,7 @@ pub async fn send_email(
 
             Err(fail_msg)
         }
-    }
+    };
+
+    mat
 }

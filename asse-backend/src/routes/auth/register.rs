@@ -8,8 +8,8 @@ use serde_json::json;
 use sqlx::Row;
 use std::fmt::Debug;
 
-use crate::utils::auth::password;
 use crate::errors::reg_errors;
+use crate::utils::auth::password;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct RawUserData {
@@ -30,7 +30,9 @@ pub async fn rollback(
 
     match result {
         Ok(_) => Ok(()),
-        Err(_) => Err(reg_errors::system(reg_errors::DEFAULT_MSG))?,
+        Err(_) => Err(reg_errors::system(
+            "An error has been occurred during sending the verification e-mail. Please try again later.",
+        ))?,
     }
 }
 
@@ -41,7 +43,9 @@ pub async fn commit(
 
     match result {
         Ok(_) => Ok(()),
-        Err(_) => Err(reg_errors::system(reg_errors::DEFAULT_MSG))?,
+        Err(_) => Err(reg_errors::system(
+            "An error has been occurred during sending the verification e-mail. Please try again later.",
+        ))?,
     }
 }
 
@@ -80,29 +84,51 @@ pub async fn register(
         .pg
         .begin()
         .await
-        .map_err(|_| reg_errors::system(reg_errors::DEFAULT_MSG))?;
+        .map_err(|err| reg_errors::system(err.to_string()))?;
 
     // ref-deref problem ,so we can use commit, or rollback
     let mut is_rollback_needed = false;
 
-    // Create user & get user_id
-    let user_id =
-        match sqlx::query("INSERT INTO users (email, password) VALUES ($1, $2) RETURNING id")
-            .bind(&user.email)
-            .bind(&user.password)
-            .fetch_one(&mut *pg_transaction)
-            .await
-        {
-            Ok(row) => {
-                let user_id: uuid::Uuid = row.get("id");
+    // Create user & get user_id. In case user exists, return user_id and status
+    let (user_id, is_active) = match sqlx::query(
+        "
+            WITH ins AS (
+                INSERT INTO users (email, password)
+                VALUES ($1, $2)
+                ON CONFLICT (email) DO NOTHING
+                RETURNING id, is_active
+            )
+            SELECT id, is_active FROM ins
+            UNION ALL
+            SELECT id, is_active FROM users WHERE email = $1
+            LIMIT 1;
+        ",
+    )
+    .bind(&user.email)
+    .bind(&user.password)
+    .fetch_one(&mut *pg_transaction)
+    .await
+    {
+        Ok(row) => {
+            let user_id: uuid::Uuid = row.get("id");
+            let is_active: bool = row.get("is_active");
 
-                user_id
-            }
-            Err(_) => Err(reg_errors::system(reg_errors::DEFAULT_MSG))?,
-        };
+            (user_id, is_active)
+        }
+        Err(err) => Err(reg_errors::system(err.to_string()))?,
+    };
+
+    // Check if user active. If not active, proceed as as usual until redis check
+    if is_active == true {
+        rollback(pg_transaction).await?;
+
+        return Err(reg_errors::system(
+            "An error has been occurred during sending the verification e-mail. Please try again later.",
+        ))?;
+    }
 
     // Create user profile
-    match sqlx::query("INSERT INTO settings (user_id, name) VALUES ($1, $2) ON CONFLICT (user_id) DO NOTHING")
+    match sqlx::query("INSERT INTO user_profiles (user_id, name) VALUES ($1, $2) ON CONFLICT (user_id) DO NOTHING")
         .bind(&user_id)
         .bind(&new_user.name)
         .execute(&mut *pg_transaction)
@@ -117,7 +143,9 @@ pub async fn register(
     if is_rollback_needed == true {
         rollback(pg_transaction).await?;
 
-        return Err(reg_errors::system(reg_errors::DEFAULT_MSG))?;
+        return Err(reg_errors::system(
+            "An error has been occurred during sending the verification e-mail. Please try again later.",
+        ))?;
     } else {
         commit(pg_transaction).await?;
     }
@@ -125,7 +153,9 @@ pub async fn register(
     // Check if redis is available
     dp.redis
         .get()
-        .map_err(|_| reg_errors::system(reg_errors::DEFAULT_MSG))?;
+        .map_err(|_|reg_errors::system(
+            "An error has been occurred during sending the verification e-mail. Please try again later.",
+        ))?;
 
     // send email with PASETO token
     send_email(
@@ -134,14 +164,10 @@ pub async fn register(
         user.email.clone(),
         "verification_email".to_string(),
         user_id,
-        dp.redis.clone(), 
+        dp.redis.clone(),
     )
     .await
-    .map_err(|_| {
-        reg_errors::system(
-            "An error has been occurred during sending the verification e-mail. Please try again later.",
-        )
-    })?;
+    .map_err(|err| reg_errors::system(err))?;
 
     Ok(HttpResponse::Ok().json(json!({
         "data": {

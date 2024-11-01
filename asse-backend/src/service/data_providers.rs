@@ -1,7 +1,6 @@
 use crate::service;
 
 use log;
-use std::time::Duration;
 
 use r2d2_redis::RedisConnectionManager;
 use sqlx::postgres::PgPoolOptions;
@@ -33,8 +32,7 @@ impl WebDataPool {
         let env_config = service::env::EnvConfig::new();
 
         let pool = PgPoolOptions::new()
-            .max_connections(5)
-            .acquire_timeout(Duration::from_secs(10))
+            .max_connections(500)
             .connect(&env_config.db_url)
             .await
             .expect("Postgres connection should be successful");

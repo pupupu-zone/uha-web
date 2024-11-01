@@ -31,7 +31,6 @@ CREATE TABLE "users" (
 );
 CREATE INDEX IF NOT EXISTS "users_email_index" ON "users"("email");
 
-
 -- 
 -- SUBSCRIPTIONS
 --
@@ -65,7 +64,7 @@ CREATE INDEX IF NOT EXISTS "subscriptions_app_id_index" ON "subscriptions"("app_
 
 
 --
--- USER SETTINGS
+-- USER SETTINGS & PROFILES
 --
 CREATE TYPE "theme" AS ENUM (
   'system',
@@ -73,11 +72,24 @@ CREATE TYPE "theme" AS ENUM (
   'light'
 );
 
-CREATE TABLE "settings" (
+CREATE TABLE "user_profiles" (
   "id" UUID NOT NULL DEFAULT gen_random_uuid(),
   "user_id" UUID NOT NULL UNIQUE,
   "name" TEXT NOT NULL,
   "avatar_url" TEXT NULL,
+
+  PRIMARY KEY ("id"),
+  FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS "user_profiles_user_id_index" ON "user_profiles"("user_id");
+
+--
+-- USER SETTINGS
+--
+
+CREATE TABLE "settings" (
+  "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+  "user_id" UUID NOT NULL UNIQUE,
   "theme" theme NOT NULL DEFAULT 'system',
   "default_currency" CHAR(3) NOT NULL CHECK (default_currency ~ '^[A-Z]{3}$') DEFAULT 'USD',
   "do_recalc" BOOLEAN DEFAULT true,
@@ -85,9 +97,3 @@ CREATE TABLE "settings" (
   PRIMARY KEY ("id"),
   FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE
 );
-CREATE INDEX IF NOT EXISTS "settings_user_id_index" ON "settings"("user_id");
-
-
-
-ALTER TABLE "users" ADD CONSTRAINT "users_email_unique" UNIQUE("email");
-ALTER TABLE "settings" ADD CONSTRAINT "settings_user_id_unique" UNIQUE("user_id");

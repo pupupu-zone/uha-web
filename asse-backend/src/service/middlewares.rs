@@ -30,7 +30,7 @@ impl Middlewares {
     fn get_cors() -> Cors {
         let cors_conf = Cors::default()
             // .allow_any_origin()
-            // .allowed_origin("http://localhost:4200")
+            .allowed_origin("http://localhost:4200")
             .allowed_origin("https://app.subsawwy.com")
             .allowed_origin("https://www.app.subsawwy.com")
             .allow_any_method()
@@ -47,6 +47,7 @@ impl Middlewares {
     }
 
     fn get_session() -> SessionMiddleware<CookieSessionStore> {
+        log::info!("[+] Reading ENV configuration.");
         let envs = crate::service::env::EnvConfig::new();
         let secret_key = actix_web::cookie::Key::from(envs.hmac_secret.as_bytes());
 

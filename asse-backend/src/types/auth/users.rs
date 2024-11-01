@@ -1,4 +1,4 @@
-use crate::schema::{settings, users};
+use crate::schema::{user_profiles, users};
 use diesel;
 use diesel::{Insertable, Queryable, Selectable};
 use serde::{Deserialize, Serialize};
@@ -17,30 +17,25 @@ pub struct UserToRegister {
 pub enum Theme {
     Light,
     Dark,
+    System,
 }
 
-#[derive(Queryable, Serialize, Deserialize, Debug)]
-#[diesel(table_name = settings)]
-pub struct UserSettings {
+#[derive(Insertable, Queryable, Selectable, Serialize, Deserialize, Debug)]
+#[diesel(table_name = user_profiles)]
+pub struct UserProfiles {
     pub id: uuid::Uuid,
     pub user_id: uuid::Uuid,
     pub name: String,
     pub avatar_url: Option<String>,
-    pub theme: Theme,
-    pub default_currency: String,
-    pub do_recalc: Option<bool>,
 }
 
-impl UserSettings {
+impl UserProfiles {
     pub fn from_row(row: &PgRow) -> Self {
         Self {
             id: row.get("id"),
             user_id: row.get("user_id"),
             name: row.get("name"),
             avatar_url: row.get("avatar_url"),
-            theme: row.get("theme"),
-            default_currency: row.get("default_currency"),
-            do_recalc: row.get("do_recalc"),
         }
     }
 }
