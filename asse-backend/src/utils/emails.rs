@@ -1,6 +1,7 @@
 use crate::service::env::EnvConfig;
 use crate::utils::auth::tokens;
 
+use include_dir::{include_dir, Dir};
 use lettre::transport::smtp::authentication::Credentials;
 use lettre::{AsyncSmtpTransport, AsyncTransport, Tokio1Executor};
 use minijinja::Environment;
@@ -16,12 +17,23 @@ pub async fn send_email(
     redis: r2d2::Pool<RedisConnectionManager>,
 ) -> Result<(), String> {
     let envs = EnvConfig::new();
-    let mut minijinja_env = Environment::new();
 
     // Add templates to minijinja
-    let active_template = include_str!("../templates/verification_email.html");
+    let mut minijinja_env = Environment::new();
+    let template_file = format!("{}.html", &template_name);
+    static TEMPLATES_DIR: Dir = include_dir!("$CARGO_MANIFEST_DIR/src/templates/");
+
+    let active_template = match TEMPLATES_DIR.get_file(&template_file) {
+        Some(template) => template.contents_utf8().unwrap(),
+        None => {
+            let error_msg = format!("Could not find file: {}", &template_file);
+            tracing::event!(target: "backend", tracing::Level::ERROR, "{}", error_msg);
+            return Err(error_msg);
+        }
+    };
+
     minijinja_env
-        .add_template("verification_email", active_template)
+        .add_template(&template_name, active_template)
         .unwrap();
 
     // Set up the recipient of e-mail
@@ -37,7 +49,7 @@ pub async fn send_email(
     };
 
     let confirmation_link = {
-        if template_name == "reset_email.html" {
+        if template_name == "reset_email" {
             format!(
                 "{}/id/set-new-password?token={}",
                 envs.app_url, issued_token,
