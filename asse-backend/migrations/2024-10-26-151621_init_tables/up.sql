@@ -64,7 +64,7 @@ CREATE INDEX IF NOT EXISTS "subscriptions_app_id_index" ON "subscriptions"("app_
 
 
 --
--- USER SETTINGS & PROFILES
+-- USER PROFILES
 --
 CREATE TYPE "theme" AS ENUM (
   'system',

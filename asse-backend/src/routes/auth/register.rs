@@ -124,6 +124,19 @@ pub async fn register(
         }
     }
 
+    // Create user settings
+    match sqlx::query("INSERT INTO settings (user_id) VALUES ($1) ON CONFLICT (user_id) DO NOTHING")
+        .bind(&user_id)
+        .bind(&new_user.name)
+        .execute(&mut *pg_transaction)
+        .await
+    {
+        Ok(_) => {}
+        Err(_) => {
+            is_rollback_needed = true;
+        }
+    }
+
     if is_rollback_needed == true {
         rollback(pg_transaction).await?;
 
