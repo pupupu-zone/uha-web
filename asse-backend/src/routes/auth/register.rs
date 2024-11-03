@@ -90,18 +90,12 @@ pub async fn register(
     let mut is_rollback_needed = false;
 
     // Create user & get user_id. In case user exists, return user_id and status
-    let (user_id, is_active) = match sqlx::query(
+    let user_id = match sqlx::query(
         "
-            WITH ins AS (
-                INSERT INTO users (email, password)
+            INSERT INTO users (email, password)
                 VALUES ($1, $2)
                 ON CONFLICT (email) DO NOTHING
                 RETURNING id, is_active
-            )
-            SELECT id, is_active FROM ins
-            UNION ALL
-            SELECT id, is_active FROM users WHERE email = $1
-            LIMIT 1;
         ",
     )
     .bind(&user.email)
@@ -111,21 +105,11 @@ pub async fn register(
     {
         Ok(row) => {
             let user_id: uuid::Uuid = row.get("id");
-            let is_active: bool = row.get("is_active");
 
-            (user_id, is_active)
+            user_id
         }
         Err(err) => Err(reg_errors::system(err.to_string()))?,
     };
-
-    // Check if user active. If not active, proceed as as usual until redis check
-    if is_active == true {
-        rollback(pg_transaction).await?;
-
-        return Err(reg_errors::system(
-            "An error has been occurred during sending the verification e-mail. Please try again later.",
-        ))?;
-    }
 
     // Create user profile
     match sqlx::query("INSERT INTO user_profiles (user_id, name) VALUES ($1, $2) ON CONFLICT (user_id) DO NOTHING")
