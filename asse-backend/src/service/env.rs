@@ -40,6 +40,11 @@ pub struct EnvConfig {
     pub email_from: String,
     pub smtp: SMTPConfig,
     pub app_url: String,
+    // S3
+    pub minio_bucket_name: String,
+    pub minio_endpoint_url: String,
+    pub minio_access_key: String,
+    pub minio_secret_key: String,
 }
 
 impl EnvConfig {
@@ -83,6 +88,16 @@ impl EnvConfig {
                 token: env::var("SMTP_TOKEN").expect("SMTP_TOKEN must be set"),
             },
             app_url: env::var("APP_URL").expect("APP_URL must be set"),
+
+            // minio
+            minio_bucket_name: env::var("MINIO_BUCKET_NAME")
+                .expect("MINIO_BUCKET_NAME must be set"),
+            minio_endpoint_url: env::var("MINIO_ENDPOINT_URL")
+                .expect("MINIO_ENDPOINT_URL must be set"),
+            // .parse::<BaseUrl>()
+            // .expect("MINIO_ENDPOINT_URL must be a valid URL"),
+            minio_access_key: env::var("MINIO_ACCESS_KEY").expect("MINIO_ACCESS_KEY must be set"),
+            minio_secret_key: env::var("MINIO_SECRET_KEY").expect("MINIO_SECRET_KEY must be set"),
         }
     }
 }

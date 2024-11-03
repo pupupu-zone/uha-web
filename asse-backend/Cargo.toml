@@ -39,7 +39,6 @@ uuid = { version = "1.10.0", features = [
   "macro-diagnostics",
 ] }
 chrono = { version = "0.4.38", features = ["serde"] }
-
 url = "2.5.2"
 log = { version = "0.4.22", features = ["std", "serde"] }
 dotenvy = "0.15.7"
@@ -76,3 +75,5 @@ sqlx = { version = "0.8.2", features = [
   "chrono",
 ] }
 include_dir = "0.7.4"
+actix-multipart = "0.7.2"
+rust-s3 = "0.35.1"

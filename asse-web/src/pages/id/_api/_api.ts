@@ -28,7 +28,7 @@ const idApi = API.injectEndpoints({
 			query: () => ({
 				url: '/auth/sign-out',
 				credentials: 'include',
-				method: 'POST'
+				method: 'DELETE'
 			})
 		}),
 
