@@ -1,4 +1,4 @@
-use actix_web::{web, Error, HttpResponse};
+use actix_web::{web, Error, HttpRequest, HttpResponse};
 use chrono::{Duration, Timelike, Utc};
 use mime::Mime;
 use mime_guess::get_mime_extensions;
@@ -34,7 +34,6 @@ fn get_extension_from_mime(mime_type: &str) -> Option<&'static str> {
 #[derive(actix_multipart::form::MultipartForm)]
 pub struct UserForm {
     name: Option<actix_multipart::form::text::Text<String>>,
-    #[multipart(limit = "1 MiB")]
     avatar: Option<actix_multipart::form::tempfile::TempFile>,
 }
 
@@ -42,8 +41,19 @@ pub async fn update_user(
     user: actix_multipart::form::MultipartForm<UserForm>,
     dp: web::Data<WebDataPool>,
     session: actix_session::Session,
+    req: HttpRequest,
 ) -> Result<HttpResponse, Error> {
     tracing::event!(target: "backend", tracing::Level::DEBUG, "Update user endpoint");
+
+    if let Some(content_length) = req.headers().get("Content-Length") {
+        if let Ok(size) = content_length.to_str().expect("msg").parse::<usize>() {
+            if size > 1 * 1024 * 1024 {
+                return Ok(HttpResponse::PayloadTooLarge().json(json!({
+                    "error": "File too large."
+                })));
+            }
+        }
+    }
 
     let content_type = user
         .avatar
