@@ -1,10 +1,9 @@
+use crate::utils::acquire_pg_connection;
 use actix_web::{web, Error, HttpResponse};
 use email_address::EmailAddress;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use sqlx::Row;
-
-use crate::utils::acquire_pg_connection;
 
 use crate::errors::reg_errors;
 use crate::service::data_providers::WebDataPool;
@@ -30,6 +29,11 @@ pub async fn login(
     if user.password.is_empty() {
         Err(reg_errors::password("Password too short"))?
     }
+
+    let s3_path = "test-2.file";
+    let test = b"I'm going to S3!";
+
+    let response_data = dp.minio.put_object(s3_path, test).await.expect("msg");
 
     // get user_id by email from db
     let pg_connection = acquire_pg_connection(dp).await?;
