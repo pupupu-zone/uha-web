@@ -17,6 +17,7 @@ const idApi = API.injectEndpoints({
 		login: build.query<LoginResT, LoginReqT>({
 			query: (body) => ({
 				url: '/auth/sign-in',
+				credentials: 'include',
 				method: 'POST',
 				body
 			})
@@ -26,7 +27,8 @@ const idApi = API.injectEndpoints({
 		logout: build.query<LogoutResT, LogoutReqT>({
 			query: () => ({
 				url: '/auth/sign-out',
-				method: 'DELETE'
+				credentials: 'include',
+				method: 'POST'
 			})
 		}),
 
@@ -35,6 +37,7 @@ const idApi = API.injectEndpoints({
 			query: (body) => ({
 				url: '/auth/sign-up',
 				method: 'POST',
+				credentials: 'omit',
 				body
 			})
 		}),
@@ -43,6 +46,7 @@ const idApi = API.injectEndpoints({
 			query: (body) => ({
 				url: '/auth/validate',
 				method: 'POST',
+				credentials: 'omit',
 				body
 			})
 		})

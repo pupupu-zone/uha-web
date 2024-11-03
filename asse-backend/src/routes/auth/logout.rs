@@ -1,11 +1,13 @@
 use crate::errors::{info, reg_errors};
-use crate::utils::session_user_id;
+use crate::utils::get_session_user_id;
 
 use actix_web::{Error, HttpResponse};
 
 #[tracing::instrument(name = "Log out user", skip(session))]
 pub async fn logout(session: actix_session::Session) -> Result<HttpResponse, Error> {
-    match session_user_id(&session).await {
+    let session_user_id = get_session_user_id(&session).await;
+
+    match session_user_id {
         Ok(_) => {
             tracing::event!(target: "backend", tracing::Level::INFO, "Users retrieved from the DB.");
             session.purge();

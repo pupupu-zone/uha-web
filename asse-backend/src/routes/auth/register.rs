@@ -155,16 +155,19 @@ pub async fn register(
         ))?;
 
     // send email with PASETO token
-    send_email(
-        "E-Mail Verification".to_string(),
-        new_user.name.clone(),
-        user.email.clone(),
-        "verification_email".to_string(),
-        user_id,
-        dp.redis.clone(),
-    )
-    .await
-    .map_err(|err| reg_errors::system(err))?;
+    tokio::spawn(async move {
+        send_email(
+            "E-Mail Verification".to_string(),
+            new_user.name.clone(),
+            user.email.clone(),
+            "verification_email".to_string(),
+            user_id,
+            dp.redis.clone(),
+        )
+        .await
+        .map_err(|err| reg_errors::system(err))
+        .expect("E-Mail have to be sent");
+    });
 
     Ok(HttpResponse::Ok().json(json!({
         "data": {

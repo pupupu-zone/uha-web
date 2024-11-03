@@ -29,16 +29,18 @@ impl Middlewares {
 
     fn get_cors() -> Cors {
         let cors_conf = Cors::default()
-            .allow_any_origin()
-            // .allowed_origin("https://app.subsawwy.com")
-            // .allowed_origin("https://www.app.subsawwy.com")
+            // .allow_any_origin()
+            .allowed_origin("https://app.subsawwy.com")
+            .allowed_origin("https://www.app.subsawwy.com")
             .allow_any_method()
             .allowed_headers(vec![
-                actix_web::http::header::AUTHORIZATION,
                 actix_web::http::header::ACCEPT,
+                actix_web::http::header::CONTENT_TYPE,
             ])
-            .allowed_header(actix_web::http::header::CONTENT_TYPE)
-            .expose_headers(&[actix_web::http::header::CONTENT_DISPOSITION])
+            .expose_headers(&[
+                actix_web::http::header::CONTENT_DISPOSITION,
+                actix_web::http::header::SET_COOKIE,
+            ])
             .supports_credentials()
             .max_age(3600);
 

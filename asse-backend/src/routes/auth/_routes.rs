@@ -9,7 +9,7 @@ pub fn get_routes() -> Scope {
     let auth_routes = web::scope("/auth")
         .service(web::resource("/sign-in").route(web::post().to(login)))
         .service(web::resource("/sign-up").route(web::post().to(register)))
-        .service(web::resource("/sign-out").route(web::delete().to(logout)))
+        .service(web::resource("/sign-out").route(web::post().to(logout)))
         .service(web::resource("/validate").route(web::post().to(verify_email)));
 
     auth_routes

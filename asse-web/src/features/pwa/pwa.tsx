@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { useHealthSW } from './hooks';
 import { useRegisterSW } from 'virtual:pwa-register/react';
-
-import BegForNotifications from './notifications';
 
 const PWA = () => {
 	useHealthSW();
@@ -19,11 +17,7 @@ const PWA = () => {
 		}
 	}, [needRefresh]);
 
-	return (
-		<>
-			<BegForNotifications />
-		</>
-	);
+	return null;
 };
 
 export default PWA;

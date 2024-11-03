@@ -3,11 +3,19 @@ export type LoginReqT = {
 	email: string;
 	password: string;
 };
-export type LoginResT = unknown;
+export type LoginResT = {
+	data: {
+		user_id: string;
+	};
+};
 
 // Logout
 export type LogoutReqT = void;
-export type LogoutResT = unknown;
+export type LogoutResT = {
+	info: {
+		system: string;
+	};
+};
 
 // Register
 export type RegisterReqT = {

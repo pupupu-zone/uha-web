@@ -1,23 +1,7 @@
 import { createApi, fetchBaseQuery, retry, FetchArgs } from '@reduxjs/toolkit/query/react';
-import { RootState } from '@store';
 import { isPlainObject } from '@utils';
 
 type PrepareHeaders = (headers: Headers) => Headers;
-
-type TokenEndpoint = {
-	url: string;
-	method: string;
-};
-const NO_TOKEN_ENDPOINTS: TokenEndpoint[] = [];
-
-const isNoTokenEndpoint = (arg: FetchArgs) => {
-	return NO_TOKEN_ENDPOINTS.some((endpoint) => {
-		return (
-			arg.url.toLocaleUpperCase() === endpoint.url.toLocaleUpperCase() &&
-			endpoint.method.toLocaleUpperCase() === arg.method!.toLocaleUpperCase()
-		);
-	});
-};
 
 const isJsonReady = (body: FetchArgs['body']): boolean => {
 	if (body === null || typeof body !== 'object') {
@@ -32,15 +16,8 @@ const isJsonReady = (body: FetchArgs['body']): boolean => {
 
 const baseQuery = fetchBaseQuery({
 	baseUrl: import.meta.env.VITE_REACT_APP_API_URL,
-	prepareHeaders: (headers, { getState, arg }) => {
-		const store = getState() as RootState;
+	prepareHeaders: (headers, { arg }) => {
 		arg = arg as FetchArgs;
-
-		const token = store.auth?.sessionToken;
-
-		if (token && !isNoTokenEndpoint(arg)) {
-			headers.append('authorization', `Bearer ${token}`);
-		}
 
 		if (!headers.has('Content-Type') && isJsonReady(arg.body)) {
 			headers.append('Content-Type', 'application/json');

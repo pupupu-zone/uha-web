@@ -32,7 +32,7 @@ pub async fn login(
     }
 
     // get user_id by email from db
-    let mut pg_connection = acquire_pg_connection(dp).await?;
+    let pg_connection = acquire_pg_connection(dp).await?;
 
     match get_active_user(pg_connection, user.email.clone()).await {
         Ok(logged_user) => {
