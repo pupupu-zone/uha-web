@@ -17,7 +17,6 @@ const idApi = API.injectEndpoints({
 		login: build.query<LoginResT, LoginReqT>({
 			query: (body) => ({
 				url: '/auth/sign-in',
-				credentials: 'include',
 				method: 'POST',
 				body
 			})

@@ -79,7 +79,6 @@ impl WebDataPool {
         WebDataPool {
             pg: WebDataPool::create_db().await.into(),
             redis: WebDataPool::create_redis(),
-            // minio: WebDataPool::create_minio().await,
             minio: WebDataPool::create_minio().await,
         }
     }

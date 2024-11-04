@@ -30,11 +30,6 @@ pub async fn login(
         Err(reg_errors::password("Password too short"))?
     }
 
-    let s3_path = "test-2.file";
-    let test = b"I'm going to S3!";
-
-    let response_data = dp.minio.put_object(s3_path, test).await.expect("msg");
-
     // get user_id by email from db
     let pg_connection = acquire_pg_connection(dp).await?;
 

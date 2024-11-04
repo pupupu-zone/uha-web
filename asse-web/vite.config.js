@@ -77,10 +77,6 @@ const config = ({ mode }) => {
 				injectManifest: {
 					globPatterns: ['**/*.{js,css,html,svg,png,ico,ttf,woff,woff2}']
 				},
-				pwaAssets: {
-					disabled: false,
-					config: true
-				},
 				devOptions: {
 					enabled: process.env.NODE_ENV === 'development',
 					navigateFallback: 'index.html',
