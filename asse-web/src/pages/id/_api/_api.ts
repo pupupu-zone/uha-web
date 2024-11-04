@@ -18,6 +18,7 @@ const idApi = API.injectEndpoints({
 			query: (body) => ({
 				url: '/auth/sign-in',
 				method: 'POST',
+				credentials: 'include',
 				body
 			})
 		}),

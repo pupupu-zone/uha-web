@@ -3,11 +3,14 @@ import React from 'react';
 import useUpdateUser from './use-update-user';
 
 const UserProfile = () => {
-	const form = useUpdateUser();
+	const { form, avatarUrl } = useUpdateUser();
 
+	console.log(avatarUrl);
 	return (
 		<div>
 			<h1>Login</h1>
+
+			{avatarUrl && <img src={avatarUrl} />}
 
 			<form
 				onSubmit={(e) => {

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from '@tanstack/react-form';
 import { yupValidator } from '@tanstack/yup-form-adapter';
 import yup from '@yup';
@@ -27,6 +27,7 @@ const formSchema = yup.object({
 
 const useUpdateUser = () => {
 	const [request, result] = useLazyUpdateUserQuery();
+	const [avatarUrl, setAvatarUrl] = useState('');
 
 	const form = useForm({
 		validatorAdapter: yupValidator(),
@@ -50,9 +51,11 @@ const useUpdateUser = () => {
 		if (!result.isSuccess || !result.data) return;
 
 		console.log('[User]: Update:', result.data);
+
+		setAvatarUrl(result.data.data.avatar);
 	}, [result.isSuccess, result.data]);
 
-	return form;
+	return { form, avatarUrl };
 };
 
 export default useUpdateUser;
