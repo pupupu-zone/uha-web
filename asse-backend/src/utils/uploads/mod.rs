@@ -9,3 +9,6 @@ pub use update_avatar::update_avatar;
 
 mod delete_avatar;
 pub use delete_avatar::delete_avatar;
+
+mod compress_image;
+pub use compress_image::compress_image;
