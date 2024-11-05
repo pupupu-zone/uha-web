@@ -1,4 +1,3 @@
-use crate::service;
 use crate::service::env::EnvConfig;
 
 use log;
@@ -16,7 +15,7 @@ pub struct WebDataPool {
 
 impl WebDataPool {
     fn create_redis() -> r2d2::Pool<RedisConnectionManager> {
-        let env_config = service::env::EnvConfig::new();
+        let env_config = EnvConfig::new();
 
         let manager = RedisConnectionManager::new(env_config.redis_url)
             .expect("Redis connection should be successful");
@@ -33,7 +32,7 @@ impl WebDataPool {
     }
 
     async fn create_db() -> sqlx::Pool<sqlx::Postgres> {
-        let env_config = service::env::EnvConfig::new();
+        let env_config = EnvConfig::new();
 
         let pool = PgPoolOptions::new()
             .max_connections(500)

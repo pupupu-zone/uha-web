@@ -22,9 +22,9 @@ const IdVerifyEmailLazyImport = createFileRoute('/id/verify-email')()
 const IdSetNewPasswordLazyImport = createFileRoute('/id/set-new-password')()
 const IdResetPasswordLazyImport = createFileRoute('/id/reset-password')()
 const IdRegisterLazyImport = createFileRoute('/id/register')()
+const IdNewTokenLazyImport = createFileRoute('/id/new-token')()
 const IdLogoutLazyImport = createFileRoute('/id/logout')()
 const IdLoginLazyImport = createFileRoute('/id/login')()
-const Id2faLazyImport = createFileRoute('/id/2fa')()
 
 // Create/Update Routes
 
@@ -72,6 +72,14 @@ const IdRegisterLazyRoute = IdRegisterLazyImport.update({
   import('./core/routes/id/register.lazy').then((d) => d.Route),
 )
 
+const IdNewTokenLazyRoute = IdNewTokenLazyImport.update({
+  id: '/new-token',
+  path: '/new-token',
+  getParentRoute: () => IdRouteLazyRoute,
+} as any).lazy(() =>
+  import('./core/routes/id/new-token.lazy').then((d) => d.Route),
+)
+
 const IdLogoutLazyRoute = IdLogoutLazyImport.update({
   id: '/logout',
   path: '/logout',
@@ -85,12 +93,6 @@ const IdLoginLazyRoute = IdLoginLazyImport.update({
   path: '/login',
   getParentRoute: () => IdRouteLazyRoute,
 } as any).lazy(() => import('./core/routes/id/login.lazy').then((d) => d.Route))
-
-const Id2faLazyRoute = Id2faLazyImport.update({
-  id: '/2fa',
-  path: '/2fa',
-  getParentRoute: () => IdRouteLazyRoute,
-} as any).lazy(() => import('./core/routes/id/2fa.lazy').then((d) => d.Route))
 
 // Populate the FileRoutesByPath interface
 
@@ -110,13 +112,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IdRouteLazyImport
       parentRoute: typeof rootRoute
     }
-    '/id/2fa': {
-      id: '/id/2fa'
-      path: '/2fa'
-      fullPath: '/id/2fa'
-      preLoaderRoute: typeof Id2faLazyImport
-      parentRoute: typeof IdRouteLazyImport
-    }
     '/id/login': {
       id: '/id/login'
       path: '/login'
@@ -129,6 +124,13 @@ declare module '@tanstack/react-router' {
       path: '/logout'
       fullPath: '/id/logout'
       preLoaderRoute: typeof IdLogoutLazyImport
+      parentRoute: typeof IdRouteLazyImport
+    }
+    '/id/new-token': {
+      id: '/id/new-token'
+      path: '/new-token'
+      fullPath: '/id/new-token'
+      preLoaderRoute: typeof IdNewTokenLazyImport
       parentRoute: typeof IdRouteLazyImport
     }
     '/id/register': {
@@ -165,9 +167,9 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface IdRouteLazyRouteChildren {
-  Id2faLazyRoute: typeof Id2faLazyRoute
   IdLoginLazyRoute: typeof IdLoginLazyRoute
   IdLogoutLazyRoute: typeof IdLogoutLazyRoute
+  IdNewTokenLazyRoute: typeof IdNewTokenLazyRoute
   IdRegisterLazyRoute: typeof IdRegisterLazyRoute
   IdResetPasswordLazyRoute: typeof IdResetPasswordLazyRoute
   IdSetNewPasswordLazyRoute: typeof IdSetNewPasswordLazyRoute
@@ -175,9 +177,9 @@ interface IdRouteLazyRouteChildren {
 }
 
 const IdRouteLazyRouteChildren: IdRouteLazyRouteChildren = {
-  Id2faLazyRoute: Id2faLazyRoute,
   IdLoginLazyRoute: IdLoginLazyRoute,
   IdLogoutLazyRoute: IdLogoutLazyRoute,
+  IdNewTokenLazyRoute: IdNewTokenLazyRoute,
   IdRegisterLazyRoute: IdRegisterLazyRoute,
   IdResetPasswordLazyRoute: IdResetPasswordLazyRoute,
   IdSetNewPasswordLazyRoute: IdSetNewPasswordLazyRoute,
@@ -191,9 +193,9 @@ const IdRouteLazyRouteWithChildren = IdRouteLazyRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/id': typeof IdRouteLazyRouteWithChildren
-  '/id/2fa': typeof Id2faLazyRoute
   '/id/login': typeof IdLoginLazyRoute
   '/id/logout': typeof IdLogoutLazyRoute
+  '/id/new-token': typeof IdNewTokenLazyRoute
   '/id/register': typeof IdRegisterLazyRoute
   '/id/reset-password': typeof IdResetPasswordLazyRoute
   '/id/set-new-password': typeof IdSetNewPasswordLazyRoute
@@ -203,9 +205,9 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/id': typeof IdRouteLazyRouteWithChildren
-  '/id/2fa': typeof Id2faLazyRoute
   '/id/login': typeof IdLoginLazyRoute
   '/id/logout': typeof IdLogoutLazyRoute
+  '/id/new-token': typeof IdNewTokenLazyRoute
   '/id/register': typeof IdRegisterLazyRoute
   '/id/reset-password': typeof IdResetPasswordLazyRoute
   '/id/set-new-password': typeof IdSetNewPasswordLazyRoute
@@ -216,9 +218,9 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/id': typeof IdRouteLazyRouteWithChildren
-  '/id/2fa': typeof Id2faLazyRoute
   '/id/login': typeof IdLoginLazyRoute
   '/id/logout': typeof IdLogoutLazyRoute
+  '/id/new-token': typeof IdNewTokenLazyRoute
   '/id/register': typeof IdRegisterLazyRoute
   '/id/reset-password': typeof IdResetPasswordLazyRoute
   '/id/set-new-password': typeof IdSetNewPasswordLazyRoute
@@ -230,9 +232,9 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/id'
-    | '/id/2fa'
     | '/id/login'
     | '/id/logout'
+    | '/id/new-token'
     | '/id/register'
     | '/id/reset-password'
     | '/id/set-new-password'
@@ -241,9 +243,9 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/id'
-    | '/id/2fa'
     | '/id/login'
     | '/id/logout'
+    | '/id/new-token'
     | '/id/register'
     | '/id/reset-password'
     | '/id/set-new-password'
@@ -252,9 +254,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/id'
-    | '/id/2fa'
     | '/id/login'
     | '/id/logout'
+    | '/id/new-token'
     | '/id/register'
     | '/id/reset-password'
     | '/id/set-new-password'
@@ -294,18 +296,14 @@ export const routeTree = rootRoute
     "/id": {
       "filePath": "id/route.lazy.tsx",
       "children": [
-        "/id/2fa",
         "/id/login",
         "/id/logout",
+        "/id/new-token",
         "/id/register",
         "/id/reset-password",
         "/id/set-new-password",
         "/id/verify-email"
       ]
-    },
-    "/id/2fa": {
-      "filePath": "id/2fa.lazy.tsx",
-      "parent": "/id"
     },
     "/id/login": {
       "filePath": "id/login.lazy.tsx",
@@ -313,6 +311,10 @@ export const routeTree = rootRoute
     },
     "/id/logout": {
       "filePath": "id/logout.lazy.tsx",
+      "parent": "/id"
+    },
+    "/id/new-token": {
+      "filePath": "id/new-token.lazy.tsx",
       "parent": "/id"
     },
     "/id/register": {

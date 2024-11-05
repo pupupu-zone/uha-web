@@ -1,3 +1,4 @@
+use crate::service::env::EnvConfig;
 use actix_web::body::BoxBody;
 use actix_web::{web, HttpResponse};
 use serde_json::json;
@@ -11,6 +12,8 @@ pub async fn delete_avatar(
     session_user_id: &Uuid,
     dp: &web::Data<WebDataPool>,
 ) -> Result<(), HttpResponse<BoxBody>> {
+    let envs = EnvConfig::new();
+
     /*
      * Get previous avatar from db
      */
@@ -48,9 +51,9 @@ pub async fn delete_avatar(
         Err(_) => "".to_string(),
     };
 
-    let prefix = "https://s3.keireira.com/subsawwy-demo/";
+    let prefix = format!("{}/{}", envs.minio_endpoint_url, envs.minio_bucket_name); // "https://s3.keireira.com/subsawwy-demo/";
     let trimmed_url = old_avatar_url
-        .strip_prefix(prefix)
+        .strip_prefix(&prefix)
         .unwrap_or(&old_avatar_url);
 
     if trimmed_url.len() != 0 {

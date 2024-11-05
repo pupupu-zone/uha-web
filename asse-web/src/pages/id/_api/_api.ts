@@ -42,9 +42,20 @@ const idApi = API.injectEndpoints({
 			})
 		}),
 
+		// Verify E-Mail from the letter
 		verifyEmail: build.query<VerifyEmailResT, VerifyEmailReqT>({
 			query: (body) => ({
 				url: '/auth/validate',
+				method: 'POST',
+				credentials: 'omit',
+				body
+			})
+		}),
+
+		// Send verifying email once again
+		newToken: build.query<VerifyEmailResT, VerifyEmailReqT>({
+			query: (body) => ({
+				url: '/auth/new-token',
 				method: 'POST',
 				credentials: 'omit',
 				body

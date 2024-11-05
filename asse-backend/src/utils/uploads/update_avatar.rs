@@ -59,7 +59,7 @@ pub async fn update_avatar(
 
     let file_to_upload = match &user.avatar {
         Some(temp_file) => match uploads::get_file_bytes(temp_file).await {
-            Ok(bytes) => uploads::compress_image(&bytes, content_type).await,
+            Ok(bytes) => uploads::compress_image(&bytes, content_type, 320, 320).await,
             Err(_) => {
                 return Err(HttpResponse::InternalServerError().json(json!({
                     "status": "error",

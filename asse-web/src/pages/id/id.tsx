@@ -25,7 +25,7 @@ const AuthPage = () => {
 				<Link to="/id/register">Register</Link>
 				<Link to="/id/reset-password">Reset Password</Link>
 				<Link to="/id/set-new-password">Set New Password</Link>
-				<Link to="/id/2fa">Two Factor</Link>
+				<Link to="/id/new-token">Token Regeneration</Link>
 				<Link
 					to="/id/verify-email"
 					search={{
