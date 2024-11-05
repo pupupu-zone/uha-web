@@ -122,7 +122,7 @@ fn compress_image(image_data: &[u8], content_type: &Mime) -> Vec<u8> {
     let img = image::load_from_memory_with_format(image_data, format).expect("Invalid image data");
 
     // Resize the image to a maximum dimension (e.g., 800x800 pixels)
-    let resized_img = img.resize(320, 320, image::imageops::FilterType::Lanczos3);
+    let resized_img = img.resize(320, 320, image::imageops::FilterType::Nearest);
 
     // Compress the image and store it in a buffer
     let mut buffer = Cursor::new(Vec::new());
