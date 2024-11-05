@@ -54,7 +54,7 @@ pub async fn update_avatar(
      */
     let file_name = Uuid::new_v4().to_string();
     let file_extension = uploads::get_extension_from_mime(content_type.as_ref()).expect("msg");
-    let file_name_to_upload = format!("media/{file_name}.{file_extension}");
+    let file_name_to_upload = format!("media/avatars/{file_name}.{file_extension}");
 
     let file_to_upload = match &user.avatar {
         Some(temp_file) => match uploads::get_file_bytes(temp_file).await {
