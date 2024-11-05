@@ -19,7 +19,7 @@ pub struct ForgottenUser {
 /*
  * Generate new verification token for e-mail
 */
-pub async fn new_token(
+pub async fn regenerate_token(
     forgotten: web::Json<ForgottenUser>,
     dp: web::Data<WebDataPool>,
 ) -> Result<HttpResponse, Error> {

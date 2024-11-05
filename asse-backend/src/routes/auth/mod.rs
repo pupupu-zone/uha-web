@@ -12,5 +12,5 @@ pub use register::register;
 mod verify_email;
 pub use verify_email::verify_email;
 
-mod new_token;
-pub use new_token::new_token;
+mod regenerate_token;
+pub use regenerate_token::regenerate_token;

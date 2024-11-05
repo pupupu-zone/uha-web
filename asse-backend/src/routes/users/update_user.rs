@@ -36,7 +36,7 @@ pub async fn update_user(
 
     let mut avatar_url = None;
     if user.avatar.is_some() {
-        avatar_url = match update_avatar(&user, &session_user_id, &dp, &req).await {
+        avatar_url = match update_avatar(&user, &dp, &req).await {
             Ok(url) => {
                 let _ = delete_avatar(&session_user_id, &dp).await;
 
