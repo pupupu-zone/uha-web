@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from '@tanstack/react-form';
 import { yupValidator } from '@tanstack/yup-form-adapter';
 import yup from '@yup';
+import { v4 as uuid } from 'uuid';
 
 import API from '@api';
 
@@ -21,8 +22,8 @@ const userApi = API.injectEndpoints({
 const { useLazyUpdateUserQuery } = userApi;
 
 const formSchema = yup.object({
-	name: yup.string().required(),
-	avatar: yup.mixed().required()
+	name: yup.string(),
+	avatar: yup.mixed()
 });
 
 const useUpdateUser = () => {
@@ -40,8 +41,13 @@ const useUpdateUser = () => {
 		},
 		onSubmit: async ({ value }) => {
 			const formData = new FormData();
-			formData.append('avatar', value.avatar);
-			formData.append('name', value.name);
+			if (value.avatar) {
+				formData.append('avatar', value.avatar);
+			}
+
+			if (value.name) {
+				formData.append('name', value.name);
+			}
 
 			await request(formData);
 		}
@@ -52,7 +58,7 @@ const useUpdateUser = () => {
 
 		console.log('[User]: Update:', result.data);
 
-		setAvatarUrl(result.data.data.avatar);
+		setAvatarUrl(`${result.data.data.avatar_url}`);
 	}, [result.isSuccess, result.data]);
 
 	return { form, avatarUrl };

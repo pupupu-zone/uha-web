@@ -4,13 +4,11 @@ import useUpdateUser from './use-update-user';
 
 const UserProfile = () => {
 	const { form, avatarUrl } = useUpdateUser();
-
-	console.log(avatarUrl);
 	return (
 		<div>
 			<h1>Login</h1>
 
-			{avatarUrl && <img src={avatarUrl} />}
+			{avatarUrl && <img src={avatarUrl} alt="avatar" />}
 
 			<form
 				onSubmit={(e) => {
@@ -22,34 +20,29 @@ const UserProfile = () => {
 			>
 				<form.Field name="name">
 					{(field) => (
-						<>
-							<label htmlFor={field.name}>Nickname</label> <br />
-							<input
-								id={field.name}
-								name={field.name}
-								value={field.state.value}
-								type="text"
-								onChange={(e) => {
-									field.handleChange(e.target.value);
-								}}
-							/>
-							<br />
-							{field.state.meta.errors ? <em role="alert">{field.state.meta.errors.join(', ')}</em> : null}
-						</>
+						<input
+							id={field.name}
+							name={field.name}
+							value={field.state.value}
+							type="text"
+							onChange={(e) => {
+								field.handleChange(e.target.value);
+							}}
+						/>
 					)}
 				</form.Field>
 
 				<hr />
 				<form.Field name="avatar">
 					{(field) => (
-						<>
-							<input
-								type="file"
-								onChange={(e) => {
-									field.setValue(e.target.files[0]);
-								}}
-							/>
-						</>
+						<input
+							id={field.name}
+							name={field.name}
+							type="file"
+							onChange={(e) => {
+								field.setValue(e.target.files[0]);
+							}}
+						/>
 					)}
 				</form.Field>
 
