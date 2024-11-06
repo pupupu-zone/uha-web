@@ -1,6 +1,7 @@
 use crate::service::data_providers::WebDataPool;
 use actix_web::Error;
 use actix_web::{web, HttpResponse};
+use r2d2_redis::redis::{Commands, Value};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use sqlx::Row;
@@ -12,7 +13,7 @@ use crate::utils::acquire_pg_connection;
 use crate::utils::emails::send_email;
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct ForgottenUser {
+pub struct Parameters {
     email: String,
 }
 
@@ -20,9 +21,36 @@ pub struct ForgottenUser {
  * Generate new verification token for e-mail
 */
 pub async fn regenerate_token(
-    forgotten: web::Json<ForgottenUser>,
+    parameters: web::Json<Parameters>,
     dp: web::Data<WebDataPool>,
 ) -> Result<HttpResponse, Error> {
+    let redis_key = format!("jail_{}", parameters.email.clone());
+    let mut redis_connection = dp.redis.clone().get().unwrap();
+    /*
+     * Check in redis if user is not trying to regenerate token too often
+     */
+    let is_in_jail = redis_connection.get::<String, Option<String>>(redis_key.clone());
+
+    /*
+     * If user is trying to regenerate token too often, return an error
+     */
+    if is_in_jail.unwrap().is_some() {
+        return Err(reg_errors::email(
+            "You are trying to regenerate token too often",
+        ));
+    }
+
+    /*
+     * Set in redis value with TTL for 1 minute — email : regeneration_attempt
+     */
+    redis_connection
+        .set::<&str, String, Value>(&redis_key, String::new())
+        .expect("Cannot set key in redis");
+
+    redis_connection
+        .expire::<String, Value>(redis_key.clone(), 60)
+        .expect("Cannot set expiry for key in redis");
+
     /*
      * Get user from DB with such e-mail and who doesn't active yet
      */
@@ -30,7 +58,7 @@ pub async fn regenerate_token(
 
     let (is_user_active, user_id, user_name) =
         match sqlx::query("SELECT * FROM users WHERE email = $1")
-            .bind(&forgotten.email)
+            .bind(&parameters.email)
             .fetch_one(&mut *pg_connection)
             .await
         {
@@ -75,17 +103,10 @@ pub async fn regenerate_token(
     }
 
     /*
-     * Check if redis is available
-     */
-    dp.redis.get().map_err(|_| {
-        reg_errors::email("You have entered invalid e-mail, or user is active already")
-    })?;
-
-    /*
      * Send e-mail with verification link
      */
     let user_id = user_id.unwrap();
-    let email = forgotten.email.clone();
+    let email = parameters.email.clone();
     let user_name = user_name.unwrap_or("Anonymous".to_string());
 
     tokio::spawn(async move {
