@@ -1,8 +1,18 @@
 import React from 'react';
 import { createLazyFileRoute } from '@tanstack/react-router';
 
-import SetNewPasswordUnit from '@pages/id/BACKEND_set-new-password';
+import SetNewPasswordUnit from '@pages/id/set-new-password';
+
+type SearchParams = {
+	token: string;
+};
 
 export const Route = createLazyFileRoute('/id/set-new-password')({
-	component: () => <SetNewPasswordUnit />
+	component: () => <SetNewPassword />
 });
+
+const SetNewPassword = () => {
+	const { token } = Route.useSearch<SearchParams>();
+
+	return <SetNewPasswordUnit token={token} />;
+};

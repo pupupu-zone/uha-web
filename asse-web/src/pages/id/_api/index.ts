@@ -6,5 +6,7 @@ export const {
 	useLazyRegisterQuery,
 	useLazyVerifyEmailQuery,
 	useLazyNewTokenQuery,
-	useLazyInitiatePasswordChangeQuery
+	useLazyInitiateRecoveryQuery,
+	useLazyVerifyRecoveryQuery,
+	useLazySetNewPasswordQuery
 } = idApi;

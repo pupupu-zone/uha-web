@@ -81,7 +81,7 @@ pub async fn send_email(
     let action_link = {
         if template_name == "reset_email" {
             format!(
-                "{}/id/set-new-password?token={}",
+                "{}/id/verify-reset-token?token={}",
                 envs.app_url, issued_token,
             )
         } else {

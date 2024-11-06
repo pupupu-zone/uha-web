@@ -18,7 +18,7 @@ const idApi = API.injectEndpoints({
 			query: (body) => ({
 				url: '/auth/sign-in',
 				method: 'POST',
-				credentials: 'include',
+				credentials: 'omit',
 				body
 			})
 		}),
@@ -63,9 +63,29 @@ const idApi = API.injectEndpoints({
 		}),
 
 		// Request to initiate password recovery
-		initiatePasswordChange: build.query<VerifyEmailResT, VerifyEmailReqT>({
+		initiateRecovery: build.query<VerifyEmailResT, VerifyEmailReqT>({
 			query: (body) => ({
-				url: '/user/init-password-change',
+				url: '/user/password-change/init',
+				method: 'POST',
+				credentials: 'omit',
+				body
+			})
+		}),
+
+		// Verify token for password recovery
+		verifyRecovery: build.query<VerifyEmailResT, VerifyEmailReqT>({
+			query: (body) => ({
+				url: '/user/password-change/verify',
+				method: 'POST',
+				credentials: 'omit',
+				body
+			})
+		}),
+
+		// Set new password
+		setNewPassword: build.query<VerifyEmailResT, VerifyEmailReqT>({
+			query: (body) => ({
+				url: '/user/password-change/set',
 				method: 'POST',
 				credentials: 'omit',
 				body

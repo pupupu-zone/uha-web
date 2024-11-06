@@ -111,7 +111,7 @@ pub async fn regenerate_token(
 
     tokio::spawn(async move {
         send_email(
-            "E-Mail Regeneration".to_string(),
+            "E-Mail Verification".to_string(),
             user_name,
             email,
             "verification_email".to_string(),

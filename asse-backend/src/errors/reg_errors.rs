@@ -36,6 +36,14 @@ pub fn system<T: Debug + Serialize>(msg: T) -> actix_web::Error {
     .into()
 }
 
+pub fn bad_request<T: Debug + Serialize>(msg: T) -> actix_web::Error {
+    actix_web::error::InternalError::new(
+        json!({"errors": { "system": msg }}),
+        actix_web::http::StatusCode::BAD_REQUEST,
+    )
+    .into()
+}
+
 pub fn not_authenticated<T: Debug + Serialize>(msg: T) -> actix_web::Error {
     actix_web::error::ErrorUnauthorized(json!({"errors": { "system": msg }}))
 }

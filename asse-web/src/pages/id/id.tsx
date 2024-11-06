@@ -41,23 +41,9 @@ const AuthPage = () => {
 				<Route as={Link} to="/">
 					Index
 				</Route>
-				<Route as={Link} to="/id/login">
-					Login
-				</Route>
-				<Route as={Link} to="/id/logout">
-					Logout
-				</Route>
+
 				<Route as={Link} to="/id/register">
 					Register
-				</Route>
-				<Route as={Link} to="/id/reset-password">
-					Reset Password
-				</Route>
-				<Route as={Link} to="/id/set-new-password">
-					Set New Password
-				</Route>
-				<Route as={Link} to="/id/new-token">
-					Token Regeneration
 				</Route>
 				<Route
 					as={Link}
@@ -67,6 +53,24 @@ const AuthPage = () => {
 					}}
 				>
 					Verify Email
+				</Route>
+
+				<Route as={Link} to="/id/login">
+					Login
+				</Route>
+				<Route as={Link} to="/id/new-token">
+					Send E-Mail once again
+				</Route>
+
+				<Route as={Link} to="/id/start-password-reset">
+					Init Reset Password
+				</Route>
+				<Route as={Link} to="/id/verify-reset-token">
+					Verify Reset Password Token
+				</Route>
+
+				<Route as={Link} to="/id/logout">
+					Logout
 				</Route>
 			</Wrap>
 		</Root>

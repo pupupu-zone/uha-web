@@ -25,15 +25,17 @@ pub async fn request_password_change(
         Err(_) => {
             return Ok(HttpResponse::Ok().json(json!({
                 "status": "success",
-                "message": "Verification e-mail has been sent to the provided E-Mail, if it exists in our DB"
+                "message": "E-Mail with reset link has been sent to the provided E-Mail, if it exists in our DB and active"
             })));
         }
     };
 
-    let (user_id, user_email) = match sqlx::query("SELECT id, email FROM users WHERE email = $1")
-        .bind(&user.email)
-        .fetch_one(&mut *pg_connection)
-        .await
+    let (user_id, user_email) = match sqlx::query(
+        "SELECT id, email FROM users WHERE email = $1 AND is_active = TRUE",
+    )
+    .bind(&user.email)
+    .fetch_one(&mut *pg_connection)
+    .await
     {
         Ok(row) => {
             let user_email: Result<String, sqlx::Error> = row.try_get("email");
@@ -44,20 +46,20 @@ pub async fn request_password_change(
         Err(_) => {
             return Ok(HttpResponse::Ok().json(json!({
                 "status": "success",
-                "message": "Verification e-mail has been sent to the provided E-Mail, if it exists in our DB"
+                "message": "E-Mail with reset link has been sent to the provided E-Mail, if it exists in our DB and active"
             })));
         }
     };
 
     /*
-     * If no user found, return "Verification e-mail has been sent to the provided E-Mail, if it exists in our DB"
+     * If no user found, return "E-Mail with reset link has been sent to the provided E-Mail, if it exists in our DB and active"
      */
     let user_id = match user_id {
         Ok(id) => id,
         Err(_) => {
             return Ok(HttpResponse::Ok().json(json!({
                 "status": "success",
-                "message": "Verification e-mail has been sent to the provided E-Mail, if it exists in our DB"
+                "message": "E-Mail with reset link has been sent to the provided E-Mail, if it exists in our DB and active"
             })));
         }
     };
@@ -67,20 +69,40 @@ pub async fn request_password_change(
         Err(_) => {
             return Ok(HttpResponse::Ok().json(json!({
                 "status": "success",
-                "message": "Verification e-mail has been sent to the provided E-Mail, if it exists in our DB"
+                "message": "E-Mail with reset link has been sent to the provided E-Mail, if it exists in our DB and active"
             })));
         }
     };
 
-    let user_name = "__USERNAME__".to_string();
+    let user_name = match sqlx::query("SELECT name FROM user_profiles WHERE user_id = $1")
+        .bind(&user_id)
+        .fetch_one(&mut *pg_connection)
+        .await
+    {
+        Ok(row) => {
+            let user_name: Result<String, sqlx::Error> = row.try_get("name");
+
+            user_name
+        }
+        Err(_) => {
+            return Ok(HttpResponse::Ok().json(json!({
+                "status": "success",
+                "message": "E-Mail with reset link has been sent to the provided E-Mail, if it exists in our DB and active"
+            })));
+        }
+    };
+
+    let user_name = match user_name {
+        Ok(name) => name,
+        Err(_) => "Anonymous".to_string(),
+    };
 
     /*
      * Send E-Mail with token to the user
      */
-
     tokio::spawn(async move {
         send_email(
-            "E-Mail Regeneration".to_string(),
+            "Request to Change Password".to_string(),
             user_name,
             user_email,
             "reset_email".to_string(),
@@ -90,16 +112,16 @@ pub async fn request_password_change(
         .await
         .map_err(|_| HttpResponse::Ok().json(json!({
             "status": "success",
-            "message": "Verification e-mail has been sent to the provided E-Mail, if it exists in our DB"
+            "message": "E-Mail with reset link has been sent to the provided E-Mail, if it exists in our DB and active"
         })))
         .expect("E-Mail have to be sent");
     });
 
     /*
-     * return "Verification e-mail has been sent to the provided E-Mail, if it exists in our DB"
+     * return "E-Mail with reset link has been sent to the provided E-Mail, if it exists in our DB and active"
      */
     Ok(HttpResponse::Ok().json(json!({
         "status": "success",
-        "message": "Verification e-mail has been sent to the provided E-Mail, if it exists in our DB"
+        "message": "E-Mail with reset link has been sent to the provided E-Mail, if it exists in our DB and active"
     })))
 }

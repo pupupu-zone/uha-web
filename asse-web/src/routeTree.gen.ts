@@ -18,9 +18,12 @@ import { Route as IndexImport } from './core/routes/index'
 // Create Virtual Routes
 
 const IdRouteLazyImport = createFileRoute('/id')()
+const IdVerifyResetTokenLazyImport = createFileRoute('/id/verify-reset-token')()
 const IdVerifyEmailLazyImport = createFileRoute('/id/verify-email')()
+const IdStartPasswordResetLazyImport = createFileRoute(
+  '/id/start-password-reset',
+)()
 const IdSetNewPasswordLazyImport = createFileRoute('/id/set-new-password')()
-const IdResetPasswordLazyImport = createFileRoute('/id/reset-password')()
 const IdRegisterLazyImport = createFileRoute('/id/register')()
 const IdNewTokenLazyImport = createFileRoute('/id/new-token')()
 const IdLogoutLazyImport = createFileRoute('/id/logout')()
@@ -40,6 +43,14 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const IdVerifyResetTokenLazyRoute = IdVerifyResetTokenLazyImport.update({
+  id: '/verify-reset-token',
+  path: '/verify-reset-token',
+  getParentRoute: () => IdRouteLazyRoute,
+} as any).lazy(() =>
+  import('./core/routes/id/verify-reset-token.lazy').then((d) => d.Route),
+)
+
 const IdVerifyEmailLazyRoute = IdVerifyEmailLazyImport.update({
   id: '/verify-email',
   path: '/verify-email',
@@ -48,20 +59,20 @@ const IdVerifyEmailLazyRoute = IdVerifyEmailLazyImport.update({
   import('./core/routes/id/verify-email.lazy').then((d) => d.Route),
 )
 
+const IdStartPasswordResetLazyRoute = IdStartPasswordResetLazyImport.update({
+  id: '/start-password-reset',
+  path: '/start-password-reset',
+  getParentRoute: () => IdRouteLazyRoute,
+} as any).lazy(() =>
+  import('./core/routes/id/start-password-reset.lazy').then((d) => d.Route),
+)
+
 const IdSetNewPasswordLazyRoute = IdSetNewPasswordLazyImport.update({
   id: '/set-new-password',
   path: '/set-new-password',
   getParentRoute: () => IdRouteLazyRoute,
 } as any).lazy(() =>
   import('./core/routes/id/set-new-password.lazy').then((d) => d.Route),
-)
-
-const IdResetPasswordLazyRoute = IdResetPasswordLazyImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => IdRouteLazyRoute,
-} as any).lazy(() =>
-  import('./core/routes/id/reset-password.lazy').then((d) => d.Route),
 )
 
 const IdRegisterLazyRoute = IdRegisterLazyImport.update({
@@ -140,13 +151,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IdRegisterLazyImport
       parentRoute: typeof IdRouteLazyImport
     }
-    '/id/reset-password': {
-      id: '/id/reset-password'
-      path: '/reset-password'
-      fullPath: '/id/reset-password'
-      preLoaderRoute: typeof IdResetPasswordLazyImport
-      parentRoute: typeof IdRouteLazyImport
-    }
     '/id/set-new-password': {
       id: '/id/set-new-password'
       path: '/set-new-password'
@@ -154,11 +158,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IdSetNewPasswordLazyImport
       parentRoute: typeof IdRouteLazyImport
     }
+    '/id/start-password-reset': {
+      id: '/id/start-password-reset'
+      path: '/start-password-reset'
+      fullPath: '/id/start-password-reset'
+      preLoaderRoute: typeof IdStartPasswordResetLazyImport
+      parentRoute: typeof IdRouteLazyImport
+    }
     '/id/verify-email': {
       id: '/id/verify-email'
       path: '/verify-email'
       fullPath: '/id/verify-email'
       preLoaderRoute: typeof IdVerifyEmailLazyImport
+      parentRoute: typeof IdRouteLazyImport
+    }
+    '/id/verify-reset-token': {
+      id: '/id/verify-reset-token'
+      path: '/verify-reset-token'
+      fullPath: '/id/verify-reset-token'
+      preLoaderRoute: typeof IdVerifyResetTokenLazyImport
       parentRoute: typeof IdRouteLazyImport
     }
   }
@@ -171,9 +189,10 @@ interface IdRouteLazyRouteChildren {
   IdLogoutLazyRoute: typeof IdLogoutLazyRoute
   IdNewTokenLazyRoute: typeof IdNewTokenLazyRoute
   IdRegisterLazyRoute: typeof IdRegisterLazyRoute
-  IdResetPasswordLazyRoute: typeof IdResetPasswordLazyRoute
   IdSetNewPasswordLazyRoute: typeof IdSetNewPasswordLazyRoute
+  IdStartPasswordResetLazyRoute: typeof IdStartPasswordResetLazyRoute
   IdVerifyEmailLazyRoute: typeof IdVerifyEmailLazyRoute
+  IdVerifyResetTokenLazyRoute: typeof IdVerifyResetTokenLazyRoute
 }
 
 const IdRouteLazyRouteChildren: IdRouteLazyRouteChildren = {
@@ -181,9 +200,10 @@ const IdRouteLazyRouteChildren: IdRouteLazyRouteChildren = {
   IdLogoutLazyRoute: IdLogoutLazyRoute,
   IdNewTokenLazyRoute: IdNewTokenLazyRoute,
   IdRegisterLazyRoute: IdRegisterLazyRoute,
-  IdResetPasswordLazyRoute: IdResetPasswordLazyRoute,
   IdSetNewPasswordLazyRoute: IdSetNewPasswordLazyRoute,
+  IdStartPasswordResetLazyRoute: IdStartPasswordResetLazyRoute,
   IdVerifyEmailLazyRoute: IdVerifyEmailLazyRoute,
+  IdVerifyResetTokenLazyRoute: IdVerifyResetTokenLazyRoute,
 }
 
 const IdRouteLazyRouteWithChildren = IdRouteLazyRoute._addFileChildren(
@@ -197,9 +217,10 @@ export interface FileRoutesByFullPath {
   '/id/logout': typeof IdLogoutLazyRoute
   '/id/new-token': typeof IdNewTokenLazyRoute
   '/id/register': typeof IdRegisterLazyRoute
-  '/id/reset-password': typeof IdResetPasswordLazyRoute
   '/id/set-new-password': typeof IdSetNewPasswordLazyRoute
+  '/id/start-password-reset': typeof IdStartPasswordResetLazyRoute
   '/id/verify-email': typeof IdVerifyEmailLazyRoute
+  '/id/verify-reset-token': typeof IdVerifyResetTokenLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -209,9 +230,10 @@ export interface FileRoutesByTo {
   '/id/logout': typeof IdLogoutLazyRoute
   '/id/new-token': typeof IdNewTokenLazyRoute
   '/id/register': typeof IdRegisterLazyRoute
-  '/id/reset-password': typeof IdResetPasswordLazyRoute
   '/id/set-new-password': typeof IdSetNewPasswordLazyRoute
+  '/id/start-password-reset': typeof IdStartPasswordResetLazyRoute
   '/id/verify-email': typeof IdVerifyEmailLazyRoute
+  '/id/verify-reset-token': typeof IdVerifyResetTokenLazyRoute
 }
 
 export interface FileRoutesById {
@@ -222,9 +244,10 @@ export interface FileRoutesById {
   '/id/logout': typeof IdLogoutLazyRoute
   '/id/new-token': typeof IdNewTokenLazyRoute
   '/id/register': typeof IdRegisterLazyRoute
-  '/id/reset-password': typeof IdResetPasswordLazyRoute
   '/id/set-new-password': typeof IdSetNewPasswordLazyRoute
+  '/id/start-password-reset': typeof IdStartPasswordResetLazyRoute
   '/id/verify-email': typeof IdVerifyEmailLazyRoute
+  '/id/verify-reset-token': typeof IdVerifyResetTokenLazyRoute
 }
 
 export interface FileRouteTypes {
@@ -236,9 +259,10 @@ export interface FileRouteTypes {
     | '/id/logout'
     | '/id/new-token'
     | '/id/register'
-    | '/id/reset-password'
     | '/id/set-new-password'
+    | '/id/start-password-reset'
     | '/id/verify-email'
+    | '/id/verify-reset-token'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -247,9 +271,10 @@ export interface FileRouteTypes {
     | '/id/logout'
     | '/id/new-token'
     | '/id/register'
-    | '/id/reset-password'
     | '/id/set-new-password'
+    | '/id/start-password-reset'
     | '/id/verify-email'
+    | '/id/verify-reset-token'
   id:
     | '__root__'
     | '/'
@@ -258,9 +283,10 @@ export interface FileRouteTypes {
     | '/id/logout'
     | '/id/new-token'
     | '/id/register'
-    | '/id/reset-password'
     | '/id/set-new-password'
+    | '/id/start-password-reset'
     | '/id/verify-email'
+    | '/id/verify-reset-token'
   fileRoutesById: FileRoutesById
 }
 
@@ -300,9 +326,10 @@ export const routeTree = rootRoute
         "/id/logout",
         "/id/new-token",
         "/id/register",
-        "/id/reset-password",
         "/id/set-new-password",
-        "/id/verify-email"
+        "/id/start-password-reset",
+        "/id/verify-email",
+        "/id/verify-reset-token"
       ]
     },
     "/id/login": {
@@ -321,16 +348,20 @@ export const routeTree = rootRoute
       "filePath": "id/register.lazy.tsx",
       "parent": "/id"
     },
-    "/id/reset-password": {
-      "filePath": "id/reset-password.lazy.tsx",
-      "parent": "/id"
-    },
     "/id/set-new-password": {
       "filePath": "id/set-new-password.lazy.tsx",
       "parent": "/id"
     },
+    "/id/start-password-reset": {
+      "filePath": "id/start-password-reset.lazy.tsx",
+      "parent": "/id"
+    },
     "/id/verify-email": {
       "filePath": "id/verify-email.lazy.tsx",
+      "parent": "/id"
+    },
+    "/id/verify-reset-token": {
+      "filePath": "id/verify-reset-token.lazy.tsx",
       "parent": "/id"
     }
   }

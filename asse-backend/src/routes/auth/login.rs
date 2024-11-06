@@ -1,4 +1,3 @@
-use crate::utils::acquire_pg_connection;
 use actix_web::{web, Error, HttpResponse};
 use email_address::EmailAddress;
 use serde::{Deserialize, Serialize};
@@ -7,6 +6,7 @@ use sqlx::Row;
 
 use crate::errors::reg_errors;
 use crate::service::data_providers::WebDataPool;
+use crate::utils::acquire_pg_connection;
 use crate::utils::auth::password::verify_password;
 
 #[derive(Serialize, Deserialize, Debug)]
