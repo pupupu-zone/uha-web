@@ -53,6 +53,7 @@ pub async fn register(
     new_user: web::Json<RawUserData>,
     dp: web::Data<WebDataPool>,
 ) -> Result<HttpResponse, actix_web::Error> {
+    // implement jail system similar to regenerate_token
     let new_user = new_user.into_inner();
 
     // Check if the username is valid

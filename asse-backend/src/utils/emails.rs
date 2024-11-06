@@ -96,6 +96,7 @@ pub async fn send_email(
     let expiration_date = current_date_time + chrono::Duration::minutes(envs.token_expiration);
     let ctx = minijinja::context! {
         title => &subject,
+        name => &name,
         action_link => &action_link,
         domain => &envs.app_url,
         expiration_time => &envs.token_expiration,
