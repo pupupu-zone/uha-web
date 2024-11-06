@@ -9,7 +9,7 @@ docker run -d \
   --name subsawwy-postgres-dev \
   -e POSTGRES_USER=postgres \
   -e POSTGRES_PASSWORD=some_password \
-  -e POSTGRES_DB=subsawwy-demo \
+  -e POSTGRES_DB=subsawwy-dev \
   -p 5555:5432 \
   postgres:16
 ```
@@ -29,7 +29,7 @@ lsof -n -i:5432 | grep LISTEN
 ```
 
 ```env
-DATABASE_URL=postgresql://postgres:some_password@localhost:5555/subsawwy-demo
+DATABASE_URL=postgresql://postgres:some_password@localhost:5555/subsawwy-dev
 ```
 
 ### Create local redis

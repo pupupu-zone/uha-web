@@ -3,7 +3,7 @@
 --
 -- APPLICATIONS
 --
-CREATE TABLE "applications"(
+CREATE TABLE "applications" (
   "id" UUID NOT NULL DEFAULT gen_random_uuid(),
   "name" TEXT NOT NULL,
   "description" TEXT NULL,
@@ -87,7 +87,7 @@ CREATE INDEX IF NOT EXISTS "user_profiles_user_id_index" ON "user_profiles"("use
 -- USER SETTINGS
 --
 
-CREATE TABLE "settings" (
+CREATE TABLE "user_settings" (
   "id" UUID NOT NULL DEFAULT gen_random_uuid(),
   "user_id" UUID NOT NULL UNIQUE,
   "theme" theme NOT NULL DEFAULT 'system',

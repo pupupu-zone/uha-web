@@ -26,6 +26,18 @@ const General = createGlobalStyle`
 		cursor: pointer;
 	}
 
+	input {
+		padding: 0.5rem 1rem;
+		font-size: 1rem;
+	}
+
+	form {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
 	button, input, textarea, a {
 		outline: none;
 

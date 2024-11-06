@@ -1,5 +1,7 @@
 pub mod _routes;
 
+pub mod password_change;
+
 mod delete_user;
 pub use delete_user::delete_user;
 

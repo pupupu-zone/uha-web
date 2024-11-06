@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS "settings";
+DROP TABLE IF EXISTS "user_settings";
 DROP TABLE IF EXISTS "user_profiles";
 DROP TABLE IF EXISTS "subscriptions";
 DROP TABLE IF EXISTS "users";

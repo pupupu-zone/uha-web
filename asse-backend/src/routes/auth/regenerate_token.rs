@@ -75,6 +75,13 @@ pub async fn regenerate_token(
     }
 
     /*
+     * Check if redis is available
+     */
+    dp.redis.get().map_err(|_| {
+        reg_errors::email("You have entered invalid e-mail, or user is active already")
+    })?;
+
+    /*
      * Send e-mail with verification link
      */
     let user_id = user_id.unwrap();
@@ -83,7 +90,7 @@ pub async fn regenerate_token(
 
     tokio::spawn(async move {
         send_email(
-            "E-Mail Verification".to_string(),
+            "E-Mail Regeneration".to_string(),
             user_name,
             email,
             "verification_email".to_string(),

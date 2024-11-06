@@ -7,6 +7,36 @@ use lettre::{AsyncSmtpTransport, AsyncTransport, Tokio1Executor};
 use minijinja::Environment;
 use r2d2_redis::RedisConnectionManager;
 
+pub struct TextContent {
+    text: String,
+}
+
+impl TextContent {
+    pub fn reset_email(action_link: String) -> Self {
+        Self {
+            text: format!(
+                r#"
+                Tap the link below to proceed with the password reset process
+                {}
+                "#,
+                format!("{}", action_link)
+            ),
+        }
+    }
+
+    pub fn verification_email(action_link: String) -> Self {
+        Self {
+            text: format!(
+                r#"
+                Tap the link below to confirm your email address.
+                {}
+                "#,
+                format!("{}", action_link)
+            ),
+        }
+    }
+}
+
 pub async fn send_email(
     subject: String,
     name: String,
@@ -48,7 +78,7 @@ pub async fn send_email(
         }
     };
 
-    let confirmation_link = {
+    let action_link = {
         if template_name == "reset_email" {
             format!(
                 "{}/id/set-new-password?token={}",
@@ -59,14 +89,14 @@ pub async fn send_email(
         }
     };
 
-    let template = minijinja_env.get_template("verification_email").unwrap();
+    let template = minijinja_env.get_template(&template_name).unwrap();
 
     // Collect data for template
     let current_date_time = chrono::Local::now();
     let expiration_date = current_date_time + chrono::Duration::minutes(envs.token_expiration);
     let ctx = minijinja::context! {
         title => &subject,
-        confirmation_link => &confirmation_link,
+        action_link => &action_link,
         domain => &envs.app_url,
         expiration_time => &envs.token_expiration,
         exact_time => &expiration_date.format("%A %B %d, %Y at %r").to_string()
@@ -74,13 +104,15 @@ pub async fn send_email(
     let html_text = template.render(ctx).unwrap();
 
     // Create text content for fallback
-    let text_content: String = format!(
-        r#"
-        Tap the link below to confirm your email address.
-        {}
-        "#,
-        format!("{}", confirmation_link)
-    );
+    let text_content = match template_name.as_str() {
+        "reset_email" => TextContent::reset_email(action_link),
+        "verification_email" => TextContent::verification_email(action_link),
+        _ => {
+            let error_msg = format!("Could not find template: {}", &template_name);
+            tracing::event!(target: "backend", tracing::Level::ERROR, "{}", error_msg);
+            return Err(error_msg);
+        }
+    };
 
     // Populate e-mail
     let email = lettre::Message::builder()
@@ -92,7 +124,7 @@ pub async fn send_email(
                 .singlepart(
                     lettre::message::SinglePart::builder()
                         .content_type(lettre::message::header::ContentType::TEXT_PLAIN)
-                        .body(text_content),
+                        .body(text_content.text),
                 )
                 .singlepart(
                     lettre::message::SinglePart::builder()

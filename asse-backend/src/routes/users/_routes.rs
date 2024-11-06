@@ -1,6 +1,7 @@
 use super::delete_user;
 use super::get_personal_data;
 use super::get_user;
+use super::password_change::request_password_change;
 use super::update_user;
 
 use actix_web::{web, Scope};
@@ -10,7 +11,10 @@ pub fn get_routes() -> Scope {
         .service(web::resource("/").route(web::get().to(get_user)))
         .service(web::resource("/update").route(web::put().to(update_user)))
         .service(web::resource("/").route(web::delete().to(delete_user)))
-        .service(web::resource("/personal-data").route(web::get().to(get_personal_data)));
+        .service(web::resource("/personal-data").route(web::get().to(get_personal_data)))
+        .service(
+            web::resource("/init-password-change").route(web::post().to(request_password_change)),
+        );
 
     auth_routes
 }

@@ -60,6 +60,16 @@ const idApi = API.injectEndpoints({
 				credentials: 'omit',
 				body
 			})
+		}),
+
+		// Request to initiate password recovery
+		initiatePasswordChange: build.query<VerifyEmailResT, VerifyEmailReqT>({
+			query: (body) => ({
+				url: '/user/init-password-change',
+				method: 'POST',
+				credentials: 'omit',
+				body
+			})
 		})
 	})
 });
