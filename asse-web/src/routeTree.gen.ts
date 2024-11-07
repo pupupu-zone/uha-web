@@ -11,16 +11,27 @@
 // Import Routes
 
 import { Route as rootRoute } from './core/routes/__root'
+import { Route as VerifyEmailImport } from './core/routes/verify-email'
 import { Route as RegisterImport } from './core/routes/register'
 import { Route as LoginImport } from './core/routes/login'
+import { Route as ResetPasswordRouteImport } from './core/routes/reset-password/route'
 import { Route as AuthRouteImport } from './core/routes/_auth/route'
 import { Route as IndexImport } from './core/routes/index'
+import { Route as ResetPasswordVerifyImport } from './core/routes/reset-password/verify'
+import { Route as ResetPasswordSetImport } from './core/routes/reset-password/set'
+import { Route as ResetPasswordInitImport } from './core/routes/reset-password/init'
 import { Route as AuthSubsListImport } from './core/routes/_auth/subs-list'
 import { Route as AuthSettingsImport } from './core/routes/_auth/settings'
 import { Route as AuthProfileImport } from './core/routes/_auth/profile'
 import { Route as AuthLogoutImport } from './core/routes/_auth/logout'
 
 // Create/Update Routes
+
+const VerifyEmailRoute = VerifyEmailImport.update({
+  id: '/verify-email',
+  path: '/verify-email',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const RegisterRoute = RegisterImport.update({
   id: '/register',
@@ -34,6 +45,12 @@ const LoginRoute = LoginImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const ResetPasswordRouteRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const AuthRouteRoute = AuthRouteImport.update({
   id: '/_auth',
   getParentRoute: () => rootRoute,
@@ -43,6 +60,24 @@ const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRoute,
+} as any)
+
+const ResetPasswordVerifyRoute = ResetPasswordVerifyImport.update({
+  id: '/verify',
+  path: '/verify',
+  getParentRoute: () => ResetPasswordRouteRoute,
+} as any)
+
+const ResetPasswordSetRoute = ResetPasswordSetImport.update({
+  id: '/set',
+  path: '/set',
+  getParentRoute: () => ResetPasswordRouteRoute,
+} as any)
+
+const ResetPasswordInitRoute = ResetPasswordInitImport.update({
+  id: '/init',
+  path: '/init',
+  getParentRoute: () => ResetPasswordRouteRoute,
 } as any)
 
 const AuthSubsListRoute = AuthSubsListImport.update({
@@ -87,6 +122,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRoute
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/login': {
       id: '/login'
       path: '/login'
@@ -99,6 +141,13 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterImport
+      parentRoute: typeof rootRoute
+    }
+    '/verify-email': {
+      id: '/verify-email'
+      path: '/verify-email'
+      fullPath: '/verify-email'
+      preLoaderRoute: typeof VerifyEmailImport
       parentRoute: typeof rootRoute
     }
     '/_auth/logout': {
@@ -129,6 +178,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSubsListImport
       parentRoute: typeof AuthRouteImport
     }
+    '/reset-password/init': {
+      id: '/reset-password/init'
+      path: '/init'
+      fullPath: '/reset-password/init'
+      preLoaderRoute: typeof ResetPasswordInitImport
+      parentRoute: typeof ResetPasswordRouteImport
+    }
+    '/reset-password/set': {
+      id: '/reset-password/set'
+      path: '/set'
+      fullPath: '/reset-password/set'
+      preLoaderRoute: typeof ResetPasswordSetImport
+      parentRoute: typeof ResetPasswordRouteImport
+    }
+    '/reset-password/verify': {
+      id: '/reset-password/verify'
+      path: '/verify'
+      fullPath: '/reset-password/verify'
+      preLoaderRoute: typeof ResetPasswordVerifyImport
+      parentRoute: typeof ResetPasswordRouteImport
+    }
   }
 }
 
@@ -152,38 +222,68 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
   AuthRouteRouteChildren,
 )
 
+interface ResetPasswordRouteRouteChildren {
+  ResetPasswordInitRoute: typeof ResetPasswordInitRoute
+  ResetPasswordSetRoute: typeof ResetPasswordSetRoute
+  ResetPasswordVerifyRoute: typeof ResetPasswordVerifyRoute
+}
+
+const ResetPasswordRouteRouteChildren: ResetPasswordRouteRouteChildren = {
+  ResetPasswordInitRoute: ResetPasswordInitRoute,
+  ResetPasswordSetRoute: ResetPasswordSetRoute,
+  ResetPasswordVerifyRoute: ResetPasswordVerifyRoute,
+}
+
+const ResetPasswordRouteRouteWithChildren =
+  ResetPasswordRouteRoute._addFileChildren(ResetPasswordRouteRouteChildren)
+
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof AuthRouteRouteWithChildren
+  '/reset-password': typeof ResetPasswordRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/logout': typeof AuthLogoutRoute
   '/profile': typeof AuthProfileRoute
   '/settings': typeof AuthSettingsRoute
   '/subs-list': typeof AuthSubsListRoute
+  '/reset-password/init': typeof ResetPasswordInitRoute
+  '/reset-password/set': typeof ResetPasswordSetRoute
+  '/reset-password/verify': typeof ResetPasswordVerifyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof AuthRouteRouteWithChildren
+  '/reset-password': typeof ResetPasswordRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/logout': typeof AuthLogoutRoute
   '/profile': typeof AuthProfileRoute
   '/settings': typeof AuthSettingsRoute
   '/subs-list': typeof AuthSubsListRoute
+  '/reset-password/init': typeof ResetPasswordInitRoute
+  '/reset-password/set': typeof ResetPasswordSetRoute
+  '/reset-password/verify': typeof ResetPasswordVerifyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteRouteWithChildren
+  '/reset-password': typeof ResetPasswordRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/_auth/logout': typeof AuthLogoutRoute
   '/_auth/profile': typeof AuthProfileRoute
   '/_auth/settings': typeof AuthSettingsRoute
   '/_auth/subs-list': typeof AuthSubsListRoute
+  '/reset-password/init': typeof ResetPasswordInitRoute
+  '/reset-password/set': typeof ResetPasswordSetRoute
+  '/reset-password/verify': typeof ResetPasswordVerifyRoute
 }
 
 export interface FileRouteTypes {
@@ -191,47 +291,66 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | ''
+    | '/reset-password'
     | '/login'
     | '/register'
+    | '/verify-email'
     | '/logout'
     | '/profile'
     | '/settings'
     | '/subs-list'
+    | '/reset-password/init'
+    | '/reset-password/set'
+    | '/reset-password/verify'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | ''
+    | '/reset-password'
     | '/login'
     | '/register'
+    | '/verify-email'
     | '/logout'
     | '/profile'
     | '/settings'
     | '/subs-list'
+    | '/reset-password/init'
+    | '/reset-password/set'
+    | '/reset-password/verify'
   id:
     | '__root__'
     | '/'
     | '/_auth'
+    | '/reset-password'
     | '/login'
     | '/register'
+    | '/verify-email'
     | '/_auth/logout'
     | '/_auth/profile'
     | '/_auth/settings'
     | '/_auth/subs-list'
+    | '/reset-password/init'
+    | '/reset-password/set'
+    | '/reset-password/verify'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
+  ResetPasswordRouteRoute: typeof ResetPasswordRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
+  VerifyEmailRoute: typeof VerifyEmailRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
+  ResetPasswordRouteRoute: ResetPasswordRouteRouteWithChildren,
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
+  VerifyEmailRoute: VerifyEmailRoute,
 }
 
 export const routeTree = rootRoute
@@ -248,8 +367,10 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/_auth",
+        "/reset-password",
         "/login",
-        "/register"
+        "/register",
+        "/verify-email"
       ]
     },
     "/": {
@@ -264,11 +385,22 @@ export const routeTree = rootRoute
         "/_auth/subs-list"
       ]
     },
+    "/reset-password": {
+      "filePath": "reset-password/route.tsx",
+      "children": [
+        "/reset-password/init",
+        "/reset-password/set",
+        "/reset-password/verify"
+      ]
+    },
     "/login": {
       "filePath": "login.tsx"
     },
     "/register": {
       "filePath": "register.tsx"
+    },
+    "/verify-email": {
+      "filePath": "verify-email.tsx"
     },
     "/_auth/logout": {
       "filePath": "_auth/logout.tsx",
@@ -285,6 +417,18 @@ export const routeTree = rootRoute
     "/_auth/subs-list": {
       "filePath": "_auth/subs-list.tsx",
       "parent": "/_auth"
+    },
+    "/reset-password/init": {
+      "filePath": "reset-password/init.tsx",
+      "parent": "/reset-password"
+    },
+    "/reset-password/set": {
+      "filePath": "reset-password/set.tsx",
+      "parent": "/reset-password"
+    },
+    "/reset-password/verify": {
+      "filePath": "reset-password/verify.tsx",
+      "parent": "/reset-password"
     }
   }
 }

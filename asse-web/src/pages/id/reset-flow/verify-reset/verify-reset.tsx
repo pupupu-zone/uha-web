@@ -15,7 +15,7 @@ type Props = {
 	token: string;
 };
 
-const VerifyResetTokenUnit = ({ token }: Props) => {
+const VerifyResetToken = ({ token }: Props) => {
 	const [request, result] = useLazyVerifyRecoveryQuery();
 
 	useEffect(() => {
@@ -36,7 +36,7 @@ const VerifyResetTokenUnit = ({ token }: Props) => {
 				Success <br />
 				<Route
 					as={Link}
-					to="/id/set-new-password"
+					to="/reset-password/set"
 					search={{
 						token: result?.data?.data?.token ?? ''
 					}}
@@ -54,4 +54,4 @@ const VerifyResetTokenUnit = ({ token }: Props) => {
 	return <div>{token ? 'Verifying...' : 'No token provided'}</div>;
 };
 
-export default VerifyResetTokenUnit;
+export default VerifyResetToken;

@@ -1,13 +1,14 @@
 import React from 'react';
 
+import { H1 } from '@ui';
 import useResetPassword from './use-reset';
 
-const NewTokenUnit = () => {
+const InitializePasswordReset = () => {
 	const form = useResetPassword();
 
 	return (
 		<div>
-			<h1>Init Process of Password Recovery</h1>
+			<H1>Init Process of Password Recovery</H1>
 
 			<form
 				onSubmit={(e) => {
@@ -46,4 +47,4 @@ const NewTokenUnit = () => {
 	);
 };
 
-export default NewTokenUnit;
+export default InitializePasswordReset;

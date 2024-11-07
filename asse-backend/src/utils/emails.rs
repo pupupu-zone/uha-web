@@ -81,11 +81,11 @@ pub async fn send_email(
     let action_link = {
         if template_name == "reset_email" {
             format!(
-                "{}/id/verify-reset-token?token={}",
+                "{}/reset-password/verify?token={}",
                 envs.app_url, issued_token,
             )
         } else {
-            format!("{}/id/verify-email?token={}", envs.app_url, issued_token,)
+            format!("{}/verify-email?token={}", envs.app_url, issued_token,)
         }
     };
 

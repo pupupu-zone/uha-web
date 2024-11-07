@@ -114,11 +114,15 @@ const RegisterUnit = () => {
 					<br />
 					<form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
 						{([canSubmit, isSubmitting]) => (
-							<button type="submit" disabled={!canSubmit}>
+							<Button type="submit" isDisabled={!canSubmit} size="medium" isFullWidth>
 								{isSubmitting ? '...' : 'Submit'}
-							</button>
+							</Button>
 						)}
 					</form.Subscribe>
+
+					<Button size="medium" isFullWidth isSecondary>
+						Resend E-Mail
+					</Button>
 
 					<Button to="/login" size="medium" isFullWidth isSecondary>
 						Login
