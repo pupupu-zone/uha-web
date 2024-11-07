@@ -1,23 +1,21 @@
 import React from 'react';
+import { Outlet } from '@tanstack/react-router';
 
-import { Link } from '@tanstack/react-router';
+import { Button } from '@ui';
+import Root, { Links } from './main.styles';
 
-import HealthCheck from '@features/healthcheck';
-import UpdateUser from '@features/user-profile';
-import Root from './main.styles';
-
-const Main = () => {
+const MainPage = () => {
 	return (
 		<Root>
-			<h1>Hello</h1>
+			<Outlet />
 
-			<HealthCheck />
-
-			<UpdateUser />
-
-			<Link to="/id/register">Register!1</Link>
+			<Links>
+				<Button to="/app/profile">Profile</Button>
+				<Button to="/app/subs-list">Subs List</Button>
+				<Button to="/app/settings">Settings</Button>
+			</Links>
 		</Root>
 	);
 };
 
-export default Main;
+export default MainPage;

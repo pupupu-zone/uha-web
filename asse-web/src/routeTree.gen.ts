@@ -13,11 +13,13 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './core/routes/__root'
+import { Route as IdRouteImport } from './core/routes/id/route'
+import { Route as AppRouteImport } from './core/routes/app/route'
 import { Route as IndexImport } from './core/routes/index'
+import { Route as AppProfileRouteImport } from './core/routes/app/profile/route'
 
 // Create Virtual Routes
 
-const IdRouteLazyImport = createFileRoute('/id')()
 const IdVerifyResetTokenLazyImport = createFileRoute('/id/verify-reset-token')()
 const IdVerifyEmailLazyImport = createFileRoute('/id/verify-email')()
 const IdStartPasswordResetLazyImport = createFileRoute(
@@ -28,14 +30,22 @@ const IdRegisterLazyImport = createFileRoute('/id/register')()
 const IdNewTokenLazyImport = createFileRoute('/id/new-token')()
 const IdLogoutLazyImport = createFileRoute('/id/logout')()
 const IdLoginLazyImport = createFileRoute('/id/login')()
+const AppSubsListRouteLazyImport = createFileRoute('/app/subs-list')()
+const AppSettingsRouteLazyImport = createFileRoute('/app/settings')()
 
 // Create/Update Routes
 
-const IdRouteLazyRoute = IdRouteLazyImport.update({
+const IdRouteRoute = IdRouteImport.update({
   id: '/id',
   path: '/id',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./core/routes/id/route.lazy').then((d) => d.Route))
+} as any)
+
+const AppRouteRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const IndexRoute = IndexImport.update({
   id: '/',
@@ -46,7 +56,7 @@ const IndexRoute = IndexImport.update({
 const IdVerifyResetTokenLazyRoute = IdVerifyResetTokenLazyImport.update({
   id: '/verify-reset-token',
   path: '/verify-reset-token',
-  getParentRoute: () => IdRouteLazyRoute,
+  getParentRoute: () => IdRouteRoute,
 } as any).lazy(() =>
   import('./core/routes/id/verify-reset-token.lazy').then((d) => d.Route),
 )
@@ -54,7 +64,7 @@ const IdVerifyResetTokenLazyRoute = IdVerifyResetTokenLazyImport.update({
 const IdVerifyEmailLazyRoute = IdVerifyEmailLazyImport.update({
   id: '/verify-email',
   path: '/verify-email',
-  getParentRoute: () => IdRouteLazyRoute,
+  getParentRoute: () => IdRouteRoute,
 } as any).lazy(() =>
   import('./core/routes/id/verify-email.lazy').then((d) => d.Route),
 )
@@ -62,7 +72,7 @@ const IdVerifyEmailLazyRoute = IdVerifyEmailLazyImport.update({
 const IdStartPasswordResetLazyRoute = IdStartPasswordResetLazyImport.update({
   id: '/start-password-reset',
   path: '/start-password-reset',
-  getParentRoute: () => IdRouteLazyRoute,
+  getParentRoute: () => IdRouteRoute,
 } as any).lazy(() =>
   import('./core/routes/id/start-password-reset.lazy').then((d) => d.Route),
 )
@@ -70,7 +80,7 @@ const IdStartPasswordResetLazyRoute = IdStartPasswordResetLazyImport.update({
 const IdSetNewPasswordLazyRoute = IdSetNewPasswordLazyImport.update({
   id: '/set-new-password',
   path: '/set-new-password',
-  getParentRoute: () => IdRouteLazyRoute,
+  getParentRoute: () => IdRouteRoute,
 } as any).lazy(() =>
   import('./core/routes/id/set-new-password.lazy').then((d) => d.Route),
 )
@@ -78,7 +88,7 @@ const IdSetNewPasswordLazyRoute = IdSetNewPasswordLazyImport.update({
 const IdRegisterLazyRoute = IdRegisterLazyImport.update({
   id: '/register',
   path: '/register',
-  getParentRoute: () => IdRouteLazyRoute,
+  getParentRoute: () => IdRouteRoute,
 } as any).lazy(() =>
   import('./core/routes/id/register.lazy').then((d) => d.Route),
 )
@@ -86,7 +96,7 @@ const IdRegisterLazyRoute = IdRegisterLazyImport.update({
 const IdNewTokenLazyRoute = IdNewTokenLazyImport.update({
   id: '/new-token',
   path: '/new-token',
-  getParentRoute: () => IdRouteLazyRoute,
+  getParentRoute: () => IdRouteRoute,
 } as any).lazy(() =>
   import('./core/routes/id/new-token.lazy').then((d) => d.Route),
 )
@@ -94,7 +104,7 @@ const IdNewTokenLazyRoute = IdNewTokenLazyImport.update({
 const IdLogoutLazyRoute = IdLogoutLazyImport.update({
   id: '/logout',
   path: '/logout',
-  getParentRoute: () => IdRouteLazyRoute,
+  getParentRoute: () => IdRouteRoute,
 } as any).lazy(() =>
   import('./core/routes/id/logout.lazy').then((d) => d.Route),
 )
@@ -102,8 +112,30 @@ const IdLogoutLazyRoute = IdLogoutLazyImport.update({
 const IdLoginLazyRoute = IdLoginLazyImport.update({
   id: '/login',
   path: '/login',
-  getParentRoute: () => IdRouteLazyRoute,
+  getParentRoute: () => IdRouteRoute,
 } as any).lazy(() => import('./core/routes/id/login.lazy').then((d) => d.Route))
+
+const AppSubsListRouteLazyRoute = AppSubsListRouteLazyImport.update({
+  id: '/subs-list',
+  path: '/subs-list',
+  getParentRoute: () => AppRouteRoute,
+} as any).lazy(() =>
+  import('./core/routes/app/subs-list/route.lazy').then((d) => d.Route),
+)
+
+const AppSettingsRouteLazyRoute = AppSettingsRouteLazyImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AppRouteRoute,
+} as any).lazy(() =>
+  import('./core/routes/app/settings/route.lazy').then((d) => d.Route),
+)
+
+const AppProfileRouteRoute = AppProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AppRouteRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -116,75 +148,119 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/id': {
       id: '/id'
       path: '/id'
       fullPath: '/id'
-      preLoaderRoute: typeof IdRouteLazyImport
+      preLoaderRoute: typeof IdRouteImport
       parentRoute: typeof rootRoute
+    }
+    '/app/profile': {
+      id: '/app/profile'
+      path: '/profile'
+      fullPath: '/app/profile'
+      preLoaderRoute: typeof AppProfileRouteImport
+      parentRoute: typeof AppRouteImport
+    }
+    '/app/settings': {
+      id: '/app/settings'
+      path: '/settings'
+      fullPath: '/app/settings'
+      preLoaderRoute: typeof AppSettingsRouteLazyImport
+      parentRoute: typeof AppRouteImport
+    }
+    '/app/subs-list': {
+      id: '/app/subs-list'
+      path: '/subs-list'
+      fullPath: '/app/subs-list'
+      preLoaderRoute: typeof AppSubsListRouteLazyImport
+      parentRoute: typeof AppRouteImport
     }
     '/id/login': {
       id: '/id/login'
       path: '/login'
       fullPath: '/id/login'
       preLoaderRoute: typeof IdLoginLazyImport
-      parentRoute: typeof IdRouteLazyImport
+      parentRoute: typeof IdRouteImport
     }
     '/id/logout': {
       id: '/id/logout'
       path: '/logout'
       fullPath: '/id/logout'
       preLoaderRoute: typeof IdLogoutLazyImport
-      parentRoute: typeof IdRouteLazyImport
+      parentRoute: typeof IdRouteImport
     }
     '/id/new-token': {
       id: '/id/new-token'
       path: '/new-token'
       fullPath: '/id/new-token'
       preLoaderRoute: typeof IdNewTokenLazyImport
-      parentRoute: typeof IdRouteLazyImport
+      parentRoute: typeof IdRouteImport
     }
     '/id/register': {
       id: '/id/register'
       path: '/register'
       fullPath: '/id/register'
       preLoaderRoute: typeof IdRegisterLazyImport
-      parentRoute: typeof IdRouteLazyImport
+      parentRoute: typeof IdRouteImport
     }
     '/id/set-new-password': {
       id: '/id/set-new-password'
       path: '/set-new-password'
       fullPath: '/id/set-new-password'
       preLoaderRoute: typeof IdSetNewPasswordLazyImport
-      parentRoute: typeof IdRouteLazyImport
+      parentRoute: typeof IdRouteImport
     }
     '/id/start-password-reset': {
       id: '/id/start-password-reset'
       path: '/start-password-reset'
       fullPath: '/id/start-password-reset'
       preLoaderRoute: typeof IdStartPasswordResetLazyImport
-      parentRoute: typeof IdRouteLazyImport
+      parentRoute: typeof IdRouteImport
     }
     '/id/verify-email': {
       id: '/id/verify-email'
       path: '/verify-email'
       fullPath: '/id/verify-email'
       preLoaderRoute: typeof IdVerifyEmailLazyImport
-      parentRoute: typeof IdRouteLazyImport
+      parentRoute: typeof IdRouteImport
     }
     '/id/verify-reset-token': {
       id: '/id/verify-reset-token'
       path: '/verify-reset-token'
       fullPath: '/id/verify-reset-token'
       preLoaderRoute: typeof IdVerifyResetTokenLazyImport
-      parentRoute: typeof IdRouteLazyImport
+      parentRoute: typeof IdRouteImport
     }
   }
 }
 
 // Create and export the route tree
 
-interface IdRouteLazyRouteChildren {
+interface AppRouteRouteChildren {
+  AppProfileRouteRoute: typeof AppProfileRouteRoute
+  AppSettingsRouteLazyRoute: typeof AppSettingsRouteLazyRoute
+  AppSubsListRouteLazyRoute: typeof AppSubsListRouteLazyRoute
+}
+
+const AppRouteRouteChildren: AppRouteRouteChildren = {
+  AppProfileRouteRoute: AppProfileRouteRoute,
+  AppSettingsRouteLazyRoute: AppSettingsRouteLazyRoute,
+  AppSubsListRouteLazyRoute: AppSubsListRouteLazyRoute,
+}
+
+const AppRouteRouteWithChildren = AppRouteRoute._addFileChildren(
+  AppRouteRouteChildren,
+)
+
+interface IdRouteRouteChildren {
   IdLoginLazyRoute: typeof IdLoginLazyRoute
   IdLogoutLazyRoute: typeof IdLogoutLazyRoute
   IdNewTokenLazyRoute: typeof IdNewTokenLazyRoute
@@ -195,7 +271,7 @@ interface IdRouteLazyRouteChildren {
   IdVerifyResetTokenLazyRoute: typeof IdVerifyResetTokenLazyRoute
 }
 
-const IdRouteLazyRouteChildren: IdRouteLazyRouteChildren = {
+const IdRouteRouteChildren: IdRouteRouteChildren = {
   IdLoginLazyRoute: IdLoginLazyRoute,
   IdLogoutLazyRoute: IdLogoutLazyRoute,
   IdNewTokenLazyRoute: IdNewTokenLazyRoute,
@@ -206,13 +282,16 @@ const IdRouteLazyRouteChildren: IdRouteLazyRouteChildren = {
   IdVerifyResetTokenLazyRoute: IdVerifyResetTokenLazyRoute,
 }
 
-const IdRouteLazyRouteWithChildren = IdRouteLazyRoute._addFileChildren(
-  IdRouteLazyRouteChildren,
-)
+const IdRouteRouteWithChildren =
+  IdRouteRoute._addFileChildren(IdRouteRouteChildren)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/id': typeof IdRouteLazyRouteWithChildren
+  '/app': typeof AppRouteRouteWithChildren
+  '/id': typeof IdRouteRouteWithChildren
+  '/app/profile': typeof AppProfileRouteRoute
+  '/app/settings': typeof AppSettingsRouteLazyRoute
+  '/app/subs-list': typeof AppSubsListRouteLazyRoute
   '/id/login': typeof IdLoginLazyRoute
   '/id/logout': typeof IdLogoutLazyRoute
   '/id/new-token': typeof IdNewTokenLazyRoute
@@ -225,7 +304,11 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/id': typeof IdRouteLazyRouteWithChildren
+  '/app': typeof AppRouteRouteWithChildren
+  '/id': typeof IdRouteRouteWithChildren
+  '/app/profile': typeof AppProfileRouteRoute
+  '/app/settings': typeof AppSettingsRouteLazyRoute
+  '/app/subs-list': typeof AppSubsListRouteLazyRoute
   '/id/login': typeof IdLoginLazyRoute
   '/id/logout': typeof IdLogoutLazyRoute
   '/id/new-token': typeof IdNewTokenLazyRoute
@@ -239,7 +322,11 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/id': typeof IdRouteLazyRouteWithChildren
+  '/app': typeof AppRouteRouteWithChildren
+  '/id': typeof IdRouteRouteWithChildren
+  '/app/profile': typeof AppProfileRouteRoute
+  '/app/settings': typeof AppSettingsRouteLazyRoute
+  '/app/subs-list': typeof AppSubsListRouteLazyRoute
   '/id/login': typeof IdLoginLazyRoute
   '/id/logout': typeof IdLogoutLazyRoute
   '/id/new-token': typeof IdNewTokenLazyRoute
@@ -254,7 +341,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/app'
     | '/id'
+    | '/app/profile'
+    | '/app/settings'
+    | '/app/subs-list'
     | '/id/login'
     | '/id/logout'
     | '/id/new-token'
@@ -266,7 +357,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/app'
     | '/id'
+    | '/app/profile'
+    | '/app/settings'
+    | '/app/subs-list'
     | '/id/login'
     | '/id/logout'
     | '/id/new-token'
@@ -278,7 +373,11 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/app'
     | '/id'
+    | '/app/profile'
+    | '/app/settings'
+    | '/app/subs-list'
     | '/id/login'
     | '/id/logout'
     | '/id/new-token'
@@ -292,12 +391,14 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  IdRouteLazyRoute: typeof IdRouteLazyRouteWithChildren
+  AppRouteRoute: typeof AppRouteRouteWithChildren
+  IdRouteRoute: typeof IdRouteRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  IdRouteLazyRoute: IdRouteLazyRouteWithChildren,
+  AppRouteRoute: AppRouteRouteWithChildren,
+  IdRouteRoute: IdRouteRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -313,14 +414,23 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/app",
         "/id"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
+    "/app": {
+      "filePath": "app/route.tsx",
+      "children": [
+        "/app/profile",
+        "/app/settings",
+        "/app/subs-list"
+      ]
+    },
     "/id": {
-      "filePath": "id/route.lazy.tsx",
+      "filePath": "id/route.tsx",
       "children": [
         "/id/login",
         "/id/logout",
@@ -331,6 +441,18 @@ export const routeTree = rootRoute
         "/id/verify-email",
         "/id/verify-reset-token"
       ]
+    },
+    "/app/profile": {
+      "filePath": "app/profile/route.tsx",
+      "parent": "/app"
+    },
+    "/app/settings": {
+      "filePath": "app/settings/route.lazy.tsx",
+      "parent": "/app"
+    },
+    "/app/subs-list": {
+      "filePath": "app/subs-list/route.lazy.tsx",
+      "parent": "/app"
     },
     "/id/login": {
       "filePath": "id/login.lazy.tsx",

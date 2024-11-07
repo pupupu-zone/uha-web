@@ -1,17 +1,29 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { persistStore } from 'redux-persist';
-import { Outlet } from '@tanstack/react-router';
+import { RouterProvider } from '@tanstack/react-router';
+
 import { PersistGate } from 'redux-persist/integration/react';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
 import ProgressiveUnit from '@features/pwa';
 import { FontStyles, ResetStyles, GeneralStyles } from '@core/styles';
 
+import type { AppRouter } from '@src/index.tsx';
+
 import store from './store';
 const persistor = persistStore(store);
 
-const Root = () => (
+type Props = {
+	router: AppRouter;
+};
+
+const InnerApp = ({ router }: Props) => {
+	const isAuthorized = true;
+
+	return <RouterProvider router={router} context={{ isAuthorized }} />;
+};
+
+const Root = ({ router }: Props) => (
 	<>
 		<ResetStyles />
 		<FontStyles />
@@ -19,11 +31,9 @@ const Root = () => (
 
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
-				<Outlet />
+				<InnerApp router={router} />
 
 				<ProgressiveUnit />
-
-				{import.meta.env.DEV && <TanStackRouterDevtools initialIsOpen={false} position="bottom-right" />}
 			</PersistGate>
 		</Provider>
 	</>
