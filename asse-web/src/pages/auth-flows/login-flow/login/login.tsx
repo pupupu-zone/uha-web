@@ -34,7 +34,7 @@ const LoginUnit = () => {
 							}}
 							isFullWidth
 							autoComplete="email"
-							errors={formatError(field.state.meta.errors)}
+							errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
 						/>
 					)}
 				</form.Field>
@@ -52,7 +52,7 @@ const LoginUnit = () => {
 							}}
 							isFullWidth
 							autoComplete="current-password"
-							errors={formatError(field.state.meta.errors)}
+							errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
 						/>
 					)}
 				</form.Field>
