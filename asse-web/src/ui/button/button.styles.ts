@@ -53,7 +53,7 @@ export default styled.button<StyleProps>`
 
 	&[data-disabled] {
 		cursor: not-allowed;
-		opacity: 0.1;
+		opacity: 0.66;
 		pointer-events: none;
 	}
 

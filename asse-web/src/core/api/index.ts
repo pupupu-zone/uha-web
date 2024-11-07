@@ -34,13 +34,13 @@ const baseQuery = fetchBaseQuery({
 	responseHandler: async (response) => {
 		switch (response.status) {
 			case 401: {
-				console.error('Ошибка авторизации');
+				// console.error('Ошибка авторизации');
 				// window.location.assign('/logout');
 				break;
 			}
 
 			case 403: {
-				console.error('Доступ запрещён');
+				// console.error('Доступ запрещён');
 				break;
 			}
 		}

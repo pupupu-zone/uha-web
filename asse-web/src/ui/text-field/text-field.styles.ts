@@ -4,8 +4,22 @@ import { SmallText } from '../typography';
 import type { StyleProps } from './text-field.d';
 
 export const ErrorMessage = styled(SmallText)`
-	margin-top: 8px;
 	color: #eb5757;
+	font-weight: 500;
+	line-height: 1;
+	font-variant-caps: all-small-caps;
+	white-space: nowrap;
+
+	& + & {
+		margin-left: 8px;
+	}
+`;
+
+export const ErrorsList = styled.div`
+	display: wrap;
+	flex-wrap: wrap;
+	gap: 2px;
+	margin-top: 2px;
 `;
 
 export const Label = styled.label`
@@ -14,7 +28,7 @@ export const Label = styled.label`
 	left: 24px;
 	z-index: 1;
 	color: #9597a0;
-	font-size: 14px;
+	font-size: 16px;
 	line-height: 19px;
 `;
 
@@ -56,7 +70,8 @@ export const InputRoot = styled.div<StyleProps>`
 	display: inline-flex;
 	flex-direction: column;
 	background-color: #f8faff;
-	border: 1px solid #aaa;
+	border: 1px solid transparent;
+	border-color: ${({ $withErrors }) => ($withErrors ? `#eb5757` : '#aaa')};
 	border-radius: 8px;
 `;
 

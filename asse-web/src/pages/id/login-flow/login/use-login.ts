@@ -6,8 +6,8 @@ import yup from '@yup';
 import { useLazyLoginQuery } from '@pages/id/login-flow/_api';
 
 const formSchema = yup.object({
-	email: yup.string().email('E-mail is invalid').required('E-mail is required'),
-	password: yup.string().min(8).required('Password is required')
+	email: yup.string().email('E-mail is invalid').required('Mandatory Field'),
+	password: yup.string().required('Mandatory Field')
 });
 
 const useLogin = () => {

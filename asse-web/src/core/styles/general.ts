@@ -7,18 +7,22 @@ const General = createGlobalStyle`
 	}
 
 	html {
+		height: 100%;
+		min-height: 100%;
 		background-color: oklch(var(--white));
 	}
 
 	body {
+		min-height: 100%;
 		font-family: 'Nunito Sans', sans-serif;
 	}
 
 	#root {
-		display: flex;
-		flex-direction: column;
-		width: 100vw;
-		min-height: 100%;
+		display: grid;
+		grid-template-rows: 1fr;
+		min-width: 100vw;
+		min-height: 100vh;
+		min-height: 100dvh;
 		margin: 0 auto;
 	}
 

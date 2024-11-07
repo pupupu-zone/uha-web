@@ -2,9 +2,7 @@ import type { AriaTextFieldProps } from 'react-aria-components';
 
 export type InternalProps = {
 	description?: string;
-	error?: {
-		message: string;
-	};
+	errors?: string[];
 	isFullWidth?: boolean;
 };
 
