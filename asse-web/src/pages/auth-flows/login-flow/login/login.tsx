@@ -6,62 +6,70 @@ import { formatError } from '@utils';
 import { H1, Button, TextField } from '@ui';
 import Root, { LoginForm, Actions } from './login.styles';
 
-const LoginUnit = () => {
+const LoginPage = () => {
 	const form = useLogin();
+
+	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		e.stopPropagation();
+
+		form.handleSubmit();
+	};
 
 	return (
 		<Root>
 			<H1>Login</H1>
 
-			<LoginForm
-				onSubmit={(e) => {
-					e.preventDefault();
-					e.stopPropagation();
-					form.handleSubmit();
-				}}
-				noValidate
-			>
+			<LoginForm onSubmit={onSubmit} noValidate>
 				<form.Field name="email">
-					{(field) => (
-						<TextField
-							label="E-Mail"
-							id={field.name}
-							name={field.name}
-							value={field.state.value}
-							type="email"
-							onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-								field.handleChange(e.target.value);
-							}}
-							isFullWidth
-							autoComplete="email"
-							errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
-						/>
-					)}
+					{(field) => {
+						const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
+							field.handleChange(e.target.value);
+						};
+
+						return (
+							<TextField
+								id={field.name}
+								type="email"
+								label="E-Mail"
+								name={field.name}
+								autoComplete="email"
+								onChange={onChangeHd}
+								value={field.state.value}
+								isFullWidth
+								errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
+							/>
+						);
+					}}
 				</form.Field>
 
 				<form.Field name="password">
-					{(field) => (
-						<TextField
-							label="Password"
-							id={field.name}
-							name={field.name}
-							value={field.state.value}
-							type="password"
-							onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-								field.handleChange(e.target.value);
-							}}
-							isFullWidth
-							autoComplete="current-password"
-							errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
-						/>
-					)}
+					{(field) => {
+						const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
+							field.handleChange(e.target.value);
+						};
+
+						return (
+							<TextField
+								id={field.name}
+								type="password"
+								label="Password"
+								name={field.name}
+								autoComplete="current-password"
+								onChange={onChangeHd}
+								value={field.state.value}
+								isFullWidth
+								errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
+							/>
+						);
+					}}
 				</form.Field>
 
 				<Actions>
 					<form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
 						{([canSubmit, isSubmitting]) => (
 							<Button type="submit" isDisabled={!canSubmit || isSubmitting} size="medium" isFullWidth>
-								Submit
+								Sign In
 							</Button>
 						)}
 					</form.Subscribe>
@@ -75,4 +83,4 @@ const LoginUnit = () => {
 	);
 };
 
-export default LoginUnit;
+export default LoginPage;

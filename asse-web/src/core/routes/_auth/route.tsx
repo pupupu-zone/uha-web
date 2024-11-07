@@ -1,14 +1,14 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
-import IndexPage from '@pages/main';
+import MainPage from '@pages/main';
 
 export const Route = createFileRoute('/_auth')({
-	beforeLoad: ({ context, location }) => {
+	beforeLoad: ({ context }) => {
 		if (!context.auth.isAuthenticated) {
 			throw redirect({
 				to: '/login'
 			});
 		}
 	},
-	component: IndexPage
+	component: MainPage
 });

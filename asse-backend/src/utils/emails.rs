@@ -85,7 +85,7 @@ pub async fn send_email(
                 envs.app_url, issued_token,
             )
         } else {
-            format!("{}/verify-email?token={}", envs.app_url, issued_token,)
+            format!("{}/register/verify?token={}", envs.app_url, issued_token,)
         }
     };
 

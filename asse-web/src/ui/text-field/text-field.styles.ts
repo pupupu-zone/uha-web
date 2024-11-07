@@ -9,15 +9,11 @@ export const ErrorMessage = styled(SmallText)`
 	line-height: 1;
 	font-variant-caps: all-small-caps;
 	white-space: nowrap;
-
-	& + & {
-		margin-left: 8px;
-	}
 `;
 
 export const ErrorsList = styled.div`
-	display: wrap;
-	flex-wrap: wrap;
+	display: grid;
+	grid-auto-flow: row;
 	gap: 2px;
 	margin-top: 2px;
 `;

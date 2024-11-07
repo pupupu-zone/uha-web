@@ -8,8 +8,8 @@ import { useAuth } from '@core/auth';
 import { useLazyLoginQuery } from '@pages/auth-flows/login-flow';
 
 const formSchema = yup.object({
-	email: yup.string().email('E-mail is invalid').required('Mandatory Field'),
-	password: yup.string().required('Mandatory Field')
+	email: yup.string().email('Please use pattern "name@domain.tld"').required('Mandatory Field'),
+	password: yup.string().min(8, 'Minimum 8 characters').required('Mandatory Field')
 });
 
 const useLogin = () => {

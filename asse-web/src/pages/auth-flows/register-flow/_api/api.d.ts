@@ -1,29 +1,18 @@
-// Login
-export type LoginReqT = {
-	email: string;
-	password: string;
-};
-export type LoginResT = {
-	data: {
-		user_id: string;
-	};
-};
-
-// Logout
-export type LogoutReqT = void;
-export type LogoutResT = {
-	info: {
-		system: string;
-	};
-};
-
 // Register
-export type RegisterReqT = {
+export type RegistrationReqT = {
 	name: string;
 	email: string;
 	password: string;
 };
-export type RegisterResT = unknown;
+export type RegistrationResT = {
+	data: {
+		user_id: string;
+	};
+	info: {
+		user: string;
+		verification: string;
+	};
+};
 
 // Verify E-Mail
 export type VerifyEmailReqT = {

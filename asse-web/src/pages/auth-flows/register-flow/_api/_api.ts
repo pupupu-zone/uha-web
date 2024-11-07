@@ -1,11 +1,11 @@
 import API from '@api';
 
-import type { RegisterReqT, RegisterResT, VerifyEmailReqT, VerifyEmailResT } from './api.d';
+import type { RegistrationReqT, RegistrationResT, VerifyEmailReqT, VerifyEmailResT } from './api.d';
 
 const idApi = API.injectEndpoints({
 	endpoints: (build) => ({
 		// Register
-		register: build.query<RegisterResT, RegisterReqT>({
+		register: build.query<RegistrationResT, RegistrationReqT>({
 			query: (body) => ({
 				url: '/auth/sign-up',
 				method: 'POST',
