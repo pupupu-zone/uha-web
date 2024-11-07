@@ -22,9 +22,9 @@ import { Route as ResetPasswordInitImport } from './core/routes/reset-password/i
 import { Route as RegisterVerifyImport } from './core/routes/register/verify'
 import { Route as RegisterInitImport } from './core/routes/register/init'
 import { Route as AuthSubsListImport } from './core/routes/_auth/subs-list'
-import { Route as AuthSettingsImport } from './core/routes/_auth/settings'
 import { Route as AuthProfileImport } from './core/routes/_auth/profile'
 import { Route as AuthLogoutImport } from './core/routes/_auth/logout'
+import { Route as AuthLibraryImport } from './core/routes/_auth/library'
 
 // Create/Update Routes
 
@@ -93,12 +93,6 @@ const AuthSubsListRoute = AuthSubsListImport.update({
   getParentRoute: () => AuthRouteRoute,
 } as any)
 
-const AuthSettingsRoute = AuthSettingsImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => AuthRouteRoute,
-} as any)
-
 const AuthProfileRoute = AuthProfileImport.update({
   id: '/profile',
   path: '/profile',
@@ -108,6 +102,12 @@ const AuthProfileRoute = AuthProfileImport.update({
 const AuthLogoutRoute = AuthLogoutImport.update({
   id: '/logout',
   path: '/logout',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+
+const AuthLibraryRoute = AuthLibraryImport.update({
+  id: '/library',
+  path: '/library',
   getParentRoute: () => AuthRouteRoute,
 } as any)
 
@@ -150,6 +150,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginImport
       parentRoute: typeof rootRoute
     }
+    '/_auth/library': {
+      id: '/_auth/library'
+      path: '/library'
+      fullPath: '/library'
+      preLoaderRoute: typeof AuthLibraryImport
+      parentRoute: typeof AuthRouteImport
+    }
     '/_auth/logout': {
       id: '/_auth/logout'
       path: '/logout'
@@ -162,13 +169,6 @@ declare module '@tanstack/react-router' {
       path: '/profile'
       fullPath: '/profile'
       preLoaderRoute: typeof AuthProfileImport
-      parentRoute: typeof AuthRouteImport
-    }
-    '/_auth/settings': {
-      id: '/_auth/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof AuthSettingsImport
       parentRoute: typeof AuthRouteImport
     }
     '/_auth/subs-list': {
@@ -219,16 +219,16 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthRouteRouteChildren {
+  AuthLibraryRoute: typeof AuthLibraryRoute
   AuthLogoutRoute: typeof AuthLogoutRoute
   AuthProfileRoute: typeof AuthProfileRoute
-  AuthSettingsRoute: typeof AuthSettingsRoute
   AuthSubsListRoute: typeof AuthSubsListRoute
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthLibraryRoute: AuthLibraryRoute,
   AuthLogoutRoute: AuthLogoutRoute,
   AuthProfileRoute: AuthProfileRoute,
-  AuthSettingsRoute: AuthSettingsRoute,
   AuthSubsListRoute: AuthSubsListRoute,
 }
 
@@ -271,9 +271,9 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRouteRouteWithChildren
   '/reset-password': typeof ResetPasswordRouteRouteWithChildren
   '/login': typeof LoginRoute
+  '/library': typeof AuthLibraryRoute
   '/logout': typeof AuthLogoutRoute
   '/profile': typeof AuthProfileRoute
-  '/settings': typeof AuthSettingsRoute
   '/subs-list': typeof AuthSubsListRoute
   '/register/init': typeof RegisterInitRoute
   '/register/verify': typeof RegisterVerifyRoute
@@ -288,9 +288,9 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRouteRouteWithChildren
   '/reset-password': typeof ResetPasswordRouteRouteWithChildren
   '/login': typeof LoginRoute
+  '/library': typeof AuthLibraryRoute
   '/logout': typeof AuthLogoutRoute
   '/profile': typeof AuthProfileRoute
-  '/settings': typeof AuthSettingsRoute
   '/subs-list': typeof AuthSubsListRoute
   '/register/init': typeof RegisterInitRoute
   '/register/verify': typeof RegisterVerifyRoute
@@ -306,9 +306,9 @@ export interface FileRoutesById {
   '/register': typeof RegisterRouteRouteWithChildren
   '/reset-password': typeof ResetPasswordRouteRouteWithChildren
   '/login': typeof LoginRoute
+  '/_auth/library': typeof AuthLibraryRoute
   '/_auth/logout': typeof AuthLogoutRoute
   '/_auth/profile': typeof AuthProfileRoute
-  '/_auth/settings': typeof AuthSettingsRoute
   '/_auth/subs-list': typeof AuthSubsListRoute
   '/register/init': typeof RegisterInitRoute
   '/register/verify': typeof RegisterVerifyRoute
@@ -325,9 +325,9 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/login'
+    | '/library'
     | '/logout'
     | '/profile'
-    | '/settings'
     | '/subs-list'
     | '/register/init'
     | '/register/verify'
@@ -341,9 +341,9 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/login'
+    | '/library'
     | '/logout'
     | '/profile'
-    | '/settings'
     | '/subs-list'
     | '/register/init'
     | '/register/verify'
@@ -357,9 +357,9 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/login'
+    | '/_auth/library'
     | '/_auth/logout'
     | '/_auth/profile'
-    | '/_auth/settings'
     | '/_auth/subs-list'
     | '/register/init'
     | '/register/verify'
@@ -410,9 +410,9 @@ export const routeTree = rootRoute
     "/_auth": {
       "filePath": "_auth/route.tsx",
       "children": [
+        "/_auth/library",
         "/_auth/logout",
         "/_auth/profile",
-        "/_auth/settings",
         "/_auth/subs-list"
       ]
     },
@@ -434,16 +434,16 @@ export const routeTree = rootRoute
     "/login": {
       "filePath": "login.tsx"
     },
+    "/_auth/library": {
+      "filePath": "_auth/library.tsx",
+      "parent": "/_auth"
+    },
     "/_auth/logout": {
       "filePath": "_auth/logout.tsx",
       "parent": "/_auth"
     },
     "/_auth/profile": {
       "filePath": "_auth/profile.tsx",
-      "parent": "/_auth"
-    },
-    "/_auth/settings": {
-      "filePath": "_auth/settings.tsx",
       "parent": "/_auth"
     },
     "/_auth/subs-list": {

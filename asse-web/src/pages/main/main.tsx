@@ -11,8 +11,8 @@ const MainPage = () => {
 
 			<Links>
 				<Button to="/profile">Profile</Button>
-				<Button to="/subs-list">Subs List</Button>
-				<Button to="/settings">Settings</Button>
+				<Button to="/subs-list">Main</Button>
+				<Button to="/library">Library</Button>
 			</Links>
 		</Root>
 	);

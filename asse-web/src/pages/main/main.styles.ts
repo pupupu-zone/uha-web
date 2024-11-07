@@ -2,13 +2,12 @@ import styled from 'styled-components';
 
 export const Links = styled.div`
 	display: grid;
-	padding: 12px;
-	width: 100%;
+	grid-auto-rows: min-content;
+	grid-auto-columns: min-content;
 	grid-auto-flow: column;
 	gap: 24px;
-	grid-auto-columns: min-content;
-	grid-auto-rows: min-content;
-	white-space: nowrap;
+	width: 100%;
+	padding: 12px;
 `;
 
 export default styled.div`
