@@ -6,7 +6,7 @@ import yup from '@yup';
 import { useLazyInitiateRecoveryQuery } from '@pages/auth-flows/reset-flow/_api';
 
 const formSchema = yup.object({
-	email: yup.string().email('E-mail is invalid').required('E-mail is required')
+	email: yup.string().email('Please use pattern "name@domain.tld"').required('Mandatory Field')
 });
 
 const useResetPassword = () => {
@@ -20,8 +20,8 @@ const useResetPassword = () => {
 		defaultValues: {
 			email: ''
 		},
-		onSubmit: async ({ value }) => {
-			await request(value);
+		onSubmit: ({ value }) => {
+			request(value);
 		}
 	});
 

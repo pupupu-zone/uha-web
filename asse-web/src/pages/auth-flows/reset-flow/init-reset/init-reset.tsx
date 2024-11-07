@@ -1,49 +1,62 @@
 import React from 'react';
 
-import { H1 } from '@ui';
+import { formatError } from '@utils';
 import useResetPassword from './use-reset';
+
+import { H1, Button, TextField } from '@ui';
+import { PageRoot, PageForm, Actions } from './init-reset.styles';
 
 const InitializePasswordReset = () => {
 	const form = useResetPassword();
 
-	return (
-		<div>
-			<H1>Init Process of Password Recovery</H1>
+	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		e.stopPropagation();
 
-			<form
-				onSubmit={(e) => {
-					e.preventDefault();
-					e.stopPropagation();
-					form.handleSubmit();
-				}}
-				noValidate
-			>
+		form.handleSubmit();
+	};
+
+	return (
+		<PageRoot>
+			<H1>Password Reset</H1>
+
+			<PageForm onSubmit={onSubmit} noValidate>
 				<form.Field name="email">
-					{(field) => (
-						<>
-							<label htmlFor={field.name}>E-Mail</label> <br />
-							<input
+					{(field) => {
+						const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
+							field.handleChange(e.target.value);
+						};
+
+						return (
+							<TextField
 								id={field.name}
-								name={field.name}
-								value={field.state.value}
 								type="email"
-								onChange={(e) => {
-									field.handleChange(e.target.value);
-								}}
+								label="E-Mail"
+								name={field.name}
+								onChange={onChangeHd}
+								value={field.state.value}
+								isFullWidth
+								errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
 							/>
-						</>
-					)}
+						);
+					}}
 				</form.Field>
 
-				<form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
-					{([canSubmit, isSubmitting]) => (
-						<button type="submit" disabled={!canSubmit}>
-							{isSubmitting ? '...' : 'Submit'}
-						</button>
-					)}
-				</form.Subscribe>
-			</form>
-		</div>
+				<Actions>
+					<form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+						{([canSubmit, isSubmitting]) => (
+							<Button type="submit" isDisabled={!canSubmit || isSubmitting} size="medium" isFullWidth>
+								Send E-Mail
+							</Button>
+						)}
+					</form.Subscribe>
+
+					<Button to="/login" size="medium" isFullWidth isSecondary>
+						Sign In
+					</Button>
+				</Actions>
+			</PageForm>
+		</PageRoot>
 	);
 };
 

@@ -5,7 +5,7 @@ import useRegister from './use-register';
 import { useLazyResendEmailQuery } from '@pages/auth-flows/register-flow';
 
 import { H1, Button, TextField } from '@ui';
-import Root, { RegisterForm, Actions } from './register.styles';
+import { PageRoot, PageForm, Actions } from './register.styles';
 
 const RegisterPage = () => {
 	const form = useRegister();
@@ -31,10 +31,10 @@ const RegisterPage = () => {
 	};
 
 	return (
-		<Root>
+		<PageRoot>
 			<H1>Registration</H1>
 
-			<RegisterForm onSubmit={onSubmit} noValidate>
+			<PageForm onSubmit={onSubmit} noValidate>
 				<form.Field name="name">
 					{(field) => {
 						const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -132,8 +132,8 @@ const RegisterPage = () => {
 						Sign In Instead
 					</Button>
 				</Actions>
-			</RegisterForm>
-		</Root>
+			</PageForm>
+		</PageRoot>
 	);
 };
 

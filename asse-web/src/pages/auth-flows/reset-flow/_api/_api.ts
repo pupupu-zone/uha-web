@@ -1,11 +1,11 @@
 import API from '@api';
 
-import type { VerifyEmailReqT, VerifyEmailResT } from './api.d';
+import type { InitRecoveryResT, InitRecoveryReqT, VerifyEmailReqT, VerifyEmailResT } from './api.d';
 
 const idApi = API.injectEndpoints({
 	endpoints: (build) => ({
 		// Request to initiate password recovery
-		initiateRecovery: build.query<VerifyEmailResT, VerifyEmailReqT>({
+		initiateRecovery: build.query<InitRecoveryResT, InitRecoveryReqT>({
 			query: (body) => ({
 				url: '/user/password-change/init',
 				method: 'POST',

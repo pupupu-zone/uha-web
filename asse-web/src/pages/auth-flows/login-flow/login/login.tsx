@@ -4,7 +4,7 @@ import useLogin from './use-login';
 import { formatError } from '@utils';
 
 import { H1, Button, TextField } from '@ui';
-import Root, { LoginForm, Actions } from './login.styles';
+import { PageRoot, PageForm, Actions } from './login.styles';
 
 const LoginPage = () => {
 	const form = useLogin();
@@ -17,10 +17,10 @@ const LoginPage = () => {
 	};
 
 	return (
-		<Root>
+		<PageRoot>
 			<H1>Login</H1>
 
-			<LoginForm onSubmit={onSubmit} noValidate>
+			<PageForm onSubmit={onSubmit} noValidate>
 				<form.Field name="email">
 					{(field) => {
 						const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,11 +75,15 @@ const LoginPage = () => {
 					</form.Subscribe>
 
 					<Button to="/register" size="medium" isFullWidth isSecondary>
-						Register
+						Sign Up
+					</Button>
+
+					<Button to="/reset-password" size="medium" isFullWidth isSecondary>
+						Restore Password
 					</Button>
 				</Actions>
-			</LoginForm>
-		</Root>
+			</PageForm>
+		</PageRoot>
 	);
 };
 
