@@ -10,9 +10,9 @@ const MainPage = () => {
 			<Outlet />
 
 			<Links>
-				<Button to="/app/profile">Profile</Button>
-				<Button to="/app/subs-list">Subs List</Button>
-				<Button to="/app/settings">Settings</Button>
+				<Button to="/profile">Profile</Button>
+				<Button to="/subs-list">Subs List</Button>
+				<Button to="/settings">Settings</Button>
 			</Links>
 		</Root>
 	);

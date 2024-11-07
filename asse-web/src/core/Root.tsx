@@ -6,6 +6,7 @@ import { RouterProvider } from '@tanstack/react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import ProgressiveUnit from '@features/pwa';
+import { AuthProvider, useAuth } from './auth';
 import { FontStyles, ResetStyles, GeneralStyles } from '@core/styles';
 
 import type { AppRouter } from '@src/index.tsx';
@@ -18,9 +19,9 @@ type Props = {
 };
 
 const InnerApp = ({ router }: Props) => {
-	const isAuthorized = true;
+	const auth = useAuth();
 
-	return <RouterProvider router={router} context={{ isAuthorized }} />;
+	return <RouterProvider router={router} context={{ auth }} />;
 };
 
 const Root = ({ router }: Props) => (
@@ -31,7 +32,9 @@ const Root = ({ router }: Props) => (
 
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
-				<InnerApp router={router} />
+				<AuthProvider>
+					<InnerApp router={router} />
+				</AuthProvider>
 
 				<ProgressiveUnit />
 			</PersistGate>

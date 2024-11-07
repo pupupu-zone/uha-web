@@ -120,7 +120,7 @@ const RegisterUnit = () => {
 						)}
 					</form.Subscribe>
 
-					<Button to="/id/login" size="medium" isFullWidth isSecondary>
+					<Button to="/login" size="medium" isFullWidth isSecondary>
 						Login
 					</Button>
 				</form>

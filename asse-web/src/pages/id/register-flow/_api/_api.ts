@@ -1,28 +1,9 @@
 import API from '@api';
 
-import type {
-	LoginResT,
-	LoginReqT,
-	LogoutResT,
-	LogoutReqT,
-	RegisterReqT,
-	RegisterResT,
-	VerifyEmailReqT,
-	VerifyEmailResT
-} from './api.d';
+import type { LogoutResT, LogoutReqT, RegisterReqT, RegisterResT, VerifyEmailReqT, VerifyEmailResT } from './api.d';
 
 const idApi = API.injectEndpoints({
 	endpoints: (build) => ({
-		// Login
-		login: build.query<LoginResT, LoginReqT>({
-			query: (body) => ({
-				url: '/auth/sign-in',
-				method: 'POST',
-				credentials: 'omit',
-				body
-			})
-		}),
-
 		// Logout
 		logout: build.query<LogoutResT, LogoutReqT>({
 			query: () => ({
