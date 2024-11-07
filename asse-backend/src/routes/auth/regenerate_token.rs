@@ -36,7 +36,7 @@ pub async fn regenerate_token(
      */
     if is_in_jail.unwrap().is_some() {
         return Err(reg_errors::email(
-            "You are trying to regenerate token too often",
+            "You are trying to send new e-mail too soon. Try again in a minute",
         ));
     }
 
@@ -56,42 +56,39 @@ pub async fn regenerate_token(
      */
     let mut pg_connection = acquire_pg_connection(&dp).await?;
 
-    let (is_user_active, user_id, user_name) =
-        match sqlx::query("SELECT * FROM users WHERE email = $1")
-            .bind(&parameters.email)
-            .fetch_one(&mut *pg_connection)
-            .await
-        {
-            Ok(row) => {
-                let is_user_active: Result<bool, sqlx::Error> = row.try_get("is_active");
-                let user_id: Result<Uuid, sqlx::Error> = row.try_get("id");
-                let user_name: Result<String, sqlx::Error> = row.try_get("name");
+    let (user_id, user_name) = match sqlx::query(
+        "
+            SELECT
+                users.id,
+                user_profiles.name
+            FROM 
+                users
+            JOIN
+                user_profiles 
+            ON
+                users.id = user_profiles.user_id
+            WHERE
+                users.is_active = FALSE
+            AND
+                users.email = $1;
+        ",
+    )
+    .bind(&parameters.email)
+    .fetch_one(&mut *pg_connection)
+    .await
+    {
+        Ok(row) => {
+            let user_id: Result<Uuid, sqlx::Error> = row.try_get("id");
+            let user_name: Result<String, sqlx::Error> = row.try_get("name");
 
-                (is_user_active, user_id, user_name)
-            }
-            Err(_) => {
-                return Err(reg_errors::email(
-                    "You have entered invalid e-mail, or user is active already",
-                ));
-            }
-        };
-
-    /*
-     * If user is active, then throw an error
-     */
-    match is_user_active {
-        Ok(true) => {
-            return Err(reg_errors::email(
-                "You have entered invalid e-mail, or user is active already",
-            ));
+            (user_id, user_name)
         }
-        Ok(false) => {}
         Err(_) => {
             return Err(reg_errors::email(
                 "You have entered invalid e-mail, or user is active already",
             ));
         }
-    }
+    };
 
     /*
      * if no user, throw an error

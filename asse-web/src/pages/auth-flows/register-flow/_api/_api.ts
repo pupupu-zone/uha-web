@@ -1,6 +1,13 @@
 import API from '@api';
 
-import type { RegistrationReqT, RegistrationResT, VerifyEmailReqT, VerifyEmailResT } from './api.d';
+import type {
+	RegistrationReqT,
+	RegistrationResT,
+	VerifyEmailReqT,
+	VerifyEmailResT,
+	ResendEmailReqT,
+	ResendEmailResT
+} from './api.d';
 
 const idApi = API.injectEndpoints({
 	endpoints: (build) => ({
@@ -25,7 +32,7 @@ const idApi = API.injectEndpoints({
 		}),
 
 		// Send verifying email once again
-		resendEmail: build.query<VerifyEmailResT, VerifyEmailReqT>({
+		resendEmail: build.query<ResendEmailResT, ResendEmailReqT>({
 			query: (body) => ({
 				url: '/auth/regenerate-token',
 				method: 'POST',

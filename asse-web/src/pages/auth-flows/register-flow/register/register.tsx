@@ -1,19 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { formatError } from '@utils';
 import useRegister from './use-register';
+import { useLazyResendEmailQuery } from '@pages/auth-flows/register-flow';
 
 import { H1, Button, TextField } from '@ui';
 import Root, { RegisterForm, Actions } from './register.styles';
 
 const RegisterPage = () => {
 	const form = useRegister();
+	const [resendEmail, resendResults] = useLazyResendEmailQuery();
+
+	useEffect(() => {
+		if (!resendResults.isSuccess || !resendResults.data) return;
+
+		console.log('[Registration]: Resend E-Mail was a success!');
+	}, [resendResults.isSuccess, resendResults.isError]);
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		e.stopPropagation();
 
 		form.handleSubmit();
+	};
+
+	const onResendEmail = () => {
+		const email = form.getFieldValue('email');
+
+		resendEmail({ email });
 	};
 
 	return (
@@ -93,9 +107,26 @@ const RegisterPage = () => {
 						)}
 					</form.Subscribe>
 
-					<Button size="medium" isFullWidth isSecondary>
-						Resend E-Mail
-					</Button>
+					<form.Subscribe
+						selector={({ fieldMeta }) => {
+							const field = fieldMeta.email ?? {};
+							const errors = fieldMeta.email?.errors ?? [];
+
+							return field.isPristine || errors.length > 0;
+						}}
+					>
+						{(withEmailErrors) => (
+							<Button
+								size="medium"
+								onPress={onResendEmail}
+								isDisabled={withEmailErrors || resendResults.isFetching}
+								isFullWidth
+								isSecondary
+							>
+								Resend E-Mail
+							</Button>
+						)}
+					</form.Subscribe>
 
 					<Button to="/login" size="medium" isFullWidth isSecondary>
 						Sign In Instead

@@ -19,3 +19,13 @@ export type VerifyEmailReqT = {
 	token: string;
 };
 export type VerifyEmailResT = unknown;
+
+// Resend E-Mail
+export type ResendEmailReqT = {
+	email: string;
+};
+export type ResendEmailResT = {
+	info: {
+		user: string;
+	};
+};
