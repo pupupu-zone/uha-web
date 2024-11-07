@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { Outlet, Link, useNavigate } from '@tanstack/react-router';
+import { Outlet, Link, useNavigate, useLocation } from '@tanstack/react-router';
 
 const Wrap = styled.div`
 	display: flex;
@@ -32,9 +32,17 @@ const Header = styled.h1`
 
 const AuthPage = () => {
 	const navigate = useNavigate();
+	const location = useLocation({
+		select: (state) => state.pathname
+	});
 
 	useEffect(() => {
-		navigate({ to: '/id/login' });
+		const isEligibleForRedirect = location.split('/').filter(Boolean).length === 1;
+
+		if (isEligibleForRedirect) {
+			navigate({ to: '/id/login' });
+			console.log('REDIRECT');
+		}
 	}, []);
 
 	return <Outlet />;

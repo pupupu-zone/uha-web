@@ -3,6 +3,7 @@ import React from 'react';
 import useRegister from './use-register';
 import { colorizeWord } from '@utils';
 
+import { Button } from '@ui';
 import Root, { Content } from './register.styles';
 
 const generateWordGradient = (words: string[]) => {
@@ -118,6 +119,10 @@ const RegisterUnit = () => {
 							</button>
 						)}
 					</form.Subscribe>
+
+					<Button to="/id/login" size="medium" isFullWidth isSecondary>
+						Login
+					</Button>
 				</form>
 			</Content>
 		</Root>
