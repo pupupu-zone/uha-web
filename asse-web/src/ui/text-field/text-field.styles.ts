@@ -24,12 +24,12 @@ export const ErrorsList = styled.div`
 
 export const Label = styled.label`
 	position: absolute;
-	top: 20px;
+	top: 23px;
 	left: 24px;
 	z-index: 1;
 	color: #9597a0;
 	font-size: 16px;
-	line-height: 19px;
+	line-height: 1;
 `;
 
 const focused = css`
@@ -39,7 +39,7 @@ const focused = css`
 		top: 10px;
 		left: 16px;
 		font-size: 14px;
-		line-height: 16px;
+		line-height: 1;
 	}
 `;
 
