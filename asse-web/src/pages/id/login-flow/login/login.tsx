@@ -65,6 +65,10 @@ const LoginUnit = () => {
 							</Button>
 						)}
 					</form.Subscribe>
+
+					<Button to="/id/register" size="medium" isFullWidth isSecondary>
+						Register
+					</Button>
 				</Actions>
 			</LoginForm>
 		</Root>

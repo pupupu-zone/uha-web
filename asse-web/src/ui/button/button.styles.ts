@@ -3,20 +3,37 @@ import styled, { css } from 'styled-components';
 import type { StyleProps } from './button.d';
 
 const colors = {
-	blue: css`
-		color: #fff;
-		background-color: #4d70f5;
-
-		&:active,
-		&[data-pressed] {
-			background-color: #445abe;
-		}
-
-		&:hover {
+	blue: {
+		default: css`
+			color: #fff;
 			background-color: #4d70f5;
-			box-shadow: 0 4px 28px rgba(77 112 245 / 0.22);
-		}
-	`
+
+			&:active,
+			&[data-pressed] {
+				background-color: #445abe;
+			}
+
+			&:hover {
+				background-color: #4d70f5;
+				box-shadow: 0 4px 28px rgba(77 112 245 / 0.22);
+			}
+		`,
+		secondary: css`
+			color: #4d70f5;
+			background-color: #fff;
+			border: 1px solid #4d70f5;
+
+			&:active,
+			&[data-pressed] {
+				background-color: #e0e7ff;
+			}
+
+			&:hover {
+				background-color: #f5f8ff;
+				box-shadow: 0 4px 28px rgba(77 112 245 / 0.12);
+			}
+		`
+	}
 };
 
 const sizes = {
@@ -57,7 +74,11 @@ export default styled.button<StyleProps>`
 		pointer-events: none;
 	}
 
-	${({ $color }) => colors[$color || 'blue']}
+	${({ $color, $isSecondary }) => {
+		const key = $isSecondary ? 'secondary' : 'default';
+
+		return colors[$color || 'blue'][key];
+	}}
 	${({ $size }) => sizes[$size || 'medium']}
 	${({ $isFullWidth }) => ($isFullWidth ? fullWidth : fitWidth)}
 `;

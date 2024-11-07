@@ -5,12 +5,14 @@ export type InternalProps = {
 	size?: 'medium';
 	to?: string;
 	isFullWidth?: boolean;
+	isSecondary?: boolean;
 };
 
 export type StyleProps = {
 	$color: InternalProps['color'];
 	$size: InternalProps['size'];
 	$isFullWidth: InternalProps['isFullWidth'];
+	$isSecondary: InternalProps['isSecondary'];
 };
 
 export type Props = InternalProps & AriaButtonProps;

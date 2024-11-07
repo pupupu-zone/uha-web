@@ -10,7 +10,16 @@ const noop = () => {};
 
 const Button = React.forwardRef(
 	(
-		{ children, to, isFullWidth = false, onPress = noop, color = 'blue', size = 'medium', ...restProps }: Props,
+		{
+			children,
+			to,
+			isFullWidth = false,
+			isSecondary = false,
+			onPress = noop,
+			color = 'blue',
+			size = 'medium',
+			...restProps
+		}: Props,
 		ref
 	) => {
 		const navigate = useNavigate();
@@ -30,6 +39,7 @@ const Button = React.forwardRef(
 				$color={color}
 				$size={size}
 				$isFullWidth={isFullWidth}
+				$isSecondary={isSecondary}
 				onPress={onPressHd}
 				{...restProps}
 			>
