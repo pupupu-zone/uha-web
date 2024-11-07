@@ -1,7 +1,7 @@
 import React from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 
-import VerifyResetPage from '@src/pages/id/reset-flow/verify-reset';
+import { VerifyResetPage } from '@src/pages/auth-flows/reset-flow';
 
 type SearchParams = {
 	token: string;

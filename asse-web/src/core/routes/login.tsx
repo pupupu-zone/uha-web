@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
-import LoginUnit from '@src/pages/id/login-flow/login';
+import { LoginPage } from '@src/pages/auth-flows/login-flow';
 
 export const Route = createFileRoute('/login')({
 	beforeLoad: ({ context, search }) => {
@@ -8,5 +8,5 @@ export const Route = createFileRoute('/login')({
 			throw redirect({ to: '/subs-list' });
 		}
 	},
-	component: LoginUnit
+	component: LoginPage
 });

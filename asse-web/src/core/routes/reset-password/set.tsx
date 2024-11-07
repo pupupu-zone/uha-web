@@ -1,7 +1,7 @@
 import React from 'react';
 import { createFileRoute } from '@tanstack/react-router';
 
-import SetNewPasswordPage from '@src/pages/id/reset-flow/set-new-password';
+import { SetNewPasswordPage } from '@src/pages/auth-flows/reset-flow';
 
 type SearchParams = {
 	token: string;

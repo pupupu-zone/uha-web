@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import InitializePasswordResetPage from '@pages/id/reset-flow/init-reset';
+import { InitResetPage } from '@pages/auth-flows/reset-flow';
 
 export const Route = createFileRoute('/reset-password/init')({
-	component: InitializePasswordResetPage
+	component: InitResetPage
 });
