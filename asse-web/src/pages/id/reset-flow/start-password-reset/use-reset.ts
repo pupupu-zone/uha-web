@@ -3,7 +3,7 @@ import { useForm } from '@tanstack/react-form';
 import { yupValidator } from '@tanstack/yup-form-adapter';
 import yup from '@yup';
 
-import { useLazyInitiateRecoveryQuery } from '@pages/id/_api';
+import { useLazyInitiateRecoveryQuery } from '@pages/id/reset-flow/_api';
 
 const formSchema = yup.object({
 	email: yup.string().email('E-mail is invalid').required('E-mail is required')

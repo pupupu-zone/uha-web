@@ -3,14 +3,15 @@ import { useForm } from '@tanstack/react-form';
 import { yupValidator } from '@tanstack/yup-form-adapter';
 import yup from '@yup';
 
-import { useLazyNewTokenQuery } from '@pages/id/_api';
+import { useLazyLoginQuery } from '@pages/id/login-flow/_api';
 
 const formSchema = yup.object({
-	email: yup.string().email('E-mail is invalid').required('E-mail is required')
+	email: yup.string().email('E-mail is invalid').required('E-mail is required'),
+	password: yup.string().min(8).required('Password is required')
 });
 
-const useNewToken = () => {
-	const [request, result] = useLazyNewTokenQuery();
+const useLogin = () => {
+	const [request, result] = useLazyLoginQuery();
 
 	const form = useForm({
 		validatorAdapter: yupValidator(),
@@ -18,7 +19,8 @@ const useNewToken = () => {
 			onChange: formSchema
 		},
 		defaultValues: {
-			email: ''
+			email: '',
+			password: ''
 		},
 		onSubmit: async ({ value }) => {
 			await request(value);
@@ -28,10 +30,10 @@ const useNewToken = () => {
 	useEffect(() => {
 		if (!result.isSuccess || !result.data) return;
 
-		console.log('[ID]: New Token:', result.data);
+		console.log('[ID]: Login:', result.data);
 	}, [result.isSuccess, result.data]);
 
 	return form;
 };
 
-export default useNewToken;
+export default useLogin;

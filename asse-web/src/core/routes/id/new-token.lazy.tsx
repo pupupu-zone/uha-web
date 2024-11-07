@@ -1,8 +1,8 @@
 import React from 'react';
 import { createLazyFileRoute } from '@tanstack/react-router';
 
-import TokenRegenerator from '@pages/id/new-token';
+import SendEmailAgain from '@pages/id/register-flow/new-token';
 
 export const Route = createLazyFileRoute('/id/new-token')({
-	component: () => <TokenRegenerator />
+	component: () => <SendEmailAgain />
 });

@@ -3,15 +3,17 @@ import { useForm } from '@tanstack/react-form';
 import { yupValidator } from '@tanstack/yup-form-adapter';
 import yup from '@yup';
 
-import { useLazyLoginQuery } from '@pages/id/_api';
+import { useLazyRegisterQuery } from '@pages/id/register-flow/_api';
+import { generateRandomName } from '@utils';
 
 const formSchema = yup.object({
-	email: yup.string().email('E-mail is invalid').required('E-mail is required'),
-	password: yup.string().min(8).required('Password is required')
+	name: yup.string().min(2).required('Required'),
+	email: yup.string().email('E-mail is invalid').required('Required'),
+	password: yup.string().min(8, 'Minimum 8 chars').required('Required')
 });
 
-const useLogin = () => {
-	const [request, result] = useLazyLoginQuery();
+const useRegister = () => {
+	const [request, result] = useLazyRegisterQuery();
 
 	const form = useForm({
 		validatorAdapter: yupValidator(),
@@ -20,7 +22,8 @@ const useLogin = () => {
 		},
 		defaultValues: {
 			email: '',
-			password: ''
+			password: '',
+			name: generateRandomName()
 		},
 		onSubmit: async ({ value }) => {
 			await request(value);
@@ -30,10 +33,10 @@ const useLogin = () => {
 	useEffect(() => {
 		if (!result.isSuccess || !result.data) return;
 
-		console.log('[ID]: Login:', result.data);
+		console.log('[ID]: Register:', result.data);
 	}, [result.isSuccess, result.data]);
 
 	return form;
 };
 
-export default useLogin;
+export default useRegister;

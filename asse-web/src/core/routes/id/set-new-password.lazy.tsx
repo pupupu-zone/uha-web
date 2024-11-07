@@ -1,7 +1,7 @@
 import React from 'react';
 import { createLazyFileRoute } from '@tanstack/react-router';
 
-import SetNewPasswordUnit from '@pages/id/set-new-password';
+import SetNewPasswordUnit from '@pages/id/reset-flow/set-new-password';
 
 type SearchParams = {
 	token: string;

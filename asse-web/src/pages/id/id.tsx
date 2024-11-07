@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { Outlet, Link } from '@tanstack/react-router';
+import { Outlet, Link, useNavigate } from '@tanstack/react-router';
 
 const Wrap = styled.div`
 	display: flex;
@@ -31,6 +31,13 @@ const Header = styled.h1`
 `;
 
 const AuthPage = () => {
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		navigate({ to: '/id/login' });
+	}, []);
+
+	return <Outlet />;
 	return (
 		<Root>
 			<Header>AUTH PAGE</Header>

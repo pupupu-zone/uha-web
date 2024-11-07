@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useLazyLogoutQuery } from '@pages/id/_api';
+import { useLazyLogoutQuery } from '@pages/id/logout-flow/_api';
 
 const useLogout = () => {
 	const [request, result] = useLazyLogoutQuery();

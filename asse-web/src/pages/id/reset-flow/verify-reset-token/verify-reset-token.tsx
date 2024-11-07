@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from '@tanstack/react-router';
-import { useLazyVerifyRecoveryQuery } from '@pages/id/_api';
+import { useLazyVerifyRecoveryQuery } from '@pages/id/reset-flow/_api';
 
 const Route = styled.div`
 	display: flex;

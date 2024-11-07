@@ -1,7 +1,7 @@
 import React from 'react';
 import { createLazyFileRoute } from '@tanstack/react-router';
 
-import VerifyEmailUnit from '@pages/id/verify-email';
+import VerifyEmailUnit from '@pages/id/register-flow/verify-email';
 
 type SearchParams = {
 	token: string;

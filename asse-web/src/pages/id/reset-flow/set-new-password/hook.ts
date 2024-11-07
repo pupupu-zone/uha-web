@@ -3,7 +3,7 @@ import { useForm } from '@tanstack/react-form';
 import { yupValidator } from '@tanstack/yup-form-adapter';
 import yup from '@yup';
 
-import { useLazySetNewPasswordQuery } from '@pages/id/_api';
+import { useLazySetNewPasswordQuery } from '@pages/id/reset-flow/_api';
 
 const formSchema = yup.object({
 	password: yup.string().min(8).required('Password is required')

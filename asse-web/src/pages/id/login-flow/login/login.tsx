@@ -1,12 +1,13 @@
 import React from 'react';
 
+import { Button, TextField } from '@ui';
 import useLogin from './use-login';
 
 const LoginUnit = () => {
 	const form = useLogin();
 
 	return (
-		<div>
+		<div style={{ margin: '60px' }}>
 			<h1>Login</h1>
 
 			<form
@@ -20,8 +21,8 @@ const LoginUnit = () => {
 				<form.Field name="email">
 					{(field) => (
 						<>
-							<label htmlFor={field.name}>E-Mail</label> <br />
-							<input
+							<TextField
+								label="E-Mail"
 								id={field.name}
 								name={field.name}
 								value={field.state.value}
@@ -29,6 +30,7 @@ const LoginUnit = () => {
 								onChange={(e) => {
 									field.handleChange(e.target.value);
 								}}
+								isFullWidth
 							/>
 							<br />
 							{field.state.meta.errors ? <em role="alert">{field.state.meta.errors.join(', ')}</em> : null}
@@ -40,8 +42,8 @@ const LoginUnit = () => {
 				<form.Field name="password">
 					{(field) => (
 						<>
-							<label htmlFor={field.name}>Password</label> <br />
-							<input
+							<TextField
+								label="Password"
 								id={field.name}
 								name={field.name}
 								value={field.state.value}
@@ -49,6 +51,7 @@ const LoginUnit = () => {
 								onChange={(e) => {
 									field.handleChange(e.target.value);
 								}}
+								isFullWidth
 							/>
 							<br />
 							{field.state.meta.errors ? <em role="alert">{field.state.meta.errors.join(', ')}</em> : null}
@@ -58,9 +61,9 @@ const LoginUnit = () => {
 
 				<form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
 					{([canSubmit, isSubmitting]) => (
-						<button type="submit" disabled={!canSubmit}>
+						<Button type="submit" disabled={!canSubmit} size="medium" isFullWidth>
 							{isSubmitting ? '...' : 'Submit'}
-						</button>
+						</Button>
 					)}
 				</form.Subscribe>
 			</form>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createLazyFileRoute } from '@tanstack/react-router';
 
-import VerifyResetTokenUnit from '@pages/id/verify-reset-token';
+import VerifyResetTokenUnit from '@pages/id/reset-flow/verify-reset-token';
 
 type SearchParams = {
 	token: string;

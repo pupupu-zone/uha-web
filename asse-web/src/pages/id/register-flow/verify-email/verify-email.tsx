@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { useLazyVerifyEmailQuery } from '@pages/id/_api';
+import { useLazyVerifyEmailQuery } from '@pages/id/register-flow/_api';
 
 type Props = {
 	token: string;

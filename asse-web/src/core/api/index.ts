@@ -35,7 +35,7 @@ const baseQuery = fetchBaseQuery({
 		switch (response.status) {
 			case 401: {
 				console.error('Ошибка авторизации');
-				window.location.assign('/logout');
+				// window.location.assign('/logout');
 				break;
 			}
 
