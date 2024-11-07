@@ -28,4 +28,7 @@ export type ResendEmailResT = {
 	info: {
 		user: string;
 	};
+	errors: {
+		email: string;
+	};
 };
