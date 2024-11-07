@@ -54,7 +54,7 @@ const General = createGlobalStyle`
 	input:-webkit-autofill:hover,
 	input:-webkit-autofill:focus,
 	input:-webkit-autofill:active {
-		-webkit-box-shadow: 0 0 0 30px oklch(var(--white)) inset !important;
+		-webkit-box-shadow: 0 0 0 60px oklch(var(--white)) inset !important;
 	}
 `;
 

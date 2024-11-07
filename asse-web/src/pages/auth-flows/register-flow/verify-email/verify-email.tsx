@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 
+import { LoaderImg, ErrorStateImg, SuccessStateImg } from '@images';
 import { useLazyVerifyEmailQuery } from '@pages/auth-flows/register-flow/_api';
+
+import { H1, Button } from '@ui';
+import Root, { Loader } from './verify-email.styles';
 
 type Props = {
 	token: string;
@@ -21,15 +25,39 @@ const VerifyEmailUnit = ({ token }: Props) => {
 		console.log('[ID]: Verify E-Mail:', result.data, result.originalArgs?.token);
 	}, [result.isSuccess, result.data]);
 
-	if (result.isSuccess) {
-		return <div>Success</div>;
-	}
+	return (
+		<Root>
+			<H1>E-Mail Verification</H1>
 
-	if (result.isError) {
-		return <div>error</div>;
-	}
+			<Loader>
+				{(result.isFetching || result.isUninitialized) && (
+					<>
+						<LoaderImg width={150} height={150} />
+					</>
+				)}
 
-	return <div>{token ? 'Verifying...' : 'No token provided'}</div>;
+				{result.isError && (
+					<>
+						<ErrorStateImg width={150} height={150} />
+
+						<Button to="/register" size="medium" isFullWidth isSecondary>
+							Sign Up
+						</Button>
+					</>
+				)}
+
+				{result.isSuccess && (
+					<>
+						<SuccessStateImg width={150} height={150} />
+
+						<Button to="/login" size="medium" isFullWidth isSecondary>
+							Sign In
+						</Button>
+					</>
+				)}
+			</Loader>
+		</Root>
+	);
 };
 
 export default VerifyEmailUnit;

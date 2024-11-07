@@ -18,7 +18,12 @@ export type RegistrationResT = {
 export type VerifyEmailReqT = {
 	token: string;
 };
-export type VerifyEmailResT = unknown;
+export type VerifyEmailResT = {
+	status: string;
+	info: {
+		verification: string;
+	};
+};
 
 // Resend E-Mail
 export type ResendEmailReqT = {
