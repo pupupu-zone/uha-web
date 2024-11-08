@@ -1,10 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
-import { persistStore } from 'redux-persist';
 import { RouterProvider } from '@tanstack/react-router';
-
 import { PersistGate } from 'redux-persist/integration/react';
+
+import { useBlockZoom } from '@utils';
+import { persistStore } from 'redux-persist';
 
 import { CustomToaster } from '@ui';
 import ProgressiveUnit from '@features/pwa';
@@ -26,35 +27,39 @@ const InnerApp = ({ router }: Props) => {
 	return <RouterProvider router={router} context={{ auth }} />;
 };
 
-const Root = ({ router }: Props) => (
-	<>
-		<ResetStyles />
-		<FontStyles />
-		<GeneralStyles />
+const Root = ({ router }: Props) => {
+	useBlockZoom();
 
-		<Provider store={store}>
-			<PersistGate loading={null} persistor={persistor}>
-				<Toaster
-					containerStyle={{
-						top: 32
-					}}
-					position="top-center"
-					toastOptions={{
-						duration: 4000
-					}}
-				>
-					{/* @ts-ignore */}
-					{(toast) => <CustomToaster {...toast} />}
-				</Toaster>
+	return (
+		<>
+			<ResetStyles />
+			<FontStyles />
+			<GeneralStyles />
 
-				<AuthProvider>
-					<InnerApp router={router} />
-				</AuthProvider>
+			<Provider store={store}>
+				<PersistGate loading={null} persistor={persistor}>
+					<Toaster
+						containerStyle={{
+							top: 32
+						}}
+						position="top-center"
+						toastOptions={{
+							duration: 4000
+						}}
+					>
+						{/* @ts-ignore */}
+						{(toast) => <CustomToaster {...toast} />}
+					</Toaster>
 
-				<ProgressiveUnit />
-			</PersistGate>
-		</Provider>
-	</>
-);
+					<AuthProvider>
+						<InnerApp router={router} />
+					</AuthProvider>
+
+					<ProgressiveUnit />
+				</PersistGate>
+			</Provider>
+		</>
+	);
+};
 
 export default Root;
