@@ -17,7 +17,7 @@ const useBlockZoom = () => {
 		const viewportMeta = document.querySelector('meta[name="viewport"]');
 
 		if (isStandalone() && viewportMeta) {
-			viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=noo');
+			viewportMeta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no');
 		}
 	}, []);
 };
