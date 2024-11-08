@@ -1,3 +1,3 @@
-import { PageForm, Actions, PageRoot } from '@pages/auth-flows/common.styles';
+import { PageForm, Actions } from '@pages/auth-flows/common.styles';
 
-export { PageForm, Actions, PageRoot };
+export { PageForm, Actions };

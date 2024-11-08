@@ -4,8 +4,9 @@ import { formatError } from '@utils';
 import { useRegister } from './_hooks';
 import { useLazyResendEmailQuery } from '@pages/auth-flows/register-flow';
 
-import { H1, Button, TextField } from '@ui';
-import { PageRoot, PageForm, Actions } from './register.styles';
+import AuthFlow from '@pages/auth-flows';
+import { Button, TextField } from '@ui';
+import { PageForm, Actions } from './register.styles';
 
 const RegisterPage = () => {
 	const form = useRegister();
@@ -25,9 +26,7 @@ const RegisterPage = () => {
 	};
 
 	return (
-		<PageRoot>
-			<H1>Registration</H1>
-
+		<AuthFlow header="Registration" linkTo="/login" link="Sign In">
 			<PageForm onSubmit={onSubmit} noValidate>
 				<form.Field name="name">
 					{(field) => {
@@ -121,13 +120,9 @@ const RegisterPage = () => {
 							</Button>
 						)}
 					</form.Subscribe>
-
-					<Button to="/login" size="medium" isFullWidth isSecondary>
-						Sign In Instead
-					</Button>
 				</Actions>
 			</PageForm>
-		</PageRoot>
+		</AuthFlow>
 	);
 };
 

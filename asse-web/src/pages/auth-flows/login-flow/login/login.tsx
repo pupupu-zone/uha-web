@@ -3,8 +3,9 @@ import React from 'react';
 import { useLogin } from './_hooks';
 import { formatError } from '@utils';
 
-import { H1, Button, TextField } from '@ui';
-import Root, { Header, PageRoot, PageForm, Actions, LinkBtn, TagLine, HighTag, LowTag } from './login.styles';
+import AuthFlow from '@pages/auth-flows';
+import { Button, TextField } from '@ui';
+import { PageForm, Actions } from './login.styles';
 
 const LoginPage = () => {
 	const form = useLogin();
@@ -17,80 +18,67 @@ const LoginPage = () => {
 	};
 
 	return (
-		<Root>
-			<TagLine>
-				<HighTag>TRACK YOUR SUBSCRIPTIONS</HighTag>
-				<LowTag>DOWN!</LowTag>
-			</TagLine>
+		<AuthFlow header="Login" linkTo="/register" link="Sign Up">
+			<PageForm onSubmit={onSubmit} noValidate>
+				<form.Field name="email">
+					{(field) => {
+						const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
+							field.handleChange(e.target.value);
+						};
 
-			<PageRoot>
-				<Header>
-					<H1>Login</H1>
+						return (
+							<TextField
+								id={field.name}
+								type="email"
+								label="E-Mail"
+								name={field.name}
+								autoComplete="email"
+								onChange={onChangeHd}
+								value={field.state.value}
+								isFullWidth
+								errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
+							/>
+						);
+					}}
+				</form.Field>
 
-					<LinkBtn to="/reset-password/init">Restore password</LinkBtn>
-				</Header>
+				<form.Field name="password">
+					{(field) => {
+						const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
+							field.handleChange(e.target.value);
+						};
 
-				<PageForm onSubmit={onSubmit} noValidate>
-					<form.Field name="email">
-						{(field) => {
-							const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
-								field.handleChange(e.target.value);
-							};
+						return (
+							<TextField
+								id={field.name}
+								type="password"
+								label="Password"
+								name={field.name}
+								autoComplete="current-password"
+								onChange={onChangeHd}
+								value={field.state.value}
+								isFullWidth
+								errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
+							/>
+						);
+					}}
+				</form.Field>
 
-							return (
-								<TextField
-									id={field.name}
-									type="email"
-									label="E-Mail"
-									name={field.name}
-									autoComplete="email"
-									onChange={onChangeHd}
-									value={field.state.value}
-									isFullWidth
-									errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
-								/>
-							);
-						}}
-					</form.Field>
+				<Actions>
+					<form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+						{([canSubmit, isSubmitting]) => (
+							<Button type="submit" isDisabled={!canSubmit || isSubmitting} size="medium" isFullWidth>
+								Sign In
+							</Button>
+						)}
+					</form.Subscribe>
 
-					<form.Field name="password">
-						{(field) => {
-							const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
-								field.handleChange(e.target.value);
-							};
-
-							return (
-								<TextField
-									id={field.name}
-									type="password"
-									label="Password"
-									name={field.name}
-									autoComplete="current-password"
-									onChange={onChangeHd}
-									value={field.state.value}
-									isFullWidth
-									errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
-								/>
-							);
-						}}
-					</form.Field>
-
-					<Actions>
-						<form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
-							{([canSubmit, isSubmitting]) => (
-								<Button type="submit" isDisabled={!canSubmit || isSubmitting} size="medium" isFullWidth>
-									Sign In
-								</Button>
-							)}
-						</form.Subscribe>
-
-						<Button to="/register" size="medium" isFullWidth isSecondary>
-							Sign Up
-						</Button>
-					</Actions>
-				</PageForm>
-			</PageRoot>
-		</Root>
+					<Button to="/reset-password" size="medium" isFullWidth isSecondary>
+						Restore password
+					</Button>
+				</Actions>
+			</PageForm>
+		</AuthFlow>
 	);
 };
 
