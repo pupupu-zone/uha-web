@@ -1,10 +1,10 @@
 import API from '@api';
 
-import type { LoginResT, LoginReqT } from './api.d';
+import type { LoginResSuccessT, LoginReqT } from './api.d';
 
 const idApi = API.injectEndpoints({
 	endpoints: (build) => ({
-		login: build.query<LoginResT, LoginReqT>({
+		login: build.query<LoginResSuccessT, LoginReqT>({
 			query: (body) => ({
 				url: '/auth/sign-in',
 				method: 'POST',
