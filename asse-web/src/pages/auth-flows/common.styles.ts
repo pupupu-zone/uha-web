@@ -15,6 +15,7 @@ export const Actions = styled.div`
 	grid-auto-columns: 1fr;
 	grid-auto-flow: row;
 	gap: 12px;
+	margin-top: 12px;
 `;
 
 export const PageRoot = styled.div`

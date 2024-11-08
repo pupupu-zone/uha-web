@@ -4,7 +4,7 @@ import { useLogin } from './_hooks';
 import { formatError } from '@utils';
 
 import { H1, Button, TextField } from '@ui';
-import Root, { Header, PageRoot, PageForm, Actions, LinkBtn, PseudoLogo } from './login.styles';
+import Root, { Header, PageRoot, PageForm, Actions, LinkBtn, TagLine, HighTag, LowTag } from './login.styles';
 
 const LoginPage = () => {
 	const form = useLogin();
@@ -18,11 +18,10 @@ const LoginPage = () => {
 
 	return (
 		<Root>
-			<PseudoLogo>
-				<H1 style={{ color: '#A6749C', fontWeight: '900', lineHeight: 1 }}>TRACK YOUR SUBSCRIPTIONS</H1>
-
-				<H1 style={{ color: '#EFA7A7', fontWeight: '900', fontSize: '97px', lineHeight: 1 }}>DOWN!</H1>
-			</PseudoLogo>
+			<TagLine>
+				<HighTag>TRACK YOUR SUBSCRIPTIONS</HighTag>
+				<LowTag>DOWN!</LowTag>
+			</TagLine>
 
 			<PageRoot>
 				<Header>

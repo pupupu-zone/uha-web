@@ -1,19 +1,34 @@
 import { createGlobalStyle } from 'styled-components';
 
 const General = createGlobalStyle`
+	/* stylelint-disable custom-property-empty-line-before */
+
 	:root {
 		--blue-focus: 60% 0.2 257deg;
+
 		--bg-color: #EDE8E1;
-		--input-bg: #f2effb;
+		--popup-bg: #fefefe;
+
+		/* Typography */
 		--error: #D9534F;
-		--label: #4A4A4A;
-		--border: #A69CAC;
 		--primary-text: #333;
+
+		/* Inputs */
+		--label: #4A4A4A;
+		--input-bg: #F6F1F7;
+		--border: #D8CBD8;
+
+		/* Primary button styles */
+		--primary-button-text: #fefefe;
+		--primary-button: 58% 0.14 289; ${'' /* #7a6ac7 */}
+		--primary-button-hover: 62% 0.14 289; ${'' /* #8A7BDC */}
+		--primary-button-press: 42% 0.12 292; ${'' /* #4F3E87 */}
 	}
 
 	html {
 		height: 100%;
 		min-height: 100%;
+		overflow-x: hidden;
 		background-color: var(--bg-color);
 	}
 
@@ -59,6 +74,7 @@ const General = createGlobalStyle`
 	input:-webkit-autofill:hover,
 	input:-webkit-autofill:focus,
 	input:-webkit-autofill:active {
+		/* stylelint-disable-next-line property-no-vendor-prefix */
 		-webkit-box-shadow: 0 0 0 60px var(--bg-color) inset !important;
 	}
 `;

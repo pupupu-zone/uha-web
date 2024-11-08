@@ -16,7 +16,7 @@ const Button = React.forwardRef(
 			isFullWidth = false,
 			isSecondary = false,
 			onPress = noop,
-			color = 'blue',
+			color = 'primary',
 			size = 'medium',
 			...restProps
 		}: Props,

@@ -3,33 +3,35 @@ import styled, { css } from 'styled-components';
 import type { StyleProps } from './button.d';
 
 const colors = {
-	blue: {
+	primary: {
 		default: css`
-			color: #fff;
-			background-color: #4d70f5;
+			color: var(--primary-button-text);
+			background-color: oklch(var(--primary-button) / 1);
 
 			&:active,
+			&:focus-visible,
+			&:target,
 			&[data-pressed] {
-				background-color: #445abe;
+				background-color: oklch(var(--primary-button-press) / 1);
 			}
 
 			&:hover {
-				background-color: #4d70f5;
+				background-color: oklch(var(--primary-button-hover) / 1);
 				box-shadow: 0 4px 28px rgba(77 112 245 / 0.22);
 			}
 		`,
 		secondary: css`
-			color: #4d70f5;
-			background-color: #fff;
-			border: 1px solid #4d70f5;
+			color: oklch(var(--primary-button) / 1);
+			background-color: var(--primary-button-text);
+			border: 1px solid oklch(var(--primary-button) / 1);
 
 			&:active,
 			&[data-pressed] {
-				background-color: #e0e7ff;
+				background-color: oklch(var(--primary-button-press) / 0.15);
 			}
 
 			&:hover {
-				background-color: #f5f8ff;
+				background-color: oklch(var(--primary-button-hover) / 0.15);
 				box-shadow: 0 4px 28px rgba(77 112 245 / 0.12);
 			}
 		`
@@ -77,7 +79,7 @@ export default styled.button<StyleProps>`
 	${({ $color, $isSecondary }) => {
 		const key = $isSecondary ? 'secondary' : 'default';
 
-		return colors[$color || 'blue'][key];
+		return colors[$color || 'primary'][key];
 	}}
 	${({ $size }) => sizes[$size || 'medium']}
 	${({ $isFullWidth }) => ($isFullWidth ? fullWidth : fitWidth)}
