@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useForm } from '@tanstack/react-form';
 import { yupValidator } from '@tanstack/yup-form-adapter';
 import yup from '@yup';
@@ -25,13 +24,7 @@ const useResetPassword = () => {
 		}
 	});
 
-	useEffect(() => {
-		if (!result.isSuccess || !result.data) return;
-
-		console.log('[ID]: Password Change:', result.data);
-	}, [result.isSuccess, result.data]);
-
-	return form;
+	return { form, result };
 };
 
 export default useResetPassword;

@@ -8,7 +8,7 @@ import AuthFlow from '@pages/auth-flows';
 import { PageForm, Actions } from './init-reset.styles';
 
 const InitializePasswordReset = () => {
-	const form = useResetPassword();
+	const { form, result } = useResetPassword();
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -44,7 +44,12 @@ const InitializePasswordReset = () => {
 				<Actions>
 					<form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
 						{([canSubmit, isSubmitting]) => (
-							<Button type="submit" isDisabled={!canSubmit || isSubmitting} size="medium" isFullWidth>
+							<Button
+								type="submit"
+								isDisabled={!canSubmit || isSubmitting || result.isFetching}
+								size="medium"
+								isFullWidth
+							>
 								Send E-Mail
 							</Button>
 						)}

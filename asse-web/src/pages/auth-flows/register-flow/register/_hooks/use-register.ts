@@ -12,7 +12,7 @@ const formSchema = yup.object({
 });
 
 const useRegister = () => {
-	const [request] = useLazyRegisterQuery();
+	const [request, result] = useLazyRegisterQuery();
 
 	const form = useForm({
 		validatorAdapter: yupValidator(),
@@ -29,7 +29,7 @@ const useRegister = () => {
 		}
 	});
 
-	return form;
+	return { form, result };
 };
 
 export default useRegister;

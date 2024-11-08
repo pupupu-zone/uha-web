@@ -60,7 +60,12 @@ const SetNewPassword = ({ token }: Props) => {
 			<Actions>
 				<form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
 					{([canSubmit, isSubmitting]) => (
-						<Button type="submit" isDisabled={!canSubmit || isSubmitting} size="medium" isFullWidth>
+						<Button
+							type="submit"
+							isDisabled={!canSubmit || isSubmitting || result.isFetching}
+							size="medium"
+							isFullWidth
+						>
 							Set Up
 						</Button>
 					)}

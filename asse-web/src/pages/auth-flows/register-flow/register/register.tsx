@@ -9,7 +9,7 @@ import AuthFlow from '@pages/auth-flows';
 import { PageForm, Actions } from './register.styles';
 
 const RegisterPage = () => {
-	const form = useRegister();
+	const { form, result } = useRegister();
 	const [resendEmail, resendResults] = useLazyResendEmailQuery();
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -94,7 +94,12 @@ const RegisterPage = () => {
 				<Actions>
 					<form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
 						{([canSubmit, isSubmitting]) => (
-							<Button type="submit" isDisabled={!canSubmit || isSubmitting} size="medium" isFullWidth>
+							<Button
+								type="submit"
+								isDisabled={!canSubmit || isSubmitting || result.isFetching}
+								size="medium"
+								isFullWidth
+							>
 								Sign Up
 							</Button>
 						)}
