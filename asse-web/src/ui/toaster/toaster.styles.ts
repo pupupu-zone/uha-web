@@ -14,20 +14,6 @@ const types = {
 	`
 };
 
-export const Icon = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 36px;
-	height: 36px;
-	padding-bottom: 4px;
-	color: var(--label);
-	font-size: 24px;
-	line-height: 1;
-	border: 2px solid var(--border);
-	border-radius: 50%;
-`;
-
 export default styled.div<StyleProps>`
 	z-index: 1000;
 	display: grid;
@@ -40,9 +26,9 @@ export default styled.div<StyleProps>`
 	padding: 16px;
 	font-size: 14px;
 	font-family: 'Nunito Sans', sans-serif;
+	white-space: nowrap;
 	background-color: rgba(255 255 255 / 1);
 	border-radius: 8px;
-	backdrop-filter: blur(10px);
 
 	${({ $type }) => types[$type || 'blank']}
 `;

@@ -8,7 +8,7 @@ import { Button, TextField } from '@ui';
 import { PageForm, Actions } from './login.styles';
 
 const LoginPage = () => {
-	const form = useLogin();
+	const { form, result } = useLogin();
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -65,15 +65,14 @@ const LoginPage = () => {
 				</form.Field>
 
 				<Actions>
-					<form.Subscribe
-						selector={(state) => {
-							console.log(state.isSubmitting);
-
-							return [state.canSubmit, state.isSubmitting];
-						}}
-					>
+					<form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
 						{([canSubmit, isSubmitting]) => (
-							<Button type="submit" isDisabled={!canSubmit || isSubmitting} size="medium" isFullWidth>
+							<Button
+								type="submit"
+								isDisabled={!canSubmit || isSubmitting || result.isFetching}
+								size="medium"
+								isFullWidth
+							>
 								Sign In
 							</Button>
 						)}

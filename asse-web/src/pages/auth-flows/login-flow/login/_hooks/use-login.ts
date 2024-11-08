@@ -43,7 +43,7 @@ const useLogin = () => {
 		auth.login('ANONYMOUS');
 	}, [result.isSuccess, result.data]);
 
-	return form;
+	return { form, result };
 };
 
 export default useLogin;
