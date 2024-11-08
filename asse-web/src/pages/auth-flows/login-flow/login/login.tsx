@@ -4,7 +4,7 @@ import { useLogin } from './_hooks';
 import { formatError } from '@utils';
 
 import { H1, Button, TextField } from '@ui';
-import Root, { PageRoot, PageForm, Actions } from './login.styles';
+import Root, { Header, PageRoot, PageForm, Actions, LinkBtn, PseudoLogo } from './login.styles';
 
 const LoginPage = () => {
 	const form = useLogin();
@@ -18,8 +18,18 @@ const LoginPage = () => {
 
 	return (
 		<Root>
+			<PseudoLogo>
+				<H1 style={{ color: '#A6749C', fontWeight: '900', lineHeight: 1 }}>TRACK YOUR SUBSCRIPTIONS</H1>
+
+				<H1 style={{ color: '#EFA7A7', fontWeight: '900', fontSize: '97px', lineHeight: 1 }}>DOWN!</H1>
+			</PseudoLogo>
+
 			<PageRoot>
-				<H1>Login</H1>
+				<Header>
+					<H1>Login</H1>
+
+					<LinkBtn to="/reset-password/init">Restore password</LinkBtn>
+				</Header>
 
 				<PageForm onSubmit={onSubmit} noValidate>
 					<form.Field name="email">
@@ -77,10 +87,6 @@ const LoginPage = () => {
 
 						<Button to="/register" size="medium" isFullWidth isSecondary>
 							Sign Up
-						</Button>
-
-						<Button to="/reset-password" size="medium" isFullWidth isSecondary>
-							Restore Password
 						</Button>
 					</Actions>
 				</PageForm>

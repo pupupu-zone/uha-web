@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TanStackRouterDevtools } from '@tanstack/router-devtools';
+// import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
 
 import type { AuthContext } from '@core/auth';
@@ -13,7 +13,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 		<>
 			<Outlet />
 
-			{import.meta.env.DEV && <TanStackRouterDevtools initialIsOpen={false} position="top-right" />}
+			{/* {import.meta.env.DEV && <TanStackRouterDevtools initialIsOpen={false} position="top-right" />} */}
 		</>
 	)
 });
