@@ -3,8 +3,9 @@ import React, { useEffect } from 'react';
 import { LoaderImg, ErrorStateImg, SuccessStateImg } from '@images';
 import { useLazyVerifyEmailQuery } from '@pages/auth-flows/register-flow/_api';
 
-import { H1, Button, LargeText } from '@ui';
-import Root, { Loader } from './verify-email.styles';
+import { H3, SmallText } from '@ui';
+import AuthFlow from '@pages/auth-flows';
+import { Loader } from './verify-email.styles';
 
 type Props = {
 	token: string;
@@ -20,40 +21,38 @@ const VerifyEmailUnit = ({ token }: Props) => {
 	}, [token]);
 
 	return (
-		<Root>
-			<H1>E-Mail Verification</H1>
-
+		<AuthFlow>
 			<Loader>
-				{(result.isFetching || result.isUninitialized) && token && (
-					<>
-						<LoaderImg width={150} height={150} />
-					</>
-				)}
+				{(result.isFetching || result.isUninitialized) && token && <LoaderImg width={150} height={150} />}
 
 				{(!token || result.isError) && (
 					<>
 						<ErrorStateImg width={150} height={150} />
 
-						{!token && <LargeText>No token has been found</LargeText>}
-						{token && <LargeText>Invalid token</LargeText>}
+						{!token && (
+							<>
+								<H3>No token has been found</H3>
+								<SmallText>Please make sure you have correct link</SmallText>
+							</>
+						)}
 
-						<Button to="/register" size="medium" isFullWidth isSecondary>
-							Try to Sign Up
-						</Button>
+						{token && (
+							<>
+								<H3>Invalid token</H3>
+								<SmallText>Please make sure you have correct link</SmallText>
+							</>
+						)}
 					</>
 				)}
 
 				{result.isSuccess && (
 					<>
 						<SuccessStateImg width={150} height={150} />
-
-						<Button to="/login" size="medium" isFullWidth isSecondary>
-							Sign In
-						</Button>
+						<H3>You can now login</H3>
 					</>
 				)}
 			</Loader>
-		</Root>
+		</AuthFlow>
 	);
 };
 

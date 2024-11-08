@@ -60,8 +60,7 @@ export const PageRoot = styled.div`
 	grid-auto-columns: 1fr;
 	grid-auto-flow: row;
 	gap: 36px;
-	margin-right: 4px;
-	margin-left: 4px;
+	margin: 0;
 	padding: 24px 32px;
 	background-color: var(--popup-bg);
 	border-top-left-radius: 36px;

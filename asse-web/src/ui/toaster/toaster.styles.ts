@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components';
-import { H3, Text } from '../typography';
 
 import type { StyleProps } from './toaster.d';
 
@@ -16,45 +15,33 @@ const types = {
 };
 
 export const Icon = styled.div`
-	font-size: 24px;
-	color: var(--label);
-	width: 36px;
-	height: 36px;
-	border-radius: 50%;
-	border: 2px solid var(--border);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	line-height: 1;
+	width: 36px;
+	height: 36px;
 	padding-bottom: 4px;
+	color: var(--label);
+	font-size: 24px;
+	line-height: 1;
+	border: 2px solid var(--border);
+	border-radius: 50%;
 `;
-
-export const Content = styled.div`
-	display: grid;
-	grid-template-rows: auto auto;
-	gap: 8px;
-	grid-auto-flow: row;
-	grid-template-columns: 1fr;
-`;
-
-export const Title = styled(H3)``;
-
-export const Body = styled(Text)``;
 
 export default styled.div<StyleProps>`
+	z-index: 1000;
 	display: grid;
 	grid-auto-flow: column;
+	grid-template-columns: min-content 1fr;
 	gap: 16px;
 	align-items: center;
-	grid-template-columns: min-content 1fr;
-	z-index: 1000;
 	width: calc(100vw - 64px);
 	max-width: 400px;
 	padding: 16px;
 	font-size: 14px;
 	font-family: 'Nunito Sans', sans-serif;
+	background-color: rgba(255 255 255 / 1);
 	border-radius: 8px;
-	background-color: rgba(255, 255, 255, 1);
 	backdrop-filter: blur(10px);
 
 	${({ $type }) => types[$type || 'blank']}

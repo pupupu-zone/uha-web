@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 import { formatError } from '@utils';
 import { useRegister } from './_hooks';
@@ -10,14 +10,7 @@ import { PageForm, Actions } from './register.styles';
 
 const RegisterPage = () => {
 	const form = useRegister();
-	const firstInput = useRef<HTMLInputElement>(null);
 	const [resendEmail, resendResults] = useLazyResendEmailQuery();
-
-	useEffect(() => {
-		if (!firstInput.current) return;
-
-		firstInput.current.focus();
-	}, [firstInput.current]);
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -43,7 +36,6 @@ const RegisterPage = () => {
 
 						return (
 							<TextField
-								ref={firstInput}
 								id={field.name}
 								type="text"
 								label="Your name"

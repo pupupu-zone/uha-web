@@ -38,9 +38,11 @@ const baseQuery = fetchBaseQuery({
 		if (response.ok) return response.json();
 
 		const errorResponse = await response.json();
-		const errorMessage = errorCodes.get(errorResponse?.code) || errorResponse.code || response.statusText;
+		const errorMessage = errorCodes.get(errorResponse?.code);
 
-		toast.error(errorMessage);
+		if (errorMessage) {
+			toast.error(errorMessage);
+		}
 
 		return {
 			code: response.status,

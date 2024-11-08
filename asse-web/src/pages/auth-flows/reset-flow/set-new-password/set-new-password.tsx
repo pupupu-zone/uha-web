@@ -4,7 +4,7 @@ import { formatError } from '@utils';
 import { SuccessStateImg } from '@images';
 import { useSetNewPassword } from './_hooks';
 
-import { TextField, Button } from '@ui';
+import { TextField, Button, H3 } from '@ui';
 import { PageForm, Actions } from './set-new-password.styles';
 
 import type { Props } from './set-new-password.d';
@@ -29,10 +29,7 @@ const SetNewPassword = ({ token }: Props) => {
 		return (
 			<>
 				<SuccessStateImg width={150} height={150} />
-
-				<Button to="/login" size="medium" isFullWidth isSecondary>
-					Sign In
-				</Button>
+				<H3>You can now login</H3>
 			</>
 		);
 	}

@@ -8,11 +8,3 @@ export const Loader = styled.div`
 	justify-content: center;
 	width: 100%;
 `;
-
-export default styled.div`
-	display: grid;
-	grid-auto-rows: min-content 1fr;
-	grid-auto-columns: 1fr;
-	grid-auto-flow: row;
-	margin: 60px;
-`;

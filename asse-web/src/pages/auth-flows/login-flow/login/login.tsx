@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 import { useLogin } from './_hooks';
 import { formatError } from '@utils';
@@ -9,13 +9,6 @@ import { PageForm, Actions } from './login.styles';
 
 const LoginPage = () => {
 	const form = useLogin();
-	const firstInput = useRef<HTMLInputElement>(null);
-
-	useEffect(() => {
-		if (!firstInput.current) return;
-
-		firstInput.current.focus();
-	}, [firstInput.current]);
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -35,7 +28,6 @@ const LoginPage = () => {
 
 						return (
 							<TextField
-								ref={firstInput}
 								id={field.name}
 								type="email"
 								label="E-Mail"
@@ -73,7 +65,13 @@ const LoginPage = () => {
 				</form.Field>
 
 				<Actions>
-					<form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
+					<form.Subscribe
+						selector={(state) => {
+							console.log(state.isSubmitting);
+
+							return [state.canSubmit, state.isSubmitting];
+						}}
+					>
 						{([canSubmit, isSubmitting]) => (
 							<Button type="submit" isDisabled={!canSubmit || isSubmitting} size="medium" isFullWidth>
 								Sign In

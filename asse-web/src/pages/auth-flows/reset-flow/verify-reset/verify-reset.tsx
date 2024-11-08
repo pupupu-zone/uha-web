@@ -2,9 +2,10 @@ import React, { useEffect } from 'react';
 
 import { useLazyVerifyRecoveryQuery } from '@pages/auth-flows/reset-flow/_api';
 
-import { H1, Button, LargeText } from '@ui';
+import { H3, SmallText } from '@ui';
+import AuthFlow from '@pages/auth-flows';
+import { Loader } from './verify-reset.styles';
 import { LoaderImg, ErrorStateImg } from '@images';
-import Root, { Loader } from './verify-reset.styles';
 import { SetNewPassword } from '@pages/auth-flows/reset-flow';
 
 import type { Props } from './verify-reset.d';
@@ -19,9 +20,7 @@ const VerifyResetToken = ({ token }: Props) => {
 	}, [token]);
 
 	return (
-		<Root>
-			<H1>Password Reset</H1>
-
+		<AuthFlow>
 			<Loader>
 				{(verifyResult.isFetching || verifyResult.isUninitialized) && token && (
 					<>
@@ -33,18 +32,25 @@ const VerifyResetToken = ({ token }: Props) => {
 					<>
 						<ErrorStateImg width={150} height={150} />
 
-						{!token && <LargeText>No token has been found</LargeText>}
-						{token && <LargeText>Invalid token</LargeText>}
+						{!token && (
+							<>
+								<H3>No token has been found</H3>
+								<SmallText>Please make sure you have correct link</SmallText>
+							</>
+						)}
 
-						<Button to="/reset-password/init" size="medium" isFullWidth isSecondary>
-							Try Again
-						</Button>
+						{token && (
+							<>
+								<H3>Invalid token</H3>
+								<SmallText>Please make sure you have correct link</SmallText>
+							</>
+						)}
 					</>
 				)}
 
 				{verifyResult.isSuccess && <SetNewPassword token={verifyResult.data.data.token} />}
 			</Loader>
-		</Root>
+		</AuthFlow>
 	);
 };
 

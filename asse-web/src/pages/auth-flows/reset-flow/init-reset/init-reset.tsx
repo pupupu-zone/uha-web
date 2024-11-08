@@ -1,21 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 import { formatError } from '@utils';
 import { useResetPassword } from './_hooks';
 
-import AuthFlow from '@pages/auth-flows';
 import { Button, TextField } from '@ui';
+import AuthFlow from '@pages/auth-flows';
 import { PageForm, Actions } from './init-reset.styles';
 
 const InitializePasswordReset = () => {
 	const form = useResetPassword();
-	const firstInput = useRef<HTMLInputElement>(null);
-
-	useEffect(() => {
-		if (!firstInput.current) return;
-
-		firstInput.current.focus();
-	}, [firstInput.current]);
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -35,7 +28,6 @@ const InitializePasswordReset = () => {
 
 						return (
 							<TextField
-								ref={firstInput}
 								id={field.name}
 								type="email"
 								label="E-Mail"

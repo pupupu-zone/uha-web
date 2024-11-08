@@ -39,11 +39,12 @@ const General = createGlobalStyle`
 
 	#root {
 		display: grid;
+		grid-auto-columns: 1fr;
 		grid-template-rows: 1fr;
+		justify-content: center;
 		min-width: 100vw;
 		min-height: 100vh;
 		min-height: 100dvh;
-		margin: 0 auto;
 	}
 
 	label {
@@ -76,6 +77,13 @@ const General = createGlobalStyle`
 	input:-webkit-autofill:active {
 		/* stylelint-disable-next-line property-no-vendor-prefix */
 		-webkit-box-shadow: 0 0 0 60px var(--bg-color) inset !important;
+	}
+
+	@supports (-webkit-overflow-scrolling: touch) {
+		/* iOS-specific styles here */
+		html, body {
+			overflow-x: hidden;
+		}
 	}
 `;
 
