@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useForm } from '@tanstack/react-form';
 import { yupValidator } from '@tanstack/yup-form-adapter';
 
@@ -13,7 +12,7 @@ const formSchema = yup.object({
 });
 
 const useRegister = () => {
-	const [request, result] = useLazyRegisterQuery();
+	const [request] = useLazyRegisterQuery();
 
 	const form = useForm({
 		validatorAdapter: yupValidator(),
@@ -25,16 +24,10 @@ const useRegister = () => {
 			password: '',
 			name: generateRandomName()
 		},
-		onSubmit: async ({ value }) => {
-			await request(value);
+		onSubmit: ({ value }) => {
+			request(value);
 		}
 	});
-
-	useEffect(() => {
-		if (!result.isSuccess || !result.data) return;
-
-		console.log('[ID]: Register:', result.data);
-	}, [result.isSuccess, result.data]);
 
 	return form;
 };

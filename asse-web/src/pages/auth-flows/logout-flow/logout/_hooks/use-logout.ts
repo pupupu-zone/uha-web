@@ -14,16 +14,16 @@ const useLogout = () => {
 	}, []);
 
 	useEffect(() => {
-		if (auth.isAuthenticated) return;
-
-		navigate({ to: '/login' });
-	}, [navigate, auth.isAuthenticated]);
-
-	useEffect(() => {
 		if (!result.isSuccess || !result.data) return;
 
 		auth.logout();
 	}, [result.isSuccess, result.data]);
+
+	useEffect(() => {
+		if (auth.isAuthenticated) return;
+
+		navigate({ to: '/login' });
+	}, [navigate, auth.isAuthenticated]);
 };
 
 export default useLogout;

@@ -1,6 +1,13 @@
 import API from '@api';
 
-import type { InitRecoveryResT, InitRecoveryReqT, VerifyEmailReqT, VerifyEmailResT } from './api.d';
+import type {
+	InitRecoveryResT,
+	InitRecoveryReqT,
+	VerifyRecoveryReqT,
+	VerifyRecoveryResT,
+	SetNewPassResT,
+	SetNewPassReqT
+} from './api.d';
 
 const idApi = API.injectEndpoints({
 	endpoints: (build) => ({
@@ -15,7 +22,7 @@ const idApi = API.injectEndpoints({
 		}),
 
 		// Verify token for password recovery
-		verifyRecovery: build.query<VerifyEmailResT, VerifyEmailReqT>({
+		verifyRecovery: build.query<VerifyRecoveryResT, VerifyRecoveryReqT>({
 			query: (body) => ({
 				url: '/user/password-change/verify',
 				method: 'POST',
@@ -25,7 +32,7 @@ const idApi = API.injectEndpoints({
 		}),
 
 		// Set new password
-		setNewPassword: build.query<VerifyEmailResT, VerifyEmailReqT>({
+		setNewPassword: build.query<SetNewPassResT, SetNewPassReqT>({
 			query: (body) => ({
 				url: '/user/password-change/set',
 				method: 'POST',

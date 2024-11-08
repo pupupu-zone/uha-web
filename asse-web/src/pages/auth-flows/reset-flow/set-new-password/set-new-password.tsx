@@ -1,50 +1,75 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import useHook from './hook';
+import { formatError } from '@utils';
+import { SuccessStateImg } from '@images';
+import { useSetNewPassword } from './_hooks';
 
-const SetNewPassword = ({ token }) => {
-	const form = useHook(token);
+import { TextField, Button } from '@ui';
+import { PageForm, Actions } from './set-new-password.styles';
+
+import type { Props } from './set-new-password.d';
+
+const SetNewPassword = ({ token }: Props) => {
+	const { form, result } = useSetNewPassword();
+
+	useEffect(() => {
+		if (!token) return;
+
+		form.setFieldValue('token', token);
+	}, [token]);
+
+	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		e.stopPropagation();
+
+		form.handleSubmit();
+	};
+
+	if (result.isSuccess) {
+		return (
+			<>
+				<SuccessStateImg width={150} height={150} />
+
+				<Button to="/login" size="medium" isFullWidth isSecondary>
+					Sign In
+				</Button>
+			</>
+		);
+	}
 
 	return (
-		<div>
-			<h1>Login</h1>
+		<PageForm onSubmit={onSubmit} noValidate>
+			<form.Field name="password">
+				{(field) => {
+					const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
+						field.handleChange(e.target.value);
+					};
 
-			<form
-				onSubmit={(e) => {
-					e.preventDefault();
-					e.stopPropagation();
-					form.handleSubmit();
+					return (
+						<TextField
+							id={field.name}
+							type="password"
+							label="Password"
+							name={field.name}
+							autoComplete="password"
+							onChange={onChangeHd}
+							value={field.state.value}
+							errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
+						/>
+					);
 				}}
-				noValidate
-			>
-				<form.Field name="password">
-					{(field) => (
-						<>
-							<label htmlFor={field.name}>Password</label> <br />
-							<input
-								id={field.name}
-								name={field.name}
-								value={field.state.value}
-								type="password"
-								onChange={(e) => {
-									field.handleChange(e.target.value);
-								}}
-							/>
-							<br />
-							{field.state.meta.errors ? <em role="alert">{field.state.meta.errors.join(', ')}</em> : null}
-						</>
-					)}
-				</form.Field>
+			</form.Field>
 
+			<Actions>
 				<form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
 					{([canSubmit, isSubmitting]) => (
-						<button type="submit" disabled={!canSubmit}>
-							{isSubmitting ? '...' : 'Submit'}
-						</button>
+						<Button type="submit" isDisabled={!canSubmit || isSubmitting} size="medium" isFullWidth>
+							Set Up
+						</Button>
 					)}
 				</form.Subscribe>
-			</form>
-		</div>
+			</Actions>
+		</PageForm>
 	);
 };
 

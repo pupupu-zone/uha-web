@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { formatError } from '@utils';
-import useRegister from './use-register';
+import { useRegister } from './_hooks';
 import { useLazyResendEmailQuery } from '@pages/auth-flows/register-flow';
 
 import { H1, Button, TextField } from '@ui';
@@ -10,12 +10,6 @@ import { PageRoot, PageForm, Actions } from './register.styles';
 const RegisterPage = () => {
 	const form = useRegister();
 	const [resendEmail, resendResults] = useLazyResendEmailQuery();
-
-	useEffect(() => {
-		if (!resendResults.isSuccess || !resendResults.data) return;
-
-		console.log('[Registration]: Resend E-Mail was a success!');
-	}, [resendResults.isSuccess, resendResults.isError]);
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { LoaderImg, ErrorStateImg, SuccessStateImg } from '@images';
 import { useLazyVerifyEmailQuery } from '@pages/auth-flows/register-flow/_api';
 
-import { H1, Button } from '@ui';
+import { H1, Button, LargeText } from '@ui';
 import Root, { Loader } from './verify-email.styles';
 
 type Props = {
@@ -19,29 +19,26 @@ const VerifyEmailUnit = ({ token }: Props) => {
 		request({ token });
 	}, [token]);
 
-	useEffect(() => {
-		if (!result.isSuccess || !result.data) return;
-
-		console.log('[ID]: Verify E-Mail:', result.data, result.originalArgs?.token);
-	}, [result.isSuccess, result.data]);
-
 	return (
 		<Root>
 			<H1>E-Mail Verification</H1>
 
 			<Loader>
-				{(result.isFetching || result.isUninitialized) && (
+				{(result.isFetching || result.isUninitialized) && token && (
 					<>
 						<LoaderImg width={150} height={150} />
 					</>
 				)}
 
-				{result.isError && (
+				{(!token || result.isError) && (
 					<>
 						<ErrorStateImg width={150} height={150} />
 
+						{!token && <LargeText>No token has been found</LargeText>}
+						{token && <LargeText>Invalid token</LargeText>}
+
 						<Button to="/register" size="medium" isFullWidth isSecondary>
-							Sign Up
+							Try to Sign Up
 						</Button>
 					</>
 				)}

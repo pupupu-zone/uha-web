@@ -1,6 +1,6 @@
 import React from 'react';
 
-import useLogin from './use-login';
+import { useLogin } from './_hooks';
 import { formatError } from '@utils';
 
 import { H1, Button, TextField } from '@ui';

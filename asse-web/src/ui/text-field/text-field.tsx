@@ -30,7 +30,7 @@ const TextField = React.forwardRef<HTMLInputElement, Props>(
 				{withErrors && (
 					<ErrorsList>
 						{errors.map((error: string) => (
-							<ErrorMessage key={error} aria-live="polite">
+							<ErrorMessage key={error} role="alert" aria-live="polite">
 								{error}
 							</ErrorMessage>
 						))}

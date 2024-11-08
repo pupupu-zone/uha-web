@@ -17,7 +17,6 @@ import { Route as RegisterRouteImport } from './core/routes/register/route'
 import { Route as AuthRouteImport } from './core/routes/_auth/route'
 import { Route as IndexImport } from './core/routes/index'
 import { Route as ResetPasswordVerifyImport } from './core/routes/reset-password/verify'
-import { Route as ResetPasswordSetImport } from './core/routes/reset-password/set'
 import { Route as ResetPasswordInitImport } from './core/routes/reset-password/init'
 import { Route as RegisterVerifyImport } from './core/routes/register/verify'
 import { Route as RegisterInitImport } from './core/routes/register/init'
@@ -60,12 +59,6 @@ const IndexRoute = IndexImport.update({
 const ResetPasswordVerifyRoute = ResetPasswordVerifyImport.update({
   id: '/verify',
   path: '/verify',
-  getParentRoute: () => ResetPasswordRouteRoute,
-} as any)
-
-const ResetPasswordSetRoute = ResetPasswordSetImport.update({
-  id: '/set',
-  path: '/set',
   getParentRoute: () => ResetPasswordRouteRoute,
 } as any)
 
@@ -199,13 +192,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResetPasswordInitImport
       parentRoute: typeof ResetPasswordRouteImport
     }
-    '/reset-password/set': {
-      id: '/reset-password/set'
-      path: '/set'
-      fullPath: '/reset-password/set'
-      preLoaderRoute: typeof ResetPasswordSetImport
-      parentRoute: typeof ResetPasswordRouteImport
-    }
     '/reset-password/verify': {
       id: '/reset-password/verify'
       path: '/verify'
@@ -252,13 +238,11 @@ const RegisterRouteRouteWithChildren = RegisterRouteRoute._addFileChildren(
 
 interface ResetPasswordRouteRouteChildren {
   ResetPasswordInitRoute: typeof ResetPasswordInitRoute
-  ResetPasswordSetRoute: typeof ResetPasswordSetRoute
   ResetPasswordVerifyRoute: typeof ResetPasswordVerifyRoute
 }
 
 const ResetPasswordRouteRouteChildren: ResetPasswordRouteRouteChildren = {
   ResetPasswordInitRoute: ResetPasswordInitRoute,
-  ResetPasswordSetRoute: ResetPasswordSetRoute,
   ResetPasswordVerifyRoute: ResetPasswordVerifyRoute,
 }
 
@@ -278,7 +262,6 @@ export interface FileRoutesByFullPath {
   '/register/init': typeof RegisterInitRoute
   '/register/verify': typeof RegisterVerifyRoute
   '/reset-password/init': typeof ResetPasswordInitRoute
-  '/reset-password/set': typeof ResetPasswordSetRoute
   '/reset-password/verify': typeof ResetPasswordVerifyRoute
 }
 
@@ -295,7 +278,6 @@ export interface FileRoutesByTo {
   '/register/init': typeof RegisterInitRoute
   '/register/verify': typeof RegisterVerifyRoute
   '/reset-password/init': typeof ResetPasswordInitRoute
-  '/reset-password/set': typeof ResetPasswordSetRoute
   '/reset-password/verify': typeof ResetPasswordVerifyRoute
 }
 
@@ -313,7 +295,6 @@ export interface FileRoutesById {
   '/register/init': typeof RegisterInitRoute
   '/register/verify': typeof RegisterVerifyRoute
   '/reset-password/init': typeof ResetPasswordInitRoute
-  '/reset-password/set': typeof ResetPasswordSetRoute
   '/reset-password/verify': typeof ResetPasswordVerifyRoute
 }
 
@@ -332,7 +313,6 @@ export interface FileRouteTypes {
     | '/register/init'
     | '/register/verify'
     | '/reset-password/init'
-    | '/reset-password/set'
     | '/reset-password/verify'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -348,7 +328,6 @@ export interface FileRouteTypes {
     | '/register/init'
     | '/register/verify'
     | '/reset-password/init'
-    | '/reset-password/set'
     | '/reset-password/verify'
   id:
     | '__root__'
@@ -364,7 +343,6 @@ export interface FileRouteTypes {
     | '/register/init'
     | '/register/verify'
     | '/reset-password/init'
-    | '/reset-password/set'
     | '/reset-password/verify'
   fileRoutesById: FileRoutesById
 }
@@ -427,7 +405,6 @@ export const routeTree = rootRoute
       "filePath": "reset-password/route.tsx",
       "children": [
         "/reset-password/init",
-        "/reset-password/set",
         "/reset-password/verify"
       ]
     },
@@ -460,10 +437,6 @@ export const routeTree = rootRoute
     },
     "/reset-password/init": {
       "filePath": "reset-password/init.tsx",
-      "parent": "/reset-password"
-    },
-    "/reset-password/set": {
-      "filePath": "reset-password/set.tsx",
       "parent": "/reset-password"
     },
     "/reset-password/verify": {

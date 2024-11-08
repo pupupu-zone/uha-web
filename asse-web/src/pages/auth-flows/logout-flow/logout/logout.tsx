@@ -1,4 +1,4 @@
-import useLogout from './use-logout';
+import { useLogout } from './_hooks';
 
 const LogoutUnit = () => {
 	useLogout();

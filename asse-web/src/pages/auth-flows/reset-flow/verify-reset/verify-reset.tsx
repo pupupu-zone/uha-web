@@ -1,57 +1,51 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
-import { Link } from '@tanstack/react-router';
+
 import { useLazyVerifyRecoveryQuery } from '@pages/auth-flows/reset-flow/_api';
 
-const Route = styled.div`
-	display: flex;
-	padding: 10px 20px;
+import { H1, Button, LargeText } from '@ui';
+import { LoaderImg, ErrorStateImg } from '@images';
+import Root, { Loader } from './verify-reset.styles';
+import { SetNewPassword } from '@pages/auth-flows/reset-flow';
 
-	border: 1px solid black;
-	border-radius: 5px;
-`;
-
-type Props = {
-	token: string;
-};
+import type { Props } from './verify-reset.d';
 
 const VerifyResetToken = ({ token }: Props) => {
-	const [request, result] = useLazyVerifyRecoveryQuery();
+	const [verifyRequest, verifyResult] = useLazyVerifyRecoveryQuery();
 
 	useEffect(() => {
 		if (!token) return;
 
-		request({ token });
+		verifyRequest({ token });
 	}, [token]);
 
-	useEffect(() => {
-		if (!result.isSuccess || !result.data) return;
+	return (
+		<Root>
+			<H1>Password Reset</H1>
 
-		console.log('[ID]: Verify Recovery Token:', result.data);
-	}, [result.isSuccess, result.data]);
+			<Loader>
+				{(verifyResult.isFetching || verifyResult.isUninitialized) && token && (
+					<>
+						<LoaderImg width={150} height={150} />
+					</>
+				)}
 
-	if (result.isSuccess) {
-		return (
-			<div>
-				Success <br />
-				<Route
-					as={Link}
-					to="/reset-password/set"
-					search={{
-						token: result?.data?.data?.token ?? ''
-					}}
-				>
-					Set New Password
-				</Route>
-			</div>
-		);
-	}
+				{(!token || verifyResult.isError) && (
+					<>
+						<ErrorStateImg width={150} height={150} />
 
-	if (result.isError) {
-		return <div>error</div>;
-	}
+						{!token && <LargeText>No token has been found</LargeText>}
+						{token && <LargeText>Invalid token</LargeText>}
 
-	return <div>{token ? 'Verifying...' : 'No token provided'}</div>;
+						<Button to="/reset-password/init" size="medium" isFullWidth isSecondary>
+							Try Again
+						</Button>
+					</>
+				)}
+
+				{verifyResult.isSuccess && <SetNewPassword token={verifyResult.data.data.token} />}
+			</Loader>
+		</Root>
+	);
 };
 
 export default VerifyResetToken;

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { formatError } from '@utils';
-import useResetPassword from './use-reset';
+import { useResetPassword } from './_hooks';
 
 import { H1, Button, TextField } from '@ui';
 import { PageRoot, PageForm, Actions } from './init-reset.styles';
