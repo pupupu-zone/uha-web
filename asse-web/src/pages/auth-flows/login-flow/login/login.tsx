@@ -18,7 +18,7 @@ const LoginPage = () => {
 	};
 
 	return (
-		<AuthFlow header="Login" linkTo="/register" link="Sign Up">
+		<AuthFlow>
 			<PageForm onSubmit={onSubmit} noValidate>
 				<form.Field name="email">
 					{(field) => {
@@ -72,10 +72,6 @@ const LoginPage = () => {
 							</Button>
 						)}
 					</form.Subscribe>
-
-					<Button to="/reset-password" size="medium" isFullWidth isSecondary>
-						Restore password
-					</Button>
 				</Actions>
 			</PageForm>
 		</AuthFlow>

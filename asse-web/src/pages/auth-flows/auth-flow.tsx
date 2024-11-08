@@ -1,27 +1,39 @@
 import React from 'react';
 
-import { H1 } from '@ui';
-import Root, { PageRoot, TagLine, HighTag, LowTag, Header, LinkBtn } from './auth-flow.styles';
+import { Link } from '@tanstack/react-router';
+import Root, { PageRoot, TagLine, HighTag, LowTag, Header, PageName } from './auth-flow.styles';
 
-const AuthFlow = ({ header, link, linkTo, children }) => {
-	return (
-		<Root>
-			<TagLine>
-				<HighTag>TRACK YOUR SUBSCRIPTIONS</HighTag>
-				<LowTag>DOWN!</LowTag>
-			</TagLine>
+const AuthFlow = ({ children }: React.PropsWithChildren<unknown>) => (
+	<Root>
+		<TagLine>
+			<HighTag>TRACK YOUR SUBSCRIPTIONS</HighTag>
+			<LowTag>DOWN!</LowTag>
+		</TagLine>
 
-			<PageRoot>
-				<Header>
-					<H1>{header}</H1>
+		<PageRoot>
+			<Header>
+				<div>
+					<PageName as={Link} to="/login">
+						Login
+					</PageName>
+				</div>
 
-					{linkTo && link && <LinkBtn to={linkTo}>{link}</LinkBtn>}
-				</Header>
+				<div>
+					<PageName as={Link} to="/register">
+						Register
+					</PageName>
+				</div>
 
-				{children}
-			</PageRoot>
-		</Root>
-	);
-};
+				<div>
+					<PageName as={Link} to="/reset-password">
+						Restore
+					</PageName>
+				</div>
+			</Header>
+
+			{children}
+		</PageRoot>
+	</Root>
+);
 
 export default AuthFlow;

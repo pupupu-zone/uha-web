@@ -3,8 +3,9 @@ import React from 'react';
 import { formatError } from '@utils';
 import { useResetPassword } from './_hooks';
 
-import { H1, Button, TextField } from '@ui';
-import { PageRoot, PageForm, Actions } from './init-reset.styles';
+import AuthFlow from '@pages/auth-flows';
+import { Button, TextField } from '@ui';
+import { PageForm, Actions } from './init-reset.styles';
 
 const InitializePasswordReset = () => {
 	const form = useResetPassword();
@@ -17,9 +18,7 @@ const InitializePasswordReset = () => {
 	};
 
 	return (
-		<PageRoot>
-			<H1>Password Reset</H1>
-
+		<AuthFlow>
 			<PageForm onSubmit={onSubmit} noValidate>
 				<form.Field name="email">
 					{(field) => {
@@ -50,13 +49,9 @@ const InitializePasswordReset = () => {
 							</Button>
 						)}
 					</form.Subscribe>
-
-					<Button to="/login" size="medium" isFullWidth isSecondary>
-						Sign In
-					</Button>
 				</Actions>
 			</PageForm>
-		</PageRoot>
+		</AuthFlow>
 	);
 };
 

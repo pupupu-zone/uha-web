@@ -1,18 +1,36 @@
 import styled from 'styled-components';
 
 import { H1 } from '@ui';
-import { Link } from '@tanstack/react-router';
 
-export const Header = styled.header`
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+export const PageName = styled.h1`
+	color: var(--primary-text);
+	font-weight: 700;
+	font-size: 24px;
+	font-family: 'Nunito Sans', sans-serif;
+	line-height: 32px;
+
+	&:not(.active) {
+		opacity: 0.45;
+
+		&:active,
+		&:hover {
+			opacity: 0.75;
+		}
+	}
 `;
 
-export const LinkBtn = styled(Link)`
-	color: var(--primary-text);
-	font-weight: 500;
-	text-decoration: underline;
+export const Header = styled.header`
+	display: grid;
+	grid-auto-flow: column;
+	grid-template-columns: min-content min-content 1fr;
+	gap: 12px;
+	align-items: center;
+	justify-content: left;
+	white-space: nowrap;
+
+	& > * {
+		text-align: right;
+	}
 `;
 
 export const HighTag = styled(H1)`

@@ -4,8 +4,8 @@ import { formatError } from '@utils';
 import { useRegister } from './_hooks';
 import { useLazyResendEmailQuery } from '@pages/auth-flows/register-flow';
 
-import AuthFlow from '@pages/auth-flows';
 import { Button, TextField } from '@ui';
+import AuthFlow from '@pages/auth-flows';
 import { PageForm, Actions } from './register.styles';
 
 const RegisterPage = () => {
@@ -26,7 +26,7 @@ const RegisterPage = () => {
 	};
 
 	return (
-		<AuthFlow header="Registration" linkTo="/login" link="Sign In">
+		<AuthFlow>
 			<PageForm onSubmit={onSubmit} noValidate>
 				<form.Field name="name">
 					{(field) => {
