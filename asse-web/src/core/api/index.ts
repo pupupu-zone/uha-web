@@ -1,5 +1,8 @@
+import toast from 'react-hot-toast';
 import { createApi, fetchBaseQuery, retry, FetchArgs } from '@reduxjs/toolkit/query/react';
+
 import { isPlainObject } from '@utils';
+import errorCodes from './error-codes';
 
 type PrepareHeaders = (headers: Headers) => Headers;
 
@@ -32,32 +35,17 @@ const baseQuery = fetchBaseQuery({
 		return headers;
 	},
 	responseHandler: async (response) => {
-		switch (response.status) {
-			case 401: {
-				// console.error('Ошибка авторизации');
-				// window.location.assign('/logout');
-				break;
-			}
+		if (response.ok) return response.json();
 
-			case 403: {
-				// console.error('Доступ запрещён');
-				break;
-			}
-		}
+		const errorResponse = await response.json();
+		const errorMessage = errorCodes.get(errorResponse?.code) || errorResponse.code || response.statusText;
 
-		if (!response.ok) {
-			const error = await response.json();
+		toast.error(errorMessage);
 
-			error?.errors.forEach((error: string) => {
-				if ([401, 403].includes(response.status)) return;
-
-				console.error(error);
-			});
-
-			return { error };
-		}
-
-		return response.json();
+		return {
+			code: response.status,
+			message: errorMessage
+		};
 	}
 });
 

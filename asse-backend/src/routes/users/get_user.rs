@@ -1,37 +1,9 @@
-use crate::types::auth::users::Theme;
 use actix_web::{web, Error, HttpResponse};
-use serde::{Deserialize, Serialize};
 use serde_json::json;
-use sqlx::postgres::PgRow;
-use sqlx::Row;
 
+use crate::models::users::UserProfile;
 use crate::service::data_providers::WebDataPool;
 use crate::utils::{acquire_pg_connection, get_session_user_id};
-
-#[derive(Serialize, Deserialize, Debug)]
-pub struct UserReturn {
-    pub email: String,
-    pub user_id: uuid::Uuid,
-    pub name: String,
-    pub avatar_url: Option<String>,
-    pub theme: Theme,
-    pub default_currency: String,
-    pub do_recalc: bool,
-}
-
-impl UserReturn {
-    pub fn from_row(row: &PgRow) -> Self {
-        Self {
-            email: row.get("email"),
-            user_id: row.get("user_id"),
-            name: row.get("name"),
-            avatar_url: row.get("avatar_url"),
-            theme: row.get("theme"),
-            default_currency: row.get("default_currency"),
-            do_recalc: row.get("do_recalc"),
-        }
-    }
-}
 
 #[tracing::instrument(skip(dp, session))]
 pub async fn get_user(
@@ -95,7 +67,7 @@ pub async fn get_user(
     .await
     {
         Ok(row) => {
-            let user_profile = UserReturn::from_row(&row);
+            let user_profile = UserProfile::from_row(&row);
 
             user_profile
         }

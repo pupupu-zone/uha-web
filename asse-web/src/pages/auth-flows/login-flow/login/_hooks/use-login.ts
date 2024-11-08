@@ -40,7 +40,7 @@ const useLogin = () => {
 	useEffect(() => {
 		if (!result.isSuccess || !result.data) return;
 
-		auth.login(result.data.data.user_id || 'ANONYMOUS');
+		auth.login('ANONYMOUS');
 	}, [result.isSuccess, result.data]);
 
 	return form;
