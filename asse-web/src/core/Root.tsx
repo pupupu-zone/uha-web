@@ -36,9 +36,9 @@ const Root = ({ router }: Props) => (
 			<PersistGate loading={null} persistor={persistor}>
 				<Toaster
 					containerStyle={{
-						bottom: 100
+						top: 64
 					}}
-					position="bottom-center"
+					position="top-center"
 					toastOptions={{
 						duration: 4000
 					}}

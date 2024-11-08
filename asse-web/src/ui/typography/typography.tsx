@@ -7,7 +7,7 @@ const shades = {
 		opacity: 0.6;
 	`,
 	regular: css`
-		color: #000;
+		color: var(--primary-text);
 		opacity: 1;
 	`,
 	inherit: css`

@@ -18,6 +18,7 @@ const types = {
 };
 
 export default styled.div<StyleProps>`
+	z-index: 1000;
 	padding: 16px;
 	font-size: 14px;
 	font-family: 'Nunito Sans', sans-serif;

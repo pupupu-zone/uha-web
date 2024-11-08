@@ -2,14 +2,19 @@ import { createGlobalStyle } from 'styled-components';
 
 const General = createGlobalStyle`
 	:root {
-		--white: 99% 0 0deg;
 		--blue-focus: 60% 0.2 257deg;
+		--bg-color: #EDE8E1;
+		--input-bg: #f2effb;
+		--error: #D9534F;
+		--label: #4A4A4A;
+		--border: #A69CAC;
+		--primary-text: #333;
 	}
 
 	html {
 		height: 100%;
 		min-height: 100%;
-		background-color: oklch(var(--white));
+		background-color: var(--bg-color);
 	}
 
 	body {
@@ -54,7 +59,7 @@ const General = createGlobalStyle`
 	input:-webkit-autofill:hover,
 	input:-webkit-autofill:focus,
 	input:-webkit-autofill:active {
-		-webkit-box-shadow: 0 0 0 60px oklch(var(--white)) inset !important;
+		-webkit-box-shadow: 0 0 0 60px var(--bg-color) inset !important;
 	}
 `;
 

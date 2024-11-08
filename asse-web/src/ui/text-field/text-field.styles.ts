@@ -4,7 +4,7 @@ import { SmallText } from '../typography';
 import type { StyleProps } from './text-field.d';
 
 export const ErrorMessage = styled(SmallText)`
-	color: #eb5757;
+	color: var(--error);
 	font-weight: 500;
 	line-height: 1;
 	font-variant-caps: all-small-caps;
@@ -23,7 +23,7 @@ export const Label = styled.label`
 	top: 23px;
 	left: 24px;
 	z-index: 1;
-	color: #9597a0;
+	color: var(--label);
 	font-size: 16px;
 	line-height: 1;
 `;
@@ -44,7 +44,7 @@ export const Input = styled.input<StyleProps>`
 	width: 100%;
 	margin: 0;
 	padding: 20px 24px;
-	color: #000;
+	color: var(--primary-text);
 	font-size: 18px;
 	font-family: 'Nunito Sans', sans-serif;
 	line-height: 20px;
@@ -65,9 +65,9 @@ export const InputRoot = styled.div<StyleProps>`
 	position: relative;
 	display: inline-flex;
 	flex-direction: column;
-	background-color: #f8faff;
+	background-color: var(--input-bg);
 	border: 1px solid transparent;
-	border-color: ${({ $withErrors }) => ($withErrors ? `#eb5757` : '#aaa')};
+	border-color: ${({ $withErrors }) => ($withErrors ? `var(--error)` : 'var(--border)')};
 	border-radius: 8px;
 `;
 
