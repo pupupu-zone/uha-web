@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { formatError } from '@utils';
 import { useRegister } from './_hooks';
 import { useLazyResendEmailQuery } from '@pages/auth-flows/register-flow';
 
 import { Button, TextField } from '@ui';
-import AuthFlow from '@pages/auth-flows';
 import { PageForm, Actions } from './register.styles';
 
 const RegisterPage = () => {
+	const [wasEmailSent, setEmailWasSent] = useState(false);
 	const { form, result } = useRegister();
 	const [resendEmail, resendResults] = useLazyResendEmailQuery();
 
@@ -17,6 +17,7 @@ const RegisterPage = () => {
 		e.stopPropagation();
 
 		form.handleSubmit();
+		setEmailWasSent(true);
 	};
 
 	const onResendEmail = () => {
@@ -26,72 +27,72 @@ const RegisterPage = () => {
 	};
 
 	return (
-		<AuthFlow>
-			<PageForm onSubmit={onSubmit} noValidate>
-				<form.Field name="name">
-					{(field) => {
-						const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
-							field.handleChange(e.target.value);
-						};
+		<PageForm onSubmit={onSubmit} noValidate>
+			<form.Field name="name">
+				{(field) => {
+					const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
+						field.handleChange(e.target.value);
+					};
 
-						return (
-							<TextField
-								id={field.name}
-								type="text"
-								label="Your name"
-								name={field.name}
-								autoComplete="name"
-								onChange={onChangeHd}
-								value={field.state.value}
-								errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
-							/>
-						);
-					}}
-				</form.Field>
+					return (
+						<TextField
+							id={field.name}
+							type="text"
+							label="Your name"
+							name={field.name}
+							autoComplete="name"
+							onChange={onChangeHd}
+							value={field.state.value}
+							errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
+						/>
+					);
+				}}
+			</form.Field>
 
-				<form.Field name="email">
-					{(field) => {
-						const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
-							field.handleChange(e.target.value);
-						};
+			<form.Field name="email">
+				{(field) => {
+					const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
+						field.handleChange(e.target.value);
+					};
 
-						return (
-							<TextField
-								id={field.name}
-								type="email"
-								label="E-Mail"
-								name={field.name}
-								autoComplete="email"
-								onChange={onChangeHd}
-								value={field.state.value}
-								errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
-							/>
-						);
-					}}
-				</form.Field>
+					return (
+						<TextField
+							id={field.name}
+							type="email"
+							label="E-Mail"
+							name={field.name}
+							autoComplete="email"
+							onChange={onChangeHd}
+							value={field.state.value}
+							errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
+						/>
+					);
+				}}
+			</form.Field>
 
-				<form.Field name="password">
-					{(field) => {
-						const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
-							field.handleChange(e.target.value);
-						};
+			<form.Field name="password">
+				{(field) => {
+					const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
+						field.handleChange(e.target.value);
+					};
 
-						return (
-							<TextField
-								id={field.name}
-								type="password"
-								label="Password"
-								name={field.name}
-								autoComplete="password"
-								onChange={onChangeHd}
-								value={field.state.value}
-								errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
-							/>
-						);
-					}}
-				</form.Field>
+					return (
+						<TextField
+							id={field.name}
+							type="password"
+							label="Password"
+							name={field.name}
+							autoComplete="password"
+							onChange={onChangeHd}
+							value={field.state.value}
+							errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
+						/>
+					);
+				}}
+			</form.Field>
 
-				<Actions>
+			<Actions>
+				{!wasEmailSent && (
 					<form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
 						{([canSubmit, isSubmitting]) => (
 							<Button
@@ -104,7 +105,9 @@ const RegisterPage = () => {
 							</Button>
 						)}
 					</form.Subscribe>
+				)}
 
+				{wasEmailSent && (
 					<form.Subscribe
 						selector={({ fieldMeta }) => {
 							const field = fieldMeta.email ?? {};
@@ -119,15 +122,14 @@ const RegisterPage = () => {
 								onPress={onResendEmail}
 								isDisabled={withEmailErrors || resendResults.isFetching}
 								isFullWidth
-								isSecondary
 							>
 								Resend E-Mail
 							</Button>
 						)}
 					</form.Subscribe>
-				</Actions>
-			</PageForm>
-		</AuthFlow>
+				)}
+			</Actions>
+		</PageForm>
 	);
 };
 

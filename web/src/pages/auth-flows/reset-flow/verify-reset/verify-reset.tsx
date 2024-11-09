@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { useLazyVerifyRecoveryQuery } from '@pages/auth-flows/reset-flow/_api';
 
 import { H3, SmallText } from '@ui';
-import AuthFlow from '@pages/auth-flows';
 import { Loader } from './verify-reset.styles';
 import { LoaderImg, ErrorStateImg } from '@images';
 import { SetNewPassword } from '@pages/auth-flows/reset-flow';
@@ -20,37 +19,35 @@ const VerifyResetToken = ({ token }: Props) => {
 	}, [token]);
 
 	return (
-		<AuthFlow>
-			<Loader>
-				{(verifyResult.isFetching || verifyResult.isUninitialized) && token && (
-					<>
-						<LoaderImg width={150} height={150} />
-					</>
-				)}
+		<Loader>
+			{(verifyResult.isFetching || verifyResult.isUninitialized) && token && (
+				<>
+					<LoaderImg width={150} height={150} />
+				</>
+			)}
 
-				{(!token || verifyResult.isError) && (
-					<>
-						<ErrorStateImg width={150} height={150} />
+			{(!token || verifyResult.isError) && (
+				<>
+					<ErrorStateImg width={150} height={150} />
 
-						{!token && (
-							<>
-								<H3>No token has been found</H3>
-								<SmallText>Please make sure you have correct link</SmallText>
-							</>
-						)}
+					{!token && (
+						<>
+							<H3>No token has been found</H3>
+							<SmallText>Please make sure you have correct link</SmallText>
+						</>
+					)}
 
-						{token && (
-							<>
-								<H3>Invalid token</H3>
-								<SmallText>Please make sure you have correct link</SmallText>
-							</>
-						)}
-					</>
-				)}
+					{token && (
+						<>
+							<H3>Invalid token</H3>
+							<SmallText>Please make sure you have correct link</SmallText>
+						</>
+					)}
+				</>
+			)}
 
-				{verifyResult.isSuccess && <SetNewPassword token={verifyResult.data.data.token} />}
-			</Loader>
-		</AuthFlow>
+			{verifyResult.isSuccess && <SetNewPassword token={verifyResult.data.data.token} />}
+		</Loader>
 	);
 };
 

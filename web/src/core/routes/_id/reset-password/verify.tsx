@@ -7,7 +7,7 @@ type SearchParams = {
 	token: string;
 };
 
-export const Route = createFileRoute('/reset-password/verify')({
+export const Route = createFileRoute('/_id/reset-password/verify')({
 	component: () => <VerifyReset />
 });
 

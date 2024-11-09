@@ -7,7 +7,7 @@ type SearchParams = {
 	token: string;
 };
 
-export const Route = createFileRoute('/register/verify')({
+export const Route = createFileRoute('/_id/register/verify')({
 	component: () => <VerifyEmail />
 });
 

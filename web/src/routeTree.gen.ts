@@ -11,37 +11,25 @@
 // Import Routes
 
 import { Route as rootRoute } from './core/routes/__root'
-import { Route as LoginImport } from './core/routes/login'
-import { Route as ResetPasswordRouteImport } from './core/routes/reset-password/route'
-import { Route as RegisterRouteImport } from './core/routes/register/route'
+import { Route as IdRouteImport } from './core/routes/_id/route'
 import { Route as AuthRouteImport } from './core/routes/_auth/route'
 import { Route as IndexImport } from './core/routes/index'
-import { Route as ResetPasswordVerifyImport } from './core/routes/reset-password/verify'
-import { Route as ResetPasswordInitImport } from './core/routes/reset-password/init'
-import { Route as RegisterVerifyImport } from './core/routes/register/verify'
-import { Route as RegisterInitImport } from './core/routes/register/init'
+import { Route as IdLoginImport } from './core/routes/_id/login'
 import { Route as AuthSubsListImport } from './core/routes/_auth/subs-list'
 import { Route as AuthProfileImport } from './core/routes/_auth/profile'
 import { Route as AuthLogoutImport } from './core/routes/_auth/logout'
 import { Route as AuthLibraryImport } from './core/routes/_auth/library'
+import { Route as IdResetPasswordRouteImport } from './core/routes/_id/reset-password/route'
+import { Route as IdRegisterRouteImport } from './core/routes/_id/register/route'
+import { Route as IdResetPasswordVerifyImport } from './core/routes/_id/reset-password/verify'
+import { Route as IdResetPasswordInitImport } from './core/routes/_id/reset-password/init'
+import { Route as IdRegisterVerifyImport } from './core/routes/_id/register/verify'
+import { Route as IdRegisterInitImport } from './core/routes/_id/register/init'
 
 // Create/Update Routes
 
-const LoginRoute = LoginImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const ResetPasswordRouteRoute = ResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const RegisterRouteRoute = RegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
+const IdRouteRoute = IdRouteImport.update({
+  id: '/_id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -56,28 +44,10 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const ResetPasswordVerifyRoute = ResetPasswordVerifyImport.update({
-  id: '/verify',
-  path: '/verify',
-  getParentRoute: () => ResetPasswordRouteRoute,
-} as any)
-
-const ResetPasswordInitRoute = ResetPasswordInitImport.update({
-  id: '/init',
-  path: '/init',
-  getParentRoute: () => ResetPasswordRouteRoute,
-} as any)
-
-const RegisterVerifyRoute = RegisterVerifyImport.update({
-  id: '/verify',
-  path: '/verify',
-  getParentRoute: () => RegisterRouteRoute,
-} as any)
-
-const RegisterInitRoute = RegisterInitImport.update({
-  id: '/init',
-  path: '/init',
-  getParentRoute: () => RegisterRouteRoute,
+const IdLoginRoute = IdLoginImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => IdRouteRoute,
 } as any)
 
 const AuthSubsListRoute = AuthSubsListImport.update({
@@ -104,6 +74,42 @@ const AuthLibraryRoute = AuthLibraryImport.update({
   getParentRoute: () => AuthRouteRoute,
 } as any)
 
+const IdResetPasswordRouteRoute = IdResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => IdRouteRoute,
+} as any)
+
+const IdRegisterRouteRoute = IdRegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => IdRouteRoute,
+} as any)
+
+const IdResetPasswordVerifyRoute = IdResetPasswordVerifyImport.update({
+  id: '/verify',
+  path: '/verify',
+  getParentRoute: () => IdResetPasswordRouteRoute,
+} as any)
+
+const IdResetPasswordInitRoute = IdResetPasswordInitImport.update({
+  id: '/init',
+  path: '/init',
+  getParentRoute: () => IdResetPasswordRouteRoute,
+} as any)
+
+const IdRegisterVerifyRoute = IdRegisterVerifyImport.update({
+  id: '/verify',
+  path: '/verify',
+  getParentRoute: () => IdRegisterRouteRoute,
+} as any)
+
+const IdRegisterInitRoute = IdRegisterInitImport.update({
+  id: '/init',
+  path: '/init',
+  getParentRoute: () => IdRegisterRouteRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -122,26 +128,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRoute
     }
-    '/register': {
-      id: '/register'
+    '/_id': {
+      id: '/_id'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof IdRouteImport
+      parentRoute: typeof rootRoute
+    }
+    '/_id/register': {
+      id: '/_id/register'
       path: '/register'
       fullPath: '/register'
-      preLoaderRoute: typeof RegisterRouteImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof IdRegisterRouteImport
+      parentRoute: typeof IdRouteImport
     }
-    '/reset-password': {
-      id: '/reset-password'
+    '/_id/reset-password': {
+      id: '/_id/reset-password'
       path: '/reset-password'
       fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
-      parentRoute: typeof rootRoute
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginImport
-      parentRoute: typeof rootRoute
+      preLoaderRoute: typeof IdResetPasswordRouteImport
+      parentRoute: typeof IdRouteImport
     }
     '/_auth/library': {
       id: '/_auth/library'
@@ -171,33 +177,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthSubsListImport
       parentRoute: typeof AuthRouteImport
     }
-    '/register/init': {
-      id: '/register/init'
+    '/_id/login': {
+      id: '/_id/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof IdLoginImport
+      parentRoute: typeof IdRouteImport
+    }
+    '/_id/register/init': {
+      id: '/_id/register/init'
       path: '/init'
       fullPath: '/register/init'
-      preLoaderRoute: typeof RegisterInitImport
-      parentRoute: typeof RegisterRouteImport
+      preLoaderRoute: typeof IdRegisterInitImport
+      parentRoute: typeof IdRegisterRouteImport
     }
-    '/register/verify': {
-      id: '/register/verify'
+    '/_id/register/verify': {
+      id: '/_id/register/verify'
       path: '/verify'
       fullPath: '/register/verify'
-      preLoaderRoute: typeof RegisterVerifyImport
-      parentRoute: typeof RegisterRouteImport
+      preLoaderRoute: typeof IdRegisterVerifyImport
+      parentRoute: typeof IdRegisterRouteImport
     }
-    '/reset-password/init': {
-      id: '/reset-password/init'
+    '/_id/reset-password/init': {
+      id: '/_id/reset-password/init'
       path: '/init'
       fullPath: '/reset-password/init'
-      preLoaderRoute: typeof ResetPasswordInitImport
-      parentRoute: typeof ResetPasswordRouteImport
+      preLoaderRoute: typeof IdResetPasswordInitImport
+      parentRoute: typeof IdResetPasswordRouteImport
     }
-    '/reset-password/verify': {
-      id: '/reset-password/verify'
+    '/_id/reset-password/verify': {
+      id: '/_id/reset-password/verify'
       path: '/verify'
       fullPath: '/reset-password/verify'
-      preLoaderRoute: typeof ResetPasswordVerifyImport
-      parentRoute: typeof ResetPasswordRouteImport
+      preLoaderRoute: typeof IdResetPasswordVerifyImport
+      parentRoute: typeof IdResetPasswordRouteImport
     }
   }
 }
@@ -222,80 +235,96 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
   AuthRouteRouteChildren,
 )
 
-interface RegisterRouteRouteChildren {
-  RegisterInitRoute: typeof RegisterInitRoute
-  RegisterVerifyRoute: typeof RegisterVerifyRoute
+interface IdRegisterRouteRouteChildren {
+  IdRegisterInitRoute: typeof IdRegisterInitRoute
+  IdRegisterVerifyRoute: typeof IdRegisterVerifyRoute
 }
 
-const RegisterRouteRouteChildren: RegisterRouteRouteChildren = {
-  RegisterInitRoute: RegisterInitRoute,
-  RegisterVerifyRoute: RegisterVerifyRoute,
+const IdRegisterRouteRouteChildren: IdRegisterRouteRouteChildren = {
+  IdRegisterInitRoute: IdRegisterInitRoute,
+  IdRegisterVerifyRoute: IdRegisterVerifyRoute,
 }
 
-const RegisterRouteRouteWithChildren = RegisterRouteRoute._addFileChildren(
-  RegisterRouteRouteChildren,
+const IdRegisterRouteRouteWithChildren = IdRegisterRouteRoute._addFileChildren(
+  IdRegisterRouteRouteChildren,
 )
 
-interface ResetPasswordRouteRouteChildren {
-  ResetPasswordInitRoute: typeof ResetPasswordInitRoute
-  ResetPasswordVerifyRoute: typeof ResetPasswordVerifyRoute
+interface IdResetPasswordRouteRouteChildren {
+  IdResetPasswordInitRoute: typeof IdResetPasswordInitRoute
+  IdResetPasswordVerifyRoute: typeof IdResetPasswordVerifyRoute
 }
 
-const ResetPasswordRouteRouteChildren: ResetPasswordRouteRouteChildren = {
-  ResetPasswordInitRoute: ResetPasswordInitRoute,
-  ResetPasswordVerifyRoute: ResetPasswordVerifyRoute,
+const IdResetPasswordRouteRouteChildren: IdResetPasswordRouteRouteChildren = {
+  IdResetPasswordInitRoute: IdResetPasswordInitRoute,
+  IdResetPasswordVerifyRoute: IdResetPasswordVerifyRoute,
 }
 
-const ResetPasswordRouteRouteWithChildren =
-  ResetPasswordRouteRoute._addFileChildren(ResetPasswordRouteRouteChildren)
+const IdResetPasswordRouteRouteWithChildren =
+  IdResetPasswordRouteRoute._addFileChildren(IdResetPasswordRouteRouteChildren)
+
+interface IdRouteRouteChildren {
+  IdRegisterRouteRoute: typeof IdRegisterRouteRouteWithChildren
+  IdResetPasswordRouteRoute: typeof IdResetPasswordRouteRouteWithChildren
+  IdLoginRoute: typeof IdLoginRoute
+}
+
+const IdRouteRouteChildren: IdRouteRouteChildren = {
+  IdRegisterRouteRoute: IdRegisterRouteRouteWithChildren,
+  IdResetPasswordRouteRoute: IdResetPasswordRouteRouteWithChildren,
+  IdLoginRoute: IdLoginRoute,
+}
+
+const IdRouteRouteWithChildren =
+  IdRouteRoute._addFileChildren(IdRouteRouteChildren)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof AuthRouteRouteWithChildren
-  '/register': typeof RegisterRouteRouteWithChildren
-  '/reset-password': typeof ResetPasswordRouteRouteWithChildren
-  '/login': typeof LoginRoute
+  '': typeof IdRouteRouteWithChildren
+  '/register': typeof IdRegisterRouteRouteWithChildren
+  '/reset-password': typeof IdResetPasswordRouteRouteWithChildren
   '/library': typeof AuthLibraryRoute
   '/logout': typeof AuthLogoutRoute
   '/profile': typeof AuthProfileRoute
   '/subs-list': typeof AuthSubsListRoute
-  '/register/init': typeof RegisterInitRoute
-  '/register/verify': typeof RegisterVerifyRoute
-  '/reset-password/init': typeof ResetPasswordInitRoute
-  '/reset-password/verify': typeof ResetPasswordVerifyRoute
+  '/login': typeof IdLoginRoute
+  '/register/init': typeof IdRegisterInitRoute
+  '/register/verify': typeof IdRegisterVerifyRoute
+  '/reset-password/init': typeof IdResetPasswordInitRoute
+  '/reset-password/verify': typeof IdResetPasswordVerifyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof AuthRouteRouteWithChildren
-  '/register': typeof RegisterRouteRouteWithChildren
-  '/reset-password': typeof ResetPasswordRouteRouteWithChildren
-  '/login': typeof LoginRoute
+  '': typeof IdRouteRouteWithChildren
+  '/register': typeof IdRegisterRouteRouteWithChildren
+  '/reset-password': typeof IdResetPasswordRouteRouteWithChildren
   '/library': typeof AuthLibraryRoute
   '/logout': typeof AuthLogoutRoute
   '/profile': typeof AuthProfileRoute
   '/subs-list': typeof AuthSubsListRoute
-  '/register/init': typeof RegisterInitRoute
-  '/register/verify': typeof RegisterVerifyRoute
-  '/reset-password/init': typeof ResetPasswordInitRoute
-  '/reset-password/verify': typeof ResetPasswordVerifyRoute
+  '/login': typeof IdLoginRoute
+  '/register/init': typeof IdRegisterInitRoute
+  '/register/verify': typeof IdRegisterVerifyRoute
+  '/reset-password/init': typeof IdResetPasswordInitRoute
+  '/reset-password/verify': typeof IdResetPasswordVerifyRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteRouteWithChildren
-  '/register': typeof RegisterRouteRouteWithChildren
-  '/reset-password': typeof ResetPasswordRouteRouteWithChildren
-  '/login': typeof LoginRoute
+  '/_id': typeof IdRouteRouteWithChildren
+  '/_id/register': typeof IdRegisterRouteRouteWithChildren
+  '/_id/reset-password': typeof IdResetPasswordRouteRouteWithChildren
   '/_auth/library': typeof AuthLibraryRoute
   '/_auth/logout': typeof AuthLogoutRoute
   '/_auth/profile': typeof AuthProfileRoute
   '/_auth/subs-list': typeof AuthSubsListRoute
-  '/register/init': typeof RegisterInitRoute
-  '/register/verify': typeof RegisterVerifyRoute
-  '/reset-password/init': typeof ResetPasswordInitRoute
-  '/reset-password/verify': typeof ResetPasswordVerifyRoute
+  '/_id/login': typeof IdLoginRoute
+  '/_id/register/init': typeof IdRegisterInitRoute
+  '/_id/register/verify': typeof IdRegisterVerifyRoute
+  '/_id/reset-password/init': typeof IdResetPasswordInitRoute
+  '/_id/reset-password/verify': typeof IdResetPasswordVerifyRoute
 }
 
 export interface FileRouteTypes {
@@ -305,11 +334,11 @@ export interface FileRouteTypes {
     | ''
     | '/register'
     | '/reset-password'
-    | '/login'
     | '/library'
     | '/logout'
     | '/profile'
     | '/subs-list'
+    | '/login'
     | '/register/init'
     | '/register/verify'
     | '/reset-password/init'
@@ -320,11 +349,11 @@ export interface FileRouteTypes {
     | ''
     | '/register'
     | '/reset-password'
-    | '/login'
     | '/library'
     | '/logout'
     | '/profile'
     | '/subs-list'
+    | '/login'
     | '/register/init'
     | '/register/verify'
     | '/reset-password/init'
@@ -333,34 +362,31 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/_auth'
-    | '/register'
-    | '/reset-password'
-    | '/login'
+    | '/_id'
+    | '/_id/register'
+    | '/_id/reset-password'
     | '/_auth/library'
     | '/_auth/logout'
     | '/_auth/profile'
     | '/_auth/subs-list'
-    | '/register/init'
-    | '/register/verify'
-    | '/reset-password/init'
-    | '/reset-password/verify'
+    | '/_id/login'
+    | '/_id/register/init'
+    | '/_id/register/verify'
+    | '/_id/reset-password/init'
+    | '/_id/reset-password/verify'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
-  RegisterRouteRoute: typeof RegisterRouteRouteWithChildren
-  ResetPasswordRouteRoute: typeof ResetPasswordRouteRouteWithChildren
-  LoginRoute: typeof LoginRoute
+  IdRouteRoute: typeof IdRouteRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRouteRoute: AuthRouteRouteWithChildren,
-  RegisterRouteRoute: RegisterRouteRouteWithChildren,
-  ResetPasswordRouteRoute: ResetPasswordRouteRouteWithChildren,
-  LoginRoute: LoginRoute,
+  IdRouteRoute: IdRouteRouteWithChildren,
 }
 
 export const routeTree = rootRoute
@@ -375,9 +401,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/_auth",
-        "/register",
-        "/reset-password",
-        "/login"
+        "/_id"
       ]
     },
     "/": {
@@ -392,22 +416,29 @@ export const routeTree = rootRoute
         "/_auth/subs-list"
       ]
     },
-    "/register": {
-      "filePath": "register/route.tsx",
+    "/_id": {
+      "filePath": "_id/route.tsx",
       "children": [
-        "/register/init",
-        "/register/verify"
+        "/_id/register",
+        "/_id/reset-password",
+        "/_id/login"
       ]
     },
-    "/reset-password": {
-      "filePath": "reset-password/route.tsx",
+    "/_id/register": {
+      "filePath": "_id/register/route.tsx",
+      "parent": "/_id",
       "children": [
-        "/reset-password/init",
-        "/reset-password/verify"
+        "/_id/register/init",
+        "/_id/register/verify"
       ]
     },
-    "/login": {
-      "filePath": "login.tsx"
+    "/_id/reset-password": {
+      "filePath": "_id/reset-password/route.tsx",
+      "parent": "/_id",
+      "children": [
+        "/_id/reset-password/init",
+        "/_id/reset-password/verify"
+      ]
     },
     "/_auth/library": {
       "filePath": "_auth/library.tsx",
@@ -425,21 +456,25 @@ export const routeTree = rootRoute
       "filePath": "_auth/subs-list.tsx",
       "parent": "/_auth"
     },
-    "/register/init": {
-      "filePath": "register/init.tsx",
-      "parent": "/register"
+    "/_id/login": {
+      "filePath": "_id/login.tsx",
+      "parent": "/_id"
     },
-    "/register/verify": {
-      "filePath": "register/verify.tsx",
-      "parent": "/register"
+    "/_id/register/init": {
+      "filePath": "_id/register/init.tsx",
+      "parent": "/_id/register"
     },
-    "/reset-password/init": {
-      "filePath": "reset-password/init.tsx",
-      "parent": "/reset-password"
+    "/_id/register/verify": {
+      "filePath": "_id/register/verify.tsx",
+      "parent": "/_id/register"
     },
-    "/reset-password/verify": {
-      "filePath": "reset-password/verify.tsx",
-      "parent": "/reset-password"
+    "/_id/reset-password/init": {
+      "filePath": "_id/reset-password/init.tsx",
+      "parent": "/_id/reset-password"
+    },
+    "/_id/reset-password/verify": {
+      "filePath": "_id/reset-password/verify.tsx",
+      "parent": "/_id/reset-password"
     }
   }
 }

@@ -1,6 +1,6 @@
 import { createFileRoute, redirect, Outlet } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/reset-password')({
+export const Route = createFileRoute('/_id/reset-password')({
 	beforeLoad: (props) => {
 		if (props.context.auth.isAuthenticated) {
 			throw redirect({ to: '/subs-list' });
