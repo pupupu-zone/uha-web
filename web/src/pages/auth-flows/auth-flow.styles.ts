@@ -36,13 +36,14 @@ export const Header = styled.header`
 export const HighTag = styled(H1)`
 	color: #a6749c;
 	font-weight: 900;
+	font-size: calc(100vw / 100 * 5.5);
 	line-height: 1;
 `;
 
 export const LowTag = styled(H1)`
 	color: #efa7a7;
 	font-weight: 900;
-	font-size: 98px;
+	font-size: calc(100vw / 100 * 22.8);
 	line-height: 1;
 `;
 
@@ -50,8 +51,7 @@ export const TagLine = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	place-content: center;
-	padding: 20px;
+	justify-content: center;
 `;
 
 export const PageRoot = styled.div`
