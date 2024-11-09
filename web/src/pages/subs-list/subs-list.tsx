@@ -1,13 +1,15 @@
 import React from 'react';
 
-import { H1 } from '@ui';
+import HeaderCard from './header-card';
 
 import Root from './subs-list.styles';
 
 const SubsList = () => {
 	return (
 		<Root>
-			<H1>Subs List</H1>
+			<HeaderCard />
+
+			<div>CONTENT</div>
 		</Root>
 	);
 };

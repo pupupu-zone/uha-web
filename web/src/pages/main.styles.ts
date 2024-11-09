@@ -1,22 +1,22 @@
 import styled from 'styled-components';
 
-export const Links = styled.div`
+export const Navigation = styled.div`
 	display: grid;
-	grid-auto-rows: min-content;
-	grid-auto-columns: min-content;
-	grid-auto-flow: column;
-	gap: 24px;
-	width: 100%;
-	padding: 12px;
+	grid-auto-flow: row;
+	grid-auto-rows: repeat(3, min-content);
+	position: fixed;
+	right: 0;
+	top: 50%;
+	transform: translateY(-50%);
+	box-shadow: 0 0 10px 0 rgba(0 0 0 / 0.05);
+	background-color: var(--popup-bg);
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
 `;
 
 export default styled.div`
 	display: grid;
-	grid-auto-rows: 1fr min-content;
 	grid-auto-flow: row;
-	gap: 20px;
-	align-items: center;
-	justify-content: center;
 	width: 100%;
 	height: 100%;
 `;
