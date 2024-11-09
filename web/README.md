@@ -12,7 +12,7 @@
 
 ### How to run locally
 > [!IMPORTANT]
-> This command run FE dev server only. For running local API check [backend](../asse-backend/README.md)
+> This command run FE dev server only. For running local API check [backend](../backend/README.md)
 
 #### Baremetal run
 ```sh

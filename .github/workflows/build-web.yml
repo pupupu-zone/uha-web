@@ -3,7 +3,7 @@ name: subsawwy-web-build
 on:
   push:
     paths:
-      - asse-web/**
+      - web/**
   workflow_dispatch:
   workflow_call:
     secrets:
@@ -28,7 +28,7 @@ jobs:
         password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
 
     - name: Build
-      working-directory: ./asse-web
+      working-directory: ./web
       run: docker build --file Dockerfile --tag "registry.keireira.com/subsawwy-web:latest" .
 
     - name: Publish

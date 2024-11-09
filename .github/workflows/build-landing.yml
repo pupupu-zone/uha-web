@@ -3,7 +3,7 @@ name: subsawwy-landing-build
 on:
   push:
     paths:
-      - asse-landing/**
+      - landing/**
   workflow_dispatch:
   workflow_call:
     secrets:
@@ -28,7 +28,7 @@ jobs:
         password: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
          
     - name: Build
-      working-directory: ./asse-landing
+      working-directory: ./landing
       run: docker build --file Dockerfile --tag "registry.keireira.com/subsawwy-landing:latest" .
 
     - name: Publish
