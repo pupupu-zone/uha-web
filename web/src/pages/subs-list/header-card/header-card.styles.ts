@@ -11,6 +11,9 @@ export const Title = styled.h1`
 `;
 
 export const Navigation = styled.div`
+	position: fixed;
+	bottom: 24px;
+	right: 24px;
 	display: grid;
 	gap: 24px;
 	grid-auto-flow: row;
@@ -20,8 +23,8 @@ export const Navigation = styled.div`
 export const Profile = styled.div`
 	width: 48px;
 	height: 48px;
-	color: #333;
-	background-color: #eee;
+	color: #eee;
+	background-color: #333;
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
@@ -30,8 +33,8 @@ export const Profile = styled.div`
 export const Library = styled.div`
 	width: 48px;
 	height: 48px;
-	color: #333;
-	background-color: #eee;
+	color: #eee;
+	background-color: #333;
 	border-radius: 50%;
 	display: flex;
 	align-items: center;

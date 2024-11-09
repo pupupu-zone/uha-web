@@ -23,6 +23,13 @@ const General = createGlobalStyle`
 		--primary-button: 58% 0.14 289; ${'' /* #7a6ac7 */}
 		--primary-button-hover: 62% 0.14 289; ${'' /* #8A7BDC */}
 		--primary-button-press: 42% 0.12 292; ${'' /* #4F3E87 */}
+
+		/* Default category colors */
+		--category-1: #ff9999;
+		--category-2: #66b3ff;
+		--category-3: #99ff99;
+		--category-4: #ffcc99;
+		--category-5: #c2c2f0;
 	}
 
 	html {
