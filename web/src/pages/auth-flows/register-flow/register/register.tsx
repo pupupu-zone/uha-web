@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { formatError } from '@utils';
 import { useRegister } from './_hooks';
@@ -12,12 +12,17 @@ const RegisterPage = () => {
 	const { form, result } = useRegister();
 	const [resendEmail, resendResults] = useLazyResendEmailQuery();
 
+	useEffect(() => {
+		if (result.isError || result.isSuccess) {
+			setEmailWasSent(true);
+		}
+	}, [result.isError, result.isSuccess]);
+
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		e.stopPropagation();
 
 		form.handleSubmit();
-		setEmailWasSent(true);
 	};
 
 	const onResendEmail = () => {
