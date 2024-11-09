@@ -40,6 +40,8 @@ impl Middlewares {
             .expose_headers(&[
                 actix_web::http::header::CONTENT_DISPOSITION,
                 actix_web::http::header::SET_COOKIE,
+                actix_web::http::header::HeaderName::from_static("x-success-code"),
+                actix_web::http::header::HeaderName::from_static("x-error-code"),
             ])
             .supports_credentials()
             .max_age(3600);

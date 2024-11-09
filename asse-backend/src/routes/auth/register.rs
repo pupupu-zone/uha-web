@@ -1,5 +1,5 @@
 use crate::service::data_providers::WebDataPool;
-use actix_web::{web, HttpResponse};
+use actix_web::{http::header, http::StatusCode, web, HttpResponse};
 use email_address::EmailAddress;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
@@ -144,9 +144,14 @@ pub async fn register(
     });
 
     /*
-     * Return nothing but ok and let's hope e-mail will be sent
+     * Return OK and let's hope e-mail will be sent
      */
-    Ok(HttpResponse::Ok().json(json!({
-        "code": 2000, // 200 - User created
-    })))
+    let response = HttpResponse::build(StatusCode::CREATED)
+        .insert_header((header::CONTENT_TYPE, "text/plain"))
+        .insert_header(("x-success-code", "2000"))
+        .json(json!({
+            "code": 2000, // 200 - User created
+        }));
+
+    Ok(response)
 }

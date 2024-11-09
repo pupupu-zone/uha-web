@@ -5,13 +5,7 @@ export type RegistrationReqT = {
 	password: string;
 };
 export type RegistrationResT = {
-	data: {
-		user_id: string;
-	};
-	info: {
-		user: string;
-		verification: string;
-	};
+	code: 1001 | 1002 | 1006 | 1007 | 2000;
 };
 
 // Verify E-Mail
