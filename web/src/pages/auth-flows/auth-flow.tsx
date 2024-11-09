@@ -1,6 +1,7 @@
 import React, { useRef, useState, useLayoutEffect } from 'react';
 import { useSpring, animated } from '@react-spring/web';
 import { Outlet, useLocation, Link } from '@tanstack/react-router';
+
 import Root, { PageRoot, TagLine, HighTag, LowTag, Header, PageName } from './auth-flow.styles';
 
 const AuthFlow = () => {

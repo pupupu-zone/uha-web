@@ -12,13 +12,13 @@
 
 import { Route as rootRoute } from './core/routes/__root'
 import { Route as IdRouteImport } from './core/routes/_id/route'
-import { Route as AuthRouteImport } from './core/routes/_auth/route'
+import { Route as AuthGuardRouteImport } from './core/routes/_auth-guard/route'
 import { Route as IndexImport } from './core/routes/index'
 import { Route as IdLoginImport } from './core/routes/_id/login'
-import { Route as AuthSubsListImport } from './core/routes/_auth/subs-list'
-import { Route as AuthProfileImport } from './core/routes/_auth/profile'
-import { Route as AuthLogoutImport } from './core/routes/_auth/logout'
-import { Route as AuthLibraryImport } from './core/routes/_auth/library'
+import { Route as AuthGuardSubsListImport } from './core/routes/_auth-guard/subs-list'
+import { Route as AuthGuardProfileImport } from './core/routes/_auth-guard/profile'
+import { Route as AuthGuardLogoutImport } from './core/routes/_auth-guard/logout'
+import { Route as AuthGuardLibraryImport } from './core/routes/_auth-guard/library'
 import { Route as IdResetPasswordRouteImport } from './core/routes/_id/reset-password/route'
 import { Route as IdRegisterRouteImport } from './core/routes/_id/register/route'
 import { Route as IdResetPasswordVerifyImport } from './core/routes/_id/reset-password/verify'
@@ -33,8 +33,8 @@ const IdRouteRoute = IdRouteImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthRouteRoute = AuthRouteImport.update({
-  id: '/_auth',
+const AuthGuardRouteRoute = AuthGuardRouteImport.update({
+  id: '/_auth-guard',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -50,28 +50,28 @@ const IdLoginRoute = IdLoginImport.update({
   getParentRoute: () => IdRouteRoute,
 } as any)
 
-const AuthSubsListRoute = AuthSubsListImport.update({
+const AuthGuardSubsListRoute = AuthGuardSubsListImport.update({
   id: '/subs-list',
   path: '/subs-list',
-  getParentRoute: () => AuthRouteRoute,
+  getParentRoute: () => AuthGuardRouteRoute,
 } as any)
 
-const AuthProfileRoute = AuthProfileImport.update({
+const AuthGuardProfileRoute = AuthGuardProfileImport.update({
   id: '/profile',
   path: '/profile',
-  getParentRoute: () => AuthRouteRoute,
+  getParentRoute: () => AuthGuardRouteRoute,
 } as any)
 
-const AuthLogoutRoute = AuthLogoutImport.update({
+const AuthGuardLogoutRoute = AuthGuardLogoutImport.update({
   id: '/logout',
   path: '/logout',
-  getParentRoute: () => AuthRouteRoute,
+  getParentRoute: () => AuthGuardRouteRoute,
 } as any)
 
-const AuthLibraryRoute = AuthLibraryImport.update({
+const AuthGuardLibraryRoute = AuthGuardLibraryImport.update({
   id: '/library',
   path: '/library',
-  getParentRoute: () => AuthRouteRoute,
+  getParentRoute: () => AuthGuardRouteRoute,
 } as any)
 
 const IdResetPasswordRouteRoute = IdResetPasswordRouteImport.update({
@@ -121,11 +121,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/_auth': {
-      id: '/_auth'
+    '/_auth-guard': {
+      id: '/_auth-guard'
       path: ''
       fullPath: ''
-      preLoaderRoute: typeof AuthRouteImport
+      preLoaderRoute: typeof AuthGuardRouteImport
       parentRoute: typeof rootRoute
     }
     '/_id': {
@@ -149,33 +149,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IdResetPasswordRouteImport
       parentRoute: typeof IdRouteImport
     }
-    '/_auth/library': {
-      id: '/_auth/library'
+    '/_auth-guard/library': {
+      id: '/_auth-guard/library'
       path: '/library'
       fullPath: '/library'
-      preLoaderRoute: typeof AuthLibraryImport
-      parentRoute: typeof AuthRouteImport
+      preLoaderRoute: typeof AuthGuardLibraryImport
+      parentRoute: typeof AuthGuardRouteImport
     }
-    '/_auth/logout': {
-      id: '/_auth/logout'
+    '/_auth-guard/logout': {
+      id: '/_auth-guard/logout'
       path: '/logout'
       fullPath: '/logout'
-      preLoaderRoute: typeof AuthLogoutImport
-      parentRoute: typeof AuthRouteImport
+      preLoaderRoute: typeof AuthGuardLogoutImport
+      parentRoute: typeof AuthGuardRouteImport
     }
-    '/_auth/profile': {
-      id: '/_auth/profile'
+    '/_auth-guard/profile': {
+      id: '/_auth-guard/profile'
       path: '/profile'
       fullPath: '/profile'
-      preLoaderRoute: typeof AuthProfileImport
-      parentRoute: typeof AuthRouteImport
+      preLoaderRoute: typeof AuthGuardProfileImport
+      parentRoute: typeof AuthGuardRouteImport
     }
-    '/_auth/subs-list': {
-      id: '/_auth/subs-list'
+    '/_auth-guard/subs-list': {
+      id: '/_auth-guard/subs-list'
       path: '/subs-list'
       fullPath: '/subs-list'
-      preLoaderRoute: typeof AuthSubsListImport
-      parentRoute: typeof AuthRouteImport
+      preLoaderRoute: typeof AuthGuardSubsListImport
+      parentRoute: typeof AuthGuardRouteImport
     }
     '/_id/login': {
       id: '/_id/login'
@@ -217,22 +217,22 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-interface AuthRouteRouteChildren {
-  AuthLibraryRoute: typeof AuthLibraryRoute
-  AuthLogoutRoute: typeof AuthLogoutRoute
-  AuthProfileRoute: typeof AuthProfileRoute
-  AuthSubsListRoute: typeof AuthSubsListRoute
+interface AuthGuardRouteRouteChildren {
+  AuthGuardLibraryRoute: typeof AuthGuardLibraryRoute
+  AuthGuardLogoutRoute: typeof AuthGuardLogoutRoute
+  AuthGuardProfileRoute: typeof AuthGuardProfileRoute
+  AuthGuardSubsListRoute: typeof AuthGuardSubsListRoute
 }
 
-const AuthRouteRouteChildren: AuthRouteRouteChildren = {
-  AuthLibraryRoute: AuthLibraryRoute,
-  AuthLogoutRoute: AuthLogoutRoute,
-  AuthProfileRoute: AuthProfileRoute,
-  AuthSubsListRoute: AuthSubsListRoute,
+const AuthGuardRouteRouteChildren: AuthGuardRouteRouteChildren = {
+  AuthGuardLibraryRoute: AuthGuardLibraryRoute,
+  AuthGuardLogoutRoute: AuthGuardLogoutRoute,
+  AuthGuardProfileRoute: AuthGuardProfileRoute,
+  AuthGuardSubsListRoute: AuthGuardSubsListRoute,
 }
 
-const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
-  AuthRouteRouteChildren,
+const AuthGuardRouteRouteWithChildren = AuthGuardRouteRoute._addFileChildren(
+  AuthGuardRouteRouteChildren,
 )
 
 interface IdRegisterRouteRouteChildren {
@@ -282,10 +282,10 @@ export interface FileRoutesByFullPath {
   '': typeof IdRouteRouteWithChildren
   '/register': typeof IdRegisterRouteRouteWithChildren
   '/reset-password': typeof IdResetPasswordRouteRouteWithChildren
-  '/library': typeof AuthLibraryRoute
-  '/logout': typeof AuthLogoutRoute
-  '/profile': typeof AuthProfileRoute
-  '/subs-list': typeof AuthSubsListRoute
+  '/library': typeof AuthGuardLibraryRoute
+  '/logout': typeof AuthGuardLogoutRoute
+  '/profile': typeof AuthGuardProfileRoute
+  '/subs-list': typeof AuthGuardSubsListRoute
   '/login': typeof IdLoginRoute
   '/register/init': typeof IdRegisterInitRoute
   '/register/verify': typeof IdRegisterVerifyRoute
@@ -298,10 +298,10 @@ export interface FileRoutesByTo {
   '': typeof IdRouteRouteWithChildren
   '/register': typeof IdRegisterRouteRouteWithChildren
   '/reset-password': typeof IdResetPasswordRouteRouteWithChildren
-  '/library': typeof AuthLibraryRoute
-  '/logout': typeof AuthLogoutRoute
-  '/profile': typeof AuthProfileRoute
-  '/subs-list': typeof AuthSubsListRoute
+  '/library': typeof AuthGuardLibraryRoute
+  '/logout': typeof AuthGuardLogoutRoute
+  '/profile': typeof AuthGuardProfileRoute
+  '/subs-list': typeof AuthGuardSubsListRoute
   '/login': typeof IdLoginRoute
   '/register/init': typeof IdRegisterInitRoute
   '/register/verify': typeof IdRegisterVerifyRoute
@@ -312,14 +312,14 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/_auth': typeof AuthRouteRouteWithChildren
+  '/_auth-guard': typeof AuthGuardRouteRouteWithChildren
   '/_id': typeof IdRouteRouteWithChildren
   '/_id/register': typeof IdRegisterRouteRouteWithChildren
   '/_id/reset-password': typeof IdResetPasswordRouteRouteWithChildren
-  '/_auth/library': typeof AuthLibraryRoute
-  '/_auth/logout': typeof AuthLogoutRoute
-  '/_auth/profile': typeof AuthProfileRoute
-  '/_auth/subs-list': typeof AuthSubsListRoute
+  '/_auth-guard/library': typeof AuthGuardLibraryRoute
+  '/_auth-guard/logout': typeof AuthGuardLogoutRoute
+  '/_auth-guard/profile': typeof AuthGuardProfileRoute
+  '/_auth-guard/subs-list': typeof AuthGuardSubsListRoute
   '/_id/login': typeof IdLoginRoute
   '/_id/register/init': typeof IdRegisterInitRoute
   '/_id/register/verify': typeof IdRegisterVerifyRoute
@@ -361,14 +361,14 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/_auth'
+    | '/_auth-guard'
     | '/_id'
     | '/_id/register'
     | '/_id/reset-password'
-    | '/_auth/library'
-    | '/_auth/logout'
-    | '/_auth/profile'
-    | '/_auth/subs-list'
+    | '/_auth-guard/library'
+    | '/_auth-guard/logout'
+    | '/_auth-guard/profile'
+    | '/_auth-guard/subs-list'
     | '/_id/login'
     | '/_id/register/init'
     | '/_id/register/verify'
@@ -379,13 +379,13 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthRouteRoute: typeof AuthRouteRouteWithChildren
+  AuthGuardRouteRoute: typeof AuthGuardRouteRouteWithChildren
   IdRouteRoute: typeof IdRouteRouteWithChildren
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthRouteRoute: AuthRouteRouteWithChildren,
+  AuthGuardRouteRoute: AuthGuardRouteRouteWithChildren,
   IdRouteRoute: IdRouteRouteWithChildren,
 }
 
@@ -400,20 +400,20 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/_auth",
+        "/_auth-guard",
         "/_id"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/_auth": {
-      "filePath": "_auth/route.tsx",
+    "/_auth-guard": {
+      "filePath": "_auth-guard/route.tsx",
       "children": [
-        "/_auth/library",
-        "/_auth/logout",
-        "/_auth/profile",
-        "/_auth/subs-list"
+        "/_auth-guard/library",
+        "/_auth-guard/logout",
+        "/_auth-guard/profile",
+        "/_auth-guard/subs-list"
       ]
     },
     "/_id": {
@@ -440,21 +440,21 @@ export const routeTree = rootRoute
         "/_id/reset-password/verify"
       ]
     },
-    "/_auth/library": {
-      "filePath": "_auth/library.tsx",
-      "parent": "/_auth"
+    "/_auth-guard/library": {
+      "filePath": "_auth-guard/library.tsx",
+      "parent": "/_auth-guard"
     },
-    "/_auth/logout": {
-      "filePath": "_auth/logout.tsx",
-      "parent": "/_auth"
+    "/_auth-guard/logout": {
+      "filePath": "_auth-guard/logout.tsx",
+      "parent": "/_auth-guard"
     },
-    "/_auth/profile": {
-      "filePath": "_auth/profile.tsx",
-      "parent": "/_auth"
+    "/_auth-guard/profile": {
+      "filePath": "_auth-guard/profile.tsx",
+      "parent": "/_auth-guard"
     },
-    "/_auth/subs-list": {
-      "filePath": "_auth/subs-list.tsx",
-      "parent": "/_auth"
+    "/_auth-guard/subs-list": {
+      "filePath": "_auth-guard/subs-list.tsx",
+      "parent": "/_auth-guard"
     },
     "/_id/login": {
       "filePath": "_id/login.tsx",
