@@ -5,7 +5,6 @@ pub struct DeleteAppResponse {
     pub info: String,
 }
 
-#[tracing::instrument]
 pub async fn delete_app() -> actix_web::HttpResponse {
     tracing::event!(target: "backend", tracing::Level::DEBUG, "DeleteApp endpoint");
 

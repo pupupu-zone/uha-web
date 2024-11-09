@@ -122,10 +122,6 @@ pub async fn register(
     }
 
     /*
-     * If user isn't active, check redis for existing tokens, if present — regenerate token
-     */
-
-    /*
      * Or send a letter with activation link, out of that thread
      */
     tokio::spawn(async move {
@@ -147,7 +143,6 @@ pub async fn register(
      * Return OK and let's hope e-mail will be sent
      */
     let response = HttpResponse::build(StatusCode::CREATED)
-        .insert_header((header::CONTENT_TYPE, "text/plain"))
         .insert_header(("x-success-code", "2000"))
         .json(json!({
             "code": 2000, // 200 - User created

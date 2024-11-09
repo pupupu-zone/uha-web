@@ -30,7 +30,6 @@ fn manage_token(
     }
 }
 
-#[tracing::instrument(name = "Verify PASETO token", skip(token, redis))]
 pub async fn verify_confirmation_token_paseto(
     token: String,
     redis: r2d2::Pool<RedisConnectionManager>,

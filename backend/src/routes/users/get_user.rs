@@ -5,7 +5,6 @@ use crate::models::users::UserProfile;
 use crate::service::data_providers::WebDataPool;
 use crate::utils::{acquire_pg_connection, get_session_user_id};
 
-#[tracing::instrument(skip(dp, session))]
 pub async fn get_user(
     dp: web::Data<WebDataPool>,
     session: actix_session::Session,

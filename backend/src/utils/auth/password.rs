@@ -3,7 +3,6 @@ use argon2::{
     Argon2,
 };
 
-#[tracing::instrument(name = "Hashing user password", skip(password))]
 pub async fn hash(password: &[u8]) -> String {
     let salt = SaltString::generate(&mut OsRng);
 
@@ -13,7 +12,6 @@ pub async fn hash(password: &[u8]) -> String {
         .to_string()
 }
 
-#[tracing::instrument(name = "Verifying user password", skip(password, hash))]
 pub async fn verify_password(
     hash: &str,
     password: &[u8],

@@ -5,7 +5,6 @@ pub struct DeleteSubscriptionResponse {
     pub info: String,
 }
 
-#[tracing::instrument]
 pub async fn delete_subscription() -> actix_web::HttpResponse {
     tracing::event!(target: "backend", tracing::Level::DEBUG, "Delete Subscription endpoint");
 

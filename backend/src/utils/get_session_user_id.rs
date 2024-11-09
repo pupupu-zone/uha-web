@@ -1,4 +1,3 @@
-#[tracing::instrument(name = "Get user_id from session.", skip(session))]
 pub async fn get_session_user_id(session: &actix_session::Session) -> Result<uuid::Uuid, String> {
     match session.get(crate::types::USER_ID_KEY) {
         Ok(user_id) => match user_id {

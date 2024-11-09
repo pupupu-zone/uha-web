@@ -5,7 +5,6 @@ pub struct GetManySubscriptionsResponse {
     pub info: String,
 }
 
-#[tracing::instrument]
 pub async fn get_many_subscriptions() -> actix_web::HttpResponse {
     tracing::event!(target: "backend", tracing::Level::DEBUG, "Get Many Subscriptions endpoint");
 

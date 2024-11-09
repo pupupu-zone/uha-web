@@ -26,6 +26,7 @@ pub async fn regenerate_token(
 ) -> Result<HttpResponse, Error> {
     let redis_key = format!("jail_{}", parameters.email.clone());
     let mut redis_connection = dp.redis.clone().get().unwrap();
+
     /*
      * Check in redis if user is not trying to regenerate token too often
      */

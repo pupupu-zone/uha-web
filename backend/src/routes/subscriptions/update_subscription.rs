@@ -5,7 +5,6 @@ pub struct UpdateSubscriptionResponse {
     pub info: String,
 }
 
-#[tracing::instrument]
 pub async fn update_subscription() -> actix_web::HttpResponse {
     tracing::event!(target: "backend", tracing::Level::DEBUG, "Update Subscription endpoint");
 

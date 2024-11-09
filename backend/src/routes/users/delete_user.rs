@@ -5,7 +5,6 @@ pub struct DeleteResponse {
     pub info: String,
 }
 
-#[tracing::instrument]
 pub async fn delete_user() -> actix_web::HttpResponse {
     tracing::event!(target: "backend", tracing::Level::DEBUG, "Delete User endpoint");
 

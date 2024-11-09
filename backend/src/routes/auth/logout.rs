@@ -3,7 +3,6 @@ use crate::utils::get_session_user_id;
 
 use actix_web::{Error, HttpResponse};
 
-#[tracing::instrument(name = "Log out user", skip(session))]
 pub async fn logout(session: actix_session::Session) -> Result<HttpResponse, Error> {
     let session_user_id = get_session_user_id(&session).await;
 

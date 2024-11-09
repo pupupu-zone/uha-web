@@ -7,7 +7,6 @@ use r2d2_redis::RedisConnectionManager;
 use super::utils::{generate_random_shit, get_redis_key, set_claims, TimeManager};
 use crate::service::env::EnvConfig;
 
-#[tracing::instrument(name = "Issue PASETO token", skip(redis))]
 pub async fn issue_confirmation_token_paseto(
     user_id: uuid::Uuid,
     redis: r2d2::Pool<RedisConnectionManager>,

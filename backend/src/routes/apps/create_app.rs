@@ -5,7 +5,6 @@ pub struct CreateAppResponse {
     pub info: String,
 }
 
-#[tracing::instrument]
 pub async fn create_app() -> actix_web::HttpResponse {
     tracing::event!(target: "backend", tracing::Level::DEBUG, "Create App endpoint");
 
