@@ -1,10 +1,23 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 
-export const Test = createGlobalStyle`
-
+export const StubSelect = styled.div`
+	font-weight: 400;
+	font-size: 16px;
+	white-space: nowrap;
+	padding: 8px 16px;
+	border-radius: 20px;
+	border: 1px solid #999;
+	color: #999;
 `;
 
 export const Title = styled.h1`
+	display: grid;
+	grid-auto-flow: column;
+	white-space: nowrap;
+	grid-auto-columns: min-content 1fr min-content;
+	gap: 12px;
+	align-items: baseline;
+
 	font-weight: 700;
 	font-size: 24px;
 	color: #eee;
@@ -21,24 +34,28 @@ export const Navigation = styled.div`
 	font-size: 24px;
 `;
 export const Profile = styled.div`
-	width: 48px;
-	height: 48px;
+	width: 60px;
+	padding: 12px;
+	height: 60px;
 	color: #eee;
 	background-color: #333;
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	z-index: 1;
 `;
 export const Library = styled.div`
-	width: 48px;
-	height: 48px;
+	width: 60px;
+	padding: 12px;
+	height: 60px;
 	color: #eee;
 	background-color: #333;
 	border-radius: 50%;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	z-index: 1;
 `;
 
 export const Costs = styled.div`
@@ -48,30 +65,26 @@ export const Costs = styled.div`
 `;
 
 export const Digits = styled.h1`
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: 1fr min-content;
+	align-items: center;
+	justify-content: space-between;
+	gap: 2px;
 	font-size: 50px;
 	font-weight: 900;
 	margin: 0;
-`;
-
-export const Left = styled.div`
-	display: grid;
-	grid-auto-rows: 1fr min-content;
-	grid-auto-flow: row;
-	gap: 36px;
-`;
-
-export const Right = styled.div`
-	display: grid;
-	grid-auto-flow: row;
-	align-items: start;
-	justify-content: end;
+	width: 100%;
+	overflow: hidden;
+	overflow-x: scroll;
+	padding: 10px 0;
 `;
 
 export default styled.div`
 	display: grid;
-	grid-auto-flow: column;
+	grid-auto-rows: 1fr min-content;
+	grid-auto-flow: row;
 	gap: 12px;
-	grid-auto-columns: 1fr min-content;
 
 	width: 100vw;
 	background-color: #222;

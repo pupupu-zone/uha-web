@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { Button } from '@ui';
 import HeaderCard from './header-card';
-
 import Root, { Content } from './subs-list.styles';
 
 const SubsList = () => {
@@ -9,7 +9,10 @@ const SubsList = () => {
 		<Root>
 			<HeaderCard />
 
-			<Content>CONTENT</Content>
+			<Content>
+				CONTENT
+				<Button to="/logout">Sign Out</Button>
+			</Content>
 		</Root>
 	);
 };
