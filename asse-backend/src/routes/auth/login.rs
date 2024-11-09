@@ -25,7 +25,7 @@ pub async fn login(
      * Check if passed data are valid
      */
     if payload.password.is_empty() {
-        tracing::event!(target: "AUTHORIZATION", tracing::Level::ERROR, "Empty password attempt");
+        tracing::event!(target: "[AUTHORIZATION]", tracing::Level::ERROR, "Empty password attempt");
 
         return Err(actix_web::error::ErrorBadRequest(json!({
             "code": 1001, // 400 - Empty Password
@@ -33,7 +33,7 @@ pub async fn login(
     }
 
     if EmailAddress::is_valid(&payload.email) == false {
-        tracing::event!(target: "AUTHORIZATION", tracing::Level::ERROR, "Invalid E-Mail attempt");
+        tracing::event!(target: "[AUTHORIZATION]", tracing::Level::ERROR, "Invalid E-Mail attempt");
 
         return Err(actix_web::error::ErrorBadRequest(json!({
             "code": 1002, // 400 - Not Valid E-Mail
@@ -68,7 +68,7 @@ pub async fn login(
             (id, hashed_password)
         }
         Err(_) => {
-            tracing::event!(target: "SQLX", tracing::Level::ERROR, "User not found in DB: {:#?}", &payload.email);
+            tracing::event!(target: "[SQLX]", tracing::Level::ERROR, "User not found in DB: {:#?}", &payload.email);
 
             return Err(actix_web::error::ErrorUnauthorized(json!({
                 "code": 1005, // 401 - Wrong Credentials
@@ -86,7 +86,7 @@ pub async fn login(
      * If password invalid, send an error
      */
     if is_pass_valid.is_err() {
-        tracing::event!(target: "AUTHORIZATION", tracing::Level::ERROR, "Invalid password for user \"{:#?}\"", &payload.email);
+        tracing::event!(target: "[AUTHORIZATION]", tracing::Level::ERROR, "Invalid password for user \"{:#?}\"", &payload.email);
 
         return Err(actix_web::error::ErrorUnauthorized(json!({
             "code": 1005, // 401 - Wrong Credentials

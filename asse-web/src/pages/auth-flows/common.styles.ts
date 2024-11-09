@@ -17,12 +17,3 @@ export const Actions = styled.div`
 	gap: 12px;
 	margin-top: 12px;
 `;
-
-export const PageRoot = styled.div`
-	display: grid;
-	grid-auto-rows: max-content;
-	grid-auto-columns: 1fr;
-	grid-auto-flow: row;
-	gap: 36px;
-	margin: 60px;
-`;

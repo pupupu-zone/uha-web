@@ -1,184 +1,152 @@
 use crate::service::data_providers::WebDataPool;
-use crate::types::auth::UserToRegister;
-use crate::utils::emails::send_email;
 use actix_web::{web, HttpResponse};
 use email_address::EmailAddress;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use sqlx::Row;
 use std::fmt::Debug;
+use uuid::Uuid;
 
-use crate::errors::reg_errors;
+use crate::utils::acquire_pg_connection;
 use crate::utils::auth::password;
+use crate::utils::emails::send_email;
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct RawUserData {
+pub struct NewUserData {
     name: String,
     email: String,
     password: String,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
-pub struct FormVal {
-    pub data: RawUserData,
-}
-
-pub async fn rollback(
-    pg_transaction: sqlx::Transaction<'_, sqlx::Postgres>,
-) -> Result<(), actix_web::Error> {
-    let result = pg_transaction.rollback().await;
-
-    match result {
-        Ok(_) => Ok(()),
-        Err(_) => Err(reg_errors::system(
-            "An error has been occurred during sending the verification e-mail. Please try again later.",
-        ))?,
-    }
-}
-
-pub async fn commit(
-    pg_transaction: sqlx::Transaction<'_, sqlx::Postgres>,
-) -> Result<(), actix_web::Error> {
-    let result = pg_transaction.commit().await;
-
-    match result {
-        Ok(_) => Ok(()),
-        Err(_) => Err(reg_errors::system(
-            "An error has been occurred during sending the verification e-mail. Please try again later.",
-        ))?,
-    }
-}
-
 pub async fn register(
-    new_user: web::Json<RawUserData>,
+    payload: web::Json<NewUserData>,
     dp: web::Data<WebDataPool>,
 ) -> Result<HttpResponse, actix_web::Error> {
-    // implement jail system similar to regenerate_token
-    let new_user = new_user.into_inner();
+    // @TODO: implement jail system similar to regenerate_token but basing on footprint
+    let payload = payload.into_inner();
 
-    // Check if the username is valid
-    if new_user.name.is_empty() {
-        Err(reg_errors::name("Username too short"))?
+    /*
+     * Check if passed data are valid
+     */
+    if payload.name.is_empty() {
+        tracing::event!(target: "[REGISTRATION]", tracing::Level::ERROR, "Empty password, attempt");
+
+        return Err(actix_web::error::ErrorBadRequest(json!({
+            "code": 1006, // 400 - Empty Name
+        })));
     }
 
-    // Check if the password is valid
-    if new_user.password.is_empty() {
-        Err(reg_errors::password("Password too short"))?
+    if payload.password.is_empty() {
+        tracing::event!(target: "[REGISTRATION]", tracing::Level::ERROR, "Empty password, attempt");
+
+        return Err(actix_web::error::ErrorBadRequest(json!({
+            "code": 1001, // 400 - Empty Password
+        })));
     }
 
-    // Check if the email is valid
-    if EmailAddress::is_valid(&new_user.email) == false {
-        Err(reg_errors::email("Invalid E-Mail"))?
+    if EmailAddress::is_valid(&payload.email) == false {
+        tracing::event!(target: "[REGISTRATION]", tracing::Level::ERROR, "Invalid E-Mail, attempt");
+
+        return Err(actix_web::error::ErrorBadRequest(json!({
+            "code": 1002, // 400 - Not Valid E-Mail
+        })));
     }
 
-    // Hash the password
-    let hashed_password = password::hash(new_user.password.as_bytes()).await;
+    /*
+     * Hash password & create user with it
+     */
+    let hashed_password = password::hash(payload.password.as_bytes()).await;
 
-    // Create a new user
-    let user = UserToRegister {
-        email: new_user.email,
-        password: hashed_password,
-    };
+    /*
+     * Create user in 'users' table and related entries in 'user_settings' & 'user_profiles' tables
+     * Get an assigned user's ID and is_active flag
+     */
+    let mut pg_connection = acquire_pg_connection(&dp).await?;
 
-    // Open connection with db
-    let mut pg_transaction = dp
-        .pg
-        .begin()
-        .await
-        .map_err(|err| reg_errors::system(err.to_string()))?;
-
-    // ref-deref problem ,so we can use commit, or rollback
-    let mut is_rollback_needed = false;
-
-    // Create user & get user_id. In case user exists, return user_id and status
-    let user_id = match sqlx::query(
+    let (user_id, is_active) = match sqlx::query(
         "
-            INSERT INTO users (email, password)
+            WITH inserted_user AS (
+                INSERT INTO users (email, password)
                 VALUES ($1, $2)
                 ON CONFLICT (email) DO NOTHING
                 RETURNING id, is_active
+            ),
+            selected_user AS (
+                SELECT id, is_active FROM inserted_user
+                UNION ALL
+                SELECT id, is_active FROM users WHERE email = $1 AND NOT EXISTS (SELECT 1 FROM inserted_user)
+            ),
+            inserted_profile AS (
+                INSERT INTO user_profiles (user_id, name)
+                SELECT id, $3 FROM selected_user
+                ON CONFLICT (user_id) DO NOTHING
+            ),
+            inserted_settings AS (
+                INSERT INTO user_settings (user_id)
+                SELECT id FROM selected_user
+                ON CONFLICT (user_id) DO NOTHING
+            )
+            SELECT id, is_active FROM selected_user;
         ",
     )
-    .bind(&user.email)
-    .bind(&user.password)
-    .fetch_one(&mut *pg_transaction)
+    .bind(&payload.email)
+    .bind(&hashed_password)
+    .bind(&payload.name)
+    .fetch_one(&mut *pg_connection)
     .await
     {
         Ok(row) => {
-            let user_id: uuid::Uuid = row.get("id");
+            let id: Uuid = row.get("id");
+            let is_active: bool = row.get("is_active");
 
-            user_id
+            (id, is_active)
         }
-        Err(err) => Err(reg_errors::system(err.to_string()))?,
+        Err(e) => {
+            tracing::event!(target: "[SQLX]", tracing::Level::ERROR, "Error inserting user in DB: {:#?} ({})", &payload.email, e);
+
+            return Err(actix_web::error::ErrorInternalServerError(json!({
+                "code": 1007, // 500 - Can’t create a user
+            })));
+        }
     };
 
-    // Create user profile
-    match sqlx::query("INSERT INTO user_profiles (user_id, name) VALUES ($1, $2) ON CONFLICT (user_id) DO NOTHING")
-        .bind(&user_id)
-        .bind(&new_user.name)
-        .execute(&mut *pg_transaction)
-        .await
-    {
-        Ok(_) => {}
-        Err(_) => {
-            is_rollback_needed = true;
-        }
+    /*
+     * If user is active, throw an error
+     */
+    if is_active {
+        tracing::event!(target: "[REGISTRATION]", tracing::Level::ERROR, "User is in DB already: {:#?}", &payload.email);
+
+        return Err(actix_web::error::ErrorInternalServerError(json!({
+            "code": 1007, // 500 - Can’t create a user
+        })));
     }
 
-    // Create user settings
-    match sqlx::query(
-        "INSERT INTO user_settings (user_id) VALUES ($1) ON CONFLICT (user_id) DO NOTHING",
-    )
-    .bind(&user_id)
-    .bind(&new_user.name)
-    .execute(&mut *pg_transaction)
-    .await
-    {
-        Ok(_) => {}
-        Err(_) => {
-            is_rollback_needed = true;
-        }
-    }
+    /*
+     * If user isn't active, check redis for existing tokens, if present — regenerate token
+     */
 
-    if is_rollback_needed == true {
-        rollback(pg_transaction).await?;
-
-        return Err(reg_errors::system(
-            "An error has been occurred during sending the verification e-mail. Please try again later.",
-        ))?;
-    } else {
-        commit(pg_transaction).await?;
-    }
-
-    // Check if redis is available
-    dp.redis
-        .get()
-        .map_err(|_|reg_errors::system(
-            "An error has been occurred during sending the verification e-mail. Please try again later.",
-        ))?;
-
-    // send email with PASETO token
+    /*
+     * Or send a letter with activation link, out of that thread
+     */
     tokio::spawn(async move {
-        send_email(
+        if let Err(err) = send_email(
             "E-Mail Verification".to_string(),
-            new_user.name.clone(),
-            user.email.clone(),
+            payload.name.clone(),
+            payload.email.clone(),
             "verification_email".to_string(),
             user_id,
             dp.redis.clone(),
         )
         .await
-        .map_err(|err| reg_errors::system(err))
-        .expect("E-Mail have to be sent");
+        {
+            tracing::event!(target: "[E-MAIL]", tracing::Level::ERROR, "Can't send an E-Mail to: {:#?} ({})", &payload.email, err);
+        }
     });
 
+    /*
+     * Return nothing but ok and let's hope e-mail will be sent
+     */
     Ok(HttpResponse::Ok().json(json!({
-        "data": {
-            "user_id": user_id,
-        },
-        "info": {
-            "user": "User registered successfully",
-            "verification": "Verification email has been sent"
-        }
+        "code": 2000, // 200 - User created
     })))
 }

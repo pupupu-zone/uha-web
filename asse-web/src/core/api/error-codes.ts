@@ -4,7 +4,9 @@ const codes = new Map<number, string>([
 	[1002, 'Invalid E-Mail'],
 	[1003, 'Token generation error'],
 	[1004, 'No profile found'],
-	[1005, 'Wrong Credentials']
+	[1005, 'Wrong Credentials'],
+	[1006, 'Empty Name'],
+	[1007, 'Can’t create a user']
 ]);
 
 export default codes;
