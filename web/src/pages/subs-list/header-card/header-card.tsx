@@ -2,11 +2,12 @@ import React from 'react';
 
 import { LargeText } from '@ui';
 import { Link } from '@tanstack/react-router';
-import Root, { Title, Costs, Digits, Navigation, Profile, Library, Left, Right } from './header-card.styles';
+import Root, { Test, Title, Costs, Digits, Navigation, Profile, Library, Left, Right } from './header-card.styles';
 
 const HeaderCard = () => {
 	return (
 		<Root>
+			<Test />
 			<Left>
 				<Title>Dashboard</Title>
 

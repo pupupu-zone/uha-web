@@ -1,4 +1,8 @@
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+
+export const Test = createGlobalStyle`
+
+`;
 
 export const Title = styled.h1`
 	font-weight: 700;
@@ -37,7 +41,6 @@ export const Library = styled.div`
 export const Costs = styled.div`
 	display: grid;
 	grid-auto-flow: row;
-	gap: 8px;
 	color: #eee;
 `;
 
@@ -49,8 +52,9 @@ export const Digits = styled.h1`
 
 export const Left = styled.div`
 	display: grid;
-	grid-auto-flow: row;
 	grid-auto-rows: 1fr min-content;
+	grid-auto-flow: row;
+	gap: 36px;
 `;
 
 export const Right = styled.div`
@@ -67,12 +71,10 @@ export default styled.div`
 	grid-auto-columns: 1fr min-content;
 
 	width: 100vw;
-	min-height: 150px;
-	max-height: 200px;
-	height: calc(100dvh / 3);
 	background-color: #222;
 	border-bottom-right-radius: 36px;
 	border-bottom-left-radius: 36px;
 	padding: 24px 36px;
-	box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.5);
+	padding-top: calc(24px + env(safe-area-inset-top));
+	box-shadow: 0 0 24px 0 rgba(0 0 0 / 0.5); #00000050;
 `;
