@@ -1,5 +1,8 @@
-// import * as icons from '@icons';
+import * as icons from '@icons';
 
-const allIconsList = {};
+const allIconsList = {
+	library: icons.LibraryIcon,
+	profile: icons.ProfileIcon
+};
 
 export default allIconsList;
