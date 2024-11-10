@@ -9,8 +9,9 @@ const useScrollDirection = () => {
 
 		const updateScrollDirection = () => {
 			const scrollY = window.scrollY;
+			const maxScrollY = document.documentElement.scrollHeight - window.innerHeight;
 
-			if (Math.abs(scrollY - lastScrollY) < 25) {
+			if (Math.abs(scrollY - lastScrollY) < 25 || scrollY > maxScrollY) {
 				// Ignore small scroll movements
 				isTicking = false;
 				return;
