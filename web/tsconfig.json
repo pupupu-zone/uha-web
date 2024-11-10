@@ -48,6 +48,9 @@
       "@utils": ["./src/utils/index"],
       "@utils/*": ["./src/utils/*"],
 
+      "@hooks": ["./src/utils/hooks/index"],
+      "@hooks/*": ["./src/utils/hooks/*"],
+
       "@yup": ["./src/utils/yup/index"],
       "@yup/*": ["./src/utils/yup/*"],
 

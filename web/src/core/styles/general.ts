@@ -25,10 +25,10 @@ const General = createGlobalStyle`
 		--primary-button-press: 42% 0.12 292; ${'' /* #4F3E87 */}
 
 		/* Default category colors */
-		--category-1: #ff9999;
+		--category-1: #f99;
 		--category-2: #66b3ff;
-		--category-3: #99ff99;
-		--category-4: #ffcc99;
+		--category-3: #9f9;
+		--category-4: #fc9;
 		--category-5: #c2c2f0;
 	}
 

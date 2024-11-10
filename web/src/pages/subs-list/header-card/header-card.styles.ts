@@ -23,41 +23,6 @@ export const Title = styled.h1`
 	color: #eee;
 `;
 
-export const Navigation = styled.div`
-	position: fixed;
-	bottom: 24px;
-	right: 24px;
-	display: grid;
-	gap: 24px;
-	grid-auto-flow: row;
-	font-weight: 900;
-	font-size: 24px;
-`;
-export const Profile = styled.div`
-	width: 60px;
-	padding: 12px;
-	height: 60px;
-	color: #eee;
-	background-color: #333;
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	z-index: 1;
-`;
-export const Library = styled.div`
-	width: 60px;
-	padding: 12px;
-	height: 60px;
-	color: #eee;
-	background-color: #333;
-	border-radius: 50%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	z-index: 1;
-`;
-
 export const Costs = styled.div`
 	display: grid;
 	grid-auto-flow: row;

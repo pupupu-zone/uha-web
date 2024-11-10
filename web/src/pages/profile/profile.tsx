@@ -9,6 +9,8 @@ const Profile = () => {
 		<Root>
 			<H1>Profile Page</H1>
 
+			<div style={{ width: '100vw', height: '200vh', background: 'red' }} />
+
 			<Button to="/logout">Sign Out</Button>
 		</Root>
 	);
