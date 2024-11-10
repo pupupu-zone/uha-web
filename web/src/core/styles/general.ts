@@ -91,6 +91,10 @@ const General = createGlobalStyle`
 		html, body {
 			overflow-x: hidden;
 		}
+
+		#root {
+			min-height: 100vh;
+		}
 	}
 `;
 

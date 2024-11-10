@@ -62,6 +62,7 @@ export const PageRoot = styled.div`
 	gap: 36px;
 	margin: 0;
 	padding: 24px 32px;
+	padding-bottom: calc(env(safe-area-inset-bottom) + 24px);
 	background-color: var(--popup-bg);
 	border-top-left-radius: 36px;
 	border-top-right-radius: 36px;

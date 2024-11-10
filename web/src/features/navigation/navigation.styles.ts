@@ -25,7 +25,7 @@ export const AddButton = styled(Link)`
 export default styled.div`
 	position: fixed;
 	right: calc(env(safe-area-inset-right) + 12px);
-	bottom: calc(env(safe-area-inset-bottom) + 24px);
+	bottom: calc(env(safe-area-inset-bottom) + 12px);
 	left: calc(env(safe-area-inset-left) + 12px);
 	z-index: 100;
 	display: grid;
