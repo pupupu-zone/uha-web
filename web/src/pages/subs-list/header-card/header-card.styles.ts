@@ -45,17 +45,27 @@ export const Digits = styled.h1`
 	padding: 10px 0;
 `;
 
+export const Root2 = styled.div`
+	width: calc(100vw - 48px);
+	padding: 18px 24px;
+	background-color: #232323;
+	border-radius: 18px;
+	justify-self: center;
+	margin-top: 12px;
+`;
+
 export default styled.div`
 	display: grid;
 	grid-auto-rows: 1fr min-content;
 	grid-auto-flow: row;
 	gap: 12px;
+	margin-top: calc(env(safe-area-inset-top) + 12px);
+	justify-self: center;
 
-	width: 100vw;
-	background-color: #222;
-	border-bottom-right-radius: 36px;
-	border-bottom-left-radius: 36px;
+	width: calc(100vw - 24px);
+	background-color: #232323;
+	border-radius: 18px;
 	padding: 24px 36px;
-	padding-top: calc(24px + env(safe-area-inset-top));
+	padding-top: 24px;
 	box-shadow: 0 0 24px 0 rgba(0 0 0 / 0.5); #00000050;
 `;

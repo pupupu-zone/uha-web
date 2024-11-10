@@ -19,6 +19,7 @@ export const StubBlock = styled.div`
 
 export default styled.div`
 	display: grid;
+	grid-auto-columns: 1fr;
 	grid-auto-flow: row;
 	grid-template-rows: auto 1fr;
 	justify-content: center;
