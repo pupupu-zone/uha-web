@@ -92,8 +92,10 @@ const General = createGlobalStyle`
 			overflow-x: hidden;
 		}
 
-		#root {
-			min-height: 100vh;
+		@media (display-mode: standalone) {
+			#root {
+				min-height: 100vh;
+			}
 		}
 	}
 `;

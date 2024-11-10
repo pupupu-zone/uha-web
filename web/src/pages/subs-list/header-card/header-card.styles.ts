@@ -23,12 +23,6 @@ export const Title = styled.h1`
 	color: #eee;
 `;
 
-export const Costs = styled.div`
-	display: grid;
-	grid-auto-flow: row;
-	color: #eee;
-`;
-
 export const Digits = styled.h1`
 	display: grid;
 	grid-auto-flow: column;
@@ -45,16 +39,8 @@ export const Digits = styled.h1`
 	padding: 10px 0;
 `;
 
-export const Root2 = styled.div`
-	width: calc(100vw - 48px);
-	padding: 18px 24px;
-	background-color: #232323;
-	border-radius: 18px;
-	justify-self: center;
-	margin-top: 12px;
-`;
-
 export default styled.div`
+	color: #eee;
 	display: grid;
 	grid-auto-rows: 1fr min-content;
 	grid-auto-flow: row;
