@@ -5,6 +5,8 @@ export const Route = createFileRoute('/')({
 		if (!context.auth.isAuthenticated) {
 			throw redirect({ to: '/login' });
 		}
+
+		throw redirect({ to: '/subs-list' });
 	},
 	component: Outlet
 });

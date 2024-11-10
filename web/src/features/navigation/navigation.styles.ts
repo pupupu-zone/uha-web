@@ -35,5 +35,5 @@ export default styled.div`
 	padding: 12px;
 	background-color: var(--input-bg);
 	border-radius: 18px;
-	box-shadow: 0 0 10px 1px rgba(0 0 0 / 0.1);
+	box-shadow: 0 0 10px 1px rgba(0 0 0 / 0.15);
 `;
