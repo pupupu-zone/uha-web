@@ -1,3 +1,3 @@
 import idApi from './_api';
 
-export const { useLazyGetProfileQuery } = idApi;
+export const { useLazyObtainUserQuery } = idApi;

@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
-import { useForm } from '@tanstack/react-form';
+import { useSelector } from 'react-redux';
 import { useNavigate } from '@tanstack/react-router';
+import { useForm } from '@tanstack/react-form';
 import { yupValidator } from '@tanstack/yup-form-adapter';
 
 import yup from '@yup';
-import { useAuth } from '@core/auth';
+import { useAppDispatch } from '@store';
+import { actions as authActions } from '@pages/auth-flows/_redux';
+import { isAuthorizedSelector } from '@pages/auth-flows/_redux/selectors';
 import { useLazyLoginQuery } from '@pages/auth-flows/login-flow';
 
 const formSchema = yup.object({
@@ -13,8 +16,9 @@ const formSchema = yup.object({
 });
 
 const useLogin = () => {
-	const auth = useAuth();
+	const isAuthorized = useSelector(isAuthorizedSelector);
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 	const [request, result] = useLazyLoginQuery();
 
 	const form = useForm({
@@ -32,15 +36,15 @@ const useLogin = () => {
 	});
 
 	useEffect(() => {
-		if (!auth.isAuthenticated) return;
+		if (!isAuthorized) return;
 
 		navigate({ to: '/subscriptions' });
-	}, [auth.isAuthenticated, navigate]);
+	}, [isAuthorized, navigate]);
 
 	useEffect(() => {
 		if (!result.isSuccess || !result.data) return;
 
-		auth.login('ANONYMOUS');
+		dispatch(authActions.authLogin());
 	}, [result.isSuccess, result.data]);
 
 	return { form, result };

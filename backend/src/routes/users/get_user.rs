@@ -9,33 +9,24 @@ pub async fn get_user(
     dp: web::Data<WebDataPool>,
     session: actix_session::Session,
 ) -> Result<HttpResponse, Error> {
-    tracing::event!(target: "backend", tracing::Level::DEBUG, "Create App endpoint");
-
     /*
      * Check permissions
      */
     let session_user_id = match get_session_user_id(&session).await {
         Ok(user_id) => user_id,
-        Err(_) => {
-            return Ok(HttpResponse::Unauthorized().json(json!({
-                "status": "error",
-                "message": "Unauthorized."
-            })))
+        Err(err) => {
+            tracing::event!(target: "[GET USER]", tracing::Level::ERROR, "{}", err);
+
+            return Err(actix_web::error::ErrorUnauthorized(json!({
+                "code": 9999, // 401 - <EMPTY>, redirect to /logout
+            })));
         }
     };
 
     /*
-     * Collect user's data from DB by user_id from session
+     * Get user's profile
      */
-    let mut pg_connection = match acquire_pg_connection(&dp).await {
-        Ok(connection) => connection,
-        Err(_) => {
-            return Ok(HttpResponse::InternalServerError().json(json!({
-                "status": "error",
-                "message": "Error with the database connection."
-            })));
-        }
-    };
+    let mut pg_connection = acquire_pg_connection(&dp).await?;
 
     let user_profile = match sqlx::query(
         "
@@ -47,17 +38,17 @@ pub async fn get_user(
                 user_settings.theme,
                 user_settings.default_currency,
                 user_settings.do_recalc
-            FROM 
+            FROM
                 users
-            JOIN 
+            JOIN
                 user_profiles 
-            ON 
+            ON
                 users.id = user_profiles.user_id
-            JOIN 
+            JOIN
                 user_settings 
-            ON 
+            ON
                 users.id = user_settings.user_id
-            WHERE 
+            WHERE
                 users.id = $1;
     ",
     )
@@ -65,21 +56,24 @@ pub async fn get_user(
     .fetch_one(&mut *pg_connection)
     .await
     {
-        Ok(row) => {
-            let user_profile = UserProfile::from_row(&row);
-
-            user_profile
-        }
+        Ok(row) => UserProfile::from_row(&row),
         Err(_) => {
-            return Ok(HttpResponse::InternalServerError().json(json!({
-                "status": "error",
-                "message": "Error with updating the entry"
+            return Err(actix_web::error::ErrorNotFound(json!({
+                "code": 1004, // 404 - No profile found
             })));
         }
     };
 
-    Ok(HttpResponse::Ok().json(json!({
-        "status": "success",
-        "data": user_profile
-    })))
+    /*
+     * Renew session if everything looks good
+     */
+    session.renew();
+
+    /*
+     * If everything good, return user's profile
+     */
+    Ok(HttpResponse::Ok().json(user_profile).into())
+    // return Err(actix_web::error::ErrorUnauthorized(json!({
+    //     "code": 9999, // 401 - <EMPTY>, redirect to /logout
+    // })));
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
 import { VerifyResetPage } from '@src/pages/auth-flows/reset-flow';
 
@@ -7,7 +7,7 @@ type SearchParams = {
 	token: string;
 };
 
-export const Route = createFileRoute('/_id/reset-password/verify')({
+export const Route = createLazyFileRoute('/_id/reset-password/verify')({
 	component: () => <VerifyReset />
 });
 

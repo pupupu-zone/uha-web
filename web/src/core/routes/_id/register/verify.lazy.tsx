@@ -1,5 +1,5 @@
 import React from 'react';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
 import { VerifyEmailPage } from '@pages/auth-flows/register-flow';
 
@@ -7,7 +7,7 @@ type SearchParams = {
 	token: string;
 };
 
-export const Route = createFileRoute('/_id/register/verify')({
+export const Route = createLazyFileRoute('/_id/register/verify')({
 	component: () => <VerifyEmail />
 });
 

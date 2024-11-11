@@ -5,7 +5,6 @@ use serde_json::json;
 use sqlx::Row;
 use uuid::Uuid;
 
-use crate::models::users::UserProfile;
 use crate::service::data_providers::WebDataPool;
 use crate::utils::acquire_pg_connection;
 use crate::utils::auth::password::verify_password;
@@ -118,43 +117,7 @@ pub async fn login(
     }
 
     /*
-     * If everything good, return user's profile
+     * If everything good, return just OK with empty object, so FE can parse it. Profile will be fetched on another step
      */
-    let user_profile = match sqlx::query(
-        "
-            SELECT 
-                users.id AS user_id,
-                users.email,
-                user_profiles.name,
-                user_profiles.avatar_url,
-                user_settings.theme,
-                user_settings.default_currency,
-                user_settings.do_recalc
-            FROM
-                users
-            JOIN
-                user_profiles 
-            ON
-                users.id = user_profiles.user_id
-            JOIN
-                user_settings 
-            ON
-                users.id = user_settings.user_id
-            WHERE
-                users.id = $1;
-    ",
-    )
-    .bind(&user_id)
-    .fetch_one(&mut *pg_connection)
-    .await
-    {
-        Ok(row) => UserProfile::from_row(&row),
-        Err(_) => {
-            return Err(actix_web::error::ErrorNotFound(json!({
-                "code": 1004, // 404 - No profile found
-            })));
-        }
-    };
-
-    Ok(HttpResponse::Ok().json(user_profile).into())
+    Ok(HttpResponse::Ok().json(json!({})))
 }

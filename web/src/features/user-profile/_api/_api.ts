@@ -5,11 +5,12 @@ import type { UserProfileResT, UserProfileReqT } from './api.d';
 const idApi = API.injectEndpoints({
 	endpoints: (build) => ({
 		// Get user's profile
-		getProfile: build.query<UserProfileResT, UserProfileReqT>({
+		obtainUser: build.query<UserProfileResT, UserProfileReqT>({
 			query: () => ({
 				url: '/user/obtain',
 				method: 'GET',
-				credentials: 'include'
+				credentials: 'include',
+				cache: 'no-cache'
 			})
 		})
 	})

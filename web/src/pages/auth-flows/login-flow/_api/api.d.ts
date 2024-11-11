@@ -1,5 +1,3 @@
-import type { UserProfile } from '@features/user-profile/_types';
-
 export type LoginReqT = {
 	email: string;
 	password: string;
@@ -7,4 +5,4 @@ export type LoginReqT = {
 type LoginResErrorT = {
 	code: 1000 | 1001 | 1002 | 1003 | 1004 | 1005;
 };
-export type LoginResSuccessT = UserProfile;
+export type LoginResSuccessT = void;

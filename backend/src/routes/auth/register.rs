@@ -1,5 +1,5 @@
 use crate::service::data_providers::WebDataPool;
-use actix_web::{http::header, http::StatusCode, web, HttpResponse};
+use actix_web::{http::StatusCode, web, HttpResponse};
 use email_address::EmailAddress;
 use serde::{Deserialize, Serialize};
 use serde_json::json;

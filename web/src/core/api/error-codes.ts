@@ -6,7 +6,8 @@ const codes = new Map<number, string>([
 	[1004, 'No profile found'],
 	[1005, 'Wrong Credentials'],
 	[1006, 'Empty Name'],
-	[1007, 'Can’t create a user']
+	[1007, 'Can’t create a user'],
+	[9999, 'Session expired']
 ]);
 
 export default codes;

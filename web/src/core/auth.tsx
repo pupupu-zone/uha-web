@@ -1,48 +1,26 @@
-// @TODO: Rewrite to RTK
 import React from 'react';
+import { useSelector } from 'react-redux';
+
+import { isAuthorizedSelector } from '@pages/auth-flows/_redux/selectors';
 
 export interface AuthContext {
 	isAuthenticated: boolean;
-	login: (username: string) => Promise<void>;
-	logout: () => Promise<void>;
-	user: string | null;
 }
 
 const AuthContext = React.createContext<AuthContext | null>(null);
 
-const key = 'tanstack.auth.user';
-
-const getStoredUser = () => {
-	return localStorage.getItem(key);
-};
-
-const setStoredUser = (user: string | null) => {
-	if (user) {
-		localStorage.setItem(key, user);
-	} else {
-		localStorage.removeItem(key);
-	}
-};
-
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-	const [user, setUser] = React.useState<string | null>(getStoredUser());
-	const isAuthenticated = Boolean(user);
+	const isAuthorized = useSelector(isAuthorizedSelector);
 
-	const logout = React.useCallback(async () => {
-		setStoredUser(null);
-		setUser(null);
-	}, []);
-
-	const login = React.useCallback(async (username: string) => {
-		setStoredUser(username);
-		setUser(username);
-	}, []);
-
-	React.useEffect(() => {
-		setUser(getStoredUser());
-	}, []);
-
-	return <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>{children}</AuthContext.Provider>;
+	return (
+		<AuthContext.Provider
+			value={{
+				isAuthenticated: isAuthorized
+			}}
+		>
+			{children}
+		</AuthContext.Provider>
+	);
 };
 
 export const useAuth = () => {

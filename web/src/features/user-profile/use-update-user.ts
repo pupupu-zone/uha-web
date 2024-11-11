@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useForm } from '@tanstack/react-form';
 import { yupValidator } from '@tanstack/yup-form-adapter';
 import yup from '@yup';
-import { v4 as uuid } from 'uuid';
 
 import API from '@api';
 

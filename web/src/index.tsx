@@ -13,6 +13,7 @@ const router = createRouter({
 	context: {
 		auth: {
 			isAuthenticated: false
+			// isActiveForNow: false
 		}
 	}
 });
