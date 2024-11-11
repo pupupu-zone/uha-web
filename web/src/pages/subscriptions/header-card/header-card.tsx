@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { Link, useNavigate, useSearch } from '@tanstack/react-router';
 
-import { LargeText } from '@ui';
-import Root, { Digits } from './header-card.styles';
+import { LargeText, Icon } from '@ui';
+import Root, { Digits, R, R2, R3 } from './header-card.styles';
 
 const USD = 63000.54 / 30;
 
@@ -19,13 +20,25 @@ const HeaderCard = () => {
 	}).format(USD * interval);
 
 	return (
-		<Root>
-			<Digits onClick={() => setMax(max === 2 ? 0 : 2)}>{cur}</Digits>
+		<R>
+			<Root>
+				<Digits onClick={() => setMax(max === 2 ? 0 : 2)}>{cur}</Digits>
 
-			<LargeText $shade="light" onClick={() => setInterval(Math.floor(Math.random() * (365 - 7 + 1)) + 7)}>
-				per {interval} days
-			</LargeText>
-		</Root>
+				<LargeText $shade="light" onClick={() => setInterval(Math.floor(Math.random() * (365 - 7 + 1)) + 7)}>
+					per {interval} days
+				</LargeText>
+			</Root>
+
+			<R2>
+				<R3 as={Link} to="/subscriptions" search={{ view: 'calendar' }}>
+					<Icon name="calendar" width={32} height={32} />
+				</R3>
+
+				<R3 as={Link} to="/subscriptions" search={{ view: 'list' }}>
+					<Icon name="list" width={32} height={32} />
+				</R3>
+			</R2>
+		</R>
 	);
 };
 

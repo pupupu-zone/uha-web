@@ -3,3 +3,5 @@ export { default as ProfileIcon } from './profile.svg?react';
 export { default as HomeIcon } from './home.svg?react';
 export { default as AddIcon } from './add.svg?react';
 export { default as AnalyzeIcon } from './analyze.svg?react';
+export { default as CalendarIcon } from './calendar.svg?react';
+export { default as ListIcon } from './list.svg?react';

@@ -24,7 +24,7 @@ const Subscriptions = () => {
 		<Root>
 			<HeaderCard />
 
-			<ViewPicker>
+			{/* <ViewPicker>
 				<LinkTo as={Link} to="/subscriptions" search={{ view: 'list' }}>
 					List
 				</LinkTo>
@@ -32,7 +32,7 @@ const Subscriptions = () => {
 				<LinkTo as={Link} to="/subscriptions" search={{ view: 'calendar' }}>
 					Calendar
 				</LinkTo>
-			</ViewPicker>
+			</ViewPicker> */}
 
 			<ViewPort>
 				{view === 'list' && <ListView />}

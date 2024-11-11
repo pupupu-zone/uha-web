@@ -17,17 +17,15 @@ export const SupportImage = styled.div`
 
 export const StubBlock = styled.div`
 	display: grid;
-	grid-auto-flow: column;
 	grid-auto-columns: min-content 1fr min-content;
-	align-items: center;
+	grid-auto-flow: column;
 	gap: 12px;
-
-	width: 100%;
-	border-radius: 18px;
-	padding: 12px;
+	align-items: center;
 	width: calc(100% + 24px);
-	margin-left: -12px;
 	margin-right: -12px;
+	margin-left: -12px;
+	padding: 12px;
+	border-radius: 18px;
 
 	&:hover {
 		background-color: var(--card-hover);
