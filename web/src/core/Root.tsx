@@ -4,7 +4,6 @@ import { Toaster } from 'react-hot-toast';
 import { RouterProvider } from '@tanstack/react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 
-// import { useBlockZoom } from '@utils';
 import { persistStore } from 'redux-persist';
 
 import { CustomToaster } from '@ui';
@@ -28,8 +27,6 @@ const InnerApp = ({ router }: Props) => {
 };
 
 const Root = ({ router }: Props) => {
-	// useBlockZoom();
-
 	return (
 		<>
 			<ResetStyles />

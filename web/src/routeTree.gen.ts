@@ -26,11 +26,13 @@ import { Route as IdRegisterInitImport } from './core/routes/_id/register/init'
 
 // Create Virtual Routes
 
-const AuthGuardSubsListLazyImport = createFileRoute('/_auth-guard/subs-list')()
+const AuthGuardSubscriptionsLazyImport = createFileRoute(
+  '/_auth-guard/subscriptions',
+)()
 const AuthGuardProfileLazyImport = createFileRoute('/_auth-guard/profile')()
 const AuthGuardLogoutLazyImport = createFileRoute('/_auth-guard/logout')()
 const AuthGuardLibraryLazyImport = createFileRoute('/_auth-guard/library')()
-const AuthGuardAnalyzeLazyImport = createFileRoute('/_auth-guard/analyze')()
+const AuthGuardAnalyticsLazyImport = createFileRoute('/_auth-guard/analytics')()
 
 // Create/Update Routes
 
@@ -50,12 +52,14 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AuthGuardSubsListLazyRoute = AuthGuardSubsListLazyImport.update({
-  id: '/subs-list',
-  path: '/subs-list',
-  getParentRoute: () => AuthGuardRouteRoute,
-} as any).lazy(() =>
-  import('./core/routes/_auth-guard/subs-list.lazy').then((d) => d.Route),
+const AuthGuardSubscriptionsLazyRoute = AuthGuardSubscriptionsLazyImport.update(
+  {
+    id: '/subscriptions',
+    path: '/subscriptions',
+    getParentRoute: () => AuthGuardRouteRoute,
+  } as any,
+).lazy(() =>
+  import('./core/routes/_auth-guard/subscriptions.lazy').then((d) => d.Route),
 )
 
 const AuthGuardProfileLazyRoute = AuthGuardProfileLazyImport.update({
@@ -82,12 +86,12 @@ const AuthGuardLibraryLazyRoute = AuthGuardLibraryLazyImport.update({
   import('./core/routes/_auth-guard/library.lazy').then((d) => d.Route),
 )
 
-const AuthGuardAnalyzeLazyRoute = AuthGuardAnalyzeLazyImport.update({
-  id: '/analyze',
-  path: '/analyze',
+const AuthGuardAnalyticsLazyRoute = AuthGuardAnalyticsLazyImport.update({
+  id: '/analytics',
+  path: '/analytics',
   getParentRoute: () => AuthGuardRouteRoute,
 } as any).lazy(() =>
-  import('./core/routes/_auth-guard/analyze.lazy').then((d) => d.Route),
+  import('./core/routes/_auth-guard/analytics.lazy').then((d) => d.Route),
 )
 
 const IdLoginRoute = IdLoginImport.update({
@@ -178,11 +182,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IdLoginImport
       parentRoute: typeof IdRouteImport
     }
-    '/_auth-guard/analyze': {
-      id: '/_auth-guard/analyze'
-      path: '/analyze'
-      fullPath: '/analyze'
-      preLoaderRoute: typeof AuthGuardAnalyzeLazyImport
+    '/_auth-guard/analytics': {
+      id: '/_auth-guard/analytics'
+      path: '/analytics'
+      fullPath: '/analytics'
+      preLoaderRoute: typeof AuthGuardAnalyticsLazyImport
       parentRoute: typeof AuthGuardRouteImport
     }
     '/_auth-guard/library': {
@@ -206,11 +210,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthGuardProfileLazyImport
       parentRoute: typeof AuthGuardRouteImport
     }
-    '/_auth-guard/subs-list': {
-      id: '/_auth-guard/subs-list'
-      path: '/subs-list'
-      fullPath: '/subs-list'
-      preLoaderRoute: typeof AuthGuardSubsListLazyImport
+    '/_auth-guard/subscriptions': {
+      id: '/_auth-guard/subscriptions'
+      path: '/subscriptions'
+      fullPath: '/subscriptions'
+      preLoaderRoute: typeof AuthGuardSubscriptionsLazyImport
       parentRoute: typeof AuthGuardRouteImport
     }
     '/_id/register/init': {
@@ -247,19 +251,19 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 interface AuthGuardRouteRouteChildren {
-  AuthGuardAnalyzeLazyRoute: typeof AuthGuardAnalyzeLazyRoute
+  AuthGuardAnalyticsLazyRoute: typeof AuthGuardAnalyticsLazyRoute
   AuthGuardLibraryLazyRoute: typeof AuthGuardLibraryLazyRoute
   AuthGuardLogoutLazyRoute: typeof AuthGuardLogoutLazyRoute
   AuthGuardProfileLazyRoute: typeof AuthGuardProfileLazyRoute
-  AuthGuardSubsListLazyRoute: typeof AuthGuardSubsListLazyRoute
+  AuthGuardSubscriptionsLazyRoute: typeof AuthGuardSubscriptionsLazyRoute
 }
 
 const AuthGuardRouteRouteChildren: AuthGuardRouteRouteChildren = {
-  AuthGuardAnalyzeLazyRoute: AuthGuardAnalyzeLazyRoute,
+  AuthGuardAnalyticsLazyRoute: AuthGuardAnalyticsLazyRoute,
   AuthGuardLibraryLazyRoute: AuthGuardLibraryLazyRoute,
   AuthGuardLogoutLazyRoute: AuthGuardLogoutLazyRoute,
   AuthGuardProfileLazyRoute: AuthGuardProfileLazyRoute,
-  AuthGuardSubsListLazyRoute: AuthGuardSubsListLazyRoute,
+  AuthGuardSubscriptionsLazyRoute: AuthGuardSubscriptionsLazyRoute,
 }
 
 const AuthGuardRouteRouteWithChildren = AuthGuardRouteRoute._addFileChildren(
@@ -314,11 +318,11 @@ export interface FileRoutesByFullPath {
   '/register': typeof IdRegisterRouteRouteWithChildren
   '/reset-password': typeof IdResetPasswordRouteRouteWithChildren
   '/login': typeof IdLoginRoute
-  '/analyze': typeof AuthGuardAnalyzeLazyRoute
+  '/analytics': typeof AuthGuardAnalyticsLazyRoute
   '/library': typeof AuthGuardLibraryLazyRoute
   '/logout': typeof AuthGuardLogoutLazyRoute
   '/profile': typeof AuthGuardProfileLazyRoute
-  '/subs-list': typeof AuthGuardSubsListLazyRoute
+  '/subscriptions': typeof AuthGuardSubscriptionsLazyRoute
   '/register/init': typeof IdRegisterInitRoute
   '/register/verify': typeof IdRegisterVerifyRoute
   '/reset-password/init': typeof IdResetPasswordInitRoute
@@ -331,11 +335,11 @@ export interface FileRoutesByTo {
   '/register': typeof IdRegisterRouteRouteWithChildren
   '/reset-password': typeof IdResetPasswordRouteRouteWithChildren
   '/login': typeof IdLoginRoute
-  '/analyze': typeof AuthGuardAnalyzeLazyRoute
+  '/analytics': typeof AuthGuardAnalyticsLazyRoute
   '/library': typeof AuthGuardLibraryLazyRoute
   '/logout': typeof AuthGuardLogoutLazyRoute
   '/profile': typeof AuthGuardProfileLazyRoute
-  '/subs-list': typeof AuthGuardSubsListLazyRoute
+  '/subscriptions': typeof AuthGuardSubscriptionsLazyRoute
   '/register/init': typeof IdRegisterInitRoute
   '/register/verify': typeof IdRegisterVerifyRoute
   '/reset-password/init': typeof IdResetPasswordInitRoute
@@ -350,11 +354,11 @@ export interface FileRoutesById {
   '/_id/register': typeof IdRegisterRouteRouteWithChildren
   '/_id/reset-password': typeof IdResetPasswordRouteRouteWithChildren
   '/_id/login': typeof IdLoginRoute
-  '/_auth-guard/analyze': typeof AuthGuardAnalyzeLazyRoute
+  '/_auth-guard/analytics': typeof AuthGuardAnalyticsLazyRoute
   '/_auth-guard/library': typeof AuthGuardLibraryLazyRoute
   '/_auth-guard/logout': typeof AuthGuardLogoutLazyRoute
   '/_auth-guard/profile': typeof AuthGuardProfileLazyRoute
-  '/_auth-guard/subs-list': typeof AuthGuardSubsListLazyRoute
+  '/_auth-guard/subscriptions': typeof AuthGuardSubscriptionsLazyRoute
   '/_id/register/init': typeof IdRegisterInitRoute
   '/_id/register/verify': typeof IdRegisterVerifyRoute
   '/_id/reset-password/init': typeof IdResetPasswordInitRoute
@@ -369,11 +373,11 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/login'
-    | '/analyze'
+    | '/analytics'
     | '/library'
     | '/logout'
     | '/profile'
-    | '/subs-list'
+    | '/subscriptions'
     | '/register/init'
     | '/register/verify'
     | '/reset-password/init'
@@ -385,11 +389,11 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/login'
-    | '/analyze'
+    | '/analytics'
     | '/library'
     | '/logout'
     | '/profile'
-    | '/subs-list'
+    | '/subscriptions'
     | '/register/init'
     | '/register/verify'
     | '/reset-password/init'
@@ -402,11 +406,11 @@ export interface FileRouteTypes {
     | '/_id/register'
     | '/_id/reset-password'
     | '/_id/login'
-    | '/_auth-guard/analyze'
+    | '/_auth-guard/analytics'
     | '/_auth-guard/library'
     | '/_auth-guard/logout'
     | '/_auth-guard/profile'
-    | '/_auth-guard/subs-list'
+    | '/_auth-guard/subscriptions'
     | '/_id/register/init'
     | '/_id/register/verify'
     | '/_id/reset-password/init'
@@ -447,11 +451,11 @@ export const routeTree = rootRoute
     "/_auth-guard": {
       "filePath": "_auth-guard/route.tsx",
       "children": [
-        "/_auth-guard/analyze",
+        "/_auth-guard/analytics",
         "/_auth-guard/library",
         "/_auth-guard/logout",
         "/_auth-guard/profile",
-        "/_auth-guard/subs-list"
+        "/_auth-guard/subscriptions"
       ]
     },
     "/_id": {
@@ -482,8 +486,8 @@ export const routeTree = rootRoute
       "filePath": "_id/login.tsx",
       "parent": "/_id"
     },
-    "/_auth-guard/analyze": {
-      "filePath": "_auth-guard/analyze.lazy.tsx",
+    "/_auth-guard/analytics": {
+      "filePath": "_auth-guard/analytics.lazy.tsx",
       "parent": "/_auth-guard"
     },
     "/_auth-guard/library": {
@@ -498,8 +502,8 @@ export const routeTree = rootRoute
       "filePath": "_auth-guard/profile.lazy.tsx",
       "parent": "/_auth-guard"
     },
-    "/_auth-guard/subs-list": {
-      "filePath": "_auth-guard/subs-list.lazy.tsx",
+    "/_auth-guard/subscriptions": {
+      "filePath": "_auth-guard/subscriptions.lazy.tsx",
       "parent": "/_auth-guard"
     },
     "/_id/register/init": {

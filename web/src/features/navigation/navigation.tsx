@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { animated, useSpring } from '@react-spring/web';
-import { useScrollDirection } from '@hooks';
 
 import { Icon } from '@ui';
+import { useScrollDirection } from '@hooks';
 import { useLocation } from '@tanstack/react-router';
 import Root, { AddButton, NavButton } from './navigation.styles';
 
@@ -32,11 +32,11 @@ const Navigation = () => {
 
 	return (
 		<Root as={animated.div} style={navBarAnimation} onClick={handleNavBarClick}>
-			<NavButton to="/subs-list">
+			<NavButton to="/subscriptions" search={{ view: 'list' }}>
 				<Icon name="home" />
 			</NavButton>
 
-			<NavButton to="/analyze">
+			<NavButton to="/analytics">
 				<Icon name="analyze" />
 			</NavButton>
 

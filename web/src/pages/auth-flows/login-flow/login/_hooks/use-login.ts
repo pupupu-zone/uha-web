@@ -34,7 +34,7 @@ const useLogin = () => {
 	useEffect(() => {
 		if (!auth.isAuthenticated) return;
 
-		navigate({ to: '/subs-list' });
+		navigate({ to: '/subscriptions' });
 	}, [auth.isAuthenticated, navigate]);
 
 	useEffect(() => {

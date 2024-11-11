@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 const useScrollDirection = () => {
+	const [lastScrollY, setLastScrollY] = useState(window.scrollY);
 	const [scrollDirection, setScrollDirection] = useState('up');
-	const [lastScrollY, setLastScrollY] = useState(0);
 
 	useEffect(() => {
 		let isTicking = false;

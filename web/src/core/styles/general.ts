@@ -9,6 +9,8 @@ const General = createGlobalStyle`
 		--bg-color: #EDE8E1;
 		--popup-bg: #fefefe;
 
+		--card-hover: #EAF4EC;
+
 		/* Typography */
 		--error: #D9534F;
 		--primary-text: #333;
@@ -52,6 +54,12 @@ const General = createGlobalStyle`
 		min-width: 100vw;
 		min-height: 100vh;
 		min-height: 100dvh;
+	}
+
+	#masks {
+		position: absolute;
+		top: -100px;
+		left: -100px;
 	}
 
 	label {

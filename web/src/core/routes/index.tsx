@@ -6,7 +6,7 @@ export const Route = createFileRoute('/')({
 			throw redirect({ to: '/login' });
 		}
 
-		throw redirect({ to: '/subs-list' });
+		throw redirect({ to: '/subscriptions' });
 	},
 	component: Outlet
 });

@@ -5,7 +5,7 @@ import { LoginPage } from '@src/pages/auth-flows/login-flow';
 export const Route = createFileRoute('/_id/login')({
 	beforeLoad: ({ context }) => {
 		if (context.auth.isAuthenticated) {
-			throw redirect({ to: '/subs-list' });
+			throw redirect({ to: '/subscriptions' });
 		}
 	},
 	component: LoginPage

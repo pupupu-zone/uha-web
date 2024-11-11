@@ -5,12 +5,15 @@ import { routeTree } from './routeTree.gen';
 import { createRouter } from '@tanstack/react-router';
 
 import RootApp from '@core/Root.tsx';
+import * as masks from '@src/assets/masks';
 
 // Set up a Router instance
 const router = createRouter({
 	routeTree,
 	context: {
-		isAuthorized: undefined!
+		auth: {
+			isAuthenticated: false
+		}
 	}
 });
 
@@ -24,9 +27,20 @@ declare module '@tanstack/react-router' {
 export type AppRouter = typeof router;
 
 const rootElement = document.getElementById('root')!;
+const masksElement = document.getElementById('masks')!;
 
 if (!rootElement.innerHTML) {
 	const root = ReactDOM.createRoot(rootElement);
 
 	root.render(<RootApp router={router} />);
+}
+
+if (!masksElement.innerHTML) {
+	const masksNode = ReactDOM.createRoot(masksElement);
+
+	masksNode.render(
+		<>
+			<masks.SquircleMask />
+		</>
+	);
 }

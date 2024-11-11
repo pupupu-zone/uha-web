@@ -3,7 +3,7 @@ import { createFileRoute, redirect, Outlet } from '@tanstack/react-router';
 export const Route = createFileRoute('/_id/register')({
 	beforeLoad: (props) => {
 		if (props.context.auth.isAuthenticated) {
-			throw redirect({ to: '/subs-list' });
+			throw redirect({ to: '/subscriptions' });
 		}
 
 		if (props.location.pathname.replaceAll('/', '') === 'register') {

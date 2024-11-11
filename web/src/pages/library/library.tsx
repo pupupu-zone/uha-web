@@ -3,7 +3,7 @@ import React from 'react';
 import { H1 } from '@ui';
 import Root from './library.styles';
 
-const SettingsPage = () => {
+const LibraryPage = () => {
 	return (
 		<Root>
 			<H1>Library Page</H1>
@@ -11,4 +11,4 @@ const SettingsPage = () => {
 	);
 };
 
-export default SettingsPage;
+export default LibraryPage;
