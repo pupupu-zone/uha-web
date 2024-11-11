@@ -30,11 +30,11 @@ const HeaderCard = () => {
 			</Root>
 
 			<R2>
-				<R3 as={Link} to="/subscriptions" search={{ view: 'calendar' }}>
+				<R3 as={Link} aria-label="Calendar View" to="/subscriptions" search={{ view: 'calendar' }}>
 					<Icon name="calendar" width={32} height={32} />
 				</R3>
 
-				<R3 as={Link} to="/subscriptions" search={{ view: 'list' }}>
+				<R3 as={Link} aria-label="List View" to="/subscriptions" search={{ view: 'list' }}>
 					<Icon name="list" width={32} height={32} />
 				</R3>
 			</R2>
