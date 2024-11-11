@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, useSearch } from '@tanstack/react-router';
 
 import { LargeText, Icon } from '@ui';
+import { Link } from '@tanstack/react-router';
 import Root, { Digits, R, R2, R3 } from './header-card.styles';
 
 const USD = 63000.54 / 30;

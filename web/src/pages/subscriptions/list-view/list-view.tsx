@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { H1, H2, SmallText } from '@ui';
+import { H1, H2, H3, SmallText } from '@ui';
 import Root, { StubBlock, SupportImage, Information } from './list-view.styles';
 
 const stubs = [
@@ -51,7 +51,7 @@ const stubs = [
 const ListView = () => {
 	return (
 		<Root>
-			<H2>November</H2>
+			<H1>November</H1>
 
 			{stubs.map(({ country, date, price, flag }) => (
 				<StubBlock key={country}>
@@ -60,12 +60,12 @@ const ListView = () => {
 					</SupportImage>
 
 					<Information>
-						<H2>{country}</H2>
+						<H3>{country}</H3>
 
 						<SmallText>{date}</SmallText>
 					</Information>
 
-					<H1>{price}</H1>
+					<H2>{price}</H2>
 				</StubBlock>
 			))}
 		</Root>
