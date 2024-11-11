@@ -45,13 +45,12 @@ export default styled.div`
 	grid-auto-rows: 1fr min-content;
 	grid-auto-flow: row;
 	gap: 12px;
-	margin-top: calc(env(safe-area-inset-top) + 12px);
+	margin-top: 12px;
 	justify-self: center;
 
 	width: calc(100vw - 24px);
 	background-color: #232323;
 	border-radius: 18px;
 	padding: 24px 36px;
-	padding-top: 24px;
 	box-shadow: 0 0 24px 0 rgba(0 0 0 / 0.5); #00000050;
 `;
