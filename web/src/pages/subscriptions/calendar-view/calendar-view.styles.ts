@@ -3,6 +3,22 @@ import { H1, H2, Text } from '@ui';
 
 const gap = 12;
 
+export const SubTitle = styled.div``;
+
+export const DaySubscriptions = styled.div`
+	display: grid;
+	grid-auto-flow: row;
+	gap: 12px;
+	margin-top: 12px;
+	grid-auto-rows: min-content;
+	grid-auto-columns: 1fr;
+`;
+
+export const SubsOfTheDay = styled.div`
+	margin-top: 48px;
+	margin-bottom: calc(env(safe-area-inset-bottom) + 36px);
+`;
+
 export const CalendarBody = styled.div`
 	display: grid;
 	grid-auto-rows: max-content;
@@ -28,7 +44,7 @@ export const WeekDay = styled(Text)`
 export const Calendar = styled.div`
 	display: grid;
 	grid-auto-rows: max-content;
-	grid-auto-columns: max-content;
+	grid-auto-columns: 1fr;
 	grid-auto-flow: row;
 	gap: ${gap}px;
 	justify-content: center;
@@ -80,9 +96,10 @@ export const Titles = styled.div`
 	grid-auto-flow: column;
 	gap: 24px;
 	justify-content: flex-start;
-	padding: 12px;
+	padding: 12px 0;
 `;
 
 export default styled.div`
+	padding: 0 12px;
 	color: #333;
 `;
