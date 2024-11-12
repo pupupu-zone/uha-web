@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 
-export const ViewPort = styled.div``;
+export const ViewPort = styled.div`
+	justify-self: center;
+	width: calc(100vw - 36px);
+`;
 
 export default styled.div`
 	display: grid;

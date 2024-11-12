@@ -1,17 +1,30 @@
 {
+  "name": "Subsawwy",
   "short_name": "Subsawwy",
-  "name": "Subsawwy — Subscription Manager",
-  "description": "Subsawwy is a subscription manager that helps you keep track of all your subscriptions in one place.",
-  "theme_color": "#EF5777",
-  "background_color": "#EF5777",
-  "display": "standalone",
-  "id": "subsawwy-5702b80f-4bcc-4efe-8403-85f7febf90a0",
   "start_url": "/?source=pwa",
+  "display": "standalone",
+  "background_color": "#EDE8E1",
+  "lang": "en",
   "scope": "/",
+  "description": "Subsawwy is a subscription manager that helps you keep track of all your subscriptions in one place.",
+  "theme_color": "#EDE8E1",
+  "id": "subsawwy-5702b80f-4bcc-4efe-8403-85f7febf90a0",
   "icons": [
-    { "src": "/favicon.ico", "type": "image/x-icon", "sizes": "16x16 32x32" },
-    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192" },
-    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512" },
+    {
+      "src": "/favicon.ico",
+      "type": "image/x-icon",
+      "sizes": "16x16 32x32"
+    },
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
     {
       "src": "/icon-192-maskable.png",
       "type": "image/png",
@@ -24,5 +37,8 @@
       "sizes": "512x512",
       "purpose": "maskable"
     }
-  ]
+  ],
+  "dir": "ltr",
+  "orientation": "portrait-primary",
+  "categories": ["finance", "productivity", "utilities"]
 }

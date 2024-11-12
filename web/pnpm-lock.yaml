@@ -32,6 +32,9 @@ importers:
       '@use-gesture/react':
         specifier: ^10.3.1
         version: 10.3.1(react@18.3.1)
+      luxon:
+        specifier: ^3.5.0
+        version: 3.5.0
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -41,6 +44,9 @@ importers:
       react-aria-components:
         specifier: ^1.4.1
         version: 1.4.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-basic-horizontal-scroll:
+        specifier: ^0.1.8
+        version: 0.1.8
       react-custom-scroll:
         specifier: ^7.0.0
         version: 7.0.0
@@ -99,6 +105,9 @@ importers:
       '@tanstack/yup-form-adapter':
         specifier: ^0.34.4
         version: 0.34.4(yup@1.4.0)
+      '@types/luxon':
+        specifier: ^3.4.2
+        version: 3.4.2
       '@types/node':
         specifier: ^22.9.0
         version: 22.9.0
@@ -2496,6 +2505,9 @@ packages:
   '@types/lodash@4.17.13':
     resolution: {integrity: sha512-lfx+dftrEZcdBPczf9d0Qv0x+j/rfNCMuC6OcfXmO8gkfeNAY88PgKUbvG56whcN23gc27yenwF6oJZXGFpYxg==}
 
+  '@types/luxon@3.4.2':
+    resolution: {integrity: sha512-TifLZlFudklWlMBfhubvgqTXRzLDI5pCbGa4P8a3wPyUQSW+1xQ5eDsreP9DWHX3tjq1ke96uYG/nwundroWcA==}
+
   '@types/mdx@2.0.13':
     resolution: {integrity: sha512-+OWZQfAYyio6YkJb3HLxDrvnx6SWWDbC0zVPfBRzUk0/nqoDyf6dNxQi3eArPe8rJ473nobTMQ/8Zk+LxJ+Yuw==}
 
@@ -3734,6 +3746,10 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
+  luxon@3.5.0:
+    resolution: {integrity: sha512-rh+Zjr6DNfUYR3bPwJEnuwDdqMbxZW7LOQfUN4B54+Cl+0o5zaU9RJ6bcidfDtC1cWCZXQ+nvX8bf6bAji37QQ==}
+    engines: {node: '>=12'}
+
   lz-string@1.5.0:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
     hasBin: true
@@ -4006,6 +4022,9 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0
+
+  react-basic-horizontal-scroll@0.1.8:
+    resolution: {integrity: sha512-gjC9v6svZ02mo/dkldDzfPVgGJ0ce3sw4m+xba0VE1huWdKNP5K/N9BxYO5oVf/N4TY9j57NXvmO/tj66mC6TQ==}
 
   react-custom-scroll@7.0.0:
     resolution: {integrity: sha512-Obxsr299+7cMItEL4hIF5/pDUJastpjzEGVM5+yetiDSZF6upIocZTu4sf+Z5QYp+O0hnXm+Z2kSLvtrlTeMPA==}
@@ -7527,6 +7546,8 @@ snapshots:
 
   '@types/lodash@4.17.13': {}
 
+  '@types/luxon@3.4.2': {}
+
   '@types/mdx@2.0.13': {}
 
   '@types/minimatch@5.1.2': {}
@@ -8958,6 +8979,8 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
+  luxon@3.5.0: {}
+
   lz-string@1.5.0: {}
 
   magic-string@0.25.9:
@@ -9271,6 +9294,8 @@ snapshots:
       '@react-types/shared': 3.25.0(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
+
+  react-basic-horizontal-scroll@0.1.8: {}
 
   react-custom-scroll@7.0.0:
     dependencies:
