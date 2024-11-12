@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import { DateTime, Info } from 'luxon';
 import { Link, useSearch } from '@tanstack/react-router';
-import HorizontalScroll from 'react-basic-horizontal-scroll';
 
-import Root, { Titles, NavLink, Calendar, Week, Day } from './calendar-view.styles';
+import { H1, ScrollArea } from '@ui';
+import Root, { Titles, Calendar, Week, Day, WeekDay, WeekDays, CalendarBody } from './calendar-view.styles';
 
 // pass months before and after today
 // month starts with 1 for our purposes
@@ -38,30 +38,6 @@ const getTitle = (date: DateTime) => {
 	};
 };
 
-const useTitles = (month, year) => {
-	const title = useMemo(() => {
-		const nowDate = DateTime.now();
-		const passedDate = DateTime.fromObject({ month, year });
-
-		if (passedDate.diff(nowDate, 'months').months < -1) {
-			console.error('Invalid date');
-
-			return [];
-		}
-
-		const calcToDate = passedDate.plus({ months: 6 });
-		const delta = Math.ceil(calcToDate.diff(nowDate, 'months').months);
-
-		const dates = Array.from({ length: delta }, (_, i) => {
-			return getTitle(nowDate.plus({ months: i }));
-		});
-
-		return dates;
-	}, [month, year]);
-
-	return title;
-};
-
 const formatDays = (monthDays: DateTime[]) => {
 	const month = {};
 
@@ -83,69 +59,53 @@ const formatDays = (monthDays: DateTime[]) => {
 const CalendarView = () => {
 	const { month, year, day: searchDay } = useSearch({ from: '/_auth-guard/subscriptions' });
 	const monthDays = useGenerateYearCalendar(month, year);
-	const titles = useTitles(month, year);
+	const title = getTitle(DateTime.fromObject({ month, year }));
 
 	const formattedMonth = formatDays(monthDays);
 
 	return (
 		<Root>
-			<HorizontalScroll>
-				<Titles>
-					{titles.map((title) => {
-						const isActive = title.month === month && title.year === year;
-
-						return (
-							<Link
-								key={title.title}
-								style={{ opacity: isActive ? 1 : 0.5 }}
-								to="/subscriptions"
-								search={{
-									view: 'calendar',
-									month: title.month,
-									year: title.year
-								}}
-							>
-								<NavLink>{title.title}</NavLink>
-							</Link>
-						);
-					})}
-				</Titles>
-			</HorizontalScroll>
+			<Titles>
+				<H1>{title.title}</H1>
+			</Titles>
 
 			<Calendar>
-				<Week>
+				<WeekDays>
 					{Info.weekdays('short').map((day) => (
-						<Day key={day} $isActiveDay={false}>
-							{day}
-						</Day>
+						<WeekDay key={day}>{day}</WeekDay>
 					))}
-				</Week>
-				{Object.entries(formattedMonth).map(([week, dates]) => {
-					return (
-						<Week key={week}>
-							{dates.map((date, index) => {
-								if (date) {
-									return (
-										<Link
-											key={date.toISODate()}
-											to="/subscriptions"
-											search={{
-												view: 'calendar',
-												month: date.month,
-												year: date.year,
-												day: date.day
-											}}
-										>
-											<Day $isActiveDay={searchDay === date.day}>{date.toFormat('d')}</Day>
-										</Link>
-									);
-								}
+				</WeekDays>
 
-								return <Day key={index} />;
-							})}
-						</Week>
-					);
-				})}
+				<ScrollArea>
+					<CalendarBody>
+						{Object.entries(formattedMonth).map(([week, dates]) => {
+							return (
+								<Week key={week}>
+									{dates.map((date, index) => {
+										if (date) {
+											return (
+												<Link
+													key={date.toISODate()}
+													to="/subscriptions"
+													search={{
+														view: 'calendar',
+														month: date.month,
+														year: date.year,
+														day: date.day
+													}}
+												>
+													<Day $isActiveDay={searchDay === date.day}>{date.toFormat('d')}</Day>
+												</Link>
+											);
+										}
+
+										return <Day key={index} />;
+									})}
+								</Week>
+							);
+						})}
+					</CalendarBody>
+				</ScrollArea>
 			</Calendar>
 		</Root>
 	);
