@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { animated, useSpring } from '@react-spring/web';
+import { useSearch } from '@tanstack/react-router';
 
+import { Link } from '@tanstack/react-router';
 import { Icon } from '@ui';
 import { useScrollDirection } from '@hooks';
 import { useLocation } from '@tanstack/react-router';
 import Root, { AddButton, NavButton } from './navigation.styles';
 
 const Navigation = () => {
+	const search = useSearch({ from: '/_auth-guard' });
 	const location = useLocation();
 	const scrollDirection = useScrollDirection();
 	const [manualShow, setManualShow] = useState(false);
@@ -32,25 +35,35 @@ const Navigation = () => {
 
 	return (
 		<Root as={animated.div} style={navBarAnimation} onClick={handleNavBarClick}>
-			<NavButton to="/subscriptions" search={{ view: 'list' }}>
-				<Icon name="home" />
-			</NavButton>
+			<Link to="/subscriptions" search={{ view: 'list', action: search.action }}>
+				<NavButton>
+					<Icon name="home" />
+				</NavButton>
+			</Link>
 
-			<NavButton to="/analytics">
-				<Icon name="analyze" />
-			</NavButton>
+			<Link to="/analytics">
+				<NavButton>
+					<Icon name="analyze" />
+				</NavButton>
+			</Link>
 
-			<AddButton to={location.pathname} search={{ action: 'add' }}>
-				<Icon name="add" />
-			</AddButton>
+			<Link to={location.pathname} search={{ action: 'add', view: search.view }}>
+				<AddButton>
+					<Icon name="add" />
+				</AddButton>
+			</Link>
 
-			<NavButton to="/library">
-				<Icon name="library" />
-			</NavButton>
+			<Link to="/library">
+				<NavButton>
+					<Icon name="library" />
+				</NavButton>
+			</Link>
 
-			<NavButton to="/profile">
-				<Icon name="profile" />
-			</NavButton>
+			<Link to="/profile">
+				<NavButton>
+					<Icon name="profile" />
+				</NavButton>
+			</Link>
 		</Root>
 	);
 };

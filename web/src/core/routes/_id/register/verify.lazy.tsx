@@ -12,7 +12,7 @@ export const Route = createLazyFileRoute('/_id/register/verify')({
 });
 
 const VerifyEmail = () => {
-	const { token } = Route.useSearch<SearchParams>();
+	const { token } = Route.useSearch() as SearchParams;
 
 	return <VerifyEmailPage token={token} />;
 };

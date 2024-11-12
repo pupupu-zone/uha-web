@@ -12,7 +12,7 @@ export const Route = createLazyFileRoute('/_id/reset-password/verify')({
 });
 
 const VerifyReset = () => {
-	const { token } = Route.useSearch<SearchParams>();
+	const { token } = Route.useSearch() as SearchParams;
 
 	return <VerifyResetPage token={token} />;
 };

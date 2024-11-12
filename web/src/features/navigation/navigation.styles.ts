@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { Link } from '@tanstack/react-router';
 
-export const NavButton = styled(Link)`
+export const NavButton = styled.p`
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -11,7 +10,7 @@ export const NavButton = styled(Link)`
 	border-radius: 50%;
 `;
 
-export const AddButton = styled(Link)`
+export const AddButton = styled.p`
 	display: flex;
 	align-items: center;
 	justify-content: center;
