@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
-import { DateTime } from 'luxon';
+import { DateTime, Info } from 'luxon';
 import { Link, useSearch } from '@tanstack/react-router';
 import HorizontalScroll from 'react-basic-horizontal-scroll';
 
-import Root, { Titles, NavLink } from './calendar-view.styles';
+import Root, { Titles, NavLink, Calendar, Week, Day } from './calendar-view.styles';
 
 // pass months before and after today
 // month starts with 1 for our purposes
@@ -40,10 +40,20 @@ const getTitle = (date: DateTime) => {
 
 const useTitles = (month, year) => {
 	const title = useMemo(() => {
-		const passedDate = DateTime.fromObject({ year, month });
+		const nowDate = DateTime.now();
+		const passedDate = DateTime.fromObject({ month, year });
 
-		const dates = Array.from({ length: 12 }, (_, i) => {
-			return getTitle(passedDate.plus({ months: i }));
+		if (passedDate.diff(nowDate, 'months').months < -1) {
+			console.error('Invalid date');
+
+			return [];
+		}
+
+		const calcToDate = passedDate.plus({ months: 6 });
+		const delta = Math.ceil(calcToDate.diff(nowDate, 'months').months);
+
+		const dates = Array.from({ length: delta }, (_, i) => {
+			return getTitle(nowDate.plus({ months: i }));
 		});
 
 		return dates;
@@ -52,10 +62,30 @@ const useTitles = (month, year) => {
 	return title;
 };
 
+const formatDays = (monthDays: DateTime[]) => {
+	const month = {};
+
+	monthDays.forEach((date) => {
+		const weekday = date.weekday;
+		const isNextYearWeek = date.month === 12 && date.weekNumber === 1;
+		const weekNumber = isNextYearWeek ? date.weeksInWeekYear + 1 : date.weekNumber;
+
+		if (!month[weekNumber]) {
+			month[weekNumber] = new Array(7).fill(null);
+		}
+
+		month[weekNumber][weekday - 1] = date;
+	});
+
+	return month;
+};
+
 const CalendarView = () => {
-	const { month, year } = useSearch({ from: '/_auth-guard/subscriptions' });
+	const { month, year, day: searchDay } = useSearch({ from: '/_auth-guard/subscriptions' });
 	const monthDays = useGenerateYearCalendar(month, year);
 	const titles = useTitles(month, year);
+
+	const formattedMonth = formatDays(monthDays);
 
 	return (
 		<Root>
@@ -82,9 +112,41 @@ const CalendarView = () => {
 				</Titles>
 			</HorizontalScroll>
 
-			{monthDays.map((date) => {
-				return <div key={date.toISODate()}>{date.toFormat('d')}</div>;
-			})}
+			<Calendar>
+				<Week>
+					{Info.weekdays('short').map((day) => (
+						<Day key={day} $isActiveDay={false}>
+							{day}
+						</Day>
+					))}
+				</Week>
+				{Object.entries(formattedMonth).map(([week, dates]) => {
+					return (
+						<Week key={week}>
+							{dates.map((date, index) => {
+								if (date) {
+									return (
+										<Link
+											key={date.toISODate()}
+											to="/subscriptions"
+											search={{
+												view: 'calendar',
+												month: date.month,
+												year: date.year,
+												day: date.day
+											}}
+										>
+											<Day $isActiveDay={searchDay === date.day}>{date.toFormat('d')}</Day>
+										</Link>
+									);
+								}
+
+								return <Day key={index} />;
+							})}
+						</Week>
+					);
+				})}
+			</Calendar>
 		</Root>
 	);
 };

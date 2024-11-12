@@ -7,6 +7,7 @@ export type SearchParams = {
 	view?: 'list' | 'calendar'; // for subscriptions view
 	action?: 'add' | 'edit'; // edit for subscriptions view, add for any
 
+	day?: string | number; // for calendar view
 	month?: string | number; // for calendar view
 	year?: string | number; // for calendar view
 };
@@ -21,6 +22,10 @@ export const Route = createFileRoute('/_auth-guard')({
 	},
 	component: MainPage,
 	validateSearch: (search: SearchParams) => {
+		if ('day' in search) {
+			search.day = Number.parseInt(search.day as string, 10);
+		}
+
 		if ('month' in search) {
 			search.month = Number.parseInt(search.month as string, 10);
 		}
@@ -34,6 +39,7 @@ export const Route = createFileRoute('/_auth-guard')({
 
 			if (!search.month) search.month = now.month;
 			if (!search.year) search.year = now.year;
+			if (!search.day) search.day = now.day;
 		}
 
 		return search;
