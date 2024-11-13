@@ -16,7 +16,7 @@ const Button = React.forwardRef(
 			isFullWidth = false,
 			isSecondary = false,
 			onPress = noop,
-			color = 'primary',
+			variant = 'primary',
 			size = 'medium',
 			...restProps
 		}: Props,
@@ -36,7 +36,7 @@ const Button = React.forwardRef(
 			<Root
 				as={AdobeButton}
 				ref={ref}
-				$color={color}
+				$variant={variant}
 				$size={size}
 				$isFullWidth={isFullWidth}
 				$isSecondary={isSecondary}

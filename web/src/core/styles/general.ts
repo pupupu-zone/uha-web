@@ -26,6 +26,8 @@ const General = createGlobalStyle`
 		--primary-button-hover: 62% 0.14 289; ${'' /* #8A7BDC */}
 		--primary-button-press: 42% 0.12 292; ${'' /* #4F3E87 */}
 
+		/* Faded button */
+
 		/* Default category colors */
 		--category-1: #f99;
 		--category-2: #66b3ff;

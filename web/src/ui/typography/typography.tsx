@@ -28,7 +28,7 @@ const aligns = {
 };
 
 export const H1 = styled.h1<HeaderProps>`
-	font-weight: 700;
+	font-weight: ${({ $weight }) => $weight || 700};
 	font-size: 24px;
 	font-family: 'Nunito Sans', sans-serif;
 	line-height: 32px;
@@ -37,7 +37,7 @@ export const H1 = styled.h1<HeaderProps>`
 `;
 
 export const H2 = styled.h2<HeaderProps>`
-	font-weight: 600;
+	font-weight: ${({ $weight }) => $weight || 600};
 	font-size: 22px;
 	font-family: 'Nunito Sans', sans-serif;
 	line-height: 24px;
@@ -46,7 +46,7 @@ export const H2 = styled.h2<HeaderProps>`
 `;
 
 export const H3 = styled.h3<HeaderProps>`
-	font-weight: 600;
+	font-weight: ${({ $weight }) => $weight || 600};
 	font-size: 18px;
 	font-family: 'Nunito Sans', sans-serif;
 	line-height: 22px;

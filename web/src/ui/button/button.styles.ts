@@ -2,7 +2,11 @@ import styled, { css } from 'styled-components';
 
 import type { StyleProps } from './button.d';
 
-const colors = {
+const variants = {
+	faded: {
+		default: css``,
+		secondary: css``
+	},
 	primary: {
 		default: css`
 			color: var(--primary-button-text);
@@ -76,10 +80,10 @@ export default styled.button<StyleProps>`
 		pointer-events: none;
 	}
 
-	${({ $color, $isSecondary }) => {
+	${({ $variant, $isSecondary }) => {
 		const key = $isSecondary ? 'secondary' : 'default';
 
-		return colors[$color || 'primary'][key];
+		return variants[$variant || 'primary'][key];
 	}}
 	${({ $size }) => sizes[$size || 'medium']}
 	${({ $isFullWidth }) => ($isFullWidth ? fullWidth : fitWidth)}

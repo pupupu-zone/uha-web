@@ -1,4 +1,4 @@
-import type { UserProfile } from '@features/user-profile/_types';
+import type { UserProfile } from '@data/user';
 
 export type UserProfileReqT = void;
 export type UserProfileResT = UserProfile;

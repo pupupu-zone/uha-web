@@ -7,4 +7,5 @@ export type TextProps = {
 
 export type HeaderProps = {
 	$align?: TextProps['$align'];
+	$weight?: number | string;
 };

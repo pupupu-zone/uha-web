@@ -2,7 +2,7 @@ import { type AriaButtonProps } from 'react-aria-components';
 import type { FileRoutesByTo } from '@src/routeTree.gen';
 
 export type InternalProps = {
-	color?: 'primary';
+	tyvariantpe?: 'primary' | 'faded';
 	size?: 'medium';
 	to?: FileRoutesByTo;
 	isFullWidth?: boolean;
@@ -10,7 +10,7 @@ export type InternalProps = {
 };
 
 export type StyleProps = {
-	$color: InternalProps['color'];
+	$variant: InternalProps['variant'];
 	$size: InternalProps['size'];
 	$isFullWidth: InternalProps['isFullWidth'];
 	$isSecondary: InternalProps['isSecondary'];

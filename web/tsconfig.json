@@ -45,6 +45,9 @@
       "@features": ["./src/features/index"],
       "@features/*": ["./src/features/*"],
 
+      "@data": ["./src/data-lake/index"],
+      "@data/*": ["./src/data-lake/*"],
+
       "@utils": ["./src/utils/index"],
       "@utils/*": ["./src/utils/*"],
 
