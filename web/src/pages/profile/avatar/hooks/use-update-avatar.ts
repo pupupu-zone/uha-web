@@ -49,12 +49,11 @@ const useUpdateAvatar = () => {
 	const errors = form.useStore((store) => store.errors);
 
 	useEffect(() => {
-		if (result.isSuccess) {
-			dispatch(userActions.editUser(result.data.data));
+		if (!result.isSuccess || result.isFetching) return;
 
-			form.reset();
-		}
-	}, [result.isSuccess, result.data]);
+		dispatch(userActions.editUser(result.data.data));
+		form.reset();
+	}, [result.isSuccess, result.isFetching]);
 
 	useEffect(() => {
 		if (!errors.length) return;

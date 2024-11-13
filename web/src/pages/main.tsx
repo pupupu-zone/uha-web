@@ -32,10 +32,10 @@ const MainPage = () => {
 	}, [navigate, result.isError]);
 
 	useEffect(() => {
-		if (!result.isSuccess) return;
+		if (!result.isSuccess || result.isFetching) return;
 
 		dispatch(userActions.addUser(result.data));
-	}, [result.isSuccess]);
+	}, [result.isSuccess, result.isFetching]);
 
 	return (
 		<Root>

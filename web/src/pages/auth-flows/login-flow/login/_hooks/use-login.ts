@@ -42,10 +42,10 @@ const useLogin = () => {
 	}, [isAuthorized, navigate]);
 
 	useEffect(() => {
-		if (!result.isSuccess || !result.data) return;
+		if (!result.isSuccess || !result.isFetching) return;
 
 		dispatch(authActions.authLogin());
-	}, [result.isSuccess, result.data]);
+	}, [result.isSuccess, result.isFetching]);
 
 	return { form, result };
 };

@@ -25,10 +25,10 @@ const Profile = () => {
 	}, []);
 
 	useEffect(() => {
-		if (!result.isSuccess) return;
+		if (!result.isSuccess || result.isFetching) return;
 
-		dispatch(userActions.addUser(result.data));
-	}, [result.isSuccess]);
+		dispatch(userActions.editUser(result.currentData || result.data));
+	}, [result.isSuccess, result.isFetching]);
 
 	return (
 		<Root>

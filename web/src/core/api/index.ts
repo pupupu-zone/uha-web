@@ -73,7 +73,7 @@ const baseQueryWithRetry = retry(baseQuery, { maxRetries: 0 });
 
 const api = createApi({
 	baseQuery: baseQueryWithRetry,
-	tagTypes: [],
+	tagTypes: ['USER_OBTAIN'],
 	endpoints: () => ({})
 });
 
