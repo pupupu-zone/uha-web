@@ -39,7 +39,10 @@ export const Route = createFileRoute('/_auth-guard')({
 
 			if (!search.month) search.month = now.month;
 			if (!search.year) search.year = now.year;
-			if (!search.day) search.day = now.day;
+
+			if (search.month === now.month && search.year === now.year && !search.day) {
+				search.day = now.day;
+			}
 		}
 
 		return search;

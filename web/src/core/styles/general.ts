@@ -32,6 +32,9 @@ const General = createGlobalStyle`
 		--category-3: #9f9;
 		--category-4: #fc9;
 		--category-5: #c2c2f0;
+
+		/* Calendar */
+		--calendar-width: calc((100vw - 48px - (12px * 7)) / 7);
 	}
 
 	html {
