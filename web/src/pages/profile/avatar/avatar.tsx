@@ -1,24 +1,91 @@
-import React from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 import { selectors as userSelectors } from '@data/user';
-import { useInitials, useBrokenImg, useGradientId } from './hooks';
+import { useInitials, useBrokenImg, useGradientId, useUpdateAvatar } from './hooks';
 
-import Root, { Initials, Image } from './avatar.styles';
+import { Icon } from '@ui';
+import Root, { ImageWrap, ImageSelector, Initials, Image, Edit } from './avatar.styles';
 
 const Avatar = () => {
+	const avatarInputRef = useRef<HTMLInputElement>(null);
+	const { form, result } = useUpdateAvatar();
 	const userData = useSelector(userSelectors.userDataSelector);
+	const avatar = form.useStore((store) => store.values.avatar);
+	const isValid = form.useStore((store) => store.isValid && !store.isPristine);
 
 	const initials = useInitials();
 	const gradientId = useGradientId();
-	const { avatarRef, isImageBroken } = useBrokenImg();
+	const { avatarRef, isImageBroken, isImageLoading } = useBrokenImg();
+
+	useEffect(() => {
+		if (!isValid) return;
+
+		form.handleSubmit();
+	}, [isValid]);
+
+	const avatarUrl = useMemo(() => {
+		return avatar ? URL.createObjectURL(avatar) : undefined;
+	}, [avatar]);
+
+	const imageSrc = useMemo(() => avatarUrl || userData.avatar_url, [avatarUrl, userData.avatar_url]);
 
 	return (
-		<Root $gradientId={gradientId}>
-			{userData.avatar_url && !isImageBroken && <Image ref={avatarRef} src={userData.avatar_url} alt={userData.name} />}
+		<form
+			onSubmit={(e) => {
+				e.preventDefault();
+				e.stopPropagation();
+				form.handleSubmit();
+			}}
+			noValidate
+		>
+			<Root>
+				<form.Field name="avatar">
+					{(field) => (
+						<ImageSelector
+							ref={avatarInputRef}
+							id={field.name}
+							name={field.name}
+							type="file"
+							hidden
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+								if (!e.target.files) return;
 
-			{!userData.avatar_url && <Initials>{initials}</Initials>}
-		</Root>
+								field.setValue(e.target.files[0]);
+							}}
+						/>
+					)}
+				</form.Field>
+
+				<ImageWrap $gradientId={gradientId}>
+					{imageSrc && !isImageBroken && <Image ref={avatarRef} src={imageSrc} alt={userData.name} />}
+					{(!imageSrc || isImageLoading) && <Initials>{initials}</Initials>}
+
+					<Edit
+						$withAvatar={Boolean(avatarUrl) && isValid}
+						onPress={() => {
+							avatarInputRef.current?.click();
+						}}
+					>
+						{() => {
+							if (result.isError) {
+								return <Icon name="stop" width={36} height={36} />;
+							}
+
+							if (result.isFetching) {
+								return <Icon name="infinity" width={36} height={36} />;
+							}
+
+							if (!isValid && avatarUrl) {
+								return 'Error';
+							}
+
+							return 'Update';
+						}}
+					</Edit>
+				</ImageWrap>
+			</Root>
+		</form>
 	);
 };
 export default Avatar;

@@ -7,7 +7,11 @@ const allIconsList = {
 	add: icons.AddIcon,
 	analyze: icons.AnalyzeIcon,
 	calendar: icons.CalendarIcon,
-	list: icons.ListIcon
+	list: icons.ListIcon,
+	accept: icons.AcceptIcon,
+	edit: icons.EditIcon,
+	infinity: icons.InfinityIcon,
+	stop: icons.StopIcon
 };
 
 export default allIconsList;

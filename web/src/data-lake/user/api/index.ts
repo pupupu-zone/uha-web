@@ -1,5 +1,5 @@
 import userApi from './api';
 
-export const { useLazyObtainUserQuery } = userApi;
+export const { useLazyObtainUserQuery, useLazyUpdateUserQuery } = userApi;
 
 export * from './api.d';

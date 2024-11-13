@@ -1,6 +1,6 @@
 import API from '@api';
 
-import type { UserProfileResT, UserProfileReqT } from './api.d';
+import type { UserProfileResT, UserProfileReqT, UserUpdateResT, UserUpdateReqT } from './api.d';
 
 const idApi = API.injectEndpoints({
 	endpoints: (build) => ({
@@ -9,8 +9,15 @@ const idApi = API.injectEndpoints({
 			query: () => ({
 				url: '/user/obtain',
 				method: 'GET',
+				credentials: 'include'
+			})
+		}),
+		updateUser: build.query<UserUpdateResT, UserUpdateReqT>({
+			query: (body) => ({
+				url: `/user/update`,
+				method: 'PUT',
 				credentials: 'include',
-				cache: 'no-cache'
+				body
 			})
 		})
 	})

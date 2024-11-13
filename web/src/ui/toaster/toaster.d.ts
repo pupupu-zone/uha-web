@@ -5,6 +5,7 @@ export type Props = {
 		'aria-live': 'polite' | 'assertive';
 		role: 'status' | 'alert';
 	};
+	id: string;
 };
 
 export type StyleProps = {
