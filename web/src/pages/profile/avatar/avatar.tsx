@@ -25,10 +25,10 @@ const Avatar = () => {
 	}, [isValid]);
 
 	const avatarUrl = useMemo(() => {
+		if (typeof avatar === 'string') return avatar;
+
 		return avatar ? URL.createObjectURL(avatar) : undefined;
 	}, [avatar]);
-
-	const imageSrc = useMemo(() => avatarUrl || userData.avatar_url, [avatarUrl, userData.avatar_url]);
 
 	return (
 		<form
@@ -58,8 +58,8 @@ const Avatar = () => {
 				</form.Field>
 
 				<ImageWrap $gradientId={gradientId}>
-					{imageSrc && !isImageBroken && <Image ref={avatarRef} src={imageSrc} alt={userData.name} />}
-					{(!imageSrc || isImageLoading) && <Initials>{initials}</Initials>}
+					{avatarUrl && !isImageBroken && <Image ref={avatarRef} src={avatarUrl} alt={userData.name} />}
+					{(!avatarUrl || isImageLoading) && <Initials>{initials}</Initials>}
 
 					<Edit
 						$withAvatar={Boolean(avatarUrl) && isValid}
@@ -74,10 +74,6 @@ const Avatar = () => {
 
 							if (result.isFetching) {
 								return <Icon name="infinity" width={36} height={36} />;
-							}
-
-							if (!isValid && avatarUrl) {
-								return 'Error';
 							}
 
 							return 'Update';

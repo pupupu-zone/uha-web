@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 const useBrokenImg = () => {
 	const avatarRef = useRef<HTMLImageElement>(null);
 	const [isImageBroken, setIsImageBroken] = useState(false);
-	const [isLoading, setIsLoading] = useState(true);
+	const [isImageLoading, setIsImageLoading] = useState(true);
 
 	useEffect(() => {
 		if (!avatarRef.current) return;
@@ -13,11 +13,11 @@ const useBrokenImg = () => {
 		};
 
 		avatarRef.current.onload = () => {
-			setIsLoading(false);
+			setIsImageLoading(false);
 		};
 	}, []);
 
-	return { avatarRef, isImageBroken, isImageLoading: isLoading };
+	return { avatarRef, isImageBroken, isImageLoading };
 };
 
 export default useBrokenImg;

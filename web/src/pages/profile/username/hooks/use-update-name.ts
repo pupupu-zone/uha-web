@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import toast from 'react-hot-toast';
 import { useAppDispatch } from '@store';
 import { useSelector } from 'react-redux';
 
@@ -11,21 +10,11 @@ import { actions as userActions } from '@data/user';
 import { selectors as userSelectors } from '@data/user';
 import { useLazyUpdateUserQuery } from '@data/user/api';
 
-const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/jfif', 'image/png'];
-
 const formSchema = yup.object({
-	avatar: yup
-		.mixed<File>()
-		.required()
-		.test('fileSize', 'File too large. Maximum size is 5MB.', (value) => {
-			return value && value.size <= 5 * 1024 * 1024; // 5MB
-		})
-		.test('fileFormat', 'Unsupported Format. Allowed formats: JPG, JPEG, GIF, PNG.', (value) => {
-			return value && SUPPORTED_FORMATS.includes(value.type);
-		})
+	name: yup.string().required()
 });
 
-const useUpdateAvatar = () => {
+const useUpdateName = () => {
 	const dispatch = useAppDispatch();
 	const [request, result] = useLazyUpdateUserQuery();
 	const userData = useSelector(userSelectors.userDataSelector);
@@ -36,20 +25,19 @@ const useUpdateAvatar = () => {
 			onChange: formSchema
 		},
 		defaultValues: {
-			avatar: userData.avatar_url
+			name: userData.name
 		},
 		onSubmit: ({ value }) => {
+			if (userData.name === value.name?.trim()) return;
 			const formData = new FormData();
 
-			if (value.avatar) {
-				formData.append('avatar', value.avatar);
+			if (value.name) {
+				formData.append('name', value.name);
 			}
 
 			request(formData);
 		}
 	});
-
-	const errors = form.useStore((store) => store.errors);
 
 	useEffect(() => {
 		if (!result.isSuccess || result.isFetching) return;
@@ -58,13 +46,7 @@ const useUpdateAvatar = () => {
 		form.reset();
 	}, [result.isSuccess, result.isFetching]);
 
-	useEffect(() => {
-		if (!errors.length) return;
-
-		errors.forEach(toast.error);
-	}, [errors]);
-
 	return { form, result };
 };
 
-export default useUpdateAvatar;
+export default useUpdateName;

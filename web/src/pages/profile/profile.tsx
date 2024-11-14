@@ -36,9 +36,34 @@ const Profile = () => {
 
 			<UserName />
 
-			<SettingsBlock title="Common">Something</SettingsBlock>
-			<SettingsBlock title="Theming">Something</SettingsBlock>
-			<SettingsBlock title="About">Something</SettingsBlock>
+			<SettingsBlock title="General">
+				Primary Currency
+				<br />
+			</SettingsBlock>
+
+			<SettingsBlock title="Personalization">
+				Theme
+				<br />
+				Language
+				<br />
+				First Day of the Week
+			</SettingsBlock>
+
+			<SettingsBlock title="About">
+				Terms of Use
+				<br />
+				Privacy Policy
+			</SettingsBlock>
+
+			<SettingsBlock title="Support">
+				If you like the app, you can support me
+				<br />
+				<Button isSecondary>5$</Button>
+				<Button isSecondary>10$</Button>
+				<Button isSecondary>20$</Button>
+				<hr />
+				You can send your feedback to feedback@subsawwy.com
+			</SettingsBlock>
 
 			<Button
 				to="/logout"

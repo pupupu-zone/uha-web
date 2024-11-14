@@ -1,0 +1,40 @@
+name: SUBSAWWY
+services:
+  subsawwy.frontend:
+    image: registry.keireira.com/subsawwy-web:latest
+    labels:
+      org.opencontainers.image.title: "Subsawwy WEB App"
+      org.opencontainers.image.description: "app.subsawwy.com"
+      org.opencontainers.image.authors: "Alena Dzhukich <mail@alena.red>"
+    networks:
+      - subsawwy_net
+    ports:
+      - 127.0.0.1:4200:80
+    env_file:
+      - web.env
+    restart: always
+    container_name: subsawwy-web
+
+  subsawwy.backend:
+    image: registry.keireira.com/subsawwy-backend:latest
+    networks:
+      - subsawwy_net
+    ports:
+      - 127.0.0.1:1337:1337
+    restart: always
+    container_name: subsawwy-backend
+    env_file:
+      - backend.env
+
+  subsawwy.landing:
+    image: registry.keireira.com/subsawwy-landing:latest
+    networks:
+      - subsawwy_net
+    ports:
+      - 127.0.0.1:4300:80
+    restart: always
+    container_name: subsawwy-landing
+
+networks:
+  subsawwy_net:
+    driver: bridge

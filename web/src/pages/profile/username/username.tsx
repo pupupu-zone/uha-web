@@ -1,18 +1,45 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
-import { selectors as userSelectors } from '@data/user';
+import { useUpdateName } from './hooks';
 
-import { H1 } from '@ui';
-import Root from './username.styles';
+import Root, { NameInput } from './username.styles';
 
 const UserName = () => {
-	const userData = useSelector(userSelectors.userDataSelector);
+	const { form } = useUpdateName();
+	const isValid = form.useStore((store) => store.isValid && !store.isPristine);
+
+	const onSubmitHd = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		e.stopPropagation();
+
+		if (!isValid) return;
+
+		form.handleSubmit();
+	};
 
 	return (
-		<Root>
-			<H1>{userData.name}</H1>
-		</Root>
+		<form onSubmit={onSubmitHd} onBlur={onSubmitHd} noValidate>
+			<Root>
+				<form.Field name="name">
+					{(field) => {
+						const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
+							field.handleChange(e.target.value);
+						};
+
+						return (
+							<NameInput
+								id={field.name}
+								type="text"
+								autoComplete="off"
+								name={field.name}
+								onChange={onChangeHd}
+								value={field.state.value}
+							/>
+						);
+					}}
+				</form.Field>
+			</Root>
+		</form>
 	);
 };
 export default UserName;
