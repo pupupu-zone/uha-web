@@ -13,69 +13,89 @@ pub async fn update_user(
     session: actix_session::Session,
     req: HttpRequest,
 ) -> Result<HttpResponse, Error> {
-    tracing::event!(target: "backend", tracing::Level::DEBUG, "Update user endpoint");
-
-    // Check permissions
+    /*
+     * Check permissions
+     */
     let session_user_id = match get_session_user_id(&session).await {
         Ok(user_id) => user_id,
-        Err(_) => {
-            return Ok(HttpResponse::Unauthorized().json(json!({
-                "status": "error",
-                "message": "Unauthorized."
-            })))
-        }
-    };
+        Err(err) => {
+            tracing::event!(target: "[USER UPDATE]", tracing::Level::ERROR, "{:?}", err);
 
-    // Check if any field is present
-    if user.name.is_none() && user.avatar.is_none() {
-        return Ok(HttpResponse::BadRequest().json(json!({
-            "status": "error",
-            "message": "No fields to update."
-        })));
-    }
-
-    let mut avatar_url = None;
-    if user.avatar.is_some() {
-        avatar_url = match update_avatar(&user, &dp, &req).await {
-            Ok(url) => {
-                let _ = delete_avatar(&session_user_id, &dp).await;
-
-                Some(url)
-            }
-            Err(response) => return Ok(response),
-        };
-    }
-
-    let mut user_name = None;
-    if user.name.is_some() {
-        user_name = user.name.as_ref().map(|text| text.as_str());
-    }
-
-    let mut pg_transaction = match acquire_pg_connection(&dp).await {
-        Ok(connection) => connection,
-        Err(_) => {
-            return Ok(HttpResponse::InternalServerError().json(json!({
-                "status": "error",
-                "message": "Error with the database connection."
+            return Err(actix_web::error::ErrorUnauthorized(json!({
+                "code": 1000, // 401 - Unauthorized
             })));
         }
     };
 
-    // Save data to the database
+    /*
+     * Check if any field is present
+     */
+    if user.name.is_none() && user.avatar.is_none() {
+        tracing::event!(target: "[USER UPDATE]", tracing::Level::ERROR, "Empty fields");
+
+        return Err(actix_web::error::ErrorUnauthorized(json!({
+            "code": 1011, // 400 - Passed fields are not valid
+        })));
+    }
+
+    /*
+     * Update the avatar if avatar key is presented
+     */
+    let avatar_url = if user.avatar.is_some() {
+        match update_avatar(&user, &dp).await {
+            Ok(url) => {
+                /*
+                 * Remove previous avatar
+                 */
+                if let Err(err) = delete_avatar(&session_user_id, &dp).await {
+                    tracing::event!(target: "[USER UPDATE]", tracing::Level::ERROR, "Failed to remove user\'s old avatar {:?}", err);
+
+                    return Err(actix_web::error::ErrorInternalServerError(json!({
+                        "code": 1012, // 500 - Could not update avatar
+                    })));
+                }
+
+                Some(url)
+            }
+            Err(err) => {
+                tracing::event!(target: "[USER UPDATE]", tracing::Level::ERROR, "Failed to update avatar {:?}", err);
+
+                return Err(actix_web::error::ErrorInternalServerError(json!({
+                    "code": 1012, // 500 - Could not update avatar
+                })));
+            }
+        }
+    } else {
+        None
+    };
+
+    /*
+     * Get username if it is present
+     */
+    let user_name = user.name.as_deref().cloned();
+
+    /*
+     * Save data to the database
+     */
+    let mut pg_connection = acquire_pg_connection(&dp).await?;
+
     let user_profile = match sqlx::query(
         "
-        UPDATE user_profiles
+        UPDATE
+            user_profiles
         SET
             name = COALESCE($1, name),
             avatar_url = COALESCE($2, avatar_url)
-        WHERE user_id = $3
-        RETURNING *;
+        WHERE
+            user_id = $3
+        RETURNING
+            *;
     ",
     )
     .bind(&user_name)
     .bind(&avatar_url)
     .bind(&session_user_id)
-    .fetch_one(&mut *pg_transaction)
+    .fetch_one(&mut *pg_connection)
     .await
     {
         Ok(row) => {
@@ -83,16 +103,17 @@ pub async fn update_user(
 
             user_profile
         }
-        Err(_) => {
-            return Ok(HttpResponse::InternalServerError().json(json!({
-                "status": "error",
-                "message": "Error with updating the entry"
+        Err(err) => {
+            tracing::event!(target: "[USER UPDATE]", tracing::Level::ERROR, "Failed to update profile {:?}", err);
+
+            return Err(actix_web::error::ErrorInternalServerError(json!({
+                "code": 1013, // 500 - Could not update profile
             })));
         }
     };
 
-    Ok(HttpResponse::Ok().json(json!({
-        "status": "success",
-        "data": user_profile
-    })))
+    /*
+     * If everything good, return user's profile
+     */
+    Ok(HttpResponse::Ok().json(user_profile).into())
 }

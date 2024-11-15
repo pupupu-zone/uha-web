@@ -10,7 +10,9 @@ const codes = new Map<number, string>([
 	[1008, "We can't log you out for now"],
 	[1009, 'You are trying to send new e-mail too soon. Try again in a minute'],
 	[1010, 'You have entered invalid e-mail, or user is active already'],
-	[1011, 'Please follow the link in the E-Mail'],
+	[1011, 'Passed fields are not valid'],
+	[1012, 'Could not update avatar'],
+	[1013, 'Could not update profile'],
 
 	[9999, 'Session expired']
 ]);

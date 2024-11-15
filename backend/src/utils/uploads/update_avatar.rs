@@ -1,6 +1,6 @@
 use crate::types::users::UserForm;
 use actix_web::body::BoxBody;
-use actix_web::{web, HttpRequest, HttpResponse};
+use actix_web::{web, HttpResponse};
 use mime::Mime;
 use serde_json::json;
 use uuid::Uuid;
@@ -9,99 +9,105 @@ use crate::service::data_providers::WebDataPool;
 use crate::service::env::EnvConfig;
 use crate::utils::uploads;
 
+fn is_allowed_file(content_type: &Mime) -> bool {
+    let allowed_mime_types = vec![mime::IMAGE_JPEG, mime::IMAGE_PNG];
+
+    allowed_mime_types.contains(content_type)
+}
+
 pub async fn update_avatar(
     user: &actix_multipart::form::MultipartForm<UserForm>,
     dp: &web::Data<WebDataPool>,
-    req: &HttpRequest,
 ) -> Result<String, HttpResponse<BoxBody>> {
-    /*
-     * Check if the file is too large
-     */
-    if req
-        .headers()
-        .get("Content-Length")
-        .and_then(|value| value.to_str().ok())
-        .and_then(|size_str| size_str.parse::<usize>().ok())
-        .filter(|&size| size > 5 * 1024 * 1024)
-        .is_some()
-    {
-        return Err(HttpResponse::PayloadTooLarge().json(json!({
-            "status": "error",
-            "message": "File too large."
-        })));
-    }
+    const MAX_FILE_SIZE: usize = 5 * 1024 * 1024; // 5MB
 
     /*
-     * Check content type
+     * Ensure the avatar file exists
      */
-    let content_type = user
-        .avatar
-        .as_ref()
-        .expect("msg")
-        .content_type
-        .as_ref()
-        .expect("sf");
+    let temp_file = user.avatar.as_ref().ok_or_else(|| {
+        HttpResponse::BadRequest().json(json!({
+            "message": "No avatar file uploaded."
+        }))
+    })?;
 
-    if !is_allowed_file(content_type) {
+    /*
+     * Get the content type of the file
+     */
+    let content_type = temp_file.content_type.as_ref().ok_or_else(|| {
+        HttpResponse::BadRequest().json(json!({
+            "message": "Content type is missing."
+        }))
+    })?;
+
+    /*
+     * Check if the content type is allowed
+     */
+    if !is_allowed_file(&content_type) {
         return Err(HttpResponse::BadRequest().json(json!({
-            "status": "error",
             "message": "File type not allowed."
         })));
     }
 
     /*
-     * Prepare file to the bucket
+     * Read the file bytes
+     */
+    let bytes = uploads::get_file_bytes(&temp_file).await.map_err(|_| {
+        HttpResponse::InternalServerError().json(json!({
+            "message": "Error reading file bytes."
+        }))
+    })?;
+
+    /*
+     * Check the file size
+     */
+    if bytes.len() > MAX_FILE_SIZE {
+        return Err(HttpResponse::PayloadTooLarge().json(json!({
+            "message": "File too large."
+        })));
+    }
+
+    /*
+     * Determine the file extension
+     */
+    let file_extension =
+        uploads::get_extension_from_mime(content_type.as_ref()).ok_or_else(|| {
+            HttpResponse::BadRequest().json(json!({
+                "message": "Could not determine file extension."
+            }))
+        })?;
+
+    /*
+     * Generate the file name to upload
      */
     let file_name = Uuid::new_v4().to_string();
-    let file_extension = uploads::get_extension_from_mime(content_type.as_ref()).expect("msg");
-    let file_name_to_upload = format!("media/avatars/{file_name}.{file_extension}");
-
-    let file_to_upload = match &user.avatar {
-        Some(temp_file) => match uploads::get_file_bytes(temp_file).await {
-            Ok(bytes) => uploads::compress_image(&bytes, content_type, 320, 320).await,
-            Err(_) => {
-                return Err(HttpResponse::InternalServerError().json(json!({
-                    "status": "error",
-                    "message": "Error reading file bytes."
-                })));
-            }
-        },
-        None => Vec::new(),
-    };
+    let file_name_to_upload = format!("media/avatars/{}.{}", file_name, file_extension);
 
     /*
-     * Upload file to the bucket
+     * Compress the image
      */
-    let upload_promise = dp
+    let compressed_bytes = uploads::compress_image(&bytes, content_type, 320, 320).await;
+
+    /*
+     * Upload the file to the bucket
+     */
+    let result = dp
         .minio
-        .put_object(&file_name_to_upload, &file_to_upload)
-        .await;
+        .put_object(&file_name_to_upload, &compressed_bytes)
+        .await
+        .map_err(|_| {
+            HttpResponse::InternalServerError().json(json!({
+                "message": "Error uploading file."
+            }))
+        })?;
 
     /*
-     * Get url to the uploaded file
+     * Construct the URL to the uploaded file
      */
-    let completed_url = match upload_promise {
-        Ok(_) => {
-            let envs = EnvConfig::new();
-
-            format!(
-                "{}/{}/{}",
-                envs.minio_endpoint_url, envs.minio_bucket_name, file_name_to_upload
-            )
-        }
-        Err(_) => {
-            return Err(HttpResponse::InternalServerError().json(json!({
-                "status": "error",
-                "message": "Error uploading file."
-            })));
-        }
-    };
+    let envs = EnvConfig::new();
+    let completed_url = format!(
+        "{}/{}/{}",
+        envs.minio_endpoint_url, envs.minio_bucket_name, file_name_to_upload
+    );
 
     Ok(completed_url)
-}
-
-fn is_allowed_file(content_type: &Mime) -> bool {
-    let allowed_mime_types = vec![mime::IMAGE_JPEG, mime::IMAGE_PNG];
-
-    allowed_mime_types.contains(content_type)
 }

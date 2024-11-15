@@ -42,7 +42,7 @@ const useUpdateName = () => {
 	useEffect(() => {
 		if (!result.isSuccess || result.isFetching) return;
 
-		dispatch(userActions.editUser(result.data.data));
+		dispatch(userActions.editUser(result.data));
 		form.reset();
 	}, [result.isSuccess, result.isFetching]);
 
