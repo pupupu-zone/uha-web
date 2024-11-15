@@ -1,22 +1,26 @@
-use crate::errors::{info, reg_errors};
 use crate::utils::get_session_user_id;
+use serde_json::json;
 
 use actix_web::{Error, HttpResponse};
 
 pub async fn logout(session: actix_session::Session) -> Result<HttpResponse, Error> {
+    /*
+     * Trying to get the user from the session
+     */
     let session_user_id = get_session_user_id(&session).await;
 
     match session_user_id {
         Ok(_) => {
-            tracing::event!(target: "backend", tracing::Level::INFO, "Users retrieved from the DB.");
             session.purge();
 
-            Ok(info::system_msg("You have successfully logged out"))
+            return Ok(HttpResponse::Ok().json(json!({})));
         }
         Err(e) => {
-            tracing::event!(target: "backend", tracing::Level::ERROR, "Failed to get user from session: {:#?}", e);
+            tracing::event!(target: "[LOGOUT]", tracing::Level::ERROR, "Failed to get user from session: {:#?}", e);
 
-            Err(reg_errors::system("We can't log you out for now"))
+            return Err(actix_web::error::ErrorNotFound(json!({
+                "code": 1008, // 404 - We can't log you out for now
+            })));
         }
     }
 }

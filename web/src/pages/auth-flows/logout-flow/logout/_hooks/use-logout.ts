@@ -23,8 +23,12 @@ const useLogout = () => {
 		dispatch(authActions.authLogout());
 	}, [result.isSuccess, result.isFetching]);
 
+	console.log('isAuthorized:', isAuthorized);
+
 	useEffect(() => {
-		if (isAuthorized) return;
+		if (isAuthorized) {
+			dispatch(authActions.authLogout());
+		}
 
 		navigate({ to: '/login' });
 		window.location.reload();

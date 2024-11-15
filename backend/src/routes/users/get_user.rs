@@ -18,7 +18,7 @@ pub async fn get_user(
             tracing::event!(target: "[GET USER]", tracing::Level::ERROR, "{}", err);
 
             return Err(actix_web::error::ErrorUnauthorized(json!({
-                "code": 9999, // 401 - <EMPTY>, redirect to /logout
+                "code": 9999, // 401 - Session expired, redirect to /logout
             })));
         }
     };
@@ -73,7 +73,4 @@ pub async fn get_user(
      * If everything good, return user's profile
      */
     Ok(HttpResponse::Ok().json(user_profile).into())
-    // return Err(actix_web::error::ErrorUnauthorized(json!({
-    //     "code": 9999, // 401 - <EMPTY>, redirect to /logout
-    // })));
 }

@@ -7,6 +7,8 @@ const codes = new Map<number, string>([
 	[1005, 'Wrong Credentials'],
 	[1006, 'Empty Name'],
 	[1007, 'Can’t create a user'],
+	[1008, "We can't log you out for now"],
+
 	[9999, 'Session expired']
 ]);
 
