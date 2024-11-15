@@ -36,9 +36,9 @@ pub async fn regenerate_token(
      * If user is trying to regenerate token too often, return an error
      */
     if is_in_jail.unwrap().is_some() {
-        return Err(reg_errors::email(
-            "You are trying to send new e-mail too soon. Try again in a minute",
-        ));
+        return Err(actix_web::error::ErrorTooManyRequests(json!({
+            "code": 1009, // 429 - You are trying to send new e-mail too soon. Try again in a minute
+        })));
     }
 
     /*
@@ -85,9 +85,9 @@ pub async fn regenerate_token(
             (user_id, user_name)
         }
         Err(_) => {
-            return Err(reg_errors::email(
-                "You have entered invalid e-mail, or user is active already",
-            ));
+            return Err(actix_web::error::ErrorNotFound(json!({
+                "code": 1010, // 404 - You have entered invalid e-mail, or user is active already
+            })));
         }
     };
 
@@ -95,9 +95,9 @@ pub async fn regenerate_token(
      * if no user, throw an error
      */
     if !user_id.is_ok() {
-        return Err(reg_errors::email(
-            "You have entered invalid e-mail, or user is active already",
-        ));
+        return Err(actix_web::error::ErrorNotFound(json!({
+            "code": 1010, // 404 - You have entered invalid e-mail, or user is active already
+        })));
     }
 
     /*
@@ -122,8 +122,6 @@ pub async fn regenerate_token(
     });
 
     Ok(HttpResponse::Ok().json(json!({
-      "info": {
-        "user": "Please follow the link in the E-Mail",
-      }
+      "code": 200 // 200 - Please follow the link in the E-Mail
     })))
 }

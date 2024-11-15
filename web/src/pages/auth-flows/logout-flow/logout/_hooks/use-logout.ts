@@ -15,24 +15,18 @@ const useLogout = () => {
 
 	useEffect(() => {
 		request();
+		dispatch(authActions.authLogout());
 	}, []);
 
 	useEffect(() => {
-		if (!result.isSuccess || result.isFetching) return;
-
-		dispatch(authActions.authLogout());
-	}, [result.isSuccess, result.isFetching]);
-
-	console.log('isAuthorized:', isAuthorized);
-
-	useEffect(() => {
-		if (isAuthorized) {
-			dispatch(authActions.authLogout());
-		}
+		if (isAuthorized || !result.isSuccess) return;
 
 		navigate({ to: '/login' });
-		window.location.reload();
-	}, [isAuthorized]);
+
+		window.setTimeout(() => {
+			window.location.reload();
+		}, 0);
+	}, [navigate, isAuthorized, result.isSuccess]);
 };
 
 export default useLogout;
