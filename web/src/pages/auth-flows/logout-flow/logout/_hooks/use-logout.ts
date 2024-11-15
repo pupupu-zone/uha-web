@@ -9,21 +9,26 @@ import { isAuthorizedSelector } from '@pages/auth-flows/_redux/selectors';
 
 const useLogout = () => {
 	const navigate = useNavigate();
-	const isAuthorized = useSelector(isAuthorizedSelector);
 	const dispatch = useAppDispatch();
 	const [request, result] = useLazyLogoutQuery();
+	const isAuthorized = useSelector(isAuthorizedSelector);
 
 	useEffect(() => {
 		request();
-		dispatch(authActions.authLogout());
 	}, []);
 
 	useEffect(() => {
-		if (isAuthorized || !result.isSuccess) return;
+		if (!result.isSuccess || result.isFetching) return;
+
+		dispatch(authActions.authLogout());
+	}, [result.isSuccess, result.isFetching]);
+
+	useEffect(() => {
+		if (isAuthorized) return;
 
 		navigate({ to: '/login' });
 		window.location.reload();
-	}, [navigate, isAuthorized, result.isSuccess]);
+	}, [isAuthorized]);
 };
 
 export default useLogout;
