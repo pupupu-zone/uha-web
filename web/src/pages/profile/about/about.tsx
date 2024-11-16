@@ -6,10 +6,11 @@ const About = () => {
 	const onPressHd = () => {
 		console.log('Pressed');
 	};
+
 	return (
 		<SettingsBlock title="About">
 			<SettingsEntry onPress={onPressHd} left="Terms of Service" />
-			<SettingsEntry onPress={onPressHd} left="privacy Policy" />
+			<SettingsEntry onPress={onPressHd} left="Privacy Policy" />
 		</SettingsBlock>
 	);
 };
