@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { Button as AdobeButton } from 'react-aria-components';
+import { Button as AriaButton } from 'react-aria-components';
 
 import Root from './button.styles';
 
@@ -34,7 +34,7 @@ const Button = React.forwardRef(
 
 		return (
 			<Root
-				as={AdobeButton}
+				as={AriaButton}
 				ref={ref}
 				$variant={variant}
 				$size={size}

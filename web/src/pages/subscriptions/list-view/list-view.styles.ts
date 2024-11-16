@@ -4,5 +4,5 @@ export default styled.div`
 	display: grid;
 	grid-auto-flow: row;
 	gap: 12px;
-	padding: 12px 12px 48px;
+	padding: 0 12px 48px;
 `;

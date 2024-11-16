@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { Text, H1, H2 } from '@ui';
+import { Button as AriaButton } from 'react-aria-components';
 
 const activeDay = css`
 	color: var(--primary-button-text);
@@ -11,7 +12,25 @@ const disabled = css`
 	pointer-events: none;
 `;
 
-export const Title = styled(H1)``;
+export const TitleButton = styled(AriaButton)`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 4px;
+	background: none;
+	border: none;
+	border-radius: 8px;
+`;
+
+export const Title = styled(H1)`
+	display: flex;
+	gap: 6px;
+	align-items: center;
+	width: 24px;
+	height: 24px;
+	margin-left: -4px; /* to align with the calendar */
+	white-space: nowrap;
+`;
 
 export const Day = styled(H2)<{ $isActiveDay: boolean; $isDisabled: boolean }>`
 	display: flex;

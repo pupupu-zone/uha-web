@@ -47,11 +47,9 @@ const Profile = () => {
 	return (
 		<Root ref={rootRef} $shouldFill={shouldFill}>
 			<Avatar />
-
 			<UserName />
 
 			<Currencies />
-
 			<Personalization />
 
 			<SettingsBlock title="About">

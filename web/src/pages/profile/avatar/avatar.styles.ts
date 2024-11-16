@@ -1,10 +1,10 @@
 import styled, { css } from 'styled-components';
-import { Button as AdobeButton } from 'react-aria-components';
+import { Button as AriaButton } from 'react-aria-components';
 import type { AvatarStyledProps } from './avatar.d';
 
 import gradients from './gradients';
 
-export const Edit = styled(AdobeButton)<{ $withAvatar: boolean }>`
+export const Edit = styled(AriaButton)<{ $withAvatar: boolean }>`
 	display: flex;
 	align-items: center;
 	justify-content: center;

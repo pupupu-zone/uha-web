@@ -16,6 +16,11 @@ const CalendarView = () => {
 	const [innerYear, setInnerYear] = useState(year);
 	const dates = useDates(innerMonth, innerYear);
 
+	const changeDate = (month, year) => {
+		setInnerMonth(month);
+		setInnerYear(year);
+	};
+
 	const bind = useDrag(
 		({ active, movement: [mx], direction: [xDir], cancel, canceled, velocity: [vx], currentTarget }) => {
 			if (active || canceled) return;
@@ -25,15 +30,13 @@ const CalendarView = () => {
 			const isSwipeRight = mx > -swipeThreshold && xDir > 0 && vx > 0.3;
 
 			if (isSwipeRight) {
-				setInnerMonth(dates.prev.month);
-				setInnerYear(dates.prev.year);
+				changeDate(dates.prev.month, dates.prev.year);
 
 				cancel();
 			}
 
 			if (isSwipeLeft) {
-				setInnerMonth(dates.next.month);
-				setInnerYear(dates.next.year);
+				changeDate(dates.next.month, dates.next.year);
 
 				cancel();
 			}
@@ -43,7 +46,7 @@ const CalendarView = () => {
 	return (
 		<Root>
 			<CalendarWrapper {...bind()}>
-				<Calendar month={dates.parsed.month} year={dates.parsed.year} />
+				<Calendar month={dates.parsed.month} year={dates.parsed.year} changeDate={changeDate} />
 			</CalendarWrapper>
 
 			<SubsOfTheDay>

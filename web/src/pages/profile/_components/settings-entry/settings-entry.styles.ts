@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button as AdobeButton } from 'react-aria-components';
+import { Button as AriaButton } from 'react-aria-components';
 
 export const LeftEntry = styled.div`
 	display: flex;
@@ -22,7 +22,7 @@ export const RightEntry = styled.div`
 	}
 `;
 
-export default styled(AdobeButton)`
+export default styled(AriaButton)`
 	display: grid;
 	grid-auto-rows: max-content;
 	grid-auto-columns: 1fr 1fr;
