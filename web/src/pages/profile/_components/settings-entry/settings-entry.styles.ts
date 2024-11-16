@@ -41,7 +41,6 @@ export default styled(AriaButton)`
 	&[data-pressed],
 	&:active,
 	&:hover {
-		background-color: var(--card-hover);
 		box-shadow: none;
 	}
 `;

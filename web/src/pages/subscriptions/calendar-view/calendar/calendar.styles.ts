@@ -17,6 +17,7 @@ export const TitleButton = styled(AriaButton)`
 	align-items: center;
 	justify-content: center;
 	padding: 4px;
+	color: var(--primary-text);
 	background: none;
 	border: none;
 	border-radius: 8px;

@@ -34,11 +34,11 @@ pub async fn get_user(
                 users.id AS user_id,
                 users.email,
                 user_profiles.name,
-                user_profiles.language,
                 user_profiles.avatar_url,
                 user_settings.theme,
                 user_settings.default_currency,
-                user_settings.recalc_currency
+                user_settings.recalc_currency,
+                user_settings.language
             FROM
                 users
             JOIN

@@ -42,8 +42,6 @@ diesel::table! {
         user_id -> Uuid,
         name -> Text,
         avatar_url -> Nullable<Text>,
-        #[max_length = 2]
-        language -> Bpchar,
     }
 }
 
@@ -59,6 +57,8 @@ diesel::table! {
         default_currency -> Bpchar,
         #[max_length = 3]
         recalc_currency -> Bpchar,
+        #[max_length = 2]
+        language -> Bpchar,
     }
 }
 

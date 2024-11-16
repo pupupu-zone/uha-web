@@ -36,7 +36,7 @@ INSERT INTO "user_settings" (
   '5bc0ec7f-1206-4949-a8d8-0321daf4e71b',
   'system',
   'USD',
-  'USD'
+  'USD',
   'en'
 );
 

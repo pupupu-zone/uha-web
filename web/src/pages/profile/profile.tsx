@@ -8,6 +8,7 @@ import { useLazyObtainUserQuery } from '@data/user/api';
 
 import { Button } from '@ui';
 import Avatar from './avatar';
+import Donation from './donation';
 import Currencies from './currencies';
 import Personalization from './personalization';
 import UserName from './username';
@@ -58,16 +59,7 @@ const Profile = () => {
 				Privacy Policy
 			</SettingsBlock>
 
-			<SettingsBlock title="Support">
-				If you like the app, you can support me
-				<br />
-				<Button isSecondary>5$</Button>
-				<Button isSecondary>10$</Button>
-				<Button isSecondary>20$</Button>
-				<Button isSecondary>50$</Button>
-				<hr />
-				You can send your feedback to feedback@subsawwy.com
-			</SettingsBlock>
+			<Donation />
 
 			<Button
 				to="/logout"
