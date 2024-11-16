@@ -92,7 +92,6 @@ CREATE TABLE "user_settings" (
   "user_id" UUID NOT NULL UNIQUE,
   "theme" theme NOT NULL DEFAULT 'system',
   "default_currency" CHAR(3) NOT NULL CHECK (default_currency ~ '^[A-Z]{3}$') DEFAULT 'USD',
-  "do_recalc" BOOLEAN DEFAULT true,
 
   PRIMARY KEY ("id"),
   FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE

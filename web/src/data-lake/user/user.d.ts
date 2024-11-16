@@ -5,7 +5,6 @@ export type UserProfile = {
 	avatar_url: string | null;
 	theme: 'System' | 'Dark' | 'Light';
 	default_currency: string;
-	do_recalc: boolean;
 };
 
 export type UserSlice = {
@@ -18,6 +17,5 @@ export type UserSlice = {
 	settings: {
 		theme: UserProfile['theme'];
 		default_currency: UserProfile['default_currency'];
-		do_recalc: UserProfile['do_recalc'];
 	};
 };

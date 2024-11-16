@@ -37,7 +37,6 @@ pub async fn get_user(
                 user_profiles.avatar_url,
                 user_settings.theme,
                 user_settings.default_currency,
-                user_settings.do_recalc
             FROM
                 users
             JOIN

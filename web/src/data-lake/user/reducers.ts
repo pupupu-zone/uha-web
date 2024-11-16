@@ -15,8 +15,7 @@ export const addUser = {
 
 		slice.settings = {
 			theme: payload.theme ?? initialState.settings.theme,
-			default_currency: payload.default_currency ?? initialState.settings.default_currency,
-			do_recalc: payload.do_recalc ?? initialState.settings.do_recalc
+			default_currency: payload.default_currency ?? initialState.settings.default_currency
 		};
 	},
 	prepare: (payload: UserProfile) => ({ payload })
@@ -36,7 +35,6 @@ export const editUser = {
 
 		if (payload.theme) slice.settings.theme = payload.theme;
 		if (payload.default_currency) slice.settings.default_currency = payload.default_currency;
-		if (payload.do_recalc) slice.settings.do_recalc = payload.do_recalc;
 	},
 	prepare: (payload: Partial<UserProfile>) => ({ payload })
 };

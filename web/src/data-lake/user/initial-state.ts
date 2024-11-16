@@ -5,8 +5,7 @@ const initialState: UserSlice = {
 	data: {},
 	settings: {
 		theme: 'System',
-		default_currency: 'USD',
-		do_recalc: true
+		default_currency: 'USD'
 	}
 };
 

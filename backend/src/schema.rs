@@ -55,7 +55,6 @@ diesel::table! {
         theme -> Theme,
         #[max_length = 3]
         default_currency -> Bpchar,
-        do_recalc -> Nullable<Bool>,
     }
 }
 
