@@ -1,7 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from '@tanstack/react-router';
+import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@store';
 
+import { actions as settingsActions } from '@data/settings';
+import { selectors as settingsSelectors } from '@data/settings';
 import { actions as userActions } from '@data/user';
 import { useLazyObtainUserQuery } from '@data/user/api';
 
@@ -17,6 +20,7 @@ const Profile = () => {
 	const rootRef = useRef<HTMLDivElement>(null);
 	const [shouldFill, setShouldFill] = useState(false);
 	const [request, result] = useLazyObtainUserQuery();
+	const settings = useSelector(settingsSelectors.settingsSelector);
 
 	useEffect(() => {
 		const { abort } = request();
@@ -37,7 +41,8 @@ const Profile = () => {
 	useEffect(() => {
 		if (!result.isSuccess || result.isFetching) return;
 
-		dispatch(userActions.editUser(result.currentData || result.data));
+		dispatch(userActions.updateUser(result.currentData || result.data));
+		dispatch(settingsActions.setSettings(result.currentData || result.data));
 	}, [result.isSuccess, result.isFetching]);
 
 	return (
@@ -47,16 +52,15 @@ const Profile = () => {
 			<UserName />
 
 			<SettingsBlock title="General">
-				Primary Currency
+				Recalc Currency: {settings.recalc_currency}
 				<br />
+				Default Currency: {settings.default_currency}
 			</SettingsBlock>
 
 			<SettingsBlock title="Personalization">
-				Theme
+				Theme: {settings.theme}
 				<br />
-				{/* Language
-				<br />
-				First Day of the Week */}
+				Language: {settings.language}
 			</SettingsBlock>
 
 			<SettingsBlock title="About">
@@ -71,6 +75,7 @@ const Profile = () => {
 				<Button isSecondary>5$</Button>
 				<Button isSecondary>10$</Button>
 				<Button isSecondary>20$</Button>
+				<Button isSecondary>50$</Button>
 				<hr />
 				You can send your feedback to feedback@subsawwy.com
 			</SettingsBlock>

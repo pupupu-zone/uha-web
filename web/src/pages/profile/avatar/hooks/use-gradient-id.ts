@@ -16,7 +16,7 @@ const createHash = (text: string) => {
 
 const useGradientId = () => {
 	const initials = useInitials();
-	const userData = useSelector(userSelectors.userDataSelector);
+	const userData = useSelector(userSelectors.userSelector);
 
 	const gradientId = useMemo(() => {
 		return (createHash(initials || '') + createHash(userData.avatar_url || '')) % gradients.length;

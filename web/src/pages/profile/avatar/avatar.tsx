@@ -10,7 +10,7 @@ import Root, { ImageWrap, ImageSelector, Initials, Image, Edit } from './avatar.
 const Avatar = () => {
 	const avatarInputRef = useRef<HTMLInputElement>(null);
 	const { form, result } = useUpdateAvatar();
-	const userData = useSelector(userSelectors.userDataSelector);
+	const userData = useSelector(userSelectors.userSelector);
 	const avatar = form.useStore((store) => store.values.avatar);
 	const isValid = form.useStore((store) => store.isValid && !store.isPristine);
 

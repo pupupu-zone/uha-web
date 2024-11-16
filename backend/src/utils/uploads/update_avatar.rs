@@ -90,7 +90,7 @@ pub async fn update_avatar(
     /*
      * Upload the file to the bucket
      */
-    let result = dp
+    let _result = dp
         .minio
         .put_object(&file_name_to_upload, &compressed_bytes)
         .await

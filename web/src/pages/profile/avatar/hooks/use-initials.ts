@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectors as userSelectors } from '@data/user';
 
 const useInitials = () => {
-	const userData = useSelector(userSelectors.userDataSelector);
+	const userData = useSelector(userSelectors.userSelector);
 
 	const initials = useMemo(() => {
 		if (!userData.name) return '';

@@ -1,4 +1,4 @@
-use actix_web::{web, Error, HttpRequest, HttpResponse};
+use actix_web::{web, Error, HttpResponse};
 use serde_json::json;
 
 use crate::service::data_providers::WebDataPool;
@@ -11,7 +11,6 @@ pub async fn update_user(
     user: actix_multipart::form::MultipartForm<UserForm>,
     dp: web::Data<WebDataPool>,
     session: actix_session::Session,
-    req: HttpRequest,
 ) -> Result<HttpResponse, Error> {
     /*
      * Check permissions

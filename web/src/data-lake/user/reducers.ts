@@ -7,34 +7,20 @@ export const addUser = {
 	reducer: (slice: UserSlice, { payload }: PayloadAction<UserProfile>) => {
 		slice.id = payload.user_id;
 
-		slice.data = {
-			email: payload.email ?? initialState.data.email,
-			name: payload.name ?? initialState.data.name,
-			avatar_url: payload.avatar_url ?? initialState.data.avatar_url
-		};
-
-		slice.settings = {
-			theme: payload.theme ?? initialState.settings.theme,
-			default_currency: payload.default_currency ?? initialState.settings.default_currency
-		};
+		slice.email = payload.email ?? initialState.email;
+		slice.name = payload.name ?? initialState.name;
+		slice.avatar_url = payload.avatar_url ?? initialState.avatar_url;
 	},
 	prepare: (payload: UserProfile) => ({ payload })
 };
 
-export const editUser = {
+export const updateUser = {
 	reducer: (slice: UserSlice, { payload }: PayloadAction<Partial<UserProfile>>) => {
-		if (!slice.data) {
-			slice.data = initialState.data;
-		}
-
 		if (payload.user_id) slice.id = payload.user_id;
 
-		if (payload.email) slice.data.email = payload.email;
-		if (payload.name) slice.data.name = payload.name;
-		if (payload.avatar_url) slice.data.avatar_url = payload.avatar_url;
-
-		if (payload.theme) slice.settings.theme = payload.theme;
-		if (payload.default_currency) slice.settings.default_currency = payload.default_currency;
+		if (payload.email) slice.email = payload.email;
+		if (payload.name) slice.name = payload.name;
+		if (payload.avatar_url) slice.avatar_url = payload.avatar_url;
 	},
 	prepare: (payload: Partial<UserProfile>) => ({ payload })
 };

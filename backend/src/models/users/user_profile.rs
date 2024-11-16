@@ -12,6 +12,8 @@ pub struct UserProfile {
     pub avatar_url: Option<String>,
     pub theme: Theme,
     pub default_currency: String,
+    pub language: String,
+    pub recalc_currency: String,
 }
 
 impl UserProfile {
@@ -22,7 +24,9 @@ impl UserProfile {
             name: row.get("name"),
             avatar_url: row.get("avatar_url"),
             theme: row.get("theme"),
+            recalc_currency: row.get("recalc_currency"),
             default_currency: row.get("default_currency"),
+            language: row.get("language"),
         }
     }
 }

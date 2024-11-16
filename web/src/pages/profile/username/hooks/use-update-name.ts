@@ -6,6 +6,7 @@ import yup from '@yup';
 import { useForm } from '@tanstack/react-form';
 import { yupValidator } from '@tanstack/yup-form-adapter';
 
+import { actions as settingsActions } from '@data/settings';
 import { actions as userActions } from '@data/user';
 import { selectors as userSelectors } from '@data/user';
 import { useLazyUpdateUserQuery } from '@data/user/api';
@@ -17,7 +18,7 @@ const formSchema = yup.object({
 const useUpdateName = () => {
 	const dispatch = useAppDispatch();
 	const [request, result] = useLazyUpdateUserQuery();
-	const userData = useSelector(userSelectors.userDataSelector);
+	const userData = useSelector(userSelectors.userSelector);
 
 	const form = useForm({
 		validatorAdapter: yupValidator(),
@@ -42,7 +43,9 @@ const useUpdateName = () => {
 	useEffect(() => {
 		if (!result.isSuccess || result.isFetching) return;
 
-		dispatch(userActions.editUser(result.data));
+		dispatch(userActions.updateUser(result.data));
+		dispatch(settingsActions.setSettings(result.data));
+
 		form.reset();
 	}, [result.isSuccess, result.isFetching]);
 

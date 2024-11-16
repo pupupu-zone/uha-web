@@ -77,6 +77,7 @@ CREATE TABLE "user_profiles" (
   "user_id" UUID NOT NULL UNIQUE,
   "name" TEXT NOT NULL,
   "avatar_url" TEXT NULL,
+  "language" CHAR(2) NOT NULL DEFAULT 'en',
 
   PRIMARY KEY ("id"),
   FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE
@@ -92,6 +93,7 @@ CREATE TABLE "user_settings" (
   "user_id" UUID NOT NULL UNIQUE,
   "theme" theme NOT NULL DEFAULT 'system',
   "default_currency" CHAR(3) NOT NULL CHECK (default_currency ~ '^[A-Z]{3}$') DEFAULT 'USD',
+  "recalc_currency" CHAR(3) NOT NULL CHECK (recalc_currency ~ '^[A-Z]{3}$') DEFAULT 'USD',
 
   PRIMARY KEY ("id"),
   FOREIGN KEY ("user_id") REFERENCES "users" ("id") ON DELETE CASCADE

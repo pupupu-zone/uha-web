@@ -34,9 +34,11 @@ pub async fn get_user(
                 users.id AS user_id,
                 users.email,
                 user_profiles.name,
+                user_profiles.language,
                 user_profiles.avatar_url,
                 user_settings.theme,
                 user_settings.default_currency,
+                user_settings.recalc_currency
             FROM
                 users
             JOIN
@@ -56,7 +58,9 @@ pub async fn get_user(
     .await
     {
         Ok(row) => UserProfile::from_row(&row),
-        Err(_) => {
+        Err(err) => {
+            tracing::event!(target: "[GET USER]", tracing::Level::ERROR, "{}", err);
+
             return Err(actix_web::error::ErrorNotFound(json!({
                 "code": 1004, // 404 - No profile found
             })));
