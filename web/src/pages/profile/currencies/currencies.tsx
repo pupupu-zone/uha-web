@@ -6,24 +6,16 @@ import { selectors as settingsSelectors } from '@data/settings';
 import { useRecalc, useDefault } from './_hooks';
 
 import { Select } from '@ui';
-import { SettingsBlock } from '@pages/profile/_components';
-import { SettingsEntry, LeftEntry, RightEntry } from './general.styles';
-
-const CURRENCY_LABELS = {
-	KZT: 'Tenge',
-	RUB: 'Roubles',
-	USD: 'US Dollars',
-	EUR: 'Euro'
-};
+import { SettingsBlock, SettingsEntry } from '@pages/profile/_components';
 
 const CURRENCIES = [
-	{ value: 'KZT', label: CURRENCY_LABELS.KZT },
-	{ value: 'RUB', label: CURRENCY_LABELS.RUB },
-	{ value: 'USD', label: CURRENCY_LABELS.USD },
-	{ value: 'EUR', label: CURRENCY_LABELS.EUR }
+	{ value: 'KZT', label: 'Tenge' },
+	{ value: 'RUB', label: 'Roubles' },
+	{ value: 'USD', label: 'US Dollars' },
+	{ value: 'EUR', label: 'Euro' }
 ];
 
-const General = () => {
+const Currencies = () => {
 	const settings = useSelector(settingsSelectors.settingsSelector);
 	const recalcCur = useRecalc();
 	const defaultCur = useDefault();
@@ -33,17 +25,8 @@ const General = () => {
 
 	return (
 		<SettingsBlock title="Currencies">
-			<SettingsEntry onPress={recalcCur.open}>
-				<LeftEntry>Recalc Currency</LeftEntry>
-
-				<RightEntry>{recalcView?.label}</RightEntry>
-			</SettingsEntry>
-
-			<SettingsEntry onPress={defaultCur.open}>
-				<LeftEntry>Default Currency</LeftEntry>
-
-				<RightEntry>{defaultView?.label}</RightEntry>
-			</SettingsEntry>
+			<SettingsEntry onPress={recalcCur.open} left="Re-calc currency" right={recalcView?.label ?? ''} />
+			<SettingsEntry onPress={defaultCur.open} left="Default currency" right={defaultView?.label ?? ''} />
 
 			{recalcCur.isOpen && <Select values={CURRENCIES} close={recalcCur.close} onSelect={recalcCur.select} />}
 			{defaultCur.isOpen && <Select values={CURRENCIES} close={defaultCur.close} onSelect={defaultCur.select} />}
@@ -51,4 +34,4 @@ const General = () => {
 	);
 };
 
-export default General;
+export default Currencies;

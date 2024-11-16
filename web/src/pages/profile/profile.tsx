@@ -1,16 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from '@tanstack/react-router';
-import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@store';
 
 import { actions as settingsActions } from '@data/settings';
-import { selectors as settingsSelectors } from '@data/settings';
 import { actions as userActions } from '@data/user';
 import { useLazyObtainUserQuery } from '@data/user/api';
 
 import { Button } from '@ui';
 import Avatar from './avatar';
-import General from './general';
+import Currencies from './currencies';
+import Personalization from './personalization';
 import UserName from './username';
 import { SettingsBlock } from './_components';
 import Root from './profile.styles';
@@ -21,7 +20,6 @@ const Profile = () => {
 	const rootRef = useRef<HTMLDivElement>(null);
 	const [shouldFill, setShouldFill] = useState(false);
 	const [request, result] = useLazyObtainUserQuery();
-	const settings = useSelector(settingsSelectors.settingsSelector);
 
 	useEffect(() => {
 		const { abort } = request();
@@ -52,13 +50,9 @@ const Profile = () => {
 
 			<UserName />
 
-			<General />
+			<Currencies />
 
-			<SettingsBlock title="Personalization">
-				Theme: {settings.theme}
-				<br />
-				Language: {settings.language}
-			</SettingsBlock>
+			<Personalization />
 
 			<SettingsBlock title="About">
 				Terms of Use

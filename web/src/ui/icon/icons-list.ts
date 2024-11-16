@@ -11,7 +11,9 @@ const allIconsList = {
 	accept: icons.AcceptIcon,
 	edit: icons.EditIcon,
 	infinity: icons.InfinityIcon,
-	stop: icons.StopIcon
+	stop: icons.StopIcon,
+	'arrow-left': icons.ArrowLeft,
+	'arrow-right': icons.ArrowRight
 };
 
 export default allIconsList;

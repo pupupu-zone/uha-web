@@ -1,8 +1,28 @@
 import styled from 'styled-components';
-import { H3 } from '@ui';
 import { Button as AdobeButton } from 'react-aria-components';
 
-export const SettingsEntry = styled(AdobeButton)`
+export const LeftEntry = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: start;
+`;
+
+export const RightEntry = styled.div`
+	display: flex;
+	gap: 4px;
+	align-items: center;
+	justify-content: end;
+	opacity: 0.6;
+
+	& > h3 {
+		max-width: 75%;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+`;
+
+export default styled(AdobeButton)`
 	display: grid;
 	grid-auto-rows: max-content;
 	grid-auto-columns: 1fr 1fr;
@@ -12,9 +32,9 @@ export const SettingsEntry = styled(AdobeButton)`
 	margin-right: -12px;
 	margin-left: -12px;
 	padding: 12px;
+	color: var(--primary-text);
 	background: none;
 	border: none;
-	border-radius: 8px;
 
 	&:focus-visible,
 	&:focus,
@@ -22,15 +42,6 @@ export const SettingsEntry = styled(AdobeButton)`
 	&:active,
 	&:hover {
 		background-color: var(--card-hover);
+		box-shadow: none;
 	}
-`;
-
-export const LeftEntry = styled(H3).attrs({ $weight: 400 })`
-	display: flex;
-	justify-content: start;
-`;
-
-export const RightEntry = styled(H3).attrs({ $weight: 400 })`
-	display: flex;
-	justify-content: end;
 `;
