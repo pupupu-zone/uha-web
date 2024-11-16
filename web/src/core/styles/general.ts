@@ -9,7 +9,7 @@ const General = createGlobalStyle`
 		--bg-color: #EDE8E1;
 		--popup-bg: #fefefe;
 
-		--card-hover: #EAF4EC;
+		--card-hover: #E5E5E5;
 
 		/* Typography */
 		--error: #D9534F;

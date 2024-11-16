@@ -28,19 +28,21 @@ export default styled(AriaButton)`
 	grid-auto-columns: 1fr 1fr;
 	grid-auto-flow: column;
 	justify-content: space-between;
-	width: calc(100% + 24px);
-	margin-right: -12px;
-	margin-left: -12px;
+	width: calc(100% + 32px);
+	margin-right: -16px;
+	margin-left: -16px;
 	padding: 12px;
 	color: var(--primary-text);
 	background: none;
 	border: none;
+	cursor: pointer;
+	transition: background-color 150ms ease-in-out;
 
 	&:focus-visible,
 	&:focus,
 	&[data-pressed],
-	&:active,
 	&:hover {
+		background-color: var(--card-hover);
 		box-shadow: none;
 	}
 `;

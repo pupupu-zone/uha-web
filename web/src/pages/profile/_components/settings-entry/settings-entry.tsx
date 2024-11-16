@@ -11,10 +11,12 @@ const SettingsEntry = ({ left, right, ...props }: Props) => {
 				<H3 $weight={400}>{left}</H3>
 			</LeftEntry>
 
-			<RightEntry>
-				<H3 $weight={400}>{right}</H3>
-				<Icon name="arrow-right" width={18} height={18} />
-			</RightEntry>
+			{right && (
+				<RightEntry>
+					<H3 $weight={400}>{right}</H3>
+					<Icon name="arrow-right" width={18} height={18} />
+				</RightEntry>
+			)}
 		</Root>
 	);
 };

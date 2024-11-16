@@ -30,15 +30,35 @@ export const Cancel = styled.div`
 	width: auto;
 	align-items: center;
 	justify-content: center;
+	cursor: pointer;
+	transition: background-color 150ms ease-in-out;
+
+	&:focus-visible,
+	&:focus,
+	&[data-pressed],
+	&:hover {
+		background-color: var(--card-hover);
+		box-shadow: none;
+	}
 `;
 
 export const Item = styled.div`
 	display: flex;
+	cursor: pointer;
 	width: 100%;
 	align-items: center;
 	justify-content: center;
 	font-size: 18px;
 	padding: 18px;
+	transition: background-color 150ms ease-in-out;
+
+	&:focus-visible,
+	&:focus,
+	&[data-pressed],
+	&:hover {
+		background-color: var(--card-hover);
+		box-shadow: none;
+	}
 
 	& + & {
 		border-top: 1px solid var(--border);

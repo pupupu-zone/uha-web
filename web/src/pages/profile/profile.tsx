@@ -8,11 +8,11 @@ import { useLazyObtainUserQuery } from '@data/user/api';
 
 import { Button } from '@ui';
 import Avatar from './avatar';
+import About from './about';
 import Donation from './donation';
 import Currencies from './currencies';
 import Personalization from './personalization';
 import UserName from './username';
-import { SettingsBlock } from './_components';
 import Root from './profile.styles';
 
 const Profile = () => {
@@ -52,14 +52,8 @@ const Profile = () => {
 
 			<Currencies />
 			<Personalization />
-
-			<SettingsBlock title="About">
-				Terms of Use
-				<br />
-				Privacy Policy
-			</SettingsBlock>
-
 			<Donation />
+			<About />
 
 			<Button
 				to="/logout"
