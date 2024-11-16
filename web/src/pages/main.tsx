@@ -9,8 +9,8 @@ import { useLazyObtainUserQuery } from '@data/user/api';
 import { ScrollRestoration, Outlet } from '@tanstack/react-router';
 import { isAuthorizedSelector } from '@pages/auth-flows/_redux/selectors';
 
-import Navigation from '@features/navigation';
 import Root from './main.styles';
+import Navigation from '@features/navigation';
 
 const MainPage = () => {
 	const dispatch = useAppDispatch();

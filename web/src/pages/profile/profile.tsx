@@ -10,8 +10,9 @@ import { useLazyObtainUserQuery } from '@data/user/api';
 
 import { Button } from '@ui';
 import Avatar from './avatar';
+import General from './general';
 import UserName from './username';
-import SettingsBlock from './settings-block';
+import { SettingsBlock } from './_components';
 import Root from './profile.styles';
 
 const Profile = () => {
@@ -51,11 +52,7 @@ const Profile = () => {
 
 			<UserName />
 
-			<SettingsBlock title="General">
-				Recalc Currency: {settings.recalc_currency}
-				<br />
-				Default Currency: {settings.default_currency}
-			</SettingsBlock>
+			<General />
 
 			<SettingsBlock title="Personalization">
 				Theme: {settings.theme}
