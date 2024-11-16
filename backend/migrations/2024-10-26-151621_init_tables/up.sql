@@ -8,6 +8,7 @@ CREATE TABLE "applications" (
   "name" TEXT NOT NULL,
   "description" TEXT NULL,
   "logo_url" TEXT NULL,
+  "category" TEXT NOT NULL,
 
   PRIMARY KEY ("id")
 );

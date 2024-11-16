@@ -16,6 +16,7 @@ diesel::table! {
         name -> Text,
         description -> Nullable<Text>,
         logo_url -> Nullable<Text>,
+        category -> Text,
     }
 }
 
