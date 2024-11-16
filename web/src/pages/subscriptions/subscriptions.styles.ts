@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
-export const ViewPort = styled.div`
+export const ViewPort = styled.div<{ $shouldFill: boolean }>`
 	justify-self: center;
 	width: calc(100vw - 36px);
+	padding-bottom: ${({ $shouldFill }) => ($shouldFill ? '72px' : '0')};
 `;
 
 export default styled.div`

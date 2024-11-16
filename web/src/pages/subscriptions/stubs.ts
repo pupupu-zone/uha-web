@@ -40,6 +40,24 @@ const stubs = [
 		date: '2024-11-26',
 		price: '$100',
 		flag: 'https://s3.keireira.com/subsawwy-demo/flags/va.svg'
+	},
+	{
+		country: 'Uzbekistan',
+		date: '2024-11-26',
+		price: '$100',
+		flag: 'https://s3.keireira.com/subsawwy-demo/flags/uz.svg'
+	},
+	{
+		country: 'China',
+		date: '2024-11-26',
+		price: '$100',
+		flag: 'https://s3.keireira.com/subsawwy-demo/flags/ch.svg'
+	},
+	{
+		country: 'Test',
+		date: '2024-11-26',
+		price: '$100',
+		flag: 'https://s3.keireira.com/subsawwy-demo/flags/zw.svg'
 	}
 ];
 

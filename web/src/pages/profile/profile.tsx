@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
-import { useAppDispatch } from '@store';
+import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from '@tanstack/react-router';
-import { Button } from '@ui';
+import { useAppDispatch } from '@store';
 
-import { useLazyObtainUserQuery } from '@data/user/api';
 import { actions as userActions } from '@data/user';
+import { useLazyObtainUserQuery } from '@data/user/api';
 
+import { Button } from '@ui';
 import Avatar from './avatar';
 import UserName from './username';
 import SettingsBlock from './settings-block';
@@ -14,10 +14,20 @@ import Root from './profile.styles';
 const Profile = () => {
 	const location = useLocation();
 	const dispatch = useAppDispatch();
+	const rootRef = useRef<HTMLDivElement>(null);
+	const [shouldFill, setShouldFill] = useState(false);
 	const [request, result] = useLazyObtainUserQuery();
 
 	useEffect(() => {
 		const { abort } = request();
+
+		if (rootRef.current) {
+			const NAVBAR_HEIGHT = 120;
+			const contentHeight = rootRef.current.offsetHeight;
+			const viewportHeight = window.innerHeight + NAVBAR_HEIGHT;
+
+			setShouldFill(contentHeight <= viewportHeight);
+		}
 
 		return () => {
 			if (abort) abort();
@@ -31,7 +41,7 @@ const Profile = () => {
 	}, [result.isSuccess, result.isFetching]);
 
 	return (
-		<Root>
+		<Root ref={rootRef} $shouldFill={shouldFill}>
 			<Avatar />
 
 			<UserName />
@@ -44,9 +54,9 @@ const Profile = () => {
 			<SettingsBlock title="Personalization">
 				Theme
 				<br />
-				Language
+				{/* Language
 				<br />
-				First Day of the Week
+				First Day of the Week */}
 			</SettingsBlock>
 
 			<SettingsBlock title="About">
