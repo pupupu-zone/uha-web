@@ -12,11 +12,40 @@ pub mod sql_types {
 
 diesel::table! {
     applications (id) {
-        id -> Uuid,
         name -> Text,
-        description -> Nullable<Text>,
+        #[max_length = 7]
+        color -> Varchar,
         logo_url -> Nullable<Text>,
-        category -> Text,
+        aliases -> Array<Nullable<Text>>,
+        links -> Jsonb,
+        is_public -> Bool,
+        is_dead -> Bool,
+        id -> Uuid,
+        user_id -> Uuid,
+        category_id -> Uuid,
+    }
+}
+
+diesel::table! {
+    categories (id) {
+        id -> Uuid,
+        user_id -> Uuid,
+        is_public -> Bool,
+        name -> Text,
+        #[max_length = 7]
+        color -> Varchar,
+    }
+}
+
+diesel::table! {
+    payments (id) {
+        id -> Uuid,
+        user_id -> Uuid,
+        subscription_id -> Uuid,
+        amount -> Numeric,
+        #[max_length = 255]
+        currency -> Varchar,
+        created_at -> Timestamptz,
     }
 }
 
@@ -30,10 +59,12 @@ diesel::table! {
         app_id -> Uuid,
         interval_type -> IntervalType,
         interval_value -> Int2,
-        comment -> Nullable<Text>,
+        service -> Nullable<Text>,
         #[max_length = 255]
         currency -> Varchar,
-        price -> Money,
+        price -> Numeric,
+        first_payment -> Timestamptz,
+        next_payment -> Timestamptz,
     }
 }
 
@@ -68,8 +99,7 @@ diesel::table! {
         id -> Uuid,
         email -> Text,
         password -> Text,
-        is_staff -> Bool,
-        is_superuser -> Bool,
+        is_sudo -> Bool,
         created_at -> Timestamptz,
         updated_at -> Timestamptz,
         is_active -> Bool,
@@ -77,6 +107,10 @@ diesel::table! {
     }
 }
 
+diesel::joinable!(applications -> categories (category_id));
+diesel::joinable!(applications -> users (user_id));
+diesel::joinable!(payments -> subscriptions (subscription_id));
+diesel::joinable!(payments -> users (user_id));
 diesel::joinable!(subscriptions -> applications (app_id));
 diesel::joinable!(subscriptions -> users (user_id));
 diesel::joinable!(user_profiles -> users (user_id));
@@ -84,6 +118,8 @@ diesel::joinable!(user_settings -> users (user_id));
 
 diesel::allow_tables_to_appear_in_same_query!(
     applications,
+    categories,
+    payments,
     subscriptions,
     user_profiles,
     user_settings,
