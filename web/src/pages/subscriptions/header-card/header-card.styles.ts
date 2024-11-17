@@ -6,9 +6,9 @@ export const R3 = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: #232323;
+	background-color: var(--primary-text);
 	border-radius: 18px;
-	box-shadow: 0 0 24px 0 rgba(0 0 0 / 0.5); #00000050;
+	box-shadow: 0 0 12px 0 rgba(0 0 0 / 0.4);
 	color: #999;
 	opacity: 0.8;
 
@@ -71,7 +71,7 @@ export const Digits = styled.h1`
 	justify-content: space-between;
 	gap: 2px;
 	font-size: 36px;
-	font-weight: 900;
+	font-weight: 700;
 	margin: 0;
 	width: 100%;
 	overflow: hidden;
@@ -81,15 +81,15 @@ export const Digits = styled.h1`
 
 export default styled.div`
 	color: #eee;
-		width: 100%;
+	width: 100%;
 	display: grid;
 	grid-auto-rows: 1fr min-content;
 	grid-auto-flow: row;
 	gap: 12px;
 	justify-self: center;
 
-	background-color: #232323;
+	background-color: var(--primary-text);
 	border-radius: 18px;
 	padding: 24px 24px;
-	box-shadow: 0 0 24px 0 rgba(0 0 0 / 0.5); #00000050;
+	box-shadow: 0 0 12px 0 rgba(0 0 0 / 0.4);
 `;

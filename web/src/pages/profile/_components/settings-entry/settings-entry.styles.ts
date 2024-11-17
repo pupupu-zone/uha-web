@@ -31,7 +31,7 @@ export default styled(AriaButton)`
 	width: calc(100% + 32px);
 	margin-right: -16px;
 	margin-left: -16px;
-	padding: 12px;
+	padding: 12px 16px;
 	color: var(--primary-text);
 	background: none;
 	border: none;
