@@ -3,7 +3,7 @@ import { H3 } from '@ui';
 
 export const Main = styled.div`
 	overflow: hidden;
-	background-color: var(--input-bg);
+	background-color: var(--settings-bg);
 	border-radius: 12px;
 `;
 

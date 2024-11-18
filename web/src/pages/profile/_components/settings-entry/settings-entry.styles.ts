@@ -40,7 +40,7 @@ export default styled(AriaButton)`
 	&:focus,
 	&[data-pressed],
 	&:hover {
-		background-color: var(--card-hover);
+		background-color: var(--settings-hover);
 		box-shadow: none;
 	}
 `;

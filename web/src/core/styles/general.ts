@@ -6,10 +6,16 @@ const General = createGlobalStyle`
 	:root {
 		--blue-focus: 60% 0.2 257deg;
 
-		--bg-color: #EDE8E1;
+		--bg-color: #fefefe;
 		--popup-bg: #fefefe;
 
 		--card-hover: #E5E5E5;
+
+		--settings-bg: #F9F9F9;
+		--settings-hover: #E5E5E5;
+
+		--select-bg: #fefefe;
+		--select-hover: #eee;
 
 		/* Typography */
 		--error: #D9534F;

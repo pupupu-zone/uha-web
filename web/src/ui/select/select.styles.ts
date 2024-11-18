@@ -32,12 +32,13 @@ export const Cancel = styled.div`
 	justify-content: center;
 	cursor: pointer;
 	transition: background-color 150ms ease-in-out;
+	background-color: var(--select-bg);
 
 	&:focus-visible,
 	&:focus,
 	&[data-pressed],
 	&:hover {
-		background-color: var(--card-hover);
+		background-color: var(--select-hover);
 		box-shadow: none;
 	}
 `;
@@ -51,12 +52,13 @@ export const Item = styled.div`
 	font-size: 18px;
 	padding: 18px;
 	transition: background-color 150ms ease-in-out;
+	background-color: var(--select-bg);
 
 	&:focus-visible,
 	&:focus,
 	&[data-pressed],
 	&:hover {
-		background-color: var(--card-hover);
+		background-color: var(--select-hover);
 		box-shadow: none;
 	}
 
