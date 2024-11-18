@@ -21,10 +21,10 @@ export default styled.div`
 	grid-auto-flow: column;
 	gap: 12px;
 	align-items: center;
-	width: calc(100% + 48px);
-	margin-right: -24px;
-	margin-left: -24px;
-	padding: 12px 24px;
+	width: calc(100% + 40px);
+	margin-right: -20px;
+	margin-left: -20px;
+	padding: 12px 16px;
 	border-radius: 18px;
 
 	&:hover {

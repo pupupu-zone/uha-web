@@ -9,7 +9,7 @@ const General = createGlobalStyle`
 		--bg-color: #F9F9F9;
 		--popup-bg: #fefefe;
 
-		--card-hover: #E5E5E5;
+		--card-hover: #eee;
 
 		--settings-bg: #f1f1f1;
 		--settings-hover: #E5E5E5;
@@ -24,7 +24,7 @@ const General = createGlobalStyle`
 		/* Inputs */
 		--label: #777;
 		--input-bg: #F7F7F8;
-		--border: #E5E5E5;
+		--border: #E9E9Ea;
 		--placeholder: #A1A1A1;
 
 		/* Primary button styles */

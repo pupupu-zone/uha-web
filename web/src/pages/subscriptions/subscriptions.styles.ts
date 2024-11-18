@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const ViewPort = styled.div<{ $shouldFill: boolean }>`
 	justify-self: center;
-	width: calc(100vw - 36px);
+	width: calc(100vw - 36px); /* 48px from header.styles - 12px from list-view.styles */
 	padding-bottom: ${({ $shouldFill }) => ($shouldFill ? '72px' : '0')};
 `;
 

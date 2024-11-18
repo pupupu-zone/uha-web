@@ -34,7 +34,7 @@ export const R = styled.div`
 	justify-self: center;
 	grid-auto-columns: 1fr min-content;
 	gap: 18px;
-	width: calc(100vw - 36px);
+	width: calc(100vw - 48px);
 	margin-top: 18px;
 	margin-bottom: 36px;
 `;
