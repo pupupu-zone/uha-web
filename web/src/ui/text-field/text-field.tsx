@@ -24,7 +24,12 @@ const TextField = React.forwardRef<HTMLInputElement, Props>(
 						aria-errormessage={errors.join(';')}
 					/>
 
-					<Label htmlFor={id}>{label || placeholder}</Label>
+					<Label
+						htmlFor={id}
+						$isPlaceholder={Boolean((placeholder && !restProps.value) || (label && !restProps.value))}
+					>
+						{label || placeholder}
+					</Label>
 				</InputRoot>
 
 				{withErrors && (

@@ -18,12 +18,12 @@ export const ErrorsList = styled.div`
 	margin-top: 2px;
 `;
 
-export const Label = styled.label`
+export const Label = styled.label<{ $isPlaceholder: boolean }>`
 	position: absolute;
 	top: 23px;
 	left: 24px;
 	z-index: 1;
-	color: var(--label);
+	color: ${({ $isPlaceholder }) => ($isPlaceholder ? 'var(--placeholder)' : 'var(--label)')};
 	font-size: 16px;
 	line-height: 1;
 `;

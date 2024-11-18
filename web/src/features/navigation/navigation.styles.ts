@@ -32,7 +32,10 @@ export default styled.div`
 	align-items: center;
 	justify-content: space-around;
 	padding: 12px;
-	background-color: var(--input-bg);
+	transform: translateY(0%);
+	backdrop-filter: blur(8px);
+	background: rgba(251 251 251 / 0.7);
 	border-radius: 18px;
-	box-shadow: 0 0 10px 1px rgba(0 0 0 / 0.15);
+	border-top: 1px solid #e5e7eb;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;

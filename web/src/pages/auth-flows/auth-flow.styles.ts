@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-
+import styled, { createGlobalStyle } from 'styled-components';
 import { H1 } from '@ui';
 
 export const PageName = styled.h1`
@@ -45,6 +44,14 @@ export const LowTag = styled(H1)`
 	font-weight: 900;
 	font-size: calc(100vw / 100 * 22.8);
 	line-height: 1;
+`;
+
+export const Test = createGlobalStyle`
+// 	html {
+// 		// background: linear-gradient(to top, #ffeceb, #fff);
+// background: linear-gradient(to bottom, #88E7DC, #54C8BC);
+// background: #F6F6F6;
+// 		}
 `;
 
 export const TagLine = styled.div`

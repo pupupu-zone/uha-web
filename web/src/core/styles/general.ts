@@ -6,12 +6,12 @@ const General = createGlobalStyle`
 	:root {
 		--blue-focus: 60% 0.2 257deg;
 
-		--bg-color: #fefefe;
+		--bg-color: #F9F9F9;
 		--popup-bg: #fefefe;
 
 		--card-hover: #E5E5E5;
 
-		--settings-bg: #F9F9F9;
+		--settings-bg: #f1f1f1;
 		--settings-hover: #E5E5E5;
 
 		--select-bg: #fefefe;
@@ -22,9 +22,10 @@ const General = createGlobalStyle`
 		--primary-text: #333;
 
 		/* Inputs */
-		--label: #4A4A4A;
-		--input-bg: #F6F1F7;
-		--border: #EDE8E1;
+		--label: #777;
+		--input-bg: #F7F7F8;
+		--border: #E5E5E5;
+		--placeholder: #A1A1A1;
 
 		/* Primary button styles */
 		--primary-button-text: #fefefe;
