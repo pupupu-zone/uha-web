@@ -9,6 +9,10 @@ export const NameInput = styled.input`
 	background-color: transparent;
 	border: none;
 	border-radius: 12px;
+
+	&:focus-visible {
+		box-shadow: none;
+	}
 `;
 
 export default styled.div`

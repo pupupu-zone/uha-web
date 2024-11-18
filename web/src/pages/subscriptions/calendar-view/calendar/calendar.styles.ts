@@ -71,7 +71,7 @@ export const WeekDay = styled(Text)`
 	justify-content: center;
 	width: var(--calendar-width);
 	min-width: var(--calendar-width);
-	opacity: 0.6;
+	opacity: 0.6; /* @TODO: Rewrite to actual color */
 `;
 
 export const WeekDays = styled.div`

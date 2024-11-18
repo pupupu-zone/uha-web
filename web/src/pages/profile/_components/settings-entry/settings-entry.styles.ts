@@ -12,7 +12,7 @@ export const RightEntry = styled.div`
 	gap: 4px;
 	align-items: center;
 	justify-content: end;
-	opacity: 0.6;
+	opacity: 0.6; /* @TODO: Rewrite to actual color */
 
 	& > h3 {
 		max-width: 75%;
@@ -28,10 +28,8 @@ export default styled(AriaButton)`
 	grid-auto-columns: 1fr 1fr;
 	grid-auto-flow: column;
 	justify-content: space-between;
-	width: calc(100% + 32px);
-	margin-right: -16px;
-	margin-left: -16px;
-	padding: 12px 16px;
+	width: 100%;
+	padding: 16px;
 	color: var(--primary-text);
 	background: none;
 	border: none;

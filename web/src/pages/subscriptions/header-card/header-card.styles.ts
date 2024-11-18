@@ -8,7 +8,6 @@ export const R3 = styled.div`
 	justify-content: center;
 	background-color: var(--primary-text);
 	border-radius: 18px;
-	box-shadow: 0 0 12px 0 rgba(0 0 0 / 0.4);
 	color: #999;
 	opacity: 0.8;
 
@@ -91,5 +90,4 @@ export default styled.div`
 	background-color: var(--primary-text);
 	border-radius: 18px;
 	padding: 24px 24px;
-	box-shadow: 0 0 12px 0 rgba(0 0 0 / 0.4);
 `;

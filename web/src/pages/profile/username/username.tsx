@@ -30,7 +30,10 @@ const UserName = () => {
 							<NameInput
 								id={field.name}
 								type="text"
-								autoComplete="off"
+								autoComplete="first-name"
+								autoCapitalize="off"
+								autoCorrect="off"
+								spellCheck={false}
 								name={field.name}
 								onChange={onChangeHd}
 								value={field.state.value}

@@ -4,7 +4,7 @@ import type { TextProps, HeaderProps } from './typography.d';
 const shades = {
 	light: css`
 		color: #999;
-		opacity: 0.6;
+		opacity: 0.6; /* @TODO: Rewrite to actual color */
 	`,
 	regular: css`
 		color: var(--primary-text);
