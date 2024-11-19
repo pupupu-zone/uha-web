@@ -3,6 +3,7 @@ use actix_governor::governor::clock::QuantaInstant;
 use actix_governor::governor::middleware::NoOpMiddleware;
 use actix_governor::{Governor, GovernorConfigBuilder, PeerIpKeyExtractor};
 use actix_session::{storage::CookieSessionStore, SessionMiddleware};
+use actix_web::cookie::time::Duration;
 use actix_web::middleware::{Compress, Logger};
 
 pub struct Middlewares {
@@ -54,6 +55,8 @@ impl Middlewares {
         let envs = crate::service::env::EnvConfig::new();
         let secret_key = actix_web::cookie::Key::from(envs.hmac_secret.as_bytes());
 
+        let one_day = Duration::seconds(24 * 60 * 60); // 24 hours in seconds
+
         if envs.with_debug {
             actix_session::SessionMiddleware::builder(
                 actix_session::storage::CookieSessionStore::default(),
@@ -62,12 +65,24 @@ impl Middlewares {
             .cookie_http_only(true)
             .cookie_same_site(actix_web::cookie::SameSite::None)
             .cookie_secure(true)
+            .session_lifecycle(
+                actix_session::config::PersistentSession::default().session_ttl(one_day), // This sets both cookie max-age and session TTL
+            )
+            .cookie_path("/".to_string())
             .build()
         } else {
-            actix_session::SessionMiddleware::new(
+            actix_session::SessionMiddleware::builder(
                 actix_session::storage::CookieSessionStore::default(),
                 secret_key.clone(),
             )
+            .cookie_http_only(true)
+            .cookie_secure(true)
+            .cookie_same_site(actix_web::cookie::SameSite::Strict)
+            .session_lifecycle(
+                actix_session::config::PersistentSession::default().session_ttl(one_day),
+            )
+            .cookie_path("/".to_string())
+            .build()
         }
     }
 
