@@ -10,7 +10,7 @@ const Categories = () => {
 			<Title as={Link} to="/library">
 				<Icon name="arrow-left" /> Library
 			</Title>
-			categories
+			+++
 		</Section>
 	);
 };
