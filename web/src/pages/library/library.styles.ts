@@ -6,8 +6,11 @@ export const Section = styled.div`
 	grid-template-rows: min-content min-content;
 	grid-template-columns: 1fr;
 	width: calc(100vw - 48px);
-	margin-top: 36px;
 	place-self: center;
+
+	& + & {
+		margin-top: 36px;
+	}
 `;
 
 export const Title = styled.h1`
@@ -29,15 +32,14 @@ export const App = styled.div`
 
 export const FeaturedApps = styled.div`
 	place-self: center;
-	width: calc(100vw - 48px);
-	margin-top: 18px;
+	width: 100%;
 	margin-bottom: 36px;
 `;
 
 export default styled.div`
 	/* stylelint-disable declaration-block-no-redundant-longhand-properties */
-	padding-top: env(safe-area-inset-top);
-	padding-right: env(safe-area-inset-right);
-	padding-bottom: env(safe-area-inset-bottom);
-	padding-left: env(safe-area-inset-left);
+	padding-top: calc(env(safe-area-inset-top) + 24px);
+	padding-right: calc(env(safe-area-inset-right) + 24px);
+	padding-bottom: calc(env(safe-area-inset-bottom) + 24px);
+	padding-left: calc(env(safe-area-inset-left) + 24px);
 `;

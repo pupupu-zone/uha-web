@@ -9,11 +9,11 @@ const LibraryPage = () => {
 
 	return (
 		<Root>
-			<FeaturedApps>
+			{/* <FeaturedApps>
 				<App as="a" target="_blank" rel="noopener noreferrer" href="https://aeza.net/?ref=491190">
 					<img src="https://my.aeza.net/assets/logo-6c69f4c1.svg" alt="Aeza" />
 				</App>
-			</FeaturedApps>
+			</FeaturedApps> */}
 
 			{!children.length && (
 				<>
