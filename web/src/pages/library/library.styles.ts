@@ -78,7 +78,7 @@ export const Section = styled.div`
 	place-self: center;
 
 	& + & {
-		margin-top: 36px;
+		margin-top: 48px;
 	}
 `;
 
@@ -113,13 +113,13 @@ export const App = styled.div`
 export const FeaturedApps = styled.div`
 	place-self: center;
 	width: 100%;
-	margin-bottom: 36px;
+	margin-bottom: 48px;
 `;
 
 export default styled.div`
 	/* stylelint-disable declaration-block-no-redundant-longhand-properties */
 	padding-top: calc(env(safe-area-inset-top) + 24px);
 	padding-right: calc(env(safe-area-inset-right) + 24px);
-	padding-bottom: calc(env(safe-area-inset-bottom) + 24px);
+	padding-bottom: calc(env(safe-area-inset-bottom) + ${({ $shouldFill }) => ($shouldFill ? '120px' : '48px')});
 	padding-left: calc(env(safe-area-inset-left) + 24px);
 `;

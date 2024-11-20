@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAppDispatch } from '@store';
 import { useSelector } from 'react-redux';
 
@@ -17,6 +17,18 @@ const LibraryPage = () => {
 	const result = useObtainCategoriesQuery();
 	const dispatch = useAppDispatch();
 	const allCategories = useSelector(categoriesSelectors.previewSelector);
+	const [shouldFill, setShouldFill] = useState(false);
+	const rootRef = useRef<HTMLDivElement>(null);
+
+	useEffect(() => {
+		if (rootRef.current) {
+			const NAVBAR_HEIGHT = 120;
+			const contentHeight = rootRef.current.offsetHeight;
+			const viewportHeight = window.innerHeight + NAVBAR_HEIGHT;
+
+			setShouldFill(contentHeight <= viewportHeight);
+		}
+	}, [children]);
 
 	useEffect(() => {
 		if (!result.isSuccess || result.isFetching) return;
@@ -25,7 +37,7 @@ const LibraryPage = () => {
 	}, [result.isSuccess, result.isFetching]);
 
 	return (
-		<Root>
+		<Root ref={rootRef} $shouldFill={shouldFill}>
 			<FeaturedApps>
 				<App as="a" target="_blank" rel="noopener noreferrer" href="https://aeza.net/?ref=491190">
 					<Image>
@@ -67,38 +79,12 @@ const LibraryPage = () => {
 						<Title as={Link} to="/library/applications">
 							Applications <Icon name="arrow-right" />
 						</Title>
-
-						{allCategories.length > 0 && (
-							<Previews>
-								{allCategories.map((category) => (
-									<Category
-										key={`app-${category.id}`}
-										title={category.name}
-										emoji={category.emoji}
-										color={category.color}
-									/>
-								))}
-							</Previews>
-						)}
 					</Section>
 
 					<Section>
 						<Title as={Link} to="/library/payments">
 							Payment Methods <Icon name="arrow-right" />
 						</Title>
-
-						{allCategories.length > 0 && (
-							<Previews>
-								{allCategories.map((category) => (
-									<Category
-										key={`pay-${category.id}`}
-										title={category.name}
-										emoji={category.emoji}
-										color={category.color}
-									/>
-								))}
-							</Previews>
-						)}
 					</Section>
 				</>
 			)}
