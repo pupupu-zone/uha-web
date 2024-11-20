@@ -1,15 +1,16 @@
 import styled from 'styled-components';
 
 export const IconContent = styled.h3`
-	color: rgba(0, 0, 0, 0.8);
-	font-size: 72px;
-	font-weight: 600;
-	line-height: 1;
-	text-align: center;
-	padding: 12px;
-	border-radius: 8px;
 	width: 96px;
 	height: 96px;
+	padding: 12px;
+	font-size: 72px;
+	line-height: 1;
+	text-align: center;
+	border-radius: 12px;
+	filter: blur(0.5px) drop-shadow(0 0 36px ${(props) => props.$color}) opacity(0.8);
+	isolation: isolate;
+	mix-blend-mode: multiply;
 `;
 
 export const IconRoot = styled.div`
@@ -20,11 +21,6 @@ export const IconRoot = styled.div`
 	align-items: end;
 	justify-content: end;
 	padding: 12px;
-
-	&::after {
-		content: '';
-		display: block;
-	}
 `;
 
 export const Title = styled.h3`
@@ -73,4 +69,6 @@ export default styled.div`
 	}
 
 	aspect-ratio: 16/9;
+	height: 160px;
+	user-select: none;
 `;

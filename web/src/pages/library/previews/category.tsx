@@ -6,7 +6,7 @@ const Category = ({ title, color, emoji }) => {
 	return (
 		<Root $color={color}>
 			<IconRoot>
-				<IconContent>{emoji || title[0]}</IconContent>
+				<IconContent $color={color}>{emoji || title[0]}</IconContent>
 			</IconRoot>
 
 			<Title lang="en">{title}</Title>
