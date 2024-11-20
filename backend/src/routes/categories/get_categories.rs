@@ -40,7 +40,7 @@ pub async fn get_categories(
         FROM
             categories
         WHERE
-            user_id = $1 OR is_public = TRUE;
+            user_id = $1 OR is_public = TRUE
         ORDER BY
             name ASC;
         "#,
