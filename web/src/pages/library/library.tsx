@@ -16,7 +16,7 @@ const LibraryPage = () => {
 	const children = useChildMatches();
 	const result = useObtainCategoriesQuery();
 	const dispatch = useAppDispatch();
-	const allCategories = useSelector(categoriesSelectors.allCategoriesSelector);
+	const allCategories = useSelector(categoriesSelectors.previewSelector);
 
 	useEffect(() => {
 		if (!result.isSuccess || result.isFetching) return;
@@ -37,7 +37,7 @@ const LibraryPage = () => {
 
 					<div>
 						<H1 $weight={600}>AEZA</H1>
-						<Text as="h3">Host your servers here</Text>
+						<Text as="h3">Host your servers there</Text>
 					</div>
 				</App>
 			</FeaturedApps>
@@ -51,11 +51,14 @@ const LibraryPage = () => {
 
 						{allCategories.length > 0 && (
 							<Previews>
-								{allCategories.map((category) => {
-									return (
-										<Category key={category.id} title={category.name} emoji={category.emoji} color={category.color} />
-									);
-								})}
+								{allCategories.map((category) => (
+									<Category
+										key={`cat-${category.id}`}
+										title={category.name}
+										emoji={category.emoji}
+										color={category.color}
+									/>
+								))}
 							</Previews>
 						)}
 					</Section>
@@ -64,12 +67,38 @@ const LibraryPage = () => {
 						<Title as={Link} to="/library/applications">
 							Applications <Icon name="arrow-right" />
 						</Title>
+
+						{allCategories.length > 0 && (
+							<Previews>
+								{allCategories.map((category) => (
+									<Category
+										key={`app-${category.id}`}
+										title={category.name}
+										emoji={category.emoji}
+										color={category.color}
+									/>
+								))}
+							</Previews>
+						)}
 					</Section>
 
 					<Section>
 						<Title as={Link} to="/library/payments">
 							Payment Methods <Icon name="arrow-right" />
 						</Title>
+
+						{allCategories.length > 0 && (
+							<Previews>
+								{allCategories.map((category) => (
+									<Category
+										key={`pay-${category.id}`}
+										title={category.name}
+										emoji={category.emoji}
+										color={category.color}
+									/>
+								))}
+							</Previews>
+						)}
 					</Section>
 				</>
 			)}

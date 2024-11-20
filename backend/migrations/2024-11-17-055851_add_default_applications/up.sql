@@ -20,8 +20,8 @@ INSERT INTO "categories" ("id", "user_id", "name", "emoji", "color", "is_public"
   ('db03adff-a6fc-4d8d-b4c1-39e8600a9655', '00000000-0000-0000-0000-000000000000', 'For Developers', '👨‍💻', '#f9ca24', true),
   -- AI
   ('680f0da2-d9b0-4f79-8809-347f2923a492', '00000000-0000-0000-0000-000000000000', 'Robotics', '🤖', '#f0932b', true),
-  -- Hosting & more
-  ('69e45825-a4e0-4c19-9351-ce95a807c158', '00000000-0000-0000-0000-000000000000', 'Hosting & more', '☁️', '#eb4d4b', true),
+  -- Hosting+
+  ('69e45825-a4e0-4c19-9351-ce95a807c158', '00000000-0000-0000-0000-000000000000', 'Hosting+', '☁️', '#eb4d4b', true),
   -- Education
   ('bc6238e6-1555-4320-9d33-0b2835313792', '00000000-0000-0000-0000-000000000000', 'Education', '📚', '#6ab04c', true),
   -- Creativity

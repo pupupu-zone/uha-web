@@ -11,6 +11,10 @@ export const allCategoriesSelector = createSelector([categoriesSelector], (categ
 	categories.allIds.map((id) => categories.byId[id])
 );
 
+export const previewSelector = createSelector([allCategoriesSelector], (categories) => {
+	return categories.slice(0, 10);
+});
+
 export const categorySelector = createSelector(
 	[categoriesSelector, (_, categoryId: string) => categoryId],
 	(categories, categoryId) => categories.byId[categoryId]

@@ -35,7 +35,6 @@ export default styled.div`
 	flex-direction: column;
 	align-items: flex-start;
 	justify-content: space-between;
-	min-height: 140px;
 	padding: 16px;
 	border-radius: 20px;
 	background-color: ${(props) => props.$color};
@@ -43,7 +42,7 @@ export default styled.div`
 	transition: all 0.2s ease;
 	position: relative;
 	overflow: hidden;
-	height: 160px;
+	width: 160px;
 
 	/* Top light overlay */
 	&::before {
@@ -71,12 +70,12 @@ export default styled.div`
 		pointer-events: none;
 	}
 
-	&:hover {
-		transform: translateY(-4px);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+	&:active {
+		box-shadow: 0 4px 12px rgba(0 0 0 / 0.15);
+		transform: translateY(4px);
 	}
 
-	aspect-ratio: 1;
+	aspect-ratio: 6/5;
 
 	/* Ensure content stays above the overlays */
 	> * {
