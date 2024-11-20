@@ -12,17 +12,17 @@ pub mod sql_types {
 
 diesel::table! {
     applications (id) {
+        id -> Uuid,
+        user_id -> Uuid,
+        category_id -> Uuid,
         name -> Text,
+        logo_url -> Nullable<Text>,
         #[max_length = 7]
         color -> Varchar,
-        logo_url -> Nullable<Text>,
         aliases -> Array<Nullable<Text>>,
         links -> Jsonb,
         is_public -> Bool,
         is_dead -> Bool,
-        id -> Uuid,
-        user_id -> Uuid,
-        category_id -> Uuid,
     }
 }
 
@@ -30,10 +30,12 @@ diesel::table! {
     categories (id) {
         id -> Uuid,
         user_id -> Uuid,
-        is_public -> Bool,
         name -> Text,
+        #[max_length = 8]
+        emoji -> Nullable<Varchar>,
         #[max_length = 7]
         color -> Varchar,
+        is_public -> Bool,
     }
 }
 
@@ -43,7 +45,7 @@ diesel::table! {
         user_id -> Uuid,
         subscription_id -> Uuid,
         amount -> Numeric,
-        #[max_length = 255]
+        #[max_length = 3]
         currency -> Varchar,
         created_at -> Timestamptz,
     }
@@ -57,12 +59,12 @@ diesel::table! {
         id -> Uuid,
         user_id -> Uuid,
         app_id -> Uuid,
+        service -> Nullable<Text>,
         interval_type -> IntervalType,
         interval_value -> Int2,
-        service -> Nullable<Text>,
-        #[max_length = 255]
-        currency -> Varchar,
         price -> Numeric,
+        #[max_length = 3]
+        currency -> Varchar,
         first_payment -> Timestamptz,
         next_payment -> Timestamptz,
     }
@@ -85,12 +87,12 @@ diesel::table! {
         id -> Uuid,
         user_id -> Uuid,
         theme -> Theme,
+        #[max_length = 2]
+        language -> Bpchar,
         #[max_length = 3]
         default_currency -> Bpchar,
         #[max_length = 3]
         recalc_currency -> Bpchar,
-        #[max_length = 2]
-        language -> Bpchar,
     }
 }
 
@@ -100,15 +102,16 @@ diesel::table! {
         email -> Text,
         password -> Text,
         is_sudo -> Bool,
-        created_at -> Timestamptz,
-        updated_at -> Timestamptz,
         is_active -> Bool,
         is_deleted -> Bool,
+        created_at -> Timestamptz,
+        updated_at -> Timestamptz,
     }
 }
 
 diesel::joinable!(applications -> categories (category_id));
 diesel::joinable!(applications -> users (user_id));
+diesel::joinable!(categories -> users (user_id));
 diesel::joinable!(payments -> subscriptions (subscription_id));
 diesel::joinable!(payments -> users (user_id));
 diesel::joinable!(subscriptions -> applications (app_id));

@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useAppDispatch } from '@store';
+import { useSelector } from 'react-redux';
 
 import { H1, Text, Icon } from '@ui';
 import { Category } from '@pages/library/previews';
+
+import { actions as categoriesActs } from '@data/categories';
+import { selectors as categoriesSelectors } from '@data/categories';
+import { useObtainCategoriesQuery } from '@data/categories/api';
 
 import { Link, Outlet, useChildMatches } from '@tanstack/react-router';
 import Root, { FeaturedApps, App, Title, Section, Image, Previews } from './library.styles';
 
 const LibraryPage = () => {
 	const children = useChildMatches();
+	const result = useObtainCategoriesQuery();
+	const dispatch = useAppDispatch();
+	const allCategories = useSelector(categoriesSelectors.allCategoriesSelector);
+
+	useEffect(() => {
+		if (!result.isSuccess || result.isFetching) return;
+
+		dispatch(categoriesActs.addCategories(result.data));
+	}, [result.isSuccess, result.isFetching]);
 
 	return (
 		<Root>
@@ -34,12 +49,15 @@ const LibraryPage = () => {
 							Categories <Icon name="arrow-right" />
 						</Title>
 
-						<Previews>
-							<Category title="Utilities" color="#f6e58d" />
-							<Category title="VPN" color="#ffbe76" />
-							<Category title="Entertainment" color="#ff7979" />
-							<Category title="Messengers" color="#badc58" />
-						</Previews>
+						{allCategories.length > 0 && (
+							<Previews>
+								{allCategories.map((category) => {
+									return (
+										<Category key={category.id} title={category.name} emoji={category.emoji} color={category.color} />
+									);
+								})}
+							</Previews>
+						)}
 					</Section>
 
 					<Section>

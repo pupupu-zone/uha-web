@@ -4,22 +4,23 @@ export const Previews = styled.div`
 	display: grid;
 	grid-auto-flow: column;
 	gap: 24px;
+	padding-top: 4px;
 	grid-auto-columns: min-content;
 	width: 100%;
 	overflow-x: auto;
 	scroll-snap-type: x mandatory;
 	-webkit-overflow-scrolling: touch;
 
-	/* Hide scrollbar but keep functionality */
+	/* Hide scrollbar */
 	scrollbar-width: none; /* Firefox */
-	-ms-overflow-style: none; /* IE and Edge */
+	-ms-overflow-style: none;
 	&::-webkit-scrollbar {
-		display: none; /* Chrome, Safari and Opera */
+		display: none;
 	}
 
 	/* Prevent grid blowout */
-	padding-bottom: 16px; // Space for potential scrollbar
-	margin-bottom: -16px; // Compensate for padding
+	padding-bottom: 16px; /* Space for potential scrollbar */
+	margin-bottom: -16px; /* Compensate for padding */
 
 	/* Better touch scrolling */
 	scroll-behavior: smooth;
@@ -37,9 +38,9 @@ export const Previews = styled.div`
 
 // Also modify Category component or its container to support snap
 export const CategoryContainer = styled.div`
-	scroll-snap-align: start; // Optional: for snappy scrolling
+	scroll-snap-align: start; /* for snappy scrolling */
 	width: 100%;
-	min-width: 200px; // Match the minmax first value
+	min-width: 200px; /* Match the minmax first value */
 `;
 
 export const Head = styled.h3`

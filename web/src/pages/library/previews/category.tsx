@@ -1,12 +1,14 @@
 import React from 'react';
 
-import { LargeText } from '@ui';
-import Root from './previews.styled';
+import Root, { Title, IconRoot, LetterFallback } from './previews.styled';
 
-const Category = ({ title, color }) => {
+const Category = ({ title, color, emoji }) => {
 	return (
 		<Root $color={color}>
-			<LargeText>{title}</LargeText>
+			<IconRoot>
+				<LetterFallback>{emoji || title[0]}</LetterFallback>
+			</IconRoot>
+			<Title>{title}</Title>
 		</Root>
 	);
 };

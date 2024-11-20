@@ -14,7 +14,8 @@ const codes = new Map<number, string>([
 	[1012, 'Could not update avatar'],
 	[1013, 'Could not update profile'],
 
-	[9999, 'Session expired']
+	[9999, 'Session expired'],
+	[10000, '']
 ]);
 
 export default codes;

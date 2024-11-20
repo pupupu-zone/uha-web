@@ -7,12 +7,13 @@ import API from '@api';
 import authReducer from '@pages/auth-flows/_redux';
 import userReducer from '@data/user';
 import settingsReducer from '@data/settings';
+import categoriesReducer from '@data/categories';
 
 const persistConfig = {
 	key: 'root',
 	version: 1,
 	storage: createIdbStorage({ name: 'subsawwy.com', storeName: 'keyval' }),
-	whitelist: ['auth', 'user', 'settings'],
+	whitelist: ['auth', 'user', 'settings', 'categories'],
 	blacklist: [API.reducerPath]
 	// transforms: [createWhitelistFilter('organizations', ['activeOrganizationId'])]
 };
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
 	[API.reducerPath]: API.reducer,
 	auth: authReducer,
 	user: userReducer,
-	settings: settingsReducer
+	settings: settingsReducer,
+	categories: categoriesReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

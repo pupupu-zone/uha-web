@@ -20,6 +20,7 @@ const General = createGlobalStyle`
 		/* Typography */
 		--error: #D9534F;
 		--primary-text: #333;
+		--light-text: #eee;
 
 		/* Inputs */
 		--label: #777;

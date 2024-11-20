@@ -7,7 +7,7 @@ const idApi = API.injectEndpoints({
 		// Get user's profile
 		obtainUser: build.query<UserProfileResT, UserProfileReqT>({
 			query: () => ({
-				url: '/user/obtain',
+				url: '/user',
 				method: 'GET',
 				credentials: 'include'
 			})
