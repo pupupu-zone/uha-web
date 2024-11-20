@@ -23,7 +23,11 @@ export const Title = styled.h3`
 	font-size: 18px;
 	font-weight: 600;
 	margin: 0;
-	text-shadow: 0 1px 2px rgba(255, 255, 255, 0.1);
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	hyphens: auto;
+	max-width: 100%;
 `;
 
 export default styled.div`
@@ -39,6 +43,7 @@ export default styled.div`
 	transition: all 0.2s ease;
 	position: relative;
 	overflow: hidden;
+	height: 160px;
 
 	/* Top light overlay */
 	&::before {
