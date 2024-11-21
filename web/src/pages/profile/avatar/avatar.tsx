@@ -24,12 +24,9 @@ const Avatar = () => {
 		form.handleSubmit();
 	}, [isValid]);
 
-	useEffect(() => {
-		form.setFieldValue('avatar', userData.avatar_url);
-	}, [userData.avatar_url]);
-
 	const avatarUrl = useMemo(() => {
 		if (typeof avatar === 'string') return avatar;
+		if (userData.avatar_url) return userData.avatar_url;
 
 		return avatar ? URL.createObjectURL(avatar) : undefined;
 	}, [avatar]);

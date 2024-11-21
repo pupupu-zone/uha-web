@@ -132,7 +132,6 @@ CREATE TABLE "subscriptions" (
   "interval_value" SMALLINT NOT NULL,
   "price" NUMERIC(12, 2) NOT NULL DEFAULT 0,
   "currency" VARCHAR(3) NOT NULL DEFAULT 'USD',
-  "first_payment" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   "next_payment" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
   PRIMARY KEY ("id"),
