@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Root, { Title, IconRoot, IconContent } from './previews.styled';
+import Root, { Title, IconRoot, IconContent } from './preview.styles';
 
-const Category = ({ title, color, emoji }) => {
+const CategoryPreview = ({ title, color, emoji }) => {
 	return (
 		<Root $color={color}>
 			<IconRoot>
@@ -14,4 +14,4 @@ const Category = ({ title, color, emoji }) => {
 	);
 };
 
-export default Category;
+export default CategoryPreview;

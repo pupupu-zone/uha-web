@@ -21,7 +21,7 @@ diesel::table! {
         color -> Varchar,
         aliases -> Array<Nullable<Text>>,
         links -> Jsonb,
-        is_public -> Bool,
+        is_default -> Bool,
         is_dead -> Bool,
     }
 }
@@ -35,7 +35,7 @@ diesel::table! {
         emoji -> Nullable<Varchar>,
         #[max_length = 7]
         color -> Varchar,
-        is_public -> Bool,
+        is_default -> Bool,
     }
 }
 

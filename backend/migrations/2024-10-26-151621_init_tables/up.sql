@@ -80,7 +80,7 @@ CREATE TABLE "categories" (
   "name" TEXT NOT NULL,
   "emoji" VARCHAR(8) NULL,
   "color" VARCHAR(7) NOT NULL DEFAULT '#000000',
-  "is_public" BOOLEAN NOT NULL DEFAULT false,
+  "is_default" BOOLEAN NOT NULL DEFAULT false,
 
   PRIMARY KEY ("id"),
   FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE,
@@ -91,7 +91,7 @@ CREATE TABLE "categories" (
 );
 
 CREATE INDEX IF NOT EXISTS "categories_user_id_index" ON "categories"("user_id");
-CREATE INDEX IF NOT EXISTS "categories_is_public_index" ON "categories"("is_public");
+CREATE INDEX IF NOT EXISTS "categories_is_default_index" ON "categories"("is_default");
 
 --
 -- APPLICATIONS
@@ -105,7 +105,7 @@ CREATE TABLE "applications" (
   "color" VARCHAR(7) NOT NULL DEFAULT '#000000',
   "aliases" TEXT[] NOT NULL DEFAULT '{}'::TEXT[],
   "links" JSONB NOT NULL DEFAULT '{}',
-  "is_public" BOOLEAN NOT NULL DEFAULT false,
+  "is_default" BOOLEAN NOT NULL DEFAULT false,
   "is_dead" BOOLEAN NOT NULL DEFAULT false,
 
   PRIMARY KEY ("id"),
@@ -118,7 +118,7 @@ CREATE TABLE "applications" (
 
 CREATE INDEX IF NOT EXISTS "applications_user_id_index" ON "applications"("user_id");
 CREATE INDEX IF NOT EXISTS "applications_category_id_index" ON "applications"("category_id");
-CREATE INDEX IF NOT EXISTS "applications_is_public_index" ON "applications"("is_public");
+CREATE INDEX IF NOT EXISTS "applications_is_default_index" ON "applications"("is_default");
 
 --
 -- SUBSCRIPTIONS

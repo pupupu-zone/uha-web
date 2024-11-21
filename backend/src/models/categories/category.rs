@@ -9,7 +9,7 @@ pub struct Category {
     name: String,
     emoji: Option<String>,
     color: String,
-    is_public: bool,
+    is_default: bool,
 }
 
 impl Category {
@@ -20,7 +20,7 @@ impl Category {
             name: row.get("name"),
             emoji: row.get("emoji"),
             color: row.get("color"),
-            is_public: row.get("is_public"),
+            is_default: row.get("is_default"),
         }
     }
 }

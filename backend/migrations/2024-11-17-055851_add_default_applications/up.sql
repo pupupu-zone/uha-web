@@ -5,7 +5,7 @@
 --
 -- Categories
 --
-INSERT INTO "categories" ("id", "user_id", "name", "emoji", "color", "is_public") VALUES 
+INSERT INTO "categories" ("id", "user_id", "name", "emoji", "color", "is_default") VALUES 
   -- Utilities
   ('eaef2630-3cea-4095-8b72-40e397ec013a', '00000000-0000-0000-0000-000000000000', 'Utilities', '🔧', '#f6e58d', true),
   -- VPN
@@ -39,7 +39,7 @@ INSERT INTO "categories" ("id", "user_id", "name", "emoji", "color", "is_public"
   -- Other
   ('ff3671b4-8924-40bc-a910-507d92fa2e88', '00000000-0000-0000-0000-000000000000', 'Other', '✨', '#4030d4', true);
 
-INSERT INTO "applications" ("name", "logo_url", "color", "is_public", "is_dead", "aliases", "links", "category_id", "user_id", "id") VALUES
+INSERT INTO "applications" ("name", "logo_url", "color", "is_default", "is_dead", "aliases", "links", "category_id", "user_id", "id") VALUES
   -- Food // 14
   ('Wolt+', 'https://s3.keireira.com/subsawwy-demo/media/apps/wolt.png', '#000000', true, false, ARRAY[]::TEXT[], '{"referral": null, "promo": null, "homepage": "https://wolt.com/"}'::JSONB, '984a7596-7b60-4584-8343-a1d018c0d458', '00000000-0000-0000-0000-000000000000', 'e7cf4cf3-3622-478f-b8bb-c3e0441d66cd'),
   ('Glovo Prime', 'https://s3.keireira.com/subsawwy-demo/media/apps/glovo.png', '#000000', true, false, ARRAY[]::TEXT[], '{"referral": null, "promo": null, "homepage": "https://glovoapp.com/"}'::JSONB, '984a7596-7b60-4584-8343-a1d018c0d458', '00000000-0000-0000-0000-000000000000', 'a69611fb-cae9-4ac8-b164-684b08eadf87'),

@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useAppDispatch } from '@store';
 import { useSelector } from 'react-redux';
 
+import ShowMore from './show-more';
 import { H1, Text, Icon } from '@ui';
-import { Category } from '@pages/library/previews';
+import { CategoryPreview } from '@pages/library/categories';
 
 import { actions as categoriesActs } from '@data/categories';
 import { selectors as categoriesSelectors } from '@data/categories';
@@ -64,13 +65,15 @@ const LibraryPage = () => {
 						{allCategories.length > 0 && (
 							<Previews>
 								{allCategories.map((category) => (
-									<Category
+									<CategoryPreview
 										key={`cat-${category.id}`}
 										title={category.name}
 										emoji={category.emoji}
 										color={category.color}
 									/>
 								))}
+
+								<ShowMore to="/library/categories" />
 							</Previews>
 						)}
 					</Section>

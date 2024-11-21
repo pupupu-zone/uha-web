@@ -36,11 +36,11 @@ pub async fn get_categories(
             name,
             emoji,
             color,
-            is_public
+            is_default
         FROM
             categories
         WHERE
-            user_id = $1 OR is_public = TRUE
+            user_id = $1 OR is_default = TRUE
         ORDER BY
             name ASC;
         "#,
