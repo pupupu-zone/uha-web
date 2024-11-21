@@ -1,13 +1,7 @@
 pub mod _routes;
 
-mod create_app;
-pub use create_app::create_app;
+mod get_apps;
+pub use get_apps::get_apps;
 
-mod delete_app;
-pub use delete_app::delete_app;
-
-mod search_app;
-pub use search_app::search_app;
-
-mod update_app;
-pub use update_app::update_app;
+mod get_apps_preview;
+pub use get_apps_preview::get_apps_preview;

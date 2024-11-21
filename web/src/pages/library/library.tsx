@@ -6,16 +6,21 @@ import ShowMore from './show-more';
 import { H1, Text, Icon } from '@ui';
 import { CategoryPreview } from '@pages/library/categories';
 
+import { actions as appsActs } from '@data/applications';
+// import { selectors as appsSelectors } from '@data/applications';
+import { useObtainPreviewApplicationsQuery } from '@data/applications/api';
+
 import { actions as categoriesActs } from '@data/categories';
 import { selectors as categoriesSelectors } from '@data/categories';
-import { useObtainCategoriesQuery } from '@data/categories/api';
+import { useObtainPreviewCategoriesQuery } from '@data/categories/api';
 
 import { Link, Outlet, useChildMatches } from '@tanstack/react-router';
 import Root, { FeaturedApps, App, Title, Section, Image, Previews } from './library.styles';
 
 const LibraryPage = () => {
 	const children = useChildMatches();
-	const result = useObtainCategoriesQuery();
+	const result = useObtainPreviewCategoriesQuery();
+	const appResult = useObtainPreviewApplicationsQuery();
 	const dispatch = useAppDispatch();
 	const allCategories = useSelector(categoriesSelectors.previewSelector);
 	const [shouldFill, setShouldFill] = useState(false);
@@ -36,6 +41,12 @@ const LibraryPage = () => {
 
 		dispatch(categoriesActs.addCategories(result.data));
 	}, [result.isSuccess, result.isFetching]);
+
+	useEffect(() => {
+		if (!appResult.isSuccess || appResult.isFetching) return;
+
+		dispatch(appsActs.addApps(appResult.data));
+	}, [appResult.isSuccess, appResult.isFetching]);
 
 	return (
 		<Root ref={rootRef} $shouldFill={shouldFill}>
