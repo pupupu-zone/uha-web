@@ -14,6 +14,7 @@ export const allAppsSelector = createSelector([appsSelector], (applications) =>
 const PREVIEW_SIZE = 6;
 
 export const previewSelector = createSelector([allAppsSelector], (applications) => {
+	return applications;
 	const shuffled = [...applications].sort(() => Math.random() - 0.5).slice(0, PREVIEW_SIZE);
 
 	return shuffled.slice(0, PREVIEW_SIZE);

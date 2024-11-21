@@ -5,9 +5,10 @@ import { useSelector } from 'react-redux';
 import ShowMore from './show-more';
 import { H1, Text, Icon } from '@ui';
 import { CategoryPreview } from '@pages/library/categories';
+import { AppPreview } from '@pages/library/applications';
 
 import { actions as appsActs } from '@data/applications';
-// import { selectors as appsSelectors } from '@data/applications';
+import { selectors as appsSelectors } from '@data/applications';
 import { useObtainPreviewApplicationsQuery } from '@data/applications/api';
 
 import { actions as categoriesActs } from '@data/categories';
@@ -18,11 +19,12 @@ import { Link, Outlet, useChildMatches } from '@tanstack/react-router';
 import Root, { FeaturedApps, App, Title, Section, Image, Previews } from './library.styles';
 
 const LibraryPage = () => {
+	const dispatch = useAppDispatch();
 	const children = useChildMatches();
 	const result = useObtainPreviewCategoriesQuery();
 	const appResult = useObtainPreviewApplicationsQuery();
-	const dispatch = useAppDispatch();
-	const allCategories = useSelector(categoriesSelectors.previewSelector);
+	const categoryPreviews = useSelector(categoriesSelectors.previewSelector);
+	const appPreviews = useSelector(appsSelectors.previewSelector);
 	const [shouldFill, setShouldFill] = useState(false);
 	const rootRef = useRef<HTMLDivElement>(null);
 
@@ -73,18 +75,13 @@ const LibraryPage = () => {
 							Categories <Icon name="arrow-right" />
 						</Title>
 
-						{allCategories.length > 0 && (
+						{categoryPreviews.length > 0 && (
 							<Previews>
-								{allCategories.map((category) => (
-									<CategoryPreview
-										key={`cat-${category.id}`}
-										title={category.name}
-										emoji={category.emoji}
-										color={category.color}
-									/>
+								{categoryPreviews.map((category) => (
+									<CategoryPreview key={`cat-${category.id}`} {...category} />
 								))}
 
-								<ShowMore to="/library/categories" />
+								{categoryPreviews.length >= 6 && <ShowMore to="/library/categories" />}
 							</Previews>
 						)}
 					</Section>
@@ -93,6 +90,16 @@ const LibraryPage = () => {
 						<Title as={Link} to="/library/applications">
 							Applications <Icon name="arrow-right" />
 						</Title>
+
+						{categoryPreviews.length > 0 && (
+							<Previews>
+								{appPreviews.map((app) => (
+									<AppPreview key={`app-${app.id}`} {...app} />
+								))}
+
+								{appPreviews.length >= 6 && <ShowMore to="/library/categories" />}
+							</Previews>
+						)}
 					</Section>
 
 					<Section>
