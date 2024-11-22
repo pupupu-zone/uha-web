@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
+import { useBrokenImg } from '@hooks';
+import { useInitials, useGradientId, useUpdateAvatar } from './hooks';
+
 import { selectors as userSelectors } from '@data/user';
-import { useInitials, useBrokenImg, useGradientId, useUpdateAvatar } from './hooks';
 
 import { Icon } from '@ui';
 import Root, { ImageWrap, ImageSelector, Initials, Image, Edit } from './avatar.styles';
@@ -16,7 +18,7 @@ const Avatar = () => {
 
 	const initials = useInitials();
 	const gradientId = useGradientId();
-	const { avatarRef, isImageBroken, isImageLoading } = useBrokenImg();
+	const { imageRef, isImageBroken, isImageLoading } = useBrokenImg();
 
 	useEffect(() => {
 		if (!isValid) return;
@@ -59,7 +61,7 @@ const Avatar = () => {
 				</form.Field>
 
 				<ImageWrap $gradientId={gradientId}>
-					{avatarUrl && !isImageBroken && <Image ref={avatarRef} src={avatarUrl} alt={userData.name} />}
+					{avatarUrl && !isImageBroken && <Image ref={imageRef} src={avatarUrl} alt={userData.name} />}
 					{(!avatarUrl || isImageLoading) && <Initials>{initials}</Initials>}
 
 					<Edit

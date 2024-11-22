@@ -1,23 +1,23 @@
 import { useState, useEffect, useRef } from 'react';
 
 const useBrokenImg = () => {
-	const avatarRef = useRef<HTMLImageElement>(null);
+	const imageRef = useRef<HTMLImageElement>(null);
 	const [isImageBroken, setIsImageBroken] = useState(false);
 	const [isImageLoading, setIsImageLoading] = useState(true);
 
 	useEffect(() => {
-		if (!avatarRef.current) return;
+		if (!imageRef.current) return;
 
-		avatarRef.current.onerror = () => {
+		imageRef.current.onerror = () => {
 			setIsImageBroken(true);
 		};
 
-		avatarRef.current.onload = () => {
+		imageRef.current.onload = () => {
 			setIsImageLoading(false);
 		};
 	}, []);
 
-	return { avatarRef, isImageBroken, isImageLoading };
+	return { imageRef, isImageBroken, isImageLoading };
 };
 
 export default useBrokenImg;
