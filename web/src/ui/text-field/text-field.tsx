@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { v4 as uuid } from 'uuid';
 
 import Root, { InputRoot, Input, Label, ErrorsList, ErrorMessage } from './text-field.styles';
@@ -16,7 +16,6 @@ const TextField = ({
 	...restProps
 }: Props) => {
 	const [id] = useState(uuid());
-	// const inputRef = useRef<HTMLInputElement>(null);
 	const withErrors = errors.length > 0;
 
 	return (
@@ -24,7 +23,6 @@ const TextField = ({
 			<InputRoot $withErrors={withErrors}>
 				{/* " " is Safari hack */}
 				<Input
-					ref={ref}
 					onInput={onChange}
 					{...restProps}
 					placeholder=" "
