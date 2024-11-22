@@ -11,13 +11,8 @@ export const allAppsSelector = createSelector([appsSelector], (applications) =>
 	applications.allIds.map((id) => applications.byId[id])
 );
 
-const PREVIEW_SIZE = 6;
-
-export const previewSelector = createSelector([allAppsSelector], (applications) => {
-	return applications;
-	const shuffled = [...applications].sort(() => Math.random() - 0.5).slice(0, PREVIEW_SIZE);
-
-	return shuffled.slice(0, PREVIEW_SIZE);
+export const previewSelector = createSelector([appsSelector], (applications) => {
+	return applications.previewIds.map((id) => applications.byId[id]);
 });
 
 export const appSelector = createSelector(

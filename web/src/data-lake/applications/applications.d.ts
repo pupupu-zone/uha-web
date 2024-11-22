@@ -19,5 +19,6 @@ export type Application = {
 
 export type ApplicationsSlice = {
 	byId: Record<string, Application>;
+	previewIds: string[];
 	allIds: string[];
 };

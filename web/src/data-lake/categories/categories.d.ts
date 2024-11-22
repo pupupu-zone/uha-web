@@ -8,5 +8,6 @@ export type Category = {
 
 export type CategoriesSlice = {
 	byId: Record<string, Category>;
+	previewIds: string[];
 	allIds: string[];
 };

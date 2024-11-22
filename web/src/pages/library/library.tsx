@@ -41,13 +41,13 @@ const LibraryPage = () => {
 	useEffect(() => {
 		if (!result.isSuccess || result.isFetching) return;
 
-		dispatch(categoriesActs.addCategories(result.data));
+		dispatch(categoriesActs.addCategoryPreviews(result.data));
 	}, [result.isSuccess, result.isFetching]);
 
 	useEffect(() => {
 		if (!appResult.isSuccess || appResult.isFetching) return;
 
-		dispatch(appsActs.addApps(appResult.data));
+		dispatch(appsActs.addAppPreviews(appResult.data));
 	}, [appResult.isSuccess, appResult.isFetching]);
 
 	return (
@@ -72,7 +72,7 @@ const LibraryPage = () => {
 				<>
 					<Section>
 						<Title as={Link} to="/library/categories">
-							Categories <Icon name="arrow-right" width={20} height={20} />
+							Categories <Icon name="arrow-right" width={18} height={18} />
 						</Title>
 
 						{categoryPreviews.length > 0 && (
@@ -88,10 +88,10 @@ const LibraryPage = () => {
 
 					<Section>
 						<Title as={Link} to="/library/applications">
-							Applications <Icon name="arrow-right" width={20} height={20} />
+							Applications <Icon name="arrow-right" width={18} height={18} />
 						</Title>
 
-						{categoryPreviews.length > 0 && (
+						{appPreviews.length > 0 && (
 							<Previews>
 								{appPreviews.map((app) => (
 									<AppPreview key={`app-${app.id}`} {...app} />
@@ -104,7 +104,7 @@ const LibraryPage = () => {
 
 					<Section>
 						<Title as={Link} to="/library/payments">
-							Payment Methods <Icon name="arrow-right" width={20} height={20} />
+							Payment Methods <Icon name="arrow-right" width={18} height={18} />
 						</Title>
 					</Section>
 				</>

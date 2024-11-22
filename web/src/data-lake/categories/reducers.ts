@@ -23,6 +23,21 @@ export const addCategories = {
 	prepare: (payload: Category[]) => ({ payload })
 };
 
+export const addCategoryPreviews = {
+	reducer: (slice: CategoriesSlice, action: PayloadAction<Category[]>) => {
+		const categories = action.payload;
+
+		slice.previewIds = [];
+
+		for (const category of categories) {
+			slice.allIds = [...new Set([...slice.allIds, category.id])];
+			slice.previewIds.push(category.id);
+			slice.byId[category.id] = category;
+		}
+	},
+	prepare: (payload: Category[]) => ({ payload })
+};
+
 export const clearCategories = {
 	reducer: (slice: CategoriesSlice) => {
 		slice = initialState;

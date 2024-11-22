@@ -31,4 +31,5 @@ export default styled.div<{ $color: string }>`
 	background-color: ${({ $color }) => `${$color}50`}; /* 50% opacity */
 	border-radius: 12px;
 	user-select: none;
+	box-shadow: 0 2px 4px rgba(0 0 0 / 0.1);
 `;

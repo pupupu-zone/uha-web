@@ -11,13 +11,8 @@ export const allCategoriesSelector = createSelector([categoriesSelector], (categ
 	categories.allIds.map((id) => categories.byId[id])
 );
 
-const PREVIEW_SIZE = 6;
-
-export const previewSelector = createSelector([allCategoriesSelector], (categories) => {
-	const shuffled = [...categories].sort(() => Math.random() - 0.5).slice(0, PREVIEW_SIZE);
-
-	// If we have less than PREVIEW_SIZE categories, pad with nulls
-	return shuffled.slice(0, PREVIEW_SIZE);
+export const previewSelector = createSelector([categoriesSelector], (categories) => {
+	return categories.previewIds.map((id) => categories.byId[id]);
 });
 
 export const categorySelector = createSelector(

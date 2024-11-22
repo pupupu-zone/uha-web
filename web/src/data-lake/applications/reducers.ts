@@ -13,11 +13,26 @@ export const addApp = {
 
 export const addApps = {
 	reducer: (slice: ApplicationsSlice, action: PayloadAction<Application[]>) => {
-		const categories = action.payload;
+		const apps = action.payload;
 
-		for (const category of categories) {
-			slice.allIds = [...new Set([...slice.allIds, category.id])];
-			slice.byId[category.id] = category;
+		for (const app of apps) {
+			slice.allIds = [...new Set([...slice.allIds, app.id])];
+			slice.byId[app.id] = app;
+		}
+	},
+	prepare: (payload: Application[]) => ({ payload })
+};
+
+export const addAppPreviews = {
+	reducer: (slice: ApplicationsSlice, action: PayloadAction<Application[]>) => {
+		const apps = action.payload;
+
+		slice.previewIds = [];
+
+		for (const app of apps) {
+			slice.allIds = [...new Set([...slice.allIds, app.id])];
+			slice.previewIds.push(app.id);
+			slice.byId[app.id] = app;
 		}
 	},
 	prepare: (payload: Application[]) => ({ payload })
