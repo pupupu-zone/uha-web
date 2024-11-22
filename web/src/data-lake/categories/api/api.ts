@@ -7,8 +7,13 @@ const idApi = API.injectEndpoints({
 		// Get list of 6 random categories for preview
 		obtainPreviewCategories: build.query<GetCategoriesResT, GetCategoriesReqT>({
 			query: () => ({
-				url: '/categories/previews',
+				url: '/categories',
 				method: 'GET',
+				params: {
+					limit: 6,
+					random: true,
+					sort: 'asc'
+				},
 				credentials: 'include'
 			})
 		}),
