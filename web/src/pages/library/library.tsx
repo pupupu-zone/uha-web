@@ -6,6 +6,7 @@ import ShowMore from './show-more';
 import { H1, Text, Icon } from '@ui';
 import { CategoryPreview } from '@pages/library/categories';
 import { AppPreview } from '@pages/library/applications';
+import { PaymentsPreview } from '@pages/library/payments';
 
 import { actions as paymentsActs } from '@data/payments';
 import { selectors as paymentsSelectors } from '@data/payments';
@@ -121,8 +122,8 @@ const LibraryPage = () => {
 
 						{paymentPreviews.length > 0 && (
 							<Previews>
-								{paymentPreviews.map((app) => (
-									<div key={app.id}>{app.name}</div>
+								{paymentPreviews.map((payment) => (
+									<PaymentsPreview key={payment.id} {...payment} />
 								))}
 
 								{paymentPreviews.length >= 6 && <ShowMore to="/library/payments" />}

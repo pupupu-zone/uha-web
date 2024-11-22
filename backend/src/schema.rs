@@ -44,22 +44,15 @@ diesel::table! {
         id -> Uuid,
         user_id -> Uuid,
         name -> Text,
+        comment -> Nullable<Text>,
+        #[max_length = 7]
+        color -> Varchar,
+        #[max_length = 8]
+        emoji -> Nullable<Varchar>,
         is_default -> Bool,
         is_deleted -> Bool,
         created_at -> Timestamptz,
         updated_at -> Timestamptz,
-    }
-}
-
-diesel::table! {
-    payments (id) {
-        id -> Uuid,
-        user_id -> Uuid,
-        subscription_id -> Uuid,
-        amount -> Numeric,
-        #[max_length = 3]
-        currency -> Varchar,
-        created_at -> Timestamptz,
     }
 }
 
@@ -126,8 +119,6 @@ diesel::joinable!(applications -> categories (category_id));
 diesel::joinable!(applications -> users (user_id));
 diesel::joinable!(categories -> users (user_id));
 diesel::joinable!(payment_methods -> users (user_id));
-diesel::joinable!(payments -> subscriptions (subscription_id));
-diesel::joinable!(payments -> users (user_id));
 diesel::joinable!(subscriptions -> applications (app_id));
 diesel::joinable!(subscriptions -> payment_methods (payment_method_id));
 diesel::joinable!(subscriptions -> users (user_id));
@@ -138,7 +129,6 @@ diesel::allow_tables_to_appear_in_same_query!(
     applications,
     categories,
     payment_methods,
-    payments,
     subscriptions,
     user_profiles,
     user_settings,

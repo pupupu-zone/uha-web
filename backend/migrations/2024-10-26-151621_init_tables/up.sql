@@ -127,14 +127,19 @@ CREATE TABLE "payment_methods" (
   "id" UUID NOT NULL DEFAULT gen_random_uuid(),
   "user_id" UUID NOT NULL,
   "name" TEXT NOT NULL,
+  "comment" TEXT NULL,
+  "color" VARCHAR(7) NOT NULL DEFAULT '#000000',
+  "emoji" VARCHAR(8) NULL,
   "is_default" BOOLEAN NOT NULL DEFAULT false,
   "is_deleted" BOOLEAN NOT NULL DEFAULT false,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   "updated_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
+
   PRIMARY KEY ("id"),
   FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE,
   
+  CONSTRAINT "payment_methods_color_check" CHECK (color ~ '^#[0-9A-Fa-f]{6}$'),
   CONSTRAINT "payment_methods_name_check" CHECK (length(trim(name)) > 0)
 );
 
@@ -171,25 +176,3 @@ CREATE INDEX IF NOT EXISTS "subscriptions_user_id_index" ON "subscriptions"("use
 CREATE INDEX IF NOT EXISTS "subscriptions_app_id_index" ON "subscriptions"("app_id");
 CREATE INDEX IF NOT EXISTS "subscriptions_payment_method_id_index" ON "subscriptions"("payment_method_id");
 CREATE INDEX IF NOT EXISTS "subscriptions_currency_user_id_index" ON "subscriptions"("currency", "user_id");
-
---
--- PAYMENTS
---
-CREATE TABLE "payments" (
-  "id" UUID NOT NULL DEFAULT gen_random_uuid(),
-  "user_id" UUID NOT NULL,
-  "subscription_id" UUID NOT NULL,
-  "amount" NUMERIC(12, 2) NOT NULL,
-  "currency" VARCHAR(3) NOT NULL DEFAULT 'USD',
-  "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-
-  PRIMARY KEY ("id"),
-  FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE,
-  FOREIGN KEY ("subscription_id") REFERENCES "subscriptions"("id") ON DELETE CASCADE,
-  
-  CONSTRAINT "payments_amount_non_negative" CHECK (amount >= 0),
-  CONSTRAINT "payments_currency_format" CHECK (currency ~ '^[A-Z]{3}$')
-);
-
-CREATE INDEX IF NOT EXISTS "payments_user_id_index" ON "payments"("user_id");
-CREATE INDEX IF NOT EXISTS "payments_subscription_id_index" ON "payments"("subscription_id");
