@@ -32,9 +32,9 @@ export default styled.div`
 	align-items: center;
 	justify-content: space-around;
 	padding: 12px;
+	background-color: rgba(251 251 251 / 0.7);
 	transform: translateY(0%);
 	backdrop-filter: blur(8px);
-	background: rgba(251 251 251 / 0.7);
 	border-radius: 18px;
 	border-top: 1px solid #e5e7eb;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

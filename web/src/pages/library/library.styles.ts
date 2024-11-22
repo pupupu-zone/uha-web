@@ -73,7 +73,7 @@ export const Section = styled.div`
 	grid-auto-flow: row;
 	grid-template-rows: min-content min-content;
 	grid-template-columns: 1fr;
-	gap: 12px;
+	gap: 24px;
 	width: calc(100vw - 48px);
 	place-self: center;
 
@@ -87,8 +87,10 @@ export const Title = styled.h1`
 	align-items: center;
 	justify-content: flex-start;
 	color: var(--primary-text);
-	font-weight: 600;
-	font-size: 24px;
+	font-size: 20px;
+	font-weight: 500;
+	text-transform: uppercase;
+	gap: 4px;
 `;
 
 export const App = styled.div`
@@ -113,7 +115,7 @@ export const App = styled.div`
 export const FeaturedApps = styled.div`
 	place-self: center;
 	width: 100%;
-	margin-bottom: 48px;
+	margin-bottom: 64px;
 `;
 
 export default styled.div`

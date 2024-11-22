@@ -72,7 +72,7 @@ const LibraryPage = () => {
 				<>
 					<Section>
 						<Title as={Link} to="/library/categories">
-							Categories <Icon name="arrow-right" />
+							Categories <Icon name="arrow-right" width={20} height={20} />
 						</Title>
 
 						{categoryPreviews.length > 0 && (
@@ -88,7 +88,7 @@ const LibraryPage = () => {
 
 					<Section>
 						<Title as={Link} to="/library/applications">
-							Applications <Icon name="arrow-right" />
+							Applications <Icon name="arrow-right" width={20} height={20} />
 						</Title>
 
 						{categoryPreviews.length > 0 && (
@@ -104,7 +104,7 @@ const LibraryPage = () => {
 
 					<Section>
 						<Title as={Link} to="/library/payments">
-							Payment Methods <Icon name="arrow-right" />
+							Payment Methods <Icon name="arrow-right" width={20} height={20} />
 						</Title>
 					</Section>
 				</>

@@ -1,74 +1,34 @@
 import styled from 'styled-components';
 
-export const IconContent = styled.h3`
-	width: 96px;
-	height: 96px;
-	padding: 12px;
-	font-size: 72px;
-	line-height: 1;
-	text-align: center;
-	border-radius: 12px;
-	filter: blur(0.5px) drop-shadow(0 0 36px ${(props) => props.$color}) opacity(0.8);
-	isolation: isolate;
-	mix-blend-mode: multiply;
+export const IconContent = styled.span`
+	font-size: 28px;
 `;
 
 export const IconRoot = styled.div`
-	position: absolute;
-	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 48px;
+	height: 48px;
+	padding: 8px;
+	background-color: rgba(255 255 255 / 0.25);
+	border-radius: 8px;
+	backdrop-filter: blur(8px);
+`;
+
+export const Title = styled.h3<{ $isTextDark: boolean }>`
+	color: ${({ $isTextDark }) => ($isTextDark ? 'var(--primary-color)' : 'white')};
+	font-size: 18px;
+	white-space: nowrap;
+`;
+
+export default styled.div<{ $color: string }>`
+	display: flex;
+	flex-direction: row;
+	gap: 18px;
+	align-items: center;
+	padding: 18px 36px 18px 18px;
+	background-color: ${({ $color }) => `${$color}50`}; /* 50% opacity */
 	border-radius: 12px;
-	display: flex;
-	align-items: end;
-	justify-content: end;
-	padding: 12px;
-`;
-
-export const Title = styled.h3`
-	position: relative;
-	margin: 0;
-	color: var(--light-text);
-	font-weight: 600;
-	font-size: 24px;
-	color: #fafafa;
-	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
-	overflow-wrap: break-word;
-	word-wrap: break-word;
-	hyphens: auto;
-	margin-right: 72px;
-	z-index: 2; /* Ensure title is above the gradient */
-`;
-
-export default styled.div`
-	position: relative;
-	display: flex;
-	align-items: flex-start;
-	justify-content: flex-start;
-	padding: 24px;
-	border-radius: 20px;
-	background-image: linear-gradient(120deg, ${(props) => props.$color}, rgba(255, 255, 255, 0.1));
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	transition: all 150ms ease;
-	overflow: hidden;
-
-	/* Add dark gradient overlay */
-	&::after {
-		content: '';
-		position: absolute;
-		left: 0;
-		right: 0;
-		top: 0;
-		height: 100%; /* Adjust this value to control gradient height */
-		background: linear-gradient(120deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
-		pointer-events: none;
-		z-index: 1;
-	}
-
-	&:active {
-		box-shadow: 0 4px 12px rgba(0 0 0 / 0.15);
-		transform: translateY(4px);
-	}
-
-	aspect-ratio: 16/9;
-	height: 160px;
 	user-select: none;
 `;
