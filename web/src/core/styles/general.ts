@@ -2,6 +2,8 @@ import { createGlobalStyle } from 'styled-components';
 
 const General = createGlobalStyle`
 	/* stylelint-disable custom-property-empty-line-before */
+	/* stylelint-disable property-no-vendor-prefix */
+
 
 	:root {
 		--blue-focus: 60% 0.2 257deg;
@@ -57,6 +59,8 @@ const General = createGlobalStyle`
 	body {
 		min-height: 100%;
 		font-family: 'Nunito Sans', sans-serif;
+		-webkit-transform: translateZ(0);
+		transform: translateZ(0);
 	}
 
 	#root {
