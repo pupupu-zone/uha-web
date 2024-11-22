@@ -12,7 +12,7 @@ export const allCategoriesSelector = createSelector([categoriesSelector], (categ
 );
 
 export const previewSelector = createSelector([categoriesSelector], (categories) => {
-	return categories.previewIds.map((id) => categories.byId[id]);
+	return (categories.previewIds || []).map((id) => categories.byId[id]);
 });
 
 export const categorySelector = createSelector(

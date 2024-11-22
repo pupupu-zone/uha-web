@@ -7,8 +7,13 @@ const idApi = API.injectEndpoints({
 		// Get list of 6 random applications
 		obtainPreviewApplications: build.query<GetApplicationsResT, GetApplicationsReqT>({
 			query: () => ({
-				url: '/apps/previews',
+				url: '/apps',
 				method: 'GET',
+				params: {
+					limit: 6,
+					random: true,
+					sort: 'asc'
+				},
 				credentials: 'include'
 			})
 		}),

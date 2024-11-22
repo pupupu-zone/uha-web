@@ -1,5 +1,4 @@
 use super::get_categories;
-use super::get_categories_preview;
 
 use actix_web::{web, Scope};
 

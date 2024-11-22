@@ -1,5 +1,5 @@
 use actix_web::{web, Error, HttpResponse};
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 use serde_json::json;
 
 use crate::models::categories::category::Category;
