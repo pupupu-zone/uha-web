@@ -121,22 +121,47 @@ CREATE INDEX IF NOT EXISTS "applications_category_id_index" ON "applications"("c
 CREATE INDEX IF NOT EXISTS "applications_is_default_index" ON "applications"("is_default");
 
 --
+-- PAYMENT METHODS
+--
+CREATE TABLE "payment_methods" (
+  "id" UUID NOT NULL DEFAULT gen_random_uuid(),
+  "user_id" UUID NOT NULL,
+  "name" TEXT NOT NULL,
+  "is_default" BOOLEAN NOT NULL DEFAULT false,
+  "is_deleted" BOOLEAN NOT NULL DEFAULT false,
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  "updated_at" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+
+  PRIMARY KEY ("id"),
+  FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE,
+  
+  CONSTRAINT "payment_methods_name_check" CHECK (length(trim(name)) > 0)
+);
+
+CREATE INDEX IF NOT EXISTS "payment_methods_user_id_index" ON "payment_methods"("user_id");
+CREATE INDEX IF NOT EXISTS "payment_methods_is_default_index" ON "payment_methods"("is_default");
+CREATE INDEX IF NOT EXISTS "payment_methods_is_deleted_index" ON "payment_methods"("is_deleted");
+
+--
 -- SUBSCRIPTIONS
 --
 CREATE TABLE "subscriptions" (
   "id" UUID NOT NULL DEFAULT gen_random_uuid(),
   "user_id" UUID NOT NULL,
   "app_id" UUID NOT NULL,
+  "payment_method_id" UUID NOT NULL,
   "service" TEXT NULL,
   "interval_type" interval_type NOT NULL,
   "interval_value" SMALLINT NOT NULL,
   "price" NUMERIC(12, 2) NOT NULL DEFAULT 0,
   "currency" VARCHAR(3) NOT NULL DEFAULT 'USD',
+  "first_payment" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   "next_payment" TIMESTAMPTZ NOT NULL DEFAULT NOW(),
 
   PRIMARY KEY ("id"),
   FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE,
   FOREIGN KEY ("app_id") REFERENCES "applications"("id") ON DELETE CASCADE,
+  FOREIGN KEY ("payment_method_id") REFERENCES "payment_methods"("id") ON DELETE RESTRICT,
   
   CONSTRAINT "subscriptions_price_non_negative" CHECK (price >= 0),
   CONSTRAINT "subscriptions_currency_format" CHECK (currency ~ '^[A-Z]{3}$')
@@ -144,6 +169,7 @@ CREATE TABLE "subscriptions" (
 
 CREATE INDEX IF NOT EXISTS "subscriptions_user_id_index" ON "subscriptions"("user_id");
 CREATE INDEX IF NOT EXISTS "subscriptions_app_id_index" ON "subscriptions"("app_id");
+CREATE INDEX IF NOT EXISTS "subscriptions_payment_method_id_index" ON "subscriptions"("payment_method_id");
 CREATE INDEX IF NOT EXISTS "subscriptions_currency_user_id_index" ON "subscriptions"("currency", "user_id");
 
 --

@@ -40,6 +40,18 @@ diesel::table! {
 }
 
 diesel::table! {
+    payment_methods (id) {
+        id -> Uuid,
+        user_id -> Uuid,
+        name -> Text,
+        is_default -> Bool,
+        is_deleted -> Bool,
+        created_at -> Timestamptz,
+        updated_at -> Timestamptz,
+    }
+}
+
+diesel::table! {
     payments (id) {
         id -> Uuid,
         user_id -> Uuid,
@@ -59,6 +71,7 @@ diesel::table! {
         id -> Uuid,
         user_id -> Uuid,
         app_id -> Uuid,
+        payment_method_id -> Uuid,
         service -> Nullable<Text>,
         interval_type -> IntervalType,
         interval_value -> Int2,
@@ -112,9 +125,11 @@ diesel::table! {
 diesel::joinable!(applications -> categories (category_id));
 diesel::joinable!(applications -> users (user_id));
 diesel::joinable!(categories -> users (user_id));
+diesel::joinable!(payment_methods -> users (user_id));
 diesel::joinable!(payments -> subscriptions (subscription_id));
 diesel::joinable!(payments -> users (user_id));
 diesel::joinable!(subscriptions -> applications (app_id));
+diesel::joinable!(subscriptions -> payment_methods (payment_method_id));
 diesel::joinable!(subscriptions -> users (user_id));
 diesel::joinable!(user_profiles -> users (user_id));
 diesel::joinable!(user_settings -> users (user_id));
@@ -122,6 +137,7 @@ diesel::joinable!(user_settings -> users (user_id));
 diesel::allow_tables_to_appear_in_same_query!(
     applications,
     categories,
+    payment_methods,
     payments,
     subscriptions,
     user_profiles,
