@@ -21,6 +21,8 @@ pub async fn get_categories_preview(
 
     let mut pg_connection = acquire_pg_connection(&dp).await?;
 
+    // ORDER BY RANDOM()
+    // LIMIT 6
     let categories = match sqlx::query(
         r#"
         SELECT 
@@ -33,10 +35,9 @@ pub async fn get_categories_preview(
         FROM (
             SELECT * FROM categories 
             WHERE user_id = $1 OR is_default = TRUE
-            ORDER BY RANDOM()
-            LIMIT 6
+           
         ) subquery
-        ORDER BY name ASC;
+            ORDER BY name ASC;
         "#,
     )
     .bind(&session_user_id)
