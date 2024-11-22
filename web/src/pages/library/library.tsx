@@ -7,6 +7,10 @@ import { H1, Text, Icon } from '@ui';
 import { CategoryPreview } from '@pages/library/categories';
 import { AppPreview } from '@pages/library/applications';
 
+import { actions as paymentsActs } from '@data/payments';
+import { selectors as paymentsSelectors } from '@data/payments';
+import { useGetPreviewPaymentsQuery } from '@data/payments/api';
+
 import { actions as appsActs } from '@data/applications';
 import { selectors as appsSelectors } from '@data/applications';
 import { useObtainPreviewApplicationsQuery } from '@data/applications/api';
@@ -23,7 +27,9 @@ const LibraryPage = () => {
 	const children = useChildMatches();
 	const result = useObtainPreviewCategoriesQuery();
 	const appResult = useObtainPreviewApplicationsQuery();
+	const paymentsResult = useGetPreviewPaymentsQuery();
 	const categoryPreviews = useSelector(categoriesSelectors.previewSelector);
+	const paymentPreviews = useSelector(paymentsSelectors.previewSelector);
 	const appPreviews = useSelector(appsSelectors.previewSelector);
 	const [shouldFill, setShouldFill] = useState(false);
 	const rootRef = useRef<HTMLDivElement>(null);
@@ -49,6 +55,12 @@ const LibraryPage = () => {
 
 		dispatch(appsActs.addAppPreviews(appResult.data));
 	}, [appResult.isSuccess, appResult.isFetching]);
+
+	useEffect(() => {
+		if (!paymentsResult.isSuccess || paymentsResult.isFetching) return;
+
+		dispatch(paymentsActs.addPaymentPreviews(paymentsResult.data));
+	}, [paymentsResult.isSuccess, paymentsResult.isFetching]);
 
 	return (
 		<Root ref={rootRef} $shouldFill={shouldFill}>
@@ -97,7 +109,7 @@ const LibraryPage = () => {
 									<AppPreview key={`app-${app.id}`} {...app} />
 								))}
 
-								{appPreviews.length >= 6 && <ShowMore to="/library/categories" />}
+								{appPreviews.length >= 6 && <ShowMore to="/library/applications" />}
 							</Previews>
 						)}
 					</Section>
@@ -106,6 +118,16 @@ const LibraryPage = () => {
 						<Title as={Link} to="/library/payments">
 							Payment Methods <Icon name="arrow-right" width={18} height={18} />
 						</Title>
+
+						{paymentPreviews.length > 0 && (
+							<Previews>
+								{paymentPreviews.map((app) => (
+									<div key={app.id}>{app.name}</div>
+								))}
+
+								{paymentPreviews.length >= 6 && <ShowMore to="/library/payments" />}
+							</Previews>
+						)}
 					</Section>
 				</>
 			)}
