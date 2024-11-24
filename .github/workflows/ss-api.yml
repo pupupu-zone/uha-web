@@ -1,4 +1,4 @@
-name: subsawwy-backend-build
+name: Build & Deploy SS-API
 
 on:
   push:
@@ -19,7 +19,7 @@ on:
         required: true
 
 jobs:
-  build-api:
+  build:
     runs-on: self-hosted
 
     steps:
@@ -45,11 +45,24 @@ jobs:
       run: docker push "registry.keireira.com/subsawwy-backend:latest" 
 
   deploy:
-    needs: build-api
-    uses: ./.github/workflows/deploy-backend.yml
-    secrets:
-      DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
-      DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
-      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      ANSIBLE_HOST: ${{ secrets.ANSIBLE_HOST }}
-      ANSIBLE_PORT: ${{ secrets.ANSIBLE_PORT }}
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # - name: Add SSH key to server
+      #   run: |
+      #     mkdir -p ~/.ssh
+      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/ansible-deploy
+      #     chmod 600 ~/.ssh/ansible-deploy
+      #     ssh-keyscan -p ${{ secrets.ANSIBLE_PORT }} ${{ secrets.ANSIBLE_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Verify inventory
+        run: ansible production --list-hosts -i ansible/inventory.ini
+
+      - name: Run Ansible playbook
+        run: |
+          ansible-playbook -i ansible/inventory.ini ansible/deploy-backend.yml \
+            -e "docker_username=${{ secrets.DOCKER_REGISTRY_USERNAME }}" \
+            -e "docker_password=${{ secrets.DOCKER_REGISTRY_PASSWORD }}"

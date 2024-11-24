@@ -1,10 +1,10 @@
 module.exports = {
-  "tabWidth": 2,
-  "singleQuote": true,
-  "printWidth": 120,
   "semi": true,
-  "trailingComma": "none",
+  "tabWidth": 2,
+  "printWidth": 120,
   "endOfLine": "auto",
+  "singleQuote": true,
+  "trailingComma": "none",
 	options: {
 		editorconfig: true
 	}
