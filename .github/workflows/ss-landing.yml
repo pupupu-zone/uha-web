@@ -52,7 +52,9 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/ansible-deploy
           chmod 600 ~/.ssh/ansible-deploy
-          ssh-keyscan -p ${{ secrets.ANSIBLE_PORT }} ${{ secrets.ANSIBLE_HOST }} >> ~/.ssh/known_hosts
+          if ! ssh-keygen -F ${{ secrets.ANSIBLE_HOST }} -p ${{ secrets.ANSIBLE_PORT }}; then
+            ssh-keyscan -p ${{ secrets.ANSIBLE_PORT }} ${{ secrets.ANSIBLE_HOST }} >> ~/.ssh/known_hosts
+          fi
           
       - name: Verify inventory
         run: ansible production --list-hosts -i ansible/inventory.ini
