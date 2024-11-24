@@ -11,6 +11,12 @@ on:
         required: true
       DOCKER_REGISTRY_PASSWORD:
         required: true
+      SSH_PRIVATE_KEY:
+        required: true
+      ANSIBLE_HOST:
+        required: true
+      ANSIBLE_PORT:
+        required: true
 
 jobs:
   build-api:
@@ -37,3 +43,13 @@ jobs:
 
     - name: Publish
       run: docker push "registry.keireira.com/subsawwy-backend:latest" 
+
+  deploy:
+    needs: build-api
+    uses: ./.github/workflows/deploy-backend.yml
+    secrets:
+      DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+      DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      ANSIBLE_HOST: ${{ secrets.ANSIBLE_HOST }}
+      ANSIBLE_PORT: ${{ secrets.ANSIBLE_PORT }}

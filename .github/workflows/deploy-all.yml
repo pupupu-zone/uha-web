@@ -1,0 +1,39 @@
+name: Deploy All
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    secrets:
+      DOCKER_REGISTRY_USERNAME:
+        required: true
+      DOCKER_REGISTRY_PASSWORD:
+        required: true
+      SSH_PRIVATE_KEY:
+        required: true
+      ANSIBLE_HOST:
+        required: true
+      ANSIBLE_PORT:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Add SSH key to server
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/ansible-deploy
+          chmod 600 ~/.ssh/ansible-deploy
+          ssh-keyscan -p ${{ secrets.ANSIBLE_PORT }} ${{ secrets.ANSIBLE_HOST }} >> ~/.ssh/known_hosts
+          
+      - name: Verify inventory
+        run: ansible production --list-hosts -i ansible/inventory.ini
+
+      - name: Run Ansible playbook
+        run: |
+          ansible-playbook -i ansible/inventory.ini ansible/deploy-all.yml \
+            -e "docker_username=${{ secrets.DOCKER_REGISTRY_USERNAME }}" \
+            -e "docker_password=${{ secrets.DOCKER_REGISTRY_PASSWORD }}"

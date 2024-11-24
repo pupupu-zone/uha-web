@@ -51,7 +51,7 @@ impl WebDataPool {
         let access_key = envs.minio_access_key.clone();
         let secret_key = envs.minio_secret_key.clone();
         let bucket_name = envs.minio_bucket_name.clone();
-        let region = "eu-finland-1".to_string();
+        let region = "eu-bulgaria-1".to_string();
 
         let region = Region::Custom {
             region: region.to_owned(),

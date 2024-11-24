@@ -8,7 +8,12 @@ on:
         required: true
       DOCKER_REGISTRY_PASSWORD:
         required: true
-
+      SSH_PRIVATE_KEY:
+        required: true
+      ANSIBLE_HOST:
+        required: true
+      ANSIBLE_PORT:
+        required: true
 jobs:
   build-fe:
     runs-on: self-hosted
@@ -75,4 +80,14 @@ jobs:
       run: docker build --file Dockerfile --tag "registry.keireira.com/subsawwy-landing:latest" .
 
     - name: Publish
-      run: docker push "registry.keireira.com/subsawwy-landing:latest" 
+      run: docker push "registry.keireira.com/subsawwy-landing:latest"
+
+  deploy:
+    needs: [build-fe, build-api, build-landing]
+    uses: ./.github/workflows/deploy-all.yml
+    secrets:
+      DOCKER_REGISTRY_USERNAME: ${{ secrets.DOCKER_REGISTRY_USERNAME }}
+      DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_REGISTRY_PASSWORD }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      ANSIBLE_HOST: ${{ secrets.ANSIBLE_HOST }}
+      ANSIBLE_PORT: ${{ secrets.ANSIBLE_PORT }}
