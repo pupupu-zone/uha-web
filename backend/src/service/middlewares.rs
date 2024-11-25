@@ -18,7 +18,7 @@ impl Middlewares {
     fn get_governor() -> Governor<PeerIpKeyExtractor, NoOpMiddleware<QuantaInstant>> {
         let governor_conf = GovernorConfigBuilder::default()
             .seconds_per_request(1)
-            .burst_size(5)
+            .burst_size(10)
             .finish()
             .expect("Governor config is not valid");
 
