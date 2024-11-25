@@ -33,13 +33,12 @@ impl Middlewares {
             // .allow_any_origin()
             .allowed_origin("https://app.subsawwy.com")
             .allowed_origin("https://www.app.subsawwy.com")
-            .allowed_methods(vec!["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"])
+            .allow_any_method()
             .allowed_headers(vec![
                 actix_web::http::header::ACCEPT,
                 actix_web::http::header::CONTENT_TYPE,
-                actix_web::http::header::AUTHORIZATION,
             ])
-            .expose_headers(vec![
+            .expose_headers(&[
                 actix_web::http::header::CONTENT_DISPOSITION,
                 actix_web::http::header::SET_COOKIE,
                 actix_web::http::header::HeaderName::from_static("x-success-code"),
