@@ -18,7 +18,9 @@ pub struct CategoriesQuery {
 
 impl CategoriesQuery {
     fn validate(&self) -> Result<(), actix_web::error::Error> {
-        // Validate limit if provided
+        /*
+         * Validate limit if provided
+         */
         if let Some(limit) = self.limit {
             if limit < 1 {
                 return Err(actix_web::error::ErrorBadRequest(json!({
@@ -28,7 +30,9 @@ impl CategoriesQuery {
             }
         }
 
-        // Validate order if provided
+        /*
+         * Validate order if provided
+         */
         if let Some(ref order) = self.order {
             if order != "asc" && order != "desc" {
                 return Err(actix_web::error::ErrorBadRequest(json!({
@@ -42,47 +46,69 @@ impl CategoriesQuery {
     }
 
     fn build_query(&self) -> String {
+        // let mut query = String::from(
+        //     r#"
+        //     SELECT
+        //         id,
+        //         user_id,
+        //         name,
+        //         emoji,
+        //         color,
+        //         is_default
+        //     FROM
+        //         categories
+        //     WHERE
+        //         user_id = $1 OR is_default = TRUE
+        // "#,
+        // );
+
         let mut query = String::from(
             r#"
-            SELECT 
+            SELECT
                 id,
                 user_id,
                 name,
                 emoji,
                 color,
                 is_default
-            FROM"#,
+            FROM 
+            "#,
         );
 
-        // If random is true and limit is set, use a subquery with RANDOM()
-        if self.random.unwrap_or(false) && self.limit.is_some() {
+        /*
+         * If random is true use subquery with RANDOM()
+         * space before is crucial
+         */
+        if self.random.unwrap_or(false) {
             query.push_str(
-                r#" (
-                    SELECT * FROM categories 
-                    WHERE user_id = $1 OR is_default = TRUE
+                r#"
+                (
+                    SELECT *
+                    FROM
+                        categories
+                    WHERE
+                        user_id = $1 OR is_default = TRUE
                     ORDER BY RANDOM()
-                    LIMIT $2
-                ) subquery"#,
+                ) AS subquery
+                "#,
             );
         } else {
-            query.push_str(r#"categories WHERE user_id = $1 OR is_default = TRUE"#);
+            query.push_str(" categories\n");
         }
 
-        // Add ORDER BY clause if not using RANDOM() or if using RANDOM() with additional ordering
-        if !self.random.unwrap_or(false) || self.limit.is_some() {
-            query.push_str("\nORDER BY name ");
-            query.push_str(match self.order.as_deref() {
-                Some("desc") => "DESC",
-                _ => "ASC",
-            });
+        /*
+         * Sort asc or desc if order is provided
+         */
+        if let Some(ref order) = self.order {
+            query.push_str(&format!("\nORDER BY name {}", order));
         }
 
-        // Add LIMIT clause if specified and not already added in subquery
-        if self.limit.is_some() && !self.random.unwrap_or(false) {
+        if self.limit.is_some() {
             query.push_str("\nLIMIT $2");
         }
 
         query.push(';');
+
         query
     }
 }
@@ -92,31 +118,46 @@ pub async fn get_categories(
     session: actix_session::Session,
     query: web::Query<CategoriesQuery>,
 ) -> Result<HttpResponse, Error> {
-    // Validate query parameters
+    /*
+     * Validate query parameters
+     */
     query.validate()?;
 
-    // Check user authorization
+    /*
+     * Check user authorization
+     */
     let session_user_id = match get_session_user_id(&session).await {
         Ok(user_id) => user_id,
         Err(err) => {
             tracing::event!(target: "[GET CATEGORIES]", tracing::Level::ERROR, "{}", err);
+
             return Err(actix_web::error::ErrorUnauthorized(json!({
                 "code": 9999, // 401 - Session expired, redirect to /logout
             })));
         }
     };
 
+    /*
+     * Acquire database connection
+     */
     let mut pg_connection = acquire_pg_connection(&dp).await?;
 
-    // Build and execute query
+    /*
+     * Build query
+     */
     let query_string = query.build_query();
     let mut db_query = sqlx::query(&query_string).bind(&session_user_id);
 
-    // Add limit parameter if specified
+    /*
+     * Add limit parameter to query, if specified
+     */
     if let Some(limit) = query.limit {
         db_query = db_query.bind(limit);
     }
 
+    /*
+     * Execute query
+     */
     let categories = match db_query.fetch_all(&mut *pg_connection).await {
         Ok(rows) => rows
             .iter()
@@ -130,7 +171,9 @@ pub async fn get_categories(
         }
     };
 
-    // Renew session
+    /*
+     * Renew session
+     */
     session.renew();
 
     Ok(HttpResponse::Ok().json(categories))

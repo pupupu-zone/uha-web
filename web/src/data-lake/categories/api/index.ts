@@ -1,5 +1,5 @@
 import userApi from './api';
 
-export const { useObtainPreviewCategoriesQuery, useObtainAllCategoriesQuery } = userApi;
+export const { useObtainPreviewCategoriesQuery, useGetAllCategoriesQuery } = userApi;
 
 export * from './api.d';

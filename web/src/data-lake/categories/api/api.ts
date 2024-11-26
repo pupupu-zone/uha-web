@@ -12,17 +12,20 @@ const idApi = API.injectEndpoints({
 				params: {
 					limit: 6,
 					random: true,
-					sort: 'asc'
+					order: 'asc'
 				},
 				credentials: 'include'
 			})
 		}),
 
 		// Get list of categories
-		obtainAllCategories: build.query<GetCategoriesResT, GetCategoriesReqT>({
+		getAllCategories: build.query<GetCategoriesResT, GetCategoriesReqT>({
 			query: () => ({
 				url: '/categories',
 				method: 'GET',
+				params: {
+					order: 'asc'
+				},
 				credentials: 'include'
 			})
 		})

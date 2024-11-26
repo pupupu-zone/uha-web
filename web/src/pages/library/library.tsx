@@ -26,6 +26,7 @@ import Root, { FeaturedApps, App, Title, Section, Image, Previews } from './libr
 const LibraryPage = () => {
 	const dispatch = useAppDispatch();
 	const children = useChildMatches();
+	// Move to related previews
 	const result = useObtainPreviewCategoriesQuery();
 	const appResult = useObtainPreviewApplicationsQuery();
 	const paymentsResult = useGetPreviewPaymentsQuery();
