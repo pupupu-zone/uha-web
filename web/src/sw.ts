@@ -1,37 +1,133 @@
 /// <reference lib="webworker" />
 import { cleanupOutdatedCaches, createHandlerBoundToURL, precacheAndRoute } from 'workbox-precaching';
 import { clientsClaim } from 'workbox-core';
+import { ExpirationPlugin } from 'workbox-expiration';
+import { NetworkFirst, CacheFirst, StaleWhileRevalidate } from 'workbox-strategies';
 import { NavigationRoute, registerRoute } from 'workbox-routing';
+import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
 declare let self: ServiceWorkerGlobalScope;
 
-/**
- * self.__WB_MANIFEST is the default injection point
- */
-precacheAndRoute(self.__WB_MANIFEST);
+self.__WB_DISABLE_DEV_LOGS = true;
 
-// clean old assets
+const API_DOMAIN = 'api.subsawwy.com';
+
+const logger = {
+	log: (...args: string[]) => {
+		if (import.meta.env.DEV && !args[0]?.includes?.('static')) {
+			console.log('[SW]:', ...args);
+		}
+	},
+	error: (...args: string[]) => console.error('[SW]:', ...args),
+	warn: (...args: string[]) => console.warn('[SW]:', ...args)
+};
+
+// Precache and cleanup
+precacheAndRoute(self.__WB_MANIFEST);
 cleanupOutdatedCaches();
 
+// Development mode handling
 let allowlist: RegExp[] | undefined;
-// in dev mode, we disable precaching to avoid caching issues
-if (import.meta.env.DEV) allowlist = [/^\/$/];
+if (import.meta.env.DEV) {
+	allowlist = [/^\/$/];
+}
 
-// to allow work offline
+// Navigation routes (for SPA)
 registerRoute(new NavigationRoute(createHandlerBoundToURL('index.html'), { allowlist }));
 
+// API routes
+registerRoute(
+	({ url }) => url.hostname === API_DOMAIN,
+	new NetworkFirst({
+		cacheName: 'api-cache-v1',
+		plugins: [
+			new ExpirationPlugin({
+				maxEntries: 50,
+				maxAgeSeconds: 60 // 1 min
+			})
+		],
+		networkTimeoutSeconds: 15
+	})
+);
+
+// Image caching - both from API domain and main app
+const imageRegex = /\.(?:png|gif|jpg|jpeg|svg|webp)$/;
+registerRoute(
+	({ request, url }) => {
+		const isImage = request.destination === 'image' || imageRegex.test(url.pathname);
+		const isAllowedDomain = url.hostname === API_DOMAIN || url.hostname === self.location.hostname;
+
+		if (isImage && isAllowedDomain) {
+			logger.log('Caching image:', url.pathname);
+			return true;
+		}
+		return false;
+	},
+	new CacheFirst({
+		cacheName: 'image-cache-v1',
+		plugins: [
+			new ExpirationPlugin({
+				maxEntries: 60,
+				maxAgeSeconds: 14 * 24 * 60 * 60, // 14 days
+				purgeOnQuotaError: true
+			}),
+			new CacheableResponsePlugin({
+				statuses: [0, 200]
+			})
+		],
+		matchOptions: {
+			ignoreSearch: true
+		}
+	})
+);
+
+// Static assets
+registerRoute(
+	({ request, url }) => {
+		const isStatic =
+			request.destination === 'style' || request.destination === 'script' || request.destination === 'font';
+		const isMainDomain = url.hostname === self.location.hostname;
+
+		return isStatic && isMainDomain;
+	},
+	new StaleWhileRevalidate({
+		cacheName: 'static-cache-v1',
+		plugins: [
+			new CacheableResponsePlugin({
+				statuses: [0, 200]
+			})
+		]
+	})
+);
+
+// Service Worker Control
 self.skipWaiting();
 clientsClaim();
 
-// Init Event
-self.addEventListener('activate', async () => {
-	console.log('[SW]: Activate');
-});
-
+// Health Check
 self.addEventListener('fetch', (event) => {
 	if (event.request.url.endsWith('/sw/health')) {
-		console.log(`[SW]: It's alive (${import.meta.env.VITE_BUILD_TIME})`);
-
-		event.respondWith(new Response({ status: 200 }));
+		event.respondWith(
+			new Response(
+				JSON.stringify({
+					status: 'healthy',
+					buildTime: import.meta.env.VITE_BUILD_TIME,
+					timestamp: new Date().toISOString(),
+					apiDomain: API_DOMAIN
+				}),
+				{
+					headers: { 'Content-Type': 'application/json' }
+				}
+			)
+		);
 	}
+});
+
+// Error handling
+self.addEventListener('error', (event) => {
+	console.error('[SW]: Error:', event.error);
+});
+
+self.addEventListener('unhandledrejection', (event) => {
+	console.error('[SW]: Unhandled rejection:', event.reason);
 });
