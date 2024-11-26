@@ -25,6 +25,7 @@ pub struct EnvConfig {
     // Base
     pub port: u16,
     pub hostname: String,
+    pub is_dev_mode: bool,
     // Postgres
     pub db_url: String,
     // // Redis
@@ -61,6 +62,8 @@ impl EnvConfig {
                 .expect("API_PORT must be set")
                 .parse::<u16>()
                 .expect("API_PORT must be a number"),
+            is_dev_mode: env::var("DEVELOPMENT").unwrap_or("false".to_string()) == "true",
+
             db_url: env::var("DATABASE_URL").expect("DATABASE_URL must be set"),
             redis_url: env::var("REDIS_URL").expect("REDIS_URL must be set"),
 

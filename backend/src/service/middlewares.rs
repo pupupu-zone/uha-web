@@ -6,6 +6,8 @@ use actix_session::{storage::CookieSessionStore, SessionMiddleware};
 use actix_web::cookie::time::Duration;
 use actix_web::middleware::{Compress, Logger};
 
+use crate::service::env::EnvConfig;
+
 pub struct Middlewares {
     pub cors: Cors,
     pub compress: Compress,
@@ -29,14 +31,20 @@ impl Middlewares {
     }
 
     fn get_cors() -> Cors {
-        let cors_conf = Cors::default()
-            // .allow_any_origin()
-            .allowed_origin("https://app.subsawwy.com")
-            .allowed_origin("https://www.app.subsawwy.com")
-            .allow_any_method()
+        let envs: EnvConfig = EnvConfig::new();
+        let is_dev_mode = envs.is_dev_mode.clone();
+
+        let allowed_origins = match is_dev_mode {
+            true => vec!["http://localhost:4200"],
+            false => vec!["https://app.subsawwy.com"],
+        };
+
+        let mut cors_conf = Cors::default()
+            .allowed_methods(vec!["OPTIONS", "GET", "POST", "PUT", "DELETE", "PATCH"])
             .allowed_headers(vec![
                 actix_web::http::header::ACCEPT,
                 actix_web::http::header::CONTENT_TYPE,
+                actix_web::http::header::AUTHORIZATION,
             ])
             .expose_headers(&[
                 actix_web::http::header::CONTENT_DISPOSITION,
@@ -46,6 +54,10 @@ impl Middlewares {
             ])
             .supports_credentials()
             .max_age(3600);
+
+        for origin in allowed_origins {
+            cors_conf = cors_conf.allowed_origin(origin);
+        }
 
         cors_conf
     }
