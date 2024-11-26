@@ -29,16 +29,16 @@ function renderChunks(deps) {
 	return chunks;
 }
 
-const proxyConfig = {
-	'/api': {
-		target: process.env.VITE_REACT_APP_API_URL,
-		changeOrigin: true,
-		// withCredentials: false,
-		rewrite: (path) => path.replace(/^\/api/, '')
-	}
-};
-
 const config = ({ mode }) => {
+	const proxyConfig = {
+		'/api': {
+			target: process.env.VITE_REACT_APP_API_URL,
+			changeOrigin: true,
+			withCredentials: true,
+			rewrite: (path) => path.replace(/^\/api/, '')
+		}
+	};
+
 	process.env = {
 		...process.env,
 		...loadEnv(mode, process.cwd()),

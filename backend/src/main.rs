@@ -10,6 +10,7 @@ use log;
 extern crate diesel;
 use actix_web::{self, web, App, HttpServer};
 use routes::{apps, auth, categories, health, payments, subscriptions, users};
+use utils::check_port_in_use;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -17,6 +18,14 @@ async fn main() -> std::io::Result<()> {
     log::info!("Main bootstrap subsawwy server starts");
 
     let env_config = service::env::EnvConfig::new();
+
+    // Check if port is in use
+    let (is_in_use, process_info) = check_port_in_use(&env_config.hostname, env_config.port);
+    if is_in_use {
+        log::error!("Port {} is already in use!", env_config.port);
+        log::error!("Process information:\n{}", process_info);
+        std::process::exit(1);
+    }
 
     let tel_subscriber = service::telemetry::get_subscriber(env_config.with_debug);
     service::telemetry::init_subscriber(tel_subscriber);
