@@ -11,8 +11,6 @@ pub struct CategoriesQuery {
     #[serde(default)]
     limit: Option<i32>,
     #[serde(default)]
-    order: Option<String>,
-    #[serde(default)]
     random: Option<bool>,
 }
 
@@ -25,19 +23,6 @@ impl CategoriesQuery {
             if limit < 1 {
                 return Err(actix_web::error::ErrorBadRequest(json!({
                     "code": 1014, // 400 - Invalid limit parameter
-                    "message": "Limit must be greater than 0"
-                })));
-            }
-        }
-
-        /*
-         * Validate order if provided
-         */
-        if let Some(ref order) = self.order {
-            if order != "asc" && order != "desc" {
-                return Err(actix_web::error::ErrorBadRequest(json!({
-                    "code": 1015, // 400 - Invalid order parameter
-                    "message": "Order must be either 'asc' or 'desc'"
                 })));
             }
         }
@@ -46,64 +31,30 @@ impl CategoriesQuery {
     }
 
     fn build_query(&self) -> String {
-        // let mut query = String::from(
-        //     r#"
-        //     SELECT
-        //         id,
-        //         user_id,
-        //         name,
-        //         emoji,
-        //         color,
-        //         is_default
-        //     FROM
-        //         categories
-        //     WHERE
-        //         user_id = $1 OR is_default = TRUE
-        // "#,
-        // );
+        let with_random = self.random.unwrap_or(false);
+        let with_limit = self.limit.is_some();
 
         let mut query = String::from(
             r#"
-            SELECT
-                id,
-                user_id,
-                name,
-                emoji,
-                color,
-                is_default
-            FROM 
+                SELECT
+                    id,
+                    user_id,
+                    name,
+                    color,
+                    emoji,
+                    is_default
+                FROM
+                    categories
+                WHERE
+                    user_id = $1 OR is_default = TRUE
             "#,
         );
 
-        /*
-         * If random is true use subquery with RANDOM()
-         * space before is crucial
-         */
-        if self.random.unwrap_or(false) {
-            query.push_str(
-                r#"
-                (
-                    SELECT *
-                    FROM
-                        categories
-                    WHERE
-                        user_id = $1 OR is_default = TRUE
-                    ORDER BY RANDOM()
-                ) AS subquery
-                "#,
-            );
-        } else {
-            query.push_str(" categories\n");
+        if with_random {
+            query.push_str("\nORDER BY RANDOM()");
         }
 
-        /*
-         * Sort asc or desc if order is provided
-         */
-        if let Some(ref order) = self.order {
-            query.push_str(&format!("\nORDER BY name {}", order));
-        }
-
-        if self.limit.is_some() {
+        if with_limit {
             query.push_str("\nLIMIT $2");
         }
 
@@ -119,23 +70,23 @@ pub async fn get_categories(
     query: web::Query<CategoriesQuery>,
 ) -> Result<HttpResponse, Error> {
     /*
-     * Validate query parameters
-     */
-    query.validate()?;
-
-    /*
      * Check user authorization
      */
     let session_user_id = match get_session_user_id(&session).await {
         Ok(user_id) => user_id,
         Err(err) => {
-            tracing::event!(target: "[GET CATEGORIES]", tracing::Level::ERROR, "{}", err);
+            tracing::event!(target: "[GET CATEGORIES / AUTH]", tracing::Level::ERROR, "{}", err);
 
             return Err(actix_web::error::ErrorUnauthorized(json!({
                 "code": 9999, // 401 - Session expired, redirect to /logout
             })));
         }
     };
+
+    /*
+     * Validate query parameters
+     */
+    query.validate()?;
 
     /*
      * Acquire database connection
@@ -164,7 +115,8 @@ pub async fn get_categories(
             .map(Category::from_row)
             .collect::<Vec<Category>>(),
         Err(err) => {
-            tracing::event!(target: "[GET CATEGORIES]", tracing::Level::ERROR, "{}", err);
+            tracing::event!(target: "[GET CATEGORIES / SQL]", tracing::Level::ERROR, "{}", err);
+
             return Err(actix_web::error::ErrorInternalServerError(json!({
                 "code": 10000, // 500 - Empty
             })));

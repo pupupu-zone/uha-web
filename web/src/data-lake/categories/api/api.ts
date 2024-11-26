@@ -11,8 +11,7 @@ const idApi = API.injectEndpoints({
 				method: 'GET',
 				params: {
 					limit: 6,
-					random: true,
-					order: 'asc'
+					random: true
 				},
 				credentials: 'include'
 			})
@@ -23,9 +22,6 @@ const idApi = API.injectEndpoints({
 			query: () => ({
 				url: '/categories',
 				method: 'GET',
-				params: {
-					order: 'asc'
-				},
 				credentials: 'include'
 			})
 		})
