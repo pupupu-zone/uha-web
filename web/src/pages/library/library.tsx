@@ -8,6 +8,10 @@ import { CategoryPreview } from '@pages/library/categories';
 import { AppPreview } from '@pages/library/applications';
 import { PaymentsPreview } from '@pages/library/payments';
 
+import { useMatchRoute } from '@tanstack/react-router';
+
+import Search from './search';
+
 import { actions as paymentsActs } from '@data/payments';
 import { selectors as paymentsSelectors } from '@data/payments';
 import { useGetPreviewPaymentsQuery } from '@data/payments/api';
@@ -18,7 +22,7 @@ import { useObtainPreviewApplicationsQuery } from '@data/applications/api';
 
 import { actions as categoriesActs } from '@data/categories';
 import { selectors as categoriesSelectors } from '@data/categories';
-import { useObtainPreviewCategoriesQuery } from '@data/categories/api';
+import { useGetPreviewCategoriesQuery } from '@data/categories/api';
 
 import { Link, Outlet, useChildMatches } from '@tanstack/react-router';
 import Root, { FeaturedApps, App, Title, Section, Image, Previews } from './library.styles';
@@ -27,7 +31,7 @@ const LibraryPage = () => {
 	const dispatch = useAppDispatch();
 	const children = useChildMatches();
 	// Move to related previews
-	const result = useObtainPreviewCategoriesQuery();
+	const result = useGetPreviewCategoriesQuery();
 	const appResult = useObtainPreviewApplicationsQuery();
 	const paymentsResult = useGetPreviewPaymentsQuery();
 	const categoryPreviews = useSelector(categoriesSelectors.previewSelector);
@@ -35,6 +39,9 @@ const LibraryPage = () => {
 	const appPreviews = useSelector(appsSelectors.previewSelector);
 	const [shouldFill, setShouldFill] = useState(false);
 	const rootRef = useRef<HTMLDivElement>(null);
+
+	const match = useMatchRoute();
+	const isRoot = match({ to: '/library' });
 
 	useEffect(() => {
 		if (rootRef.current) {
@@ -66,21 +73,29 @@ const LibraryPage = () => {
 
 	return (
 		<Root ref={rootRef} $shouldFill={shouldFill}>
-			<FeaturedApps>
-				<App as="a" target="_blank" rel="noopener noreferrer" href="https://aeza.net/?ref=491190">
-					<Image>
-						<img
-							src="https://immich.terra.onl/api/assets/e7436641-dac4-42c3-8b1d-5ea31265c02e/thumbnail?size=preview&key=eLKCSTxNXoH5aP5Qc4I4k8TpB9XzW3sBk6O6Dc9OBqQXEpVxmzmk9v_WcVGZLamDHlM&c=aJtK6OynTVCTkxwpXH47RBS%2FyAM%3D"
-							alt="Wolt"
-						/>
-					</Image>
+			{isRoot && (
+				<FeaturedApps>
+					<App as="a" target="_blank" rel="noopener noreferrer" href="https://aeza.net/?ref=491190">
+						<Image>
+							<img
+								src="https://immich.terra.onl/api/assets/e7436641-dac4-42c3-8b1d-5ea31265c02e/thumbnail?size=preview&key=eLKCSTxNXoH5aP5Qc4I4k8TpB9XzW3sBk6O6Dc9OBqQXEpVxmzmk9v_WcVGZLamDHlM&c=aJtK6OynTVCTkxwpXH47RBS%2FyAM%3D"
+								alt="Wolt"
+							/>
+						</Image>
 
-					<div>
-						<H1 $weight={600}>AEZA</H1>
-						<Text as="h3">Host your servers there</Text>
-					</div>
-				</App>
-			</FeaturedApps>
+						<div>
+							<H1 $weight={600}>AEZA</H1>
+							<Text as="h3">Host your servers there</Text>
+						</div>
+					</App>
+				</FeaturedApps>
+			)}
+
+			{!isRoot && (
+				<FeaturedApps>
+					<Search />
+				</FeaturedApps>
+			)}
 
 			{!children.length && (
 				<>

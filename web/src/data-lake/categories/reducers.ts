@@ -3,12 +3,6 @@ import type { Category, CategoriesSlice } from './categories';
 
 import initialState from './initial-state';
 
-const sortCategories = (a: Category, b: Category) => {
-	if (a.name < b.name) return -1;
-	if (a.name > b.name) return 1;
-	return 0;
-};
-
 export const addCategory = {
 	reducer: (slice: CategoriesSlice, { payload }: PayloadAction<Category>) => {
 		slice.allIds.push(payload.id);
@@ -26,9 +20,7 @@ export const addCategories = {
 			slice.byId[category.id] = category;
 		}
 	},
-	prepare: (payload: Category[]) => ({
-		payload: payload.toSorted(sortCategories)
-	})
+	prepare: (payload: Category[]) => ({ payload })
 };
 
 export const addCategoryPreviews = {
@@ -43,9 +35,7 @@ export const addCategoryPreviews = {
 			slice.byId[category.id] = category;
 		}
 	},
-	prepare: (payload: Category[]) => ({
-		payload: payload.toSorted(sortCategories)
-	})
+	prepare: (payload: Category[]) => ({ payload })
 };
 
 export const clearCategories = {

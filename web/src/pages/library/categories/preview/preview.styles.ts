@@ -30,6 +30,6 @@ export default styled.div<{ $color: string }>`
 	padding: 18px 36px 18px 18px;
 	background-color: ${({ $color }) => `${$color}50`}; /* 50% opacity */
 	border-radius: 12px;
-	user-select: none;
 	box-shadow: 0 2px 4px rgba(0 0 0 / 0.1);
+	user-select: none;
 `;

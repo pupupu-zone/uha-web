@@ -9,7 +9,7 @@ const Categories = () => {
 	return (
 		<Section>
 			<Title as={Link} to="/library">
-				<Icon name="arrow-left" /> Library
+				<Icon name="arrow-left" width={18} height={18} /> Library
 			</Title>
 
 			<CategoriesList />
