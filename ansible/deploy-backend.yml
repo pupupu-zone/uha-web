@@ -36,6 +36,7 @@
         image: registry.keireira.com/subsawwy-backend:latest
         state: started
         restart_policy: always
+        pull: true
         recreate: true
         networks:
           - name: subsawwy_net
