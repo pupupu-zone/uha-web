@@ -30,7 +30,7 @@ export default styled.div<{ $isFocused: boolean }>`
 	padding-left: 16px;
 	background-color: var(--input-bg);
 	border: 1px solid var(--input-border);
-	border-radius: 8px;
+	border-radius: 12px;
 
 	${(props) => props.$isFocused && focused}
 

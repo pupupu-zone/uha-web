@@ -64,16 +64,6 @@ const LibraryPage = () => {
 						</Title>
 
 						<AppPreviews />
-
-						{/* {appPreviews.length > 0 && (
-							<Previews>
-								{appPreviews.map((app) => (
-									<AppPreview key={`app-${app.id}`} {...app} />
-								))}
-
-								{appPreviews.length >= 6 && <ShowMore to="/library/applications" />}
-							</Previews>
-						)} */}
 					</Section>
 
 					<Section>
