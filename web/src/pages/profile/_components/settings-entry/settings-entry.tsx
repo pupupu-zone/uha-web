@@ -14,7 +14,7 @@ const SettingsEntry = ({ left, right, ...props }: Props) => {
 			{right && (
 				<RightEntry>
 					<H3 $weight={400}>{right}</H3>
-					<Icon name="arrow-right" width={18} height={18} />
+					{props.onPress && <Icon name="arrow-right" width={18} height={18} />}
 				</RightEntry>
 			)}
 		</Root>

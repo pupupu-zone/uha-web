@@ -12,16 +12,6 @@ self.__WB_DISABLE_DEV_LOGS = true;
 
 const API_DOMAIN = 'api.subsawwy.com';
 
-const logger = {
-	log: (...args: string[]) => {
-		if (import.meta.env.DEV && !args[0]?.includes?.('static')) {
-			console.log('[SW]:', ...args);
-		}
-	},
-	error: (...args: string[]) => console.error('[SW]:', ...args),
-	warn: (...args: string[]) => console.warn('[SW]:', ...args)
-};
-
 // Precache and cleanup
 precacheAndRoute(self.__WB_MANIFEST);
 cleanupOutdatedCaches();
@@ -58,9 +48,9 @@ registerRoute(
 		const isAllowedDomain = url.hostname === API_DOMAIN || url.hostname === self.location.hostname;
 
 		if (isImage && isAllowedDomain) {
-			logger.log('Caching image:', url.pathname);
 			return true;
 		}
+
 		return false;
 	},
 	new CacheFirst({

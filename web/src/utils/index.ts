@@ -7,3 +7,4 @@ export { default as useBlockZoom } from './use-block-zoom';
 export { default as useThemeColor } from './use-theme-color';
 export { default as getTextColor } from './get-text-color';
 export { default as sortBy } from './sort-by';
+export { default as formatBytes } from './format-bytes';
