@@ -20,7 +20,7 @@ const persistConfig = {
 	// transforms: [createWhitelistFilter('organizations', ['activeOrganizationId'])]
 };
 
-const rootReducer = combineReducers({
+const combinedReducer = combineReducers({
 	[API.reducerPath]: API.reducer,
 	auth: authReducer,
 	user: userReducer,
@@ -29,6 +29,14 @@ const rootReducer = combineReducers({
 	applications: applicationsReducer,
 	payments: paymentsReducer
 });
+
+const rootReducer = (state, action) => {
+	if (action.type === 'RESET') {
+		state = {};
+	}
+
+	return combinedReducer(state, action);
+};
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

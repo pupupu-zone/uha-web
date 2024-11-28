@@ -25,21 +25,6 @@ if (import.meta.env.DEV) {
 // Navigation routes (for SPA)
 registerRoute(new NavigationRoute(createHandlerBoundToURL('index.html'), { allowlist }));
 
-// API routes
-registerRoute(
-	({ url }) => url.hostname === API_DOMAIN,
-	new NetworkFirst({
-		cacheName: 'api-cache-v1',
-		plugins: [
-			new ExpirationPlugin({
-				maxEntries: 50,
-				maxAgeSeconds: 60 // 1 min
-			})
-		],
-		networkTimeoutSeconds: 15
-	})
-);
-
 // Image caching - both from API domain and main app
 const imageRegex = /\.(?:png|gif|jpg|jpeg|svg|webp)$/;
 registerRoute(
