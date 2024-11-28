@@ -1,6 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from '@tanstack/react-router';
 import { useAppDispatch } from '@store';
+
+import { useShallFill } from '@hooks';
 
 import { actions as settingsActions } from '@data/settings';
 import { actions as userActions } from '@data/user';
@@ -18,20 +20,12 @@ import Root from './profile.styles';
 const Profile = () => {
 	const location = useLocation();
 	const dispatch = useAppDispatch();
-	const rootRef = useRef<HTMLDivElement>(null);
-	const [shouldFill, setShouldFill] = useState(false);
+	const [rootRef, shallFill] = useShallFill();
+
 	const [request, result] = useLazyObtainUserQuery();
 
 	useEffect(() => {
 		const { abort } = request();
-
-		if (rootRef.current) {
-			const NAVBAR_HEIGHT = 120;
-			const contentHeight = rootRef.current.offsetHeight;
-			const viewportHeight = window.innerHeight + NAVBAR_HEIGHT;
-
-			setShouldFill(contentHeight <= viewportHeight);
-		}
 
 		return () => {
 			if (abort) abort();
@@ -46,7 +40,7 @@ const Profile = () => {
 	}, [result.isSuccess, result.isFetching]);
 
 	return (
-		<Root ref={rootRef} $shouldFill={shouldFill}>
+		<Root ref={rootRef} $shouldFill={shallFill}>
 			<Avatar />
 			<UserName />
 

@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 
 import { Icon } from '@ui';
 import { CategoryPreviews } from '@pages/library/categories';
 import { AppPreviews } from '@pages/library/applications';
 import { PaymentPreviews } from '@pages/library/payments';
 
+import { useShallFill } from '@hooks';
 import useLoadData from './use-load-data';
 
 import Search from './search';
@@ -13,24 +14,11 @@ import Root, { FeaturedApps, Title, Section } from './library.styles';
 
 const LibraryPage = () => {
 	useLoadData();
-
 	const children = useChildMatches();
-	const rootRef = useRef<HTMLDivElement>(null);
-
-	const [shouldFill, setShouldFill] = useState(false);
-
-	useEffect(() => {
-		if (rootRef.current) {
-			const NAVBAR_HEIGHT = 120;
-			const contentHeight = rootRef.current.offsetHeight;
-			const viewportHeight = window.innerHeight + NAVBAR_HEIGHT;
-
-			setShouldFill(contentHeight <= viewportHeight);
-		}
-	}, [children]);
+	const [rootRef, shallFill] = useShallFill([children]);
 
 	return (
-		<Root ref={rootRef} $shouldFill={shouldFill}>
+		<Root ref={rootRef} $shouldFill={shallFill}>
 			<FeaturedApps>
 				<Search />
 			</FeaturedApps>
