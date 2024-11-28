@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import ShowMore from './show-more';
 import { Icon } from '@ui';
 import { CategoryPreviews } from '@pages/library/categories';
-import { AppPreview } from '@pages/library/applications';
+import { AppPreviews } from '@pages/library/applications';
 import { PaymentsPreview } from '@pages/library/payments';
 
 import Search from './search';
@@ -14,10 +14,6 @@ import { actions as paymentsActs } from '@data/payments';
 import { selectors as paymentsSelectors } from '@data/payments';
 import { useGetPreviewPaymentsQuery } from '@data/payments/api';
 
-import { actions as appsActs } from '@data/applications';
-import { selectors as appsSelectors } from '@data/applications';
-import { useObtainPreviewApplicationsQuery } from '@data/applications/api';
-
 import { Link, Outlet, useChildMatches } from '@tanstack/react-router';
 import Root, { FeaturedApps, Title, Section, Previews } from './library.styles';
 
@@ -25,10 +21,8 @@ const LibraryPage = () => {
 	const dispatch = useAppDispatch();
 	const children = useChildMatches();
 	// Move to related previews
-	const appResult = useObtainPreviewApplicationsQuery();
 	const paymentsResult = useGetPreviewPaymentsQuery();
 	const paymentPreviews = useSelector(paymentsSelectors.previewSelector);
-	const appPreviews = useSelector(appsSelectors.previewSelector);
 	const [shouldFill, setShouldFill] = useState(false);
 	const rootRef = useRef<HTMLDivElement>(null);
 
@@ -41,12 +35,6 @@ const LibraryPage = () => {
 			setShouldFill(contentHeight <= viewportHeight);
 		}
 	}, [children]);
-
-	useEffect(() => {
-		if (!appResult.isSuccess || appResult.isFetching) return;
-
-		dispatch(appsActs.addAppPreviews(appResult.data));
-	}, [appResult.isSuccess, appResult.isFetching]);
 
 	useEffect(() => {
 		if (!paymentsResult.isSuccess || paymentsResult.isFetching) return;
@@ -75,7 +63,9 @@ const LibraryPage = () => {
 							Applications <Icon name="arrow-right" width={18} height={18} />
 						</Title>
 
-						{appPreviews.length > 0 && (
+						<AppPreviews />
+
+						{/* {appPreviews.length > 0 && (
 							<Previews>
 								{appPreviews.map((app) => (
 									<AppPreview key={`app-${app.id}`} {...app} />
@@ -83,7 +73,7 @@ const LibraryPage = () => {
 
 								{appPreviews.length >= 6 && <ShowMore to="/library/applications" />}
 							</Previews>
-						)}
+						)} */}
 					</Section>
 
 					<Section>

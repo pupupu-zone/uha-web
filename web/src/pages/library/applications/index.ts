@@ -1,2 +1,2 @@
 export { default } from './applications';
-export { default as AppPreview } from './preview';
+export { default as AppPreviews } from './previews';

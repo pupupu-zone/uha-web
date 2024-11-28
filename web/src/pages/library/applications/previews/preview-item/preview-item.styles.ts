@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-export const Broken = styled.div<{ $color: string; $isTextDark: boolean }>`
+import type { ColorStyled, TextStyled } from './preview-item.d';
+
+export const Broken = styled.div<ColorStyled & TextStyled>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -25,7 +27,7 @@ export const IconWrap = styled.div`
 	aspect-ratio: 1;
 `;
 
-export default styled.div<{ $color: string }>`
+export default styled.div<ColorStyled>`
 	display: flex;
 	flex-direction: column;
 	gap: 18px;
