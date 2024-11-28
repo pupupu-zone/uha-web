@@ -1,5 +1,5 @@
 import userApi from './api';
 
-export const { useObtainPreviewApplicationsQuery, useLazyObtainPreviewApplicationsQuery } = userApi;
+export const { useGetAllApplicationsQuery } = userApi;
 
 export * from './api.d';

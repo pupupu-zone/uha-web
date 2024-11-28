@@ -1,2 +1,2 @@
 export { default } from './payments';
-export { default as PaymentsPreview } from './preview';
+export { default as PaymentPreviews } from './previews';

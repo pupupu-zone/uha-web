@@ -1,30 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useAppDispatch } from '@store';
-import { useSelector } from 'react-redux';
 
-import ShowMore from './show-more';
 import { Icon } from '@ui';
 import { CategoryPreviews } from '@pages/library/categories';
 import { AppPreviews } from '@pages/library/applications';
-import { PaymentsPreview } from '@pages/library/payments';
+import { PaymentPreviews } from '@pages/library/payments';
+
+import useLoadData from './use-load-data';
 
 import Search from './search';
-
-import { actions as paymentsActs } from '@data/payments';
-import { selectors as paymentsSelectors } from '@data/payments';
-import { useGetPreviewPaymentsQuery } from '@data/payments/api';
-
 import { Link, Outlet, useChildMatches } from '@tanstack/react-router';
-import Root, { FeaturedApps, Title, Section, Previews } from './library.styles';
+import Root, { FeaturedApps, Title, Section } from './library.styles';
 
 const LibraryPage = () => {
-	const dispatch = useAppDispatch();
+	useLoadData();
+
 	const children = useChildMatches();
-	// Move to related previews
-	const paymentsResult = useGetPreviewPaymentsQuery();
-	const paymentPreviews = useSelector(paymentsSelectors.previewSelector);
-	const [shouldFill, setShouldFill] = useState(false);
 	const rootRef = useRef<HTMLDivElement>(null);
+
+	const [shouldFill, setShouldFill] = useState(false);
 
 	useEffect(() => {
 		if (rootRef.current) {
@@ -35,12 +28,6 @@ const LibraryPage = () => {
 			setShouldFill(contentHeight <= viewportHeight);
 		}
 	}, [children]);
-
-	useEffect(() => {
-		if (!paymentsResult.isSuccess || paymentsResult.isFetching) return;
-
-		dispatch(paymentsActs.addPaymentPreviews(paymentsResult.data));
-	}, [paymentsResult.isSuccess, paymentsResult.isFetching]);
 
 	return (
 		<Root ref={rootRef} $shouldFill={shouldFill}>
@@ -71,15 +58,7 @@ const LibraryPage = () => {
 							Payment Methods <Icon name="arrow-right" width={18} height={18} />
 						</Title>
 
-						{paymentPreviews.length > 0 && (
-							<Previews>
-								{paymentPreviews.map((payment) => (
-									<PaymentsPreview key={payment.id} {...payment} />
-								))}
-
-								{paymentPreviews.length >= 6 && <ShowMore to="/library/payments" />}
-							</Previews>
-						)}
+						<PaymentPreviews />
 					</Section>
 				</>
 			)}

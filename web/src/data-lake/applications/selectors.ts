@@ -12,7 +12,9 @@ export const allAppsSelector = createSelector([appsSelector], (applications) =>
 );
 
 export const previewSelector = createSelector([appsSelector], (applications) => {
-	return (applications.previewIds || []).map((id) => applications.byId[id]);
+	const firstIds = applications.allIds.slice(0, 6);
+
+	return firstIds.map((id) => applications.byId[id]);
 });
 
 export const appSelector = createSelector(
