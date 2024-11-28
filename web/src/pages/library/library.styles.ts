@@ -71,19 +71,19 @@ export const Section = styled.div`
 
 export const Title = styled.h1`
 	display: inline-flex;
+	gap: 4px;
 	align-items: center;
 	justify-content: flex-start;
 	color: var(--primary-text);
-	font-size: 16px;
 	font-weight: 700;
+	font-size: 16px;
 	text-transform: uppercase;
-	gap: 4px;
 `;
 
 export const FeaturedApps = styled.div`
 	place-self: center;
 	width: 100%;
-	margin-bottom: 64px;
+	margin-bottom: 48px;
 `;
 
 export default styled.div`

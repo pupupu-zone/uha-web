@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useState, useId } from 'react';
 
 import { Icon } from '@ui';
-import Root from './search.styles';
+import Root, { SearchLabel, SearchInput } from './search.styles';
 
 const Search = () => {
-	return (
-		<Root>
-			<Icon name="search" />
+	const id = useId();
+	const [isFocused, setIsFocused] = useState(false);
 
-			<input type="search" placeholder="Search for all" />
+	const onFocusHd = () => setIsFocused(true);
+	const onBlurHd = () => setIsFocused(false);
+
+	return (
+		<Root $isFocused={isFocused}>
+			<SearchLabel htmlFor={id}>
+				<Icon name="search" />
+			</SearchLabel>
+
+			<SearchInput id={id} type="search" placeholder="Search for all" onFocus={onFocusHd} onBlur={onBlurHd} />
 		</Root>
 	);
 };

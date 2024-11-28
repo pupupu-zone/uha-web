@@ -67,7 +67,7 @@ export const InputRoot = styled.div<StyleProps>`
 	flex-direction: column;
 	background-color: var(--input-bg);
 	border: 1px solid transparent;
-	border-color: ${({ $withErrors }) => ($withErrors ? `var(--error)` : 'var(--border)')};
+	border-color: ${({ $withErrors }) => ($withErrors ? `var(--error)` : 'var(--input-border)')};
 	border-radius: 8px;
 `;
 

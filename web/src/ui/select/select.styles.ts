@@ -63,7 +63,7 @@ export const Item = styled.div`
 	}
 
 	& + & {
-		border-top: 1px solid var(--border);
+		border-top: 1px solid var(--input-border);
 	}
 `;
 

@@ -25,7 +25,7 @@ const General = createGlobalStyle`
 		/* Inputs */
 		--label: #777;
 		--input-bg: #F7F7F8;
-		--border: #E9E9Ea;
+		--input-border: #E9E9Ea;
 		--placeholder: #A1A1A1;
 
 		/* Primary button styles */
