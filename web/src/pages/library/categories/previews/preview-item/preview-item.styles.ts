@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import type { ColorStyled, TextStyled } from './preview-item.d';
 
-export const IconContent = styled.span`
+export const IconContent = styled.span<ColorStyled>`
 	font-size: 28px;
 `;
 
@@ -16,13 +17,13 @@ export const IconRoot = styled.div`
 	backdrop-filter: blur(8px);
 `;
 
-export const Title = styled.h3<{ $isTextDark: boolean }>`
+export const Title = styled.h3<TextStyled>`
 	color: ${({ $isTextDark }) => ($isTextDark ? 'var(--primary-color)' : 'white')};
 	font-size: 18px;
 	white-space: nowrap;
 `;
 
-export default styled.div<{ $color: string }>`
+export default styled.div<ColorStyled>`
 	display: flex;
 	flex-direction: row;
 	gap: 18px;

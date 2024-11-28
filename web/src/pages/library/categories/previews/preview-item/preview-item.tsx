@@ -1,9 +1,11 @@
 import React from 'react';
 
 import { useIsTextDark } from '@hooks';
-import Root, { Title, IconRoot, IconContent } from './preview.styles';
+import Root, { Title, IconRoot, IconContent } from './preview-item.styles';
 
-const CategoryPreview = ({ name = '', color, emoji }) => {
+import type { Props } from './preview-item.d';
+
+const PreviewItem = ({ name = '', color, emoji }: Props) => {
 	const isTextDark = useIsTextDark(color, 0.5);
 
 	return (
@@ -19,4 +21,4 @@ const CategoryPreview = ({ name = '', color, emoji }) => {
 	);
 };
 
-export default CategoryPreview;
+export default PreviewItem;

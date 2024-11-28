@@ -13,7 +13,8 @@ const allIconsList = {
 	infinity: icons.InfinityIcon,
 	stop: icons.StopIcon,
 	'arrow-left': icons.ArrowLeft,
-	'arrow-right': icons.ArrowRight
+	'arrow-right': icons.ArrowRight,
+	search: icons.SearchIcon
 };
 
 export default allIconsList;

@@ -3,12 +3,10 @@ import { useAppDispatch } from '@store';
 import { useSelector } from 'react-redux';
 
 import ShowMore from './show-more';
-import { H1, Text, Icon } from '@ui';
-import { CategoryPreview } from '@pages/library/categories';
+import { Icon } from '@ui';
+import { CategoryPreviews } from '@pages/library/categories';
 import { AppPreview } from '@pages/library/applications';
 import { PaymentsPreview } from '@pages/library/payments';
-
-import { useMatchRoute } from '@tanstack/react-router';
 
 import Search from './search';
 
@@ -20,28 +18,19 @@ import { actions as appsActs } from '@data/applications';
 import { selectors as appsSelectors } from '@data/applications';
 import { useObtainPreviewApplicationsQuery } from '@data/applications/api';
 
-import { actions as categoriesActs } from '@data/categories';
-import { selectors as categoriesSelectors } from '@data/categories';
-import { useGetPreviewCategoriesQuery } from '@data/categories/api';
-
 import { Link, Outlet, useChildMatches } from '@tanstack/react-router';
-import Root, { FeaturedApps, App, Title, Section, Image, Previews } from './library.styles';
+import Root, { FeaturedApps, Title, Section, Previews } from './library.styles';
 
 const LibraryPage = () => {
 	const dispatch = useAppDispatch();
 	const children = useChildMatches();
 	// Move to related previews
-	const result = useGetPreviewCategoriesQuery();
 	const appResult = useObtainPreviewApplicationsQuery();
 	const paymentsResult = useGetPreviewPaymentsQuery();
-	const categoryPreviews = useSelector(categoriesSelectors.previewSelector);
 	const paymentPreviews = useSelector(paymentsSelectors.previewSelector);
 	const appPreviews = useSelector(appsSelectors.previewSelector);
 	const [shouldFill, setShouldFill] = useState(false);
 	const rootRef = useRef<HTMLDivElement>(null);
-
-	const match = useMatchRoute();
-	const isRoot = match({ to: '/library' });
 
 	useEffect(() => {
 		if (rootRef.current) {
@@ -52,12 +41,6 @@ const LibraryPage = () => {
 			setShouldFill(contentHeight <= viewportHeight);
 		}
 	}, [children]);
-
-	useEffect(() => {
-		if (!result.isSuccess || result.isFetching) return;
-
-		dispatch(categoriesActs.addCategoryPreviews(result.data));
-	}, [result.isSuccess, result.isFetching]);
 
 	useEffect(() => {
 		if (!appResult.isSuccess || appResult.isFetching) return;
@@ -73,29 +56,9 @@ const LibraryPage = () => {
 
 	return (
 		<Root ref={rootRef} $shouldFill={shouldFill}>
-			{isRoot && (
-				<FeaturedApps>
-					<App as="a" target="_blank" rel="noopener noreferrer" href="https://aeza.net/?ref=491190">
-						<Image>
-							<img
-								src="https://immich.terra.onl/api/assets/e7436641-dac4-42c3-8b1d-5ea31265c02e/thumbnail?size=preview&key=eLKCSTxNXoH5aP5Qc4I4k8TpB9XzW3sBk6O6Dc9OBqQXEpVxmzmk9v_WcVGZLamDHlM&c=aJtK6OynTVCTkxwpXH47RBS%2FyAM%3D"
-								alt="Wolt"
-							/>
-						</Image>
-
-						<div>
-							<H1 $weight={600}>AEZA</H1>
-							<Text as="h3">Host your servers there</Text>
-						</div>
-					</App>
-				</FeaturedApps>
-			)}
-
-			{!isRoot && (
-				<FeaturedApps>
-					<Search />
-				</FeaturedApps>
-			)}
+			<FeaturedApps>
+				<Search />
+			</FeaturedApps>
 
 			{!children.length && (
 				<>
@@ -104,15 +67,7 @@ const LibraryPage = () => {
 							Categories <Icon name="arrow-right" width={18} height={18} />
 						</Title>
 
-						{categoryPreviews.length > 0 && (
-							<Previews>
-								{categoryPreviews.map((category) => (
-									<CategoryPreview key={`cat-${category.id}`} {...category} />
-								))}
-
-								{categoryPreviews.length >= 6 && <ShowMore to="/library/categories" />}
-							</Previews>
-						)}
+						<CategoryPreviews />
 					</Section>
 
 					<Section>

@@ -55,19 +55,6 @@ export const Head = styled.h3`
 	font-variant: all-small-caps;
 `;
 
-export const Image = styled.div`
-	display: grid;
-	width: 64px;
-	height: 64px;
-	overflow: hidden;
-	clip-path: url('#squircle');
-	place-items: center;
-
-	& > img {
-		width: 100%;
-	}
-`;
-
 export const Section = styled.div`
 	display: grid;
 	grid-auto-flow: row;
@@ -91,25 +78,6 @@ export const Title = styled.h1`
 	font-weight: 700;
 	text-transform: uppercase;
 	gap: 4px;
-`;
-
-export const App = styled.div`
-	display: grid;
-	grid-auto-flow: column;
-	grid-template-columns: 64px 1fr;
-	gap: 24px;
-	align-items: center;
-	width: 100%;
-	padding: 12px;
-	background-color: var(--select-bg);
-	border-top: 1px solid #e5e7eb;
-	border-radius: 18px;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	color: var(--primary-text);
-
-	& h3 {
-		color: #999;
-	}
 `;
 
 export const FeaturedApps = styled.div`
