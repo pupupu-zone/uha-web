@@ -19,6 +19,7 @@ export const EmojiWrap = styled.div<{ $color: string }>`
 export const Emoji = styled.div`
 	font-size: 32px;
 `;
+
 export const Name = styled.div`
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
