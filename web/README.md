@@ -1,6 +1,6 @@
-# ASSE (App Front-End)
+# PU-PU-PU (Web FE)
 
-### Stack
+### Primary Stack
 * **[React@18](https://react.dev/)**
 * **[@tanstack/react-router@1](https://tanstack.com/router/latest)**
 * **[@tanstack/form@0](https://tanstack.com/form/latest)**
@@ -9,22 +9,29 @@
 * **[Vite@5](https://vite.dev/)**
 * **[PNPM](https://pnpm.io/)**
 * **[NodeJS@20](https://nodejs.org/)**
+* **[Typescript@5](https://www.typescriptlang.org/)**
 
 ### How to run locally
 > [!IMPORTANT]
-> This command run FE dev server only. For running local API check [backend](../backend/README.md)
+> This command runs FE dev server only. For running local API, check [backend](../backend/README.md)
 
-#### Baremetal run
+#### Run local dev-server
 ```sh
+# Step 0: Install NodeJS v20+
+
 # Step 1: install deps
 pnpm install
 
-# Step 2: run dev-server
+# Step 2: be sure .env.development is reliable for you
+
+# Step 3: run dev-server
 pnpm run dev
 ```
 
-#### Docker run
+#### Run production-ready docker image
 ```sh
+# Step 0: be sure .env.production is reliable for you
+
 # Step 1: build container
 docker build . -t asse.app-fe
 

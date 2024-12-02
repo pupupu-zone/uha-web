@@ -9,11 +9,9 @@ const Donation = () => {
 
 	return (
 		<SettingsBlock title="Donation">
-			<SettingsEntry onPress={onOpen} left="1 week" right="$ 18" />
-			<SettingsEntry onPress={onOpen} left="2 weeks" right="$ 36" />
-			<SettingsEntry onPress={onOpen} left="1 month" right="$ 78" />
-			<SettingsEntry onPress={onOpen} left="3 months" right="$ 235" />
-			<SettingsEntry onPress={onOpen} left="6 months" right="$ 465" />
+			<SettingsEntry onPress={onOpen} left="Tier 1" right="$ 5" />
+			<SettingsEntry onPress={onOpen} left="Tier 2" right="$ 10" />
+			<SettingsEntry onPress={onOpen} left="Tier 3" right="$ 20" />
 		</SettingsBlock>
 	);
 };

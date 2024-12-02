@@ -1,26 +1,29 @@
 import styled from 'styled-components';
 
 export const Previews = styled.div`
+	/* stylelint-disable order/properties-order */
+	/* stylelint-disable declaration-block-no-redundant-longhand-properties */
+
 	display: grid;
+	grid-auto-columns: min-content;
 	grid-auto-flow: column;
 	gap: 24px;
-	padding-top: 4px;
-	grid-auto-columns: min-content;
 	width: 100%;
+	padding-top: 4px;
 	overflow-x: auto;
 	scroll-snap-type: x mandatory;
-	-webkit-overflow-scrolling: touch;
+
+	/* Prevent grid blowout */
+	margin-bottom: -16px; /* Compensate for padding */
+	padding-bottom: 16px; /* Space for potential scrollbar */
 
 	/* Hide scrollbar */
 	scrollbar-width: none; /* Firefox */
 	-ms-overflow-style: none;
+
 	&::-webkit-scrollbar {
 		display: none;
 	}
-
-	/* Prevent grid blowout */
-	padding-bottom: 16px; /* Space for potential scrollbar */
-	margin-bottom: -16px; /* Compensate for padding */
 
 	/* Better touch scrolling */
 	scroll-behavior: smooth;
@@ -30,8 +33,8 @@ export const Previews = styled.div`
 	user-select: none;
 
 	/* Add padding to allow for overscroll bounce */
-	padding-left: 1px;
 	padding-right: 1px;
+	padding-left: 1px;
 	margin-left: -1px;
 	margin-right: -1px;
 `;
@@ -86,8 +89,7 @@ export const FeaturedApps = styled.div`
 	margin-bottom: 48px;
 `;
 
-export default styled.div`
-	/* stylelint-disable declaration-block-no-redundant-longhand-properties */
+export default styled.div<{ $shouldFill: boolean }>`
 	padding-top: calc(env(safe-area-inset-top) + 24px);
 	padding-right: calc(env(safe-area-inset-right) + 24px);
 	padding-bottom: calc(env(safe-area-inset-bottom) + ${({ $shouldFill }) => ($shouldFill ? '120px' : '48px')});

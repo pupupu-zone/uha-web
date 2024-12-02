@@ -10,13 +10,14 @@ import settingsReducer from '@data/settings';
 import categoriesReducer from '@data/categories';
 import applicationsReducer from '@data/applications';
 import paymentsReducer from '@data/payments';
+import searchReducer from '@data/search';
 
 const persistConfig = {
 	key: 'root',
 	version: 1,
 	storage: createIdbStorage({ name: 'subsawwy.com', storeName: 'keyval' }),
 	whitelist: ['auth', 'user', 'settings', 'categories', 'applications', 'payments'],
-	blacklist: [API.reducerPath]
+	blacklist: [API.reducerPath, 'search']
 	// transforms: [createWhitelistFilter('organizations', ['activeOrganizationId'])]
 };
 
@@ -27,7 +28,8 @@ const combinedReducer = combineReducers({
 	settings: settingsReducer,
 	categories: categoriesReducer,
 	applications: applicationsReducer,
-	payments: paymentsReducer
+	payments: paymentsReducer,
+	search: searchReducer
 });
 
 const rootReducer = (state, action) => {
