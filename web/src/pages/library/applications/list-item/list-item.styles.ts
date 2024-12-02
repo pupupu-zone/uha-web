@@ -4,6 +4,7 @@ export const LogoWrap = styled.div<{ $color: string }>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	min-width: 72px;
 	max-width: 72px;
 	height: 100%;
 	background-color: ${(props) => `${props.$color}25`};
