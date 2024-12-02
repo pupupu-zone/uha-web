@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { allPaymentsSelector } from '@data/payments/selectors';
+import { filteredSelector } from '@data/payments/selectors';
 
 import { Icon } from '@ui';
 import ListItem from './list-item';
@@ -10,7 +10,7 @@ import { Title, Section } from '../library.styles';
 import { PaymentsList } from './payments.styles';
 
 const Payments = () => {
-	const payments = useSelector(allPaymentsSelector);
+	const payments = useSelector(filteredSelector);
 
 	return (
 		<Section>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { allAppsSelector } from '@data/applications/selectors';
+import { filteredSelector } from '@data/applications/selectors';
 
 import { Icon } from '@ui';
 import ListItem from './list-item';
@@ -10,7 +10,7 @@ import { Title, Section } from '../library.styles';
 import { AppsList } from './applications.styles';
 
 const Applications = () => {
-	const apps = useSelector(allAppsSelector);
+	const apps = useSelector(filteredSelector);
 
 	return (
 		<Section>

@@ -1,6 +1,6 @@
 import type { Category } from '@data/categories';
 
-export type Props = Category;
+export type Props = Partial<Category>;
 
 export type ColorStyled = {
 	$color: Category['color'];

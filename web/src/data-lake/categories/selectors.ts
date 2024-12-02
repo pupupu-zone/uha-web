@@ -1,4 +1,6 @@
+import Fuse from 'fuse.js';
 import { createSelector } from '@reduxjs/toolkit';
+import { searchSelector } from '@data/search/selectors';
 
 import type { CategoriesSlice } from './categories.d';
 
@@ -11,10 +13,24 @@ export const allCategoriesSelector = createSelector([categoriesSelector], (categ
 	categories.allIds.map((id) => categories.byId[id])
 );
 
-export const previewSelector = createSelector([categoriesSelector], (categories) => {
-	const firstIds = categories.allIds.slice(0, 6);
+export const filteredSelector = createSelector([allCategoriesSelector, searchSelector], (allCategories, search) => {
+	const withQuery = search.query.length > 0;
+	const inScope = search.scopes.includes('categories');
 
-	return firstIds.map((id) => categories.byId[id]);
+	if (inScope && withQuery) {
+		const fuse = new Fuse(allCategories, {
+			keys: ['name'],
+			threshold: 0.3
+		});
+
+		return fuse.search(search.query).map((result) => result.item);
+	}
+
+	return allCategories;
+});
+
+export const previewSelector = createSelector([filteredSelector], (filteredCategories) => {
+	return filteredCategories.slice(0, 6);
 });
 
 export const categorySelector = createSelector(

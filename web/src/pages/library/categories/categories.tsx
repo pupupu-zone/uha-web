@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-import { allCategoriesSelector } from '@data/categories/selectors';
+import { filteredSelector } from '@data/categories/selectors';
 
 import { Icon } from '@ui';
 import ListItem from './list-item';
@@ -10,7 +10,7 @@ import { Title, Section } from '../library.styles';
 import { CategoriesList } from './categories.styles';
 
 const Categories = () => {
-	const categories = useSelector(allCategoriesSelector);
+	const categories = useSelector(filteredSelector);
 
 	return (
 		<Section>

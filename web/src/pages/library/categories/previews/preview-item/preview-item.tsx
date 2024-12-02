@@ -5,7 +5,7 @@ import Root, { Title, IconRoot, IconContent } from './preview-item.styles';
 
 import type { Props } from './preview-item.d';
 
-const PreviewItem = ({ name = '', color, emoji }: Props) => {
+const PreviewItem = ({ name = '', color = '#e74c3c', emoji }: Props) => {
 	const isTextDark = useIsTextDark(color, 0.5);
 
 	return (
@@ -15,7 +15,7 @@ const PreviewItem = ({ name = '', color, emoji }: Props) => {
 			</IconRoot>
 
 			<Title lang="en" $isTextDark={isTextDark}>
-				{name}
+				{name || 'No Data'}
 			</Title>
 		</Root>
 	);

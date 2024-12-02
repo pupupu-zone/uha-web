@@ -1,4 +1,6 @@
+import Fuse from 'fuse.js';
 import { createSelector } from '@reduxjs/toolkit';
+import { searchSelector } from '@data/search/selectors';
 
 import type { Application, ApplicationsSlice } from './applications.d';
 
@@ -11,10 +13,24 @@ export const allAppsSelector = createSelector([appsSelector], (applications) =>
 	applications.allIds.map((id) => applications.byId[id])
 );
 
-export const previewSelector = createSelector([appsSelector], (applications) => {
-	const firstIds = applications.allIds.slice(0, 6);
+export const filteredSelector = createSelector([allAppsSelector, searchSelector], (allApps, search) => {
+	const withQuery = search.query.length > 0;
+	const inScope = search.scopes.includes('applications');
 
-	return firstIds.map((id) => applications.byId[id]);
+	if (inScope && withQuery) {
+		const fuse = new Fuse(allApps, {
+			keys: ['name', 'aliases'],
+			threshold: 0.3
+		});
+
+		return fuse.search(search.query).map((result) => result.item);
+	}
+
+	return allApps;
+});
+
+export const previewSelector = createSelector([filteredSelector], (filteredApps) => {
+	return filteredApps.slice(0, 6);
 });
 
 export const appSelector = createSelector(
