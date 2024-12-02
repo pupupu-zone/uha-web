@@ -16,7 +16,7 @@ on:
         required: true
 jobs:
   build-ss-web:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
@@ -37,7 +37,7 @@ jobs:
       run: docker push "registry.keireira.com/subsawwy-web:latest" 
 
   build-ss-api:
-    runs-on: self-hosted
+    runs-on: octocat-1
 
     steps:
     - name: Checkout
@@ -62,7 +62,7 @@ jobs:
       run: docker push "registry.keireira.com/subsawwy-backend:latest" 
 
   build-ss-landing:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout
@@ -84,7 +84,7 @@ jobs:
 
   deploy:
     needs: [build-ss-web, build-ss-api, build-ss-landing]
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
