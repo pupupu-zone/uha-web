@@ -20,7 +20,7 @@ on:
 
 jobs:
   build:
-    runs-on: octocat-1
+    runs-on: octocat-8
 
     steps:
     - name: Checkout
