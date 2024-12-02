@@ -50,6 +50,7 @@ impl AppsQuery {
                 category_id,
                 name,
                 logo_url,
+                emoji,
                 color,
                 aliases,
                 links,

@@ -4,16 +4,11 @@ export const LogoWrap = styled.div<{ $color: string }>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	width: 80px;
-	min-width: 80px;
-	height: 80px;
-	min-height: 80px;
-	margin-top: -16px;
-	margin-bottom: -16px;
-	margin-left: -16px;
-	padding: 8px;
+	max-width: 72px;
+	height: 100%;
 	background-color: ${(props) => `${props.$color}25`};
 	backdrop-filter: blur(8px);
+	aspect-ratio: 1;
 `;
 
 export const ImgLogo = styled.img`
@@ -51,6 +46,7 @@ export const Info = styled.div`
 	grid-auto-rows: min-content min-content;
 	grid-auto-flow: row;
 	gap: 12px;
+	padding: 16px 16px 16px 0;
 `;
 
 export default styled.div`
@@ -59,7 +55,6 @@ export default styled.div`
 	gap: 16px;
 	align-items: center;
 	justify-content: flex-start;
-	padding: 16px;
 	overflow: hidden;
 	background-color: var(--settings-bg);
 	border-radius: 8px;
