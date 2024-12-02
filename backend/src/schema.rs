@@ -16,6 +16,8 @@ diesel::table! {
         user_id -> Uuid,
         category_id -> Uuid,
         name -> Text,
+        #[max_length = 8]
+        emoji -> Nullable<Varchar>,
         logo_url -> Nullable<Text>,
         #[max_length = 7]
         color -> Varchar,

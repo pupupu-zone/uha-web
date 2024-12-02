@@ -101,6 +101,7 @@ CREATE TABLE "applications" (
   "user_id" UUID NOT NULL,
   "category_id" UUID NOT NULL,
   "name" TEXT NOT NULL,
+  "emoji" VARCHAR(8) NULL,
   "logo_url" TEXT NULL,
   "color" VARCHAR(7) NOT NULL DEFAULT '#000000',
   "aliases" TEXT[] NOT NULL DEFAULT '{}'::TEXT[],
