@@ -10,7 +10,8 @@ const idApi = API.injectEndpoints({
 				method: 'POST',
 				credentials: 'include',
 				body
-			})
+			}),
+			providesTags: ['login']
 		})
 	})
 });
