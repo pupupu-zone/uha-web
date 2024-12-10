@@ -107,7 +107,7 @@ CREATE TABLE "applications" (
   "aliases" TEXT[] NOT NULL DEFAULT '{}'::TEXT[],
   "links" JSONB NOT NULL DEFAULT '{}',
   "is_default" BOOLEAN NOT NULL DEFAULT false,
-  "is_dead" BOOLEAN NOT NULL DEFAULT false,
+  "is_dead" BOOLEAN NOT NULL DEFAULT false, -- the app exists no more
 
   PRIMARY KEY ("id"),
   FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE,

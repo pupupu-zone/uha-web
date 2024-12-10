@@ -37,13 +37,13 @@ const Navigation = () => {
 		<Root as={animated.div} style={navBarAnimation} onClick={handleNavBarClick}>
 			<Link to="/subscriptions" search={{ view: 'list', action: search.action }}>
 				<NavButton>
-					<Icon name="home" />
+					<Icon name="list" />
 				</NavButton>
 			</Link>
 
-			<Link to="/analytics">
+			<Link to="/subscriptions" search={{ view: 'calendar', action: search.action }}>
 				<NavButton>
-					<Icon name="analyze" />
+					<Icon name="calendar" />
 				</NavButton>
 			</Link>
 

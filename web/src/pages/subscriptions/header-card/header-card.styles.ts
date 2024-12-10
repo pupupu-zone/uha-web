@@ -1,32 +1,5 @@
 import styled from 'styled-components';
 
-export const R3 = styled.div`
-	height: 64px;
-	width: 64px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background-color: var(--primary-text);
-	border-radius: 18px;
-	color: #999;
-	opacity: 0.8;
-
-	&.active {
-		color: var(--bg-color);
-		opacity: 1;
-	}
-`;
-
-export const R2 = styled.div`
-	display: grid;
-	grid-auto-flow: row;
-	grid-auto-columns: 1fr;
-	grid-auto-rows: 1fr 1fr;
-	width: 100%;
-	gap: 18px;
-	justify-self: center;
-`;
-
 export const R = styled.div`
 	display: grid;
 	grid-auto-flow: column;

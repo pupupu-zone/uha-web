@@ -11,7 +11,6 @@ import { useLazyObtainUserQuery } from '@data/user/api';
 import { Button } from '@ui';
 import Avatar from './avatar';
 import About from './about';
-import Donation from './donation';
 import Currencies from './currencies';
 import Personalization from './personalization';
 import UserName from './username';
@@ -46,7 +45,6 @@ const Profile = () => {
 
 			<Currencies />
 			<Personalization />
-			<Donation />
 			<About />
 
 			<Button
