@@ -10,7 +10,7 @@ INSERT INTO "users" (
   "is_active"
 ) VALUES (
   '00000000-0000-0000-0000-000000000000',  -- admin UUID
-  'test',
+  'admin',
   '$argon2id$v=19$m=19456,t=2,p=1$K3/6CNCbG7Msi5rRylABhw$zjWyTFOb2GAlYWMa5wSwkJrB3tUJHHoXYrfNOZY7RPU',
   true
 );

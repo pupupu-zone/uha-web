@@ -79,8 +79,6 @@ diesel::table! {
         price -> Numeric,
         #[max_length = 3]
         currency -> Varchar,
-        is_trial -> Bool,
-        trial_end -> Nullable<Timestamptz>,
         first_payment -> Timestamptz,
         next_payment -> Timestamptz,
     }
