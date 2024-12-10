@@ -59,18 +59,6 @@ const AuthFlow = () => {
 							Login
 						</PageName>
 					</div>
-
-					<div>
-						<PageName as={Link} to="/register/init">
-							Register
-						</PageName>
-					</div>
-
-					<div>
-						<PageName as={Link} to="/reset-password/init">
-							Restore
-						</PageName>
-					</div>
 				</Header>
 
 				<animated.div style={styles}>

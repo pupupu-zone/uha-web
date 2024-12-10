@@ -1,18 +1,12 @@
 use super::login;
 use super::logout;
-use super::regenerate_token;
-use super::register;
-use super::verify_email;
 
 use actix_web::{web, Scope};
 
 pub fn get_routes() -> Scope {
     let auth_routes = web::scope("/auth")
         .service(web::resource("/sign-in").route(web::post().to(login)))
-        .service(web::resource("/sign-up").route(web::post().to(register)))
-        .service(web::resource("/sign-out").route(web::delete().to(logout)))
-        .service(web::resource("/validate").route(web::post().to(verify_email)))
-        .service(web::resource("/regenerate-token").route(web::post().to(regenerate_token)));
+        .service(web::resource("/sign-out").route(web::delete().to(logout)));
 
     auth_routes
 }

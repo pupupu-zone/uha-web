@@ -17,8 +17,6 @@ import { Route as IdRouteImport } from './core/routes/_id/route'
 import { Route as AuthGuardRouteImport } from './core/routes/_auth-guard/route'
 import { Route as IndexImport } from './core/routes/index'
 import { Route as IdLoginImport } from './core/routes/_id/login'
-import { Route as IdResetPasswordRouteImport } from './core/routes/_id/reset-password/route'
-import { Route as IdRegisterRouteImport } from './core/routes/_id/register/route'
 import { Route as AuthGuardLibraryRouteImport } from './core/routes/_auth-guard/library/route'
 
 // Create Virtual Routes
@@ -28,14 +26,6 @@ const AuthGuardSubscriptionsLazyImport = createFileRoute(
 )()
 const AuthGuardProfileLazyImport = createFileRoute('/_auth-guard/profile')()
 const AuthGuardLogoutLazyImport = createFileRoute('/_auth-guard/logout')()
-const IdResetPasswordVerifyLazyImport = createFileRoute(
-  '/_id/reset-password/verify',
-)()
-const IdResetPasswordInitLazyImport = createFileRoute(
-  '/_id/reset-password/init',
-)()
-const IdRegisterVerifyLazyImport = createFileRoute('/_id/register/verify')()
-const IdRegisterInitLazyImport = createFileRoute('/_id/register/init')()
 const AuthGuardLibraryPaymentsLazyImport = createFileRoute(
   '/_auth-guard/library/payments',
 )()
@@ -96,55 +86,11 @@ const IdLoginRoute = IdLoginImport.update({
   getParentRoute: () => IdRouteRoute,
 } as any)
 
-const IdResetPasswordRouteRoute = IdResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => IdRouteRoute,
-} as any)
-
-const IdRegisterRouteRoute = IdRegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => IdRouteRoute,
-} as any)
-
 const AuthGuardLibraryRouteRoute = AuthGuardLibraryRouteImport.update({
   id: '/library',
   path: '/library',
   getParentRoute: () => AuthGuardRouteRoute,
 } as any)
-
-const IdResetPasswordVerifyLazyRoute = IdResetPasswordVerifyLazyImport.update({
-  id: '/verify',
-  path: '/verify',
-  getParentRoute: () => IdResetPasswordRouteRoute,
-} as any).lazy(() =>
-  import('./core/routes/_id/reset-password/verify.lazy').then((d) => d.Route),
-)
-
-const IdResetPasswordInitLazyRoute = IdResetPasswordInitLazyImport.update({
-  id: '/init',
-  path: '/init',
-  getParentRoute: () => IdResetPasswordRouteRoute,
-} as any).lazy(() =>
-  import('./core/routes/_id/reset-password/init.lazy').then((d) => d.Route),
-)
-
-const IdRegisterVerifyLazyRoute = IdRegisterVerifyLazyImport.update({
-  id: '/verify',
-  path: '/verify',
-  getParentRoute: () => IdRegisterRouteRoute,
-} as any).lazy(() =>
-  import('./core/routes/_id/register/verify.lazy').then((d) => d.Route),
-)
-
-const IdRegisterInitLazyRoute = IdRegisterInitLazyImport.update({
-  id: '/init',
-  path: '/init',
-  getParentRoute: () => IdRegisterRouteRoute,
-} as any).lazy(() =>
-  import('./core/routes/_id/register/init.lazy').then((d) => d.Route),
-)
 
 const AuthGuardLibraryPaymentsLazyRoute =
   AuthGuardLibraryPaymentsLazyImport.update({
@@ -211,20 +157,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthGuardLibraryRouteImport
       parentRoute: typeof AuthGuardRouteImport
     }
-    '/_id/register': {
-      id: '/_id/register'
-      path: '/register'
-      fullPath: '/register'
-      preLoaderRoute: typeof IdRegisterRouteImport
-      parentRoute: typeof IdRouteImport
-    }
-    '/_id/reset-password': {
-      id: '/_id/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof IdResetPasswordRouteImport
-      parentRoute: typeof IdRouteImport
-    }
     '/_id/login': {
       id: '/_id/login'
       path: '/login'
@@ -274,34 +206,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthGuardLibraryPaymentsLazyImport
       parentRoute: typeof AuthGuardLibraryRouteImport
     }
-    '/_id/register/init': {
-      id: '/_id/register/init'
-      path: '/init'
-      fullPath: '/register/init'
-      preLoaderRoute: typeof IdRegisterInitLazyImport
-      parentRoute: typeof IdRegisterRouteImport
-    }
-    '/_id/register/verify': {
-      id: '/_id/register/verify'
-      path: '/verify'
-      fullPath: '/register/verify'
-      preLoaderRoute: typeof IdRegisterVerifyLazyImport
-      parentRoute: typeof IdRegisterRouteImport
-    }
-    '/_id/reset-password/init': {
-      id: '/_id/reset-password/init'
-      path: '/init'
-      fullPath: '/reset-password/init'
-      preLoaderRoute: typeof IdResetPasswordInitLazyImport
-      parentRoute: typeof IdResetPasswordRouteImport
-    }
-    '/_id/reset-password/verify': {
-      id: '/_id/reset-password/verify'
-      path: '/verify'
-      fullPath: '/reset-password/verify'
-      preLoaderRoute: typeof IdResetPasswordVerifyLazyImport
-      parentRoute: typeof IdResetPasswordRouteImport
-    }
   }
 }
 
@@ -342,42 +246,11 @@ const AuthGuardRouteRouteWithChildren = AuthGuardRouteRoute._addFileChildren(
   AuthGuardRouteRouteChildren,
 )
 
-interface IdRegisterRouteRouteChildren {
-  IdRegisterInitLazyRoute: typeof IdRegisterInitLazyRoute
-  IdRegisterVerifyLazyRoute: typeof IdRegisterVerifyLazyRoute
-}
-
-const IdRegisterRouteRouteChildren: IdRegisterRouteRouteChildren = {
-  IdRegisterInitLazyRoute: IdRegisterInitLazyRoute,
-  IdRegisterVerifyLazyRoute: IdRegisterVerifyLazyRoute,
-}
-
-const IdRegisterRouteRouteWithChildren = IdRegisterRouteRoute._addFileChildren(
-  IdRegisterRouteRouteChildren,
-)
-
-interface IdResetPasswordRouteRouteChildren {
-  IdResetPasswordInitLazyRoute: typeof IdResetPasswordInitLazyRoute
-  IdResetPasswordVerifyLazyRoute: typeof IdResetPasswordVerifyLazyRoute
-}
-
-const IdResetPasswordRouteRouteChildren: IdResetPasswordRouteRouteChildren = {
-  IdResetPasswordInitLazyRoute: IdResetPasswordInitLazyRoute,
-  IdResetPasswordVerifyLazyRoute: IdResetPasswordVerifyLazyRoute,
-}
-
-const IdResetPasswordRouteRouteWithChildren =
-  IdResetPasswordRouteRoute._addFileChildren(IdResetPasswordRouteRouteChildren)
-
 interface IdRouteRouteChildren {
-  IdRegisterRouteRoute: typeof IdRegisterRouteRouteWithChildren
-  IdResetPasswordRouteRoute: typeof IdResetPasswordRouteRouteWithChildren
   IdLoginRoute: typeof IdLoginRoute
 }
 
 const IdRouteRouteChildren: IdRouteRouteChildren = {
-  IdRegisterRouteRoute: IdRegisterRouteRouteWithChildren,
-  IdResetPasswordRouteRoute: IdResetPasswordRouteRouteWithChildren,
   IdLoginRoute: IdLoginRoute,
 }
 
@@ -388,8 +261,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof IdRouteRouteWithChildren
   '/library': typeof AuthGuardLibraryRouteRouteWithChildren
-  '/register': typeof IdRegisterRouteRouteWithChildren
-  '/reset-password': typeof IdResetPasswordRouteRouteWithChildren
   '/login': typeof IdLoginRoute
   '/logout': typeof AuthGuardLogoutLazyRoute
   '/profile': typeof AuthGuardProfileLazyRoute
@@ -397,18 +268,12 @@ export interface FileRoutesByFullPath {
   '/library/applications': typeof AuthGuardLibraryApplicationsLazyRoute
   '/library/categories': typeof AuthGuardLibraryCategoriesLazyRoute
   '/library/payments': typeof AuthGuardLibraryPaymentsLazyRoute
-  '/register/init': typeof IdRegisterInitLazyRoute
-  '/register/verify': typeof IdRegisterVerifyLazyRoute
-  '/reset-password/init': typeof IdResetPasswordInitLazyRoute
-  '/reset-password/verify': typeof IdResetPasswordVerifyLazyRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof IdRouteRouteWithChildren
   '/library': typeof AuthGuardLibraryRouteRouteWithChildren
-  '/register': typeof IdRegisterRouteRouteWithChildren
-  '/reset-password': typeof IdResetPasswordRouteRouteWithChildren
   '/login': typeof IdLoginRoute
   '/logout': typeof AuthGuardLogoutLazyRoute
   '/profile': typeof AuthGuardProfileLazyRoute
@@ -416,10 +281,6 @@ export interface FileRoutesByTo {
   '/library/applications': typeof AuthGuardLibraryApplicationsLazyRoute
   '/library/categories': typeof AuthGuardLibraryCategoriesLazyRoute
   '/library/payments': typeof AuthGuardLibraryPaymentsLazyRoute
-  '/register/init': typeof IdRegisterInitLazyRoute
-  '/register/verify': typeof IdRegisterVerifyLazyRoute
-  '/reset-password/init': typeof IdResetPasswordInitLazyRoute
-  '/reset-password/verify': typeof IdResetPasswordVerifyLazyRoute
 }
 
 export interface FileRoutesById {
@@ -428,8 +289,6 @@ export interface FileRoutesById {
   '/_auth-guard': typeof AuthGuardRouteRouteWithChildren
   '/_id': typeof IdRouteRouteWithChildren
   '/_auth-guard/library': typeof AuthGuardLibraryRouteRouteWithChildren
-  '/_id/register': typeof IdRegisterRouteRouteWithChildren
-  '/_id/reset-password': typeof IdResetPasswordRouteRouteWithChildren
   '/_id/login': typeof IdLoginRoute
   '/_auth-guard/logout': typeof AuthGuardLogoutLazyRoute
   '/_auth-guard/profile': typeof AuthGuardProfileLazyRoute
@@ -437,10 +296,6 @@ export interface FileRoutesById {
   '/_auth-guard/library/applications': typeof AuthGuardLibraryApplicationsLazyRoute
   '/_auth-guard/library/categories': typeof AuthGuardLibraryCategoriesLazyRoute
   '/_auth-guard/library/payments': typeof AuthGuardLibraryPaymentsLazyRoute
-  '/_id/register/init': typeof IdRegisterInitLazyRoute
-  '/_id/register/verify': typeof IdRegisterVerifyLazyRoute
-  '/_id/reset-password/init': typeof IdResetPasswordInitLazyRoute
-  '/_id/reset-password/verify': typeof IdResetPasswordVerifyLazyRoute
 }
 
 export interface FileRouteTypes {
@@ -449,8 +304,6 @@ export interface FileRouteTypes {
     | '/'
     | ''
     | '/library'
-    | '/register'
-    | '/reset-password'
     | '/login'
     | '/logout'
     | '/profile'
@@ -458,17 +311,11 @@ export interface FileRouteTypes {
     | '/library/applications'
     | '/library/categories'
     | '/library/payments'
-    | '/register/init'
-    | '/register/verify'
-    | '/reset-password/init'
-    | '/reset-password/verify'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | ''
     | '/library'
-    | '/register'
-    | '/reset-password'
     | '/login'
     | '/logout'
     | '/profile'
@@ -476,18 +323,12 @@ export interface FileRouteTypes {
     | '/library/applications'
     | '/library/categories'
     | '/library/payments'
-    | '/register/init'
-    | '/register/verify'
-    | '/reset-password/init'
-    | '/reset-password/verify'
   id:
     | '__root__'
     | '/'
     | '/_auth-guard'
     | '/_id'
     | '/_auth-guard/library'
-    | '/_id/register'
-    | '/_id/reset-password'
     | '/_id/login'
     | '/_auth-guard/logout'
     | '/_auth-guard/profile'
@@ -495,10 +336,6 @@ export interface FileRouteTypes {
     | '/_auth-guard/library/applications'
     | '/_auth-guard/library/categories'
     | '/_auth-guard/library/payments'
-    | '/_id/register/init'
-    | '/_id/register/verify'
-    | '/_id/reset-password/init'
-    | '/_id/reset-password/verify'
   fileRoutesById: FileRoutesById
 }
 
@@ -544,8 +381,6 @@ export const routeTree = rootRoute
     "/_id": {
       "filePath": "_id/route.tsx",
       "children": [
-        "/_id/register",
-        "/_id/reset-password",
         "/_id/login"
       ]
     },
@@ -556,22 +391,6 @@ export const routeTree = rootRoute
         "/_auth-guard/library/applications",
         "/_auth-guard/library/categories",
         "/_auth-guard/library/payments"
-      ]
-    },
-    "/_id/register": {
-      "filePath": "_id/register/route.tsx",
-      "parent": "/_id",
-      "children": [
-        "/_id/register/init",
-        "/_id/register/verify"
-      ]
-    },
-    "/_id/reset-password": {
-      "filePath": "_id/reset-password/route.tsx",
-      "parent": "/_id",
-      "children": [
-        "/_id/reset-password/init",
-        "/_id/reset-password/verify"
       ]
     },
     "/_id/login": {
@@ -601,22 +420,6 @@ export const routeTree = rootRoute
     "/_auth-guard/library/payments": {
       "filePath": "_auth-guard/library/payments.lazy.tsx",
       "parent": "/_auth-guard/library"
-    },
-    "/_id/register/init": {
-      "filePath": "_id/register/init.lazy.tsx",
-      "parent": "/_id/register"
-    },
-    "/_id/register/verify": {
-      "filePath": "_id/register/verify.lazy.tsx",
-      "parent": "/_id/register"
-    },
-    "/_id/reset-password/init": {
-      "filePath": "_id/reset-password/init.lazy.tsx",
-      "parent": "/_id/reset-password"
-    },
-    "/_id/reset-password/verify": {
-      "filePath": "_id/reset-password/verify.lazy.tsx",
-      "parent": "/_id/reset-password"
     }
   }
 }
