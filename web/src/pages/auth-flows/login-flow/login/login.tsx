@@ -18,7 +18,7 @@ const LoginPage = () => {
 
 	return (
 		<PageForm onSubmit={onSubmit} noValidate>
-			<form.Field name="email">
+			<form.Field name="login">
 				{(field) => {
 					const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
 						field.handleChange(e.target.value);
@@ -27,10 +27,10 @@ const LoginPage = () => {
 					return (
 						<TextField
 							id={field.name}
-							type="email"
+							type="text"
 							label="E-Mail"
 							name={field.name}
-							autoComplete="email"
+							autoComplete="login"
 							onChange={onChangeHd}
 							value={field.state.value}
 							isFullWidth

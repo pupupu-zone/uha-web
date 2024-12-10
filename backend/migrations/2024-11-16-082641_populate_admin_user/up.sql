@@ -5,22 +5,14 @@
 -- Insert admin user
 INSERT INTO "users" (
   "id",
-  "email",
+  "login",
   "password",
-  "is_sudo",
-  "is_active",
-  "is_deleted",
-  "created_at",
-  "updated_at"
+  "is_active"
 ) VALUES (
   '00000000-0000-0000-0000-000000000000',  -- admin UUID
-  'test@alena.red',
+  'test',
   '$argon2id$v=19$m=19456,t=2,p=1$K3/6CNCbG7Msi5rRylABhw$zjWyTFOb2GAlYWMa5wSwkJrB3tUJHHoXYrfNOZY7RPU',
-  true,   -- is_sudo
-  true,   -- is_active
-  false,  -- is_deleted
-  '2024-11-16 08:13:36.273365+00',
-  '2024-11-16 08:13:36.273365+00'
+  true
 );
 
 -- Insert admin profile

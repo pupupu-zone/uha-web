@@ -1,5 +1,5 @@
 export type LoginReqT = {
-	email: string;
+	login: string;
 	password: string;
 };
 type LoginResErrorT = {

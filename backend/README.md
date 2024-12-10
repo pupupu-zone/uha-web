@@ -32,20 +32,6 @@ lsof -n -i:5432 | grep LISTEN
 DATABASE_URL=postgresql://postgres:some_password@localhost:5555/subsawwy-dev
 ```
 
-### Create local redis
-```sh
-docker run -d \
-  --name subsawwy-redis-dev \
-  -e REDIS_USERNAME
-  -e REDIS_PASSWORD=some_password \
-  -p 6379:6379 \
-  redis:7 --requirepass some_password
-```
-
-```env
-redis://:some_password@localhost:6379
-```
-
 ### Run migration
 ```sh
 cargo install diesel_cli --no-default-features --features postgres

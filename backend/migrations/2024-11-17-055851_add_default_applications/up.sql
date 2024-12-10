@@ -1,8 +1,4 @@
 --
--- INITIAL DATA MIGRATION
---
-
---
 -- Categories
 --
 INSERT INTO "categories" ("id", "user_id", "name", "emoji", "color", "is_default") VALUES 
@@ -39,7 +35,7 @@ INSERT INTO "categories" ("id", "user_id", "name", "emoji", "color", "is_default
   -- Other
   ('ff3671b4-8924-40bc-a910-507d92fa2e88', '00000000-0000-0000-0000-000000000000', 'Other', '✨', '#4030d4', true);
 
-INSERT INTO "applications" ("name", "emoji", "logo_url", "color", "is_default", "is_dead", "aliases", "links", "category_id", "user_id", "id") VALUES
+INSERT INTO "applications" ("name", "emoji", "logo_url", "color", "is_default", "is_archived", "aliases", "links", "category_id", "user_id", "id") VALUES
   -- Food // 14
   ('Wolt+', '🦀', 'https://s3.keireira.com/subsawwy-demo/media/apps/wolt.webp', '#3478CD', true, false, ARRAY[]::TEXT[], '{"referral": null, "promo": null, "homepage": "https://wolt.com/"}'::JSONB, '984a7596-7b60-4584-8343-a1d018c0d458', '00000000-0000-0000-0000-000000000000', 'e7cf4cf3-3622-478f-b8bb-c3e0441d66cd'),
   ('Glovo Prime', '🦀', 'https://s3.keireira.com/subsawwy-demo/media/apps/glovo.webp', '#F3C366', true, false, ARRAY[]::TEXT[], '{"referral": null, "promo": null, "homepage": "https://glovoapp.com/"}'::JSONB, '984a7596-7b60-4584-8343-a1d018c0d458', '00000000-0000-0000-0000-000000000000', 'a69611fb-cae9-4ac8-b164-684b08eadf87'),

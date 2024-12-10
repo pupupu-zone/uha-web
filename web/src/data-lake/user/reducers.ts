@@ -7,7 +7,7 @@ export const addUser = {
 	reducer: (slice: UserSlice, { payload }: PayloadAction<UserProfile>) => {
 		slice.id = payload.user_id;
 
-		slice.email = payload.email ?? initialState.email;
+		slice.login = payload.login ?? initialState.login;
 		slice.name = payload.name ?? initialState.name;
 		slice.avatar_url = payload.avatar_url ?? initialState.avatar_url;
 	},
@@ -18,7 +18,7 @@ export const updateUser = {
 	reducer: (slice: UserSlice, { payload }: PayloadAction<Partial<UserProfile>>) => {
 		if (payload.user_id) slice.id = payload.user_id;
 
-		if (payload.email) slice.email = payload.email;
+		if (payload.login) slice.login = payload.login;
 		if (payload.name) slice.name = payload.name;
 		if (payload.avatar_url) slice.avatar_url = payload.avatar_url;
 	},

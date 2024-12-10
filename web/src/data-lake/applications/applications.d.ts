@@ -15,7 +15,7 @@ export type Application = {
 	aliases: string[];
 	links: LinksT;
 	is_default: boolean;
-	is_dead: boolean;
+	is_archived: boolean;
 };
 
 export type ApplicationsSlice = {

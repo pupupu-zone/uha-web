@@ -2,7 +2,7 @@ use actix_web::{web, Error, HttpResponse};
 use serde::Deserialize;
 use serde_json::json;
 
-use crate::models::categories::category::Category;
+use crate::models::categories::category::ApiCategory;
 use crate::service::data_providers::WebDataPool;
 use crate::utils::{acquire_pg_connection, get_session_user_id};
 
@@ -10,8 +10,6 @@ use crate::utils::{acquire_pg_connection, get_session_user_id};
 pub struct CategoriesQuery {
     #[serde(default)]
     limit: Option<i32>,
-    #[serde(default)]
-    random: Option<bool>,
 }
 
 impl CategoriesQuery {
@@ -31,7 +29,6 @@ impl CategoriesQuery {
     }
 
     fn build_query(&self) -> String {
-        let with_random = self.random.unwrap_or(false);
         let with_limit = self.limit.is_some();
 
         let mut query = String::from(
@@ -50,16 +47,11 @@ impl CategoriesQuery {
             "#,
         );
 
-        if with_random {
-            query.push_str("\nORDER BY RANDOM()");
-        }
-
         if with_limit {
             query.push_str("\nLIMIT $2");
         }
 
         query.push(';');
-
         query
     }
 }
@@ -112,8 +104,8 @@ pub async fn get_categories(
     let categories = match db_query.fetch_all(&mut *pg_connection).await {
         Ok(rows) => rows
             .iter()
-            .map(Category::from_row)
-            .collect::<Vec<Category>>(),
+            .map(ApiCategory::from_row)
+            .collect::<Vec<ApiCategory>>(),
         Err(err) => {
             tracing::event!(target: "[GET CATEGORIES / SQL]", tracing::Level::ERROR, "{}", err);
 

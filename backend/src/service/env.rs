@@ -28,8 +28,6 @@ pub struct EnvConfig {
     pub is_dev_mode: bool,
     // Postgres
     pub db_url: String,
-    // // Redis
-    pub redis_url: String,
     // Params
     pub with_migration: bool,
     pub with_debug: bool,
@@ -37,10 +35,6 @@ pub struct EnvConfig {
     pub secret_key: String,
     pub token_expiration: i64,
     pub hmac_secret: String,
-    // E-Mail
-    pub email_from: String,
-    pub smtp: SMTPConfig,
-    pub app_url: String,
     // S3
     pub minio_bucket_name: String,
     pub minio_endpoint_url: String,
@@ -65,7 +59,6 @@ impl EnvConfig {
             is_dev_mode: env::var("DEVELOPMENT").unwrap_or("false".to_string()) == "true",
 
             db_url: env::var("DATABASE_URL").expect("DATABASE_URL must be set"),
-            redis_url: env::var("REDIS_URL").expect("REDIS_URL must be set"),
 
             // Additional params
             with_migration: with_migration == "MIGRATION",
@@ -78,19 +71,6 @@ impl EnvConfig {
                 .parse::<i64>()
                 .expect("TOKEN_EXPIRATION must be a number"),
             hmac_secret: env::var("HMAC_SECRET").expect("HMAC_SECRET must be set"),
-
-            // E-Mail
-            email_from: env::var("EMAIL_FROM").expect("EMAIL_FROM must be set"),
-            smtp: SMTPConfig {
-                server: env::var("SMTP_SERVER").expect("SMTP_SERVER must be set"),
-                port: env::var("SMTP_PORT")
-                    .expect("SMTP_PORT must be set")
-                    .parse::<u16>()
-                    .expect("SMTP_PORT must be a number"),
-                username: env::var("SMTP_USERNAME").expect("SMTP_USERNAME must be set"),
-                token: env::var("SMTP_TOKEN").expect("SMTP_TOKEN must be set"),
-            },
-            app_url: env::var("APP_URL").expect("APP_URL must be set"),
 
             // minio
             minio_bucket_name: env::var("MINIO_BUCKET_NAME")

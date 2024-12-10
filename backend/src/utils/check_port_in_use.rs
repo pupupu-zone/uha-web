@@ -12,28 +12,13 @@ pub fn check_port_in_use(host: &str, port: u16) -> (bool, String) {
             // If we can connect, port is in use, try to get process info
             let mut process_info = String::from("Port is in use");
 
-            #[cfg(target_os = "windows")]
+            if let Ok(output) = Command::new("sh")
+                .arg("-c")
+                .arg(&format!("lsof -i :{} | tail -n +2", port))
+                .output()
             {
-                if let Ok(output) = Command::new("cmd")
-                    .args(&["/C", &format!("netstat -ano | findstr :{}", port)])
-                    .output()
-                {
-                    if let Ok(output_str) = String::from_utf8(output.stdout) {
-                        process_info = output_str;
-                    }
-                }
-            }
-
-            #[cfg(target_family = "unix")]
-            {
-                if let Ok(output) = Command::new("sh")
-                    .arg("-c")
-                    .arg(&format!("lsof -i :{} | tail -n +2", port))
-                    .output()
-                {
-                    if let Ok(output_str) = String::from_utf8(output.stdout) {
-                        process_info = output_str;
-                    }
+                if let Ok(output_str) = String::from_utf8(output.stdout) {
+                    process_info = output_str;
                 }
             }
 

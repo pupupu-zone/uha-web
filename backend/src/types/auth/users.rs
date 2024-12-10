@@ -8,7 +8,7 @@ use sqlx::Row;
 #[derive(Insertable, Queryable, Selectable, Serialize, Deserialize, Debug)]
 #[diesel(table_name = users)]
 pub struct UserToRegister {
-    pub email: String,
+    pub login: String,
     pub password: String,
 }
 
@@ -43,7 +43,7 @@ impl UserProfiles {
 #[derive(Insertable, Queryable, Selectable, Serialize, Deserialize, Debug)]
 pub struct User {
     pub id: uuid::Uuid,
-    pub email: String,
+    pub login: String,
     pub password: String,
     pub is_active: bool,
 }

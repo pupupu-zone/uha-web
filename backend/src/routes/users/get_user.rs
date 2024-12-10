@@ -32,7 +32,7 @@ pub async fn get_user(
         "
             SELECT 
                 users.id AS user_id,
-                users.email,
+                users.login,
                 user_profiles.name,
                 user_profiles.avatar_url,
                 user_settings.theme,

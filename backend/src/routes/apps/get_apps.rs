@@ -2,7 +2,7 @@ use actix_web::{web, Error, HttpResponse};
 use serde::Deserialize;
 use serde_json::json;
 
-use crate::models::applications::application::Application;
+use crate::models::applications::application::ApiApplication;
 use crate::service::data_providers::WebDataPool;
 use crate::utils::{acquire_pg_connection, get_session_user_id};
 
@@ -10,10 +10,6 @@ use crate::utils::{acquire_pg_connection, get_session_user_id};
 pub struct AppsQuery {
     #[serde(default)]
     limit: Option<i32>,
-    #[serde(default)]
-    order: Option<String>,
-    #[serde(default)]
-    random: Option<bool>,
 }
 
 impl AppsQuery {
@@ -28,20 +24,12 @@ impl AppsQuery {
             }
         }
 
-        // Validate order if provided
-        if let Some(ref order) = self.order {
-            if order != "asc" && order != "desc" {
-                return Err(actix_web::error::ErrorBadRequest(json!({
-                    "code": 1015, // Invalid order parameter
-                    "message": "Order must be either 'asc' or 'desc'"
-                })));
-            }
-        }
-
         Ok(())
     }
 
     fn build_query(&self) -> String {
+        let with_limit = self.limit.is_some();
+
         let mut query = String::from(
             r#"
             SELECT 
@@ -55,38 +43,17 @@ impl AppsQuery {
                 aliases,
                 links,
                 is_default,
-                is_dead
-            FROM"#,
+                is_archived
+            FROM
+                applications
+            WHERE
+                (user_id = $1 OR is_default = TRUE)
+                AND is_archived = FALSE
+            "#,
         );
 
-        // If random is true and limit is set, use a subquery with RANDOM()
-        if self.random.unwrap_or(false) && self.limit.is_some() {
-            query.push_str(
-                r#" (
-                SELECT * FROM applications 
-                WHERE user_id = $1 OR is_default = TRUE
-                ORDER BY RANDOM()
-                LIMIT $2
-            ) subquery"#,
-            );
-        } else {
-            query.push_str(
-                r#" applications
-            WHERE user_id = $1 OR is_default = TRUE"#,
-            );
-        }
-
-        // Add ORDER BY clause if not using RANDOM() or if using RANDOM() with additional ordering
-        if !self.random.unwrap_or(false) || self.limit.is_some() {
-            query.push_str("\nORDER BY name ");
-            query.push_str(match self.order.as_deref() {
-                Some("desc") => "DESC",
-                _ => "ASC",
-            });
-        }
-
         // Add LIMIT clause if specified and not already added in subquery
-        if self.limit.is_some() && !self.random.unwrap_or(false) {
+        if with_limit {
             query.push_str("\nLIMIT $2");
         }
 
@@ -116,7 +83,7 @@ pub async fn get_apps(
 
     let mut pg_connection = acquire_pg_connection(&dp).await?;
 
-    // Build and execute query
+    // Build query
     let query_string = query.build_query();
     let mut db_query = sqlx::query(&query_string).bind(&session_user_id);
 
@@ -125,13 +92,15 @@ pub async fn get_apps(
         db_query = db_query.bind(limit);
     }
 
+    // Execute built query
     let apps = match db_query.fetch_all(&mut *pg_connection).await {
         Ok(rows) => rows
             .iter()
-            .map(Application::from_row)
-            .collect::<Vec<Application>>(),
+            .map(ApiApplication::from_row)
+            .collect::<Vec<ApiApplication>>(),
         Err(err) => {
             tracing::event!(target: "[GET APPS]", tracing::Level::ERROR, "{}", err);
+
             return Err(actix_web::error::ErrorInternalServerError(json!({
                 "code": 10000, // 500 - Empty
             })));

@@ -39,7 +39,7 @@ DROP INDEX IF EXISTS "user_profiles_user_id_index";
 DROP TABLE IF EXISTS "user_profiles";
 
 -- Drop users table and its index
-DROP INDEX IF EXISTS "users_email_index";
+DROP INDEX IF EXISTS "users_login_index";
 DROP TABLE IF EXISTS "users";
 
 --

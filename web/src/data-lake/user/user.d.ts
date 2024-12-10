@@ -1,5 +1,5 @@
 export type UserProfile = {
-	email: string;
+	login: string;
 	user_id: string;
 	name: string;
 	avatar_url: string | null;
@@ -11,7 +11,7 @@ export type UserProfile = {
 
 export type UserSlice = {
 	id?: UserProfile['user_id'];
-	email?: UserProfile['email'];
+	login?: UserProfile['login'];
 	name?: UserProfile['name'];
 	avatar_url?: UserProfile['avatar_url'];
 };

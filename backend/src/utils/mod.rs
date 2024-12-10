@@ -1,5 +1,4 @@
 pub mod auth;
-pub mod emails;
 pub mod uploads;
 
 mod acquire_pg_connection;

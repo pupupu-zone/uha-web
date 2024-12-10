@@ -27,7 +27,6 @@ const Currencies = () => {
 		<SettingsBlock title="Currencies">
 			<SettingsEntry onPress={recalcCur.open} left="Re-calc currency" right={recalcView?.label ?? ''} />
 			<SettingsEntry onPress={defaultCur.open} left="Default currency" right={defaultView?.label ?? ''} />
-			<SettingsEntry onPress={defaultCur.open} left="Show fractions" right="No" />
 
 			{recalcCur.isOpen && <Select values={CURRENCIES} close={recalcCur.close} onSelect={recalcCur.select} />}
 			{defaultCur.isOpen && <Select values={CURRENCIES} close={defaultCur.close} onSelect={defaultCur.select} />}

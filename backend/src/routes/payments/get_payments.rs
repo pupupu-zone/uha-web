@@ -2,7 +2,7 @@ use actix_web::{web, Error, HttpResponse};
 use serde::Deserialize;
 use serde_json::json;
 
-use crate::models::payment_methods::PaymentMethod;
+use crate::models::payment_methods::ApiPaymentMethod;
 use crate::service::data_providers::WebDataPool;
 use crate::utils::{acquire_pg_connection, get_session_user_id};
 
@@ -52,9 +52,7 @@ impl PaymentMethodsQuery {
                 comment,
                 emoji,
                 is_default,
-                is_deleted,
-                created_at,
-                updated_at
+                is_archived
             FROM"#,
         );
 
@@ -64,7 +62,7 @@ impl PaymentMethodsQuery {
                 r#" (
                 SELECT * FROM payment_methods
                 WHERE (user_id = $1 OR is_default = TRUE)
-                AND is_deleted = FALSE
+                AND is_archived = FALSE
                 ORDER BY RANDOM()
                 LIMIT $2
             ) subquery"#,
@@ -73,7 +71,7 @@ impl PaymentMethodsQuery {
             query.push_str(
                 r#" payment_methods
             WHERE (user_id = $1 OR is_default = TRUE)
-            AND is_deleted = FALSE"#,
+            AND is_archived = FALSE"#,
             );
         }
 
@@ -129,8 +127,8 @@ pub async fn get_payments(
     let payment_methods = match db_query.fetch_all(&mut *pg_connection).await {
         Ok(rows) => rows
             .iter()
-            .map(PaymentMethod::from_row)
-            .collect::<Vec<PaymentMethod>>(),
+            .map(ApiPaymentMethod::from_row)
+            .collect::<Vec<ApiPaymentMethod>>(),
         Err(err) => {
             tracing::event!(target: "[GET PAYMENT METHODS]", tracing::Level::ERROR, "{}", err);
             return Err(actix_web::error::ErrorInternalServerError(json!({
