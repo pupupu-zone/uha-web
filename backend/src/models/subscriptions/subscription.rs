@@ -1,9 +1,9 @@
+use bigdecimal::BigDecimal;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use sqlx::Row;
 use uuid::Uuid;
 
-use crate::models::settings::Currency;
 use crate::models::subscriptions::IntervalTypes;
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -16,8 +16,8 @@ pub struct ApiSubscription {
     pub interval_value: i16,
     pub interval_type: IntervalTypes,
 
-    pub price: f64,
-    pub currency: Currency,
+    pub price: BigDecimal,
+    pub currency: String, // Native currency (any of the world's currencies)
     pub divider: i16,
 
     pub first_payment: DateTime<Utc>,

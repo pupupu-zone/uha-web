@@ -66,6 +66,7 @@ sqlx = { version = "0.8.2", features = [
   "runtime-tokio-rustls",
   "chrono",
   "macros",
+  "bigdecimal",
 ] }
 include_dir = "0.7.4"
 actix-multipart = "0.7.2"
@@ -73,3 +74,4 @@ rust-s3 = "0.35.1"
 mime = "0.3.17"
 mime_guess = "2.0.5"
 image = "0.25.4"
+bigdecimal = { version = "0.4.7", features = ["serde", "serde-json"] }

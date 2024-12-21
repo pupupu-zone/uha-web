@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 
+import { useLazyGetAllSubsQuery } from '@data/subscriptions/api';
+
 import ListView from './list-view';
 import { useNavigate } from '@tanstack/react-router';
 import CalendarView from './calendar-view';
-import HeaderCard from './header-card';
+import InfographCard from './infograph-card';
 import Root, { ViewPort } from './subscriptions.styles';
 
 import type { SearchParams } from '@core/routes/_auth-guard/route';
@@ -15,6 +17,8 @@ const Subscriptions = ({ view, action }: Props) => {
 	const rootRef = useRef<HTMLDivElement>(null);
 	const [shouldFill, setShouldFill] = useState(false);
 
+	const [request, result] = useLazyGetAllSubsQuery();
+
 	useEffect(() => {
 		if (view) return;
 
@@ -24,6 +28,12 @@ const Subscriptions = ({ view, action }: Props) => {
 			replace: true
 		});
 	}, []);
+
+	useEffect(() => {
+		request();
+	}, []);
+
+	console.log(result);
 
 	useEffect(() => {
 		if (!rootRef.current) return;
@@ -37,7 +47,7 @@ const Subscriptions = ({ view, action }: Props) => {
 
 	return (
 		<Root ref={rootRef}>
-			<HeaderCard />
+			<InfographCard />
 
 			<ViewPort $shouldFill={shouldFill}>
 				{view === 'list' && <ListView />}

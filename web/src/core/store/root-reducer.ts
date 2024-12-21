@@ -11,6 +11,7 @@ import categoriesReducer from '@data/categories';
 import applicationsReducer from '@data/applications';
 import paymentsReducer from '@data/payments';
 import searchReducer from '@data/search';
+import subsReducer from '@data/subscriptions';
 
 const persistConfig = {
 	key: 'root',
@@ -29,7 +30,8 @@ const combinedReducer = combineReducers({
 	categories: categoriesReducer,
 	applications: applicationsReducer,
 	payments: paymentsReducer,
-	search: searchReducer
+	search: searchReducer,
+	subscriptions: subsReducer
 });
 
 const rootReducer = (state, action) => {
