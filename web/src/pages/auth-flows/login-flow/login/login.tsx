@@ -28,7 +28,7 @@ const LoginPage = () => {
 						<TextField
 							id={field.name}
 							type="text"
-							label="E-Mail"
+							label="Login"
 							name={field.name}
 							autoComplete="login"
 							onChange={onChangeHd}

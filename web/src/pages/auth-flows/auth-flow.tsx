@@ -1,8 +1,8 @@
 import React, { useRef, useState, useLayoutEffect } from 'react';
 import { useSpring, animated } from '@react-spring/web';
-import { Outlet, useLocation, Link } from '@tanstack/react-router';
+import { Outlet, useLocation } from '@tanstack/react-router';
 
-import Root, { PageRoot, TagLine, HighTag, LowTag, Header, PageName, Test } from './auth-flow.styles';
+import Root, { PageRoot, TagLine, HighTag, LowTag, Header, PageName } from './auth-flow.styles';
 
 const AuthFlow = () => {
 	const location = useLocation();
@@ -46,7 +46,6 @@ const AuthFlow = () => {
 
 	return (
 		<Root>
-			<Test />
 			<TagLine>
 				<HighTag>TRACK YOUR SUBSCRIPTIONS</HighTag>
 				<LowTag>DOWN!</LowTag>
@@ -55,9 +54,7 @@ const AuthFlow = () => {
 			<PageRoot>
 				<Header>
 					<div>
-						<PageName as={Link} to="/login">
-							Login
-						</PageName>
+						<PageName>Welcome, %username%</PageName>
 					</div>
 				</Header>
 

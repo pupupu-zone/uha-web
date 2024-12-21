@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 import { H1 } from '@ui';
 
 export const PageName = styled.h1`
@@ -7,15 +7,7 @@ export const PageName = styled.h1`
 	font-size: 24px;
 	font-family: 'Nunito Sans', sans-serif;
 	line-height: 32px;
-
-	&:not(.active) {
-		opacity: 0.45;
-
-		&:active,
-		&:hover {
-			opacity: 0.75;
-		}
-	}
+	opacity: 0.75;
 `;
 
 export const Header = styled.header`
@@ -46,14 +38,6 @@ export const LowTag = styled(H1)`
 	line-height: 1;
 `;
 
-export const Test = createGlobalStyle`
-// 	html {
-// 		// background: linear-gradient(to top, #ffeceb, #fff);
-// background: linear-gradient(to bottom, #88E7DC, #54C8BC);
-// background: #F6F6F6;
-// 		}
-`;
-
 export const TagLine = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -68,7 +52,7 @@ export const PageRoot = styled.div`
 	grid-auto-flow: row;
 	gap: 36px;
 	margin: 0;
-	padding: 24px 32px;
+	padding: 32px 32px 24px;
 	padding-bottom: calc(env(safe-area-inset-bottom) + 24px);
 	background-color: var(--popup-bg);
 	border-top-left-radius: 36px;
