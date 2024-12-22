@@ -137,8 +137,5 @@ pub async fn get_payments(
         }
     };
 
-    // Renew session
-    session.renew();
-
     Ok(HttpResponse::Ok().json(payment_methods))
 }

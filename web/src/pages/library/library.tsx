@@ -11,14 +11,12 @@ import { previewSelector as paymentPreviewsSelector } from '@data/payments/selec
 import { previewSelector as categoryPreviewsSelector } from '@data/categories/selectors';
 
 import { useShallFill } from '@hooks';
-import useLoadData from './use-load-data';
 
 import Search from './search';
 import { Link, Outlet, useChildMatches } from '@tanstack/react-router';
 import Root, { FeaturedApps, Title, Section } from './library.styles';
 
 const LibraryPage = () => {
-	useLoadData();
 	const children = useChildMatches();
 	const [rootRef, shallFill] = useShallFill([children]);
 

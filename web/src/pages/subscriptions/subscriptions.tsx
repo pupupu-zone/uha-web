@@ -11,11 +11,25 @@ import type { SearchParams } from '@core/routes/_auth-guard/route';
 
 type Props = SearchParams;
 
+import { allSubsSelector } from '@data/subscriptions/selectors';
+import { filteredSelector as catSelector } from '@data/categories/selectors';
+import { filteredSelector as appSelector } from '@data/applications/selectors';
+import { useSelector } from 'react-redux';
+const useIsLoading = () => {
+	const categories = useSelector(catSelector);
+	const apps = useSelector(appSelector);
+	const subsList = useSelector(allSubsSelector);
+
+	return !categories.length || !apps.length || !subsList.length;
+};
+
 const Subscriptions = ({ view, action }: Props) => {
 	useLoadSubs();
 	const navigate = useNavigate();
 	const rootRef = useRef<HTMLDivElement>(null);
 	const [shouldFill, setShouldFill] = useState(false);
+
+	const isLoading = useIsLoading();
 
 	useEffect(() => {
 		if (view) return;
@@ -41,11 +55,19 @@ const Subscriptions = ({ view, action }: Props) => {
 		<Root ref={rootRef}>
 			<InfographCard />
 
-			<ViewPort $shouldFill={shouldFill}>
-				{view === 'list' && <ListView />}
+			{isLoading && (
+				<div>
+					<p>Loading...</p>
+				</div>
+			)}
 
-				{view === 'calendar' && <CalendarView />}
-			</ViewPort>
+			{!isLoading && (
+				<ViewPort $shouldFill={shouldFill}>
+					{view === 'list' && <ListView />}
+
+					{view === 'calendar' && <CalendarView />}
+				</ViewPort>
+			)}
 		</Root>
 	);
 };

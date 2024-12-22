@@ -107,8 +107,5 @@ pub async fn get_apps(
         }
     };
 
-    // Renew session
-    session.renew();
-
     Ok(HttpResponse::Ok().json(apps))
 }

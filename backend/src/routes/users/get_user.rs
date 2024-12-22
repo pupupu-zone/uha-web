@@ -68,11 +68,6 @@ pub async fn get_user(
     };
 
     /*
-     * Renew session if everything looks good
-     */
-    session.renew();
-
-    /*
      * If everything good, return user's profile
      */
     Ok(HttpResponse::Ok().json(user_profile).into())

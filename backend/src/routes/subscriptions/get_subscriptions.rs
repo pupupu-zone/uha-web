@@ -63,7 +63,5 @@ pub async fn get_subscriptions(
         }
     };
 
-    session.renew();
-
     Ok(HttpResponse::Ok().json(subscriptions))
 }

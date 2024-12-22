@@ -3,6 +3,7 @@ import { useAppDispatch } from '@store';
 import { useSelector } from 'react-redux';
 import { useNavigate } from '@tanstack/react-router';
 
+import useLoadData from './use-load-data';
 import { actions as userActions } from '@data/user';
 import { actions as settingsActions } from '@data/settings';
 import { useLazyObtainUserQuery } from '@data/user/api';
@@ -13,6 +14,8 @@ import Root from './main.styles';
 import Navigation from '@features/navigation';
 
 const MainPage = () => {
+	useLoadData();
+
 	const dispatch = useAppDispatch();
 	const isAuthorized = useSelector(isAuthorizedSelector);
 	const [request, result] = useLazyObtainUserQuery();

@@ -115,10 +115,5 @@ pub async fn get_categories(
         }
     };
 
-    /*
-     * Renew session
-     */
-    session.renew();
-
     Ok(HttpResponse::Ok().json(categories))
 }
