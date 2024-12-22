@@ -6,6 +6,7 @@ export type UserProfile = {
 	theme: 'System' | 'Dark' | 'Light';
 	default_currency: string;
 	recalc_currency: string;
+	show_fractions: boolean;
 	language: string;
 };
 

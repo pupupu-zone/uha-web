@@ -1,9 +1,10 @@
-import type { UiSlice } from './settings.d';
+import type { SettingsSlice } from './settings.d';
 
-const initialState: UiSlice = {
+const initialState: SettingsSlice = {
 	theme: 'System',
 	default_currency: 'USD',
 	recalc_currency: 'USD',
+	show_fractions: false,
 	language: 'en'
 };
 

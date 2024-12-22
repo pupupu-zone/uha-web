@@ -30,7 +30,7 @@ export const previewSelector = createSelector([filteredSelector], (filteredPayme
 	return filteredPayments.slice(0, 6);
 });
 
-export const appSelector = createSelector(
+export const paymentSelector = createSelector(
 	[paymentsSelector, (_, paymentId: Payment['id']) => paymentId],
 	(payments, paymentId) => payments.byId[paymentId]
 );

@@ -38,6 +38,7 @@ pub async fn get_user(
                 user_settings.theme,
                 user_settings.default_currency,
                 user_settings.recalc_currency,
+                user_settings.show_fractions,
                 user_settings.language
             FROM
                 users

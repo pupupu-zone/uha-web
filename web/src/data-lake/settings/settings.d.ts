@@ -5,4 +5,5 @@ export type SettingsSlice = {
 	default_currency: UserProfile['default_currency'];
 	language: UserProfile['language'];
 	recalc_currency: UserProfile['recalc_currency'];
+	show_fractions: UserProfile['show_fractions'];
 };

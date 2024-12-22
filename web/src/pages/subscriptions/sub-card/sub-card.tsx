@@ -1,11 +1,13 @@
 import React, { useMemo } from 'react';
-import { DateTime } from 'luxon';
 import { useSelector } from 'react-redux';
 
 import { useLocale } from '@utils/hooks';
 
+import { paymentSelector } from '@data/payments/selectors';
 import { appSelector } from '@data/applications/selectors';
 import { categorySelector } from '@data/categories/selectors';
+import { settingsSelector } from '@data/settings/selectors';
+import { subscriptionByIdSelector } from '@data/subscriptions/selectors';
 
 import { H2, H3, SmallText } from '@ui';
 import LogoContent from '@features/logotype';
@@ -13,20 +15,26 @@ import Root, { LogoWrap, Information } from './sub-card.styles';
 
 import type { Subscription } from '@data/subscriptions';
 
-type Props = Subscription;
+type Props = {
+	id: Subscription['id'];
+};
 
-const SubCard = ({ app_id, category_id, price, currency, next_payment }: Props) => {
+const SubCard = ({ id }: Props) => {
 	const locale = useLocale();
+	const settings = useSelector(settingsSelector);
+	const { app_id, category_id, price, currency, payment_method_id } = useSelector((store) =>
+		subscriptionByIdSelector(store, id)
+	);
 	const app = useSelector((store) => appSelector(store, app_id));
 	const category = useSelector((store) => categorySelector(store, category_id));
+	const paymentMethod = useSelector((store) => paymentSelector(store, payment_method_id));
 
 	const formattedPrice = useMemo(() => {
-		const result = new Intl.NumberFormat(locale, {
+		const result = new Intl.NumberFormat('ru-RU', {
 			style: 'currency',
 			currency,
-			currencyDisplay: 'narrowSymbol',
 			minimumFractionDigits: 0,
-			maximumFractionDigits: 2
+			maximumFractionDigits: settings.show_fractions ? 2 : 0
 		}).format(price);
 
 		return result;
@@ -39,12 +47,12 @@ const SubCard = ({ app_id, category_id, price, currency, next_payment }: Props) 
 			</LogoWrap>
 
 			<Information>
-				<H3>{app.name}</H3>
+				<H3 $weight={500}>{app.name}</H3>
 
-				{next_payment && <SmallText>{DateTime.fromISO(next_payment).toFormat('dd LLL yyyy')}</SmallText>}
+				<SmallText>{paymentMethod.name}</SmallText>
 			</Information>
 
-			<H2 $weight={500}>{formattedPrice}</H2>
+			<H2 $weight={400}>{formattedPrice}</H2>
 		</Root>
 	);
 };

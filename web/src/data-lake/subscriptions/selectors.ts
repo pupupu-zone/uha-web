@@ -16,3 +16,10 @@ export const allSubsSelector = createSelector(subsSelector, (subs) => {
 
 	return allEntries;
 });
+
+export const subscriptionByIdSelector = createSelector(
+	[subsSelector, (_, subId: string) => subId],
+	(subsSelector, subId) => subsSelector.byId[subId]
+);
+
+export const subIdsByDatesSelector = createSelector([subsSelector], (subs) => subs.idsByDates);

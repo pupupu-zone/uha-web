@@ -62,6 +62,7 @@ CREATE TABLE "user_settings" (
   "language" languages NOT NULL DEFAULT 'en',
   "default_currency" currencies NOT NULL DEFAULT 'USD',
   "recalc_currency" currencies NOT NULL DEFAULT 'USD',
+  "show_fractions" BOOLEAN NOT NULL DEFAULT false,
 
   PRIMARY KEY ("id"),
   FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE,
@@ -96,7 +97,7 @@ CREATE INDEX IF NOT EXISTS "categories_is_default_index" ON "categories"("is_def
 CREATE TABLE "applications" (
   "id" UUID NOT NULL DEFAULT gen_random_uuid(),
   "user_id" UUID NOT NULL,
-  "category_id" UUID NOT NULL,
+  "category_id" UUID NOT NULL DEFAULT 'ff3671b4-8924-40bc-a910-507d92fa2e88', -- 'Other' category
   "name" TEXT NOT NULL,
   "emoji" VARCHAR(8) NULL,
   "logo_url" TEXT NULL,
@@ -108,7 +109,7 @@ CREATE TABLE "applications" (
 
   PRIMARY KEY ("id"),
   FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE CASCADE,
-  FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE CASCADE,
+  FOREIGN KEY ("category_id") REFERENCES "categories"("id") ON DELETE SET NULL,
   
   CONSTRAINT "applications_color_check" CHECK (color ~ '^#[0-9A-Fa-f]{6}$'),
   CONSTRAINT "applications_name_check" CHECK (length(trim(name)) > 0)

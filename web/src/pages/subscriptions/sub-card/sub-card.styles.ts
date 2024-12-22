@@ -20,11 +20,11 @@ export default styled.div`
 	display: grid;
 	grid-auto-columns: min-content 1fr min-content;
 	grid-auto-flow: column;
-	gap: 12px;
+	gap: 16px;
 	align-items: center;
-	width: calc(100% + 40px);
-	margin-right: -20px;
-	margin-left: -20px;
+	width: calc(100% + 24px);
+	margin-right: -12px;
+	margin-left: -12px;
 	padding: 12px 16px;
 	border-radius: 18px;
 
