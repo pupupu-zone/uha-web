@@ -1,32 +1,52 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { DateTime } from 'luxon';
+import { useSelector } from 'react-redux';
+
+import { useLocale } from '@utils/hooks';
+
+import { appSelector } from '@data/applications/selectors';
+import { categorySelector } from '@data/categories/selectors';
 
 import { H2, H3, SmallText } from '@ui';
-import Root, { SupportImage, Information } from './sub-card.styles';
+import LogoContent from '@features/logotype';
+import Root, { LogoWrap, Information } from './sub-card.styles';
 
-type Props = {
-	imgSrc: string;
-	title: string;
-	price: string;
-	nextDate?: string;
-};
+import type { Subscription } from '@data/subscriptions';
 
-const SubCard = ({ imgSrc, title, nextDate, price }: Props) => {
+type Props = Subscription;
+
+const SubCard = ({ app_id, category_id, price, currency, next_payment }: Props) => {
+	const locale = useLocale();
+	const app = useSelector((store) => appSelector(store, app_id));
+	const category = useSelector((store) => categorySelector(store, category_id));
+
+	const formattedPrice = useMemo(() => {
+		const result = new Intl.NumberFormat(locale, {
+			style: 'currency',
+			currency,
+			currencyDisplay: 'narrowSymbol',
+			minimumFractionDigits: 0,
+			maximumFractionDigits: 2
+		}).format(price);
+
+		return result;
+	}, [price, currency, locale]);
+
 	return (
 		<Root>
-			<SupportImage>
-				<img src={imgSrc} alt={title} />
-			</SupportImage>
+			<LogoWrap>
+				<LogoContent logoUrl={app.logo_url} emoji={category.emoji} name={app.name} size={48} />
+			</LogoWrap>
 
 			<Information>
-				<H3>{title}</H3>
+				<H3>{app.name}</H3>
 
-				{nextDate && <SmallText>{DateTime.fromISO(nextDate).toFormat('dd LLL yyyy')}</SmallText>}
+				{next_payment && <SmallText>{DateTime.fromISO(next_payment).toFormat('dd LLL yyyy')}</SmallText>}
 			</Information>
 
-			<H2>{price}</H2>
+			<H2 $weight={500}>{formattedPrice}</H2>
 		</Root>
 	);
 };
 
-export default SubCard;
+export default React.memo(SubCard);

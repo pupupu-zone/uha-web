@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 
-import { useLazyGetAllSubsQuery } from '@data/subscriptions/api';
-
+import useLoadSubs from './use-load-subs';
 import ListView from './list-view';
 import { useNavigate } from '@tanstack/react-router';
 import CalendarView from './calendar-view';
@@ -13,11 +12,10 @@ import type { SearchParams } from '@core/routes/_auth-guard/route';
 type Props = SearchParams;
 
 const Subscriptions = ({ view, action }: Props) => {
+	useLoadSubs();
 	const navigate = useNavigate();
 	const rootRef = useRef<HTMLDivElement>(null);
 	const [shouldFill, setShouldFill] = useState(false);
-
-	const [request, result] = useLazyGetAllSubsQuery();
 
 	useEffect(() => {
 		if (view) return;
@@ -28,12 +26,6 @@ const Subscriptions = ({ view, action }: Props) => {
 			replace: true
 		});
 	}, []);
-
-	useEffect(() => {
-		request();
-	}, []);
-
-	console.log(result);
 
 	useEffect(() => {
 		if (!rootRef.current) return;

@@ -9,10 +9,11 @@ export const Information = styled.div`
 	white-space: nowrap;
 `;
 
-export const SupportImage = styled.div`
-	width: 48px;
-	height: 48px;
-	clip-path: url('#squircle');
+export const LogoWrap = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
 `;
 
 export default styled.div`

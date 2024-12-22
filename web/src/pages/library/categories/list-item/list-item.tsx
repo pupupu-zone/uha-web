@@ -19,4 +19,4 @@ const ListItem = ({ color, emoji, name }: Props) => {
 	);
 };
 
-export default ListItem;
+export default React.memo(ListItem);

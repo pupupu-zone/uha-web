@@ -8,12 +8,6 @@ export enum IntervalTypes {
 	'biennial'
 }
 
-export enum Currencies {
-	'USD',
-	'RUB',
-	'KZT'
-}
-
 export type Subscription = {
 	id: string;
 	user_id: string;
@@ -23,7 +17,7 @@ export type Subscription = {
 	interval_value: number;
 	interval_type: IntervalTypes;
 	price: number;
-	currency: Currencies;
+	currency: string;
 	first_payment: string;
 	next_payment: string;
 };
@@ -31,5 +25,5 @@ export type Subscription = {
 export type SubscriptionsSlice = {
 	allIds: string[];
 	byId: Record<string, Subscription>;
-	idsByMonths: Record<string, string[]>; // { '2024-12': ['subscriptionId1', 'subscriptionId2'] }
+	idsByDates: Record<string, string[]>; // { 'DD-MM-YYYY': ['subscriptionId1', 'subscriptionId2'] }
 };

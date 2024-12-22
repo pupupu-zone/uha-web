@@ -1,7 +1,7 @@
 export type Category = {
 	id: string;
 	name: string;
-	emoji: string | null;
+	emoji?: string;
 	color: string;
 	is_public: boolean;
 };

@@ -12,22 +12,6 @@ export const LogoWrap = styled.div<{ $color: string }>`
 	aspect-ratio: 1;
 `;
 
-export const ImgLogo = styled.img`
-	width: 48px;
-	height: 48px;
-	overflow: hidden;
-	clip-path: url('#squircle');
-	aspect-ratio: 1;
-`;
-
-export const EmojiLogo = styled.div`
-	font-size: 32px;
-`;
-
-export const TextLogo = styled.p`
-	font-size: 32px;
-`;
-
 export const Name = styled.div`
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
