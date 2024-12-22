@@ -30,7 +30,7 @@ const SubCard = ({ id }: Props) => {
 	const paymentMethod = useSelector((store) => paymentSelector(store, payment_method_id));
 
 	const formattedPrice = useMemo(() => {
-		const result = new Intl.NumberFormat('ru-RU', {
+		const result = new Intl.NumberFormat(locale, {
 			style: 'currency',
 			currency,
 			minimumFractionDigits: 0,

@@ -106,6 +106,7 @@ diesel::table! {
         language -> Languages,
         default_currency -> Currencies,
         recalc_currency -> Currencies,
+        show_fractions -> Bool,
     }
 }
 
