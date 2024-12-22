@@ -1,14 +1,14 @@
 {
-  "name": "Subsawwy",
-  "short_name": "Subsawwy",
+  "name": "PuPuPu",
+  "short_name": "PuPuPu",
   "start_url": "/?source=pwa",
   "display": "standalone",
   "background_color": "#EDE8E1",
   "lang": "en",
   "scope": "/",
-  "description": "Subsawwy is a subscription manager that helps you keep track of all your subscriptions in one place.",
+  "description": "PuPuPu is a subscription manager that helps you keep track of all your subscriptions in one place.",
   "theme_color": "#EDE8E1",
-  "id": "subsawwy-5702b80f-4bcc-4efe-8403-85f7febf90a0",
+  "id": "pupupu-5702b80f-4bcc-4efe-8403-85f7febf90a0",
   "icons": [
     {
       "src": "/favicon.ico",
