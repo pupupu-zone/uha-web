@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { DateTime } from 'luxon';
 import { useSelector } from 'react-redux';
 
 import { subIdsByDatesSelector } from '@data/subscriptions/selectors';
 
-import { H3 } from '@ui';
 import SubCard from '../sub-card';
-import Root from './list-view.styles';
+import Root, { DateSlice, DateTitle } from './list-view.styles';
 
 const CURRENT_YEAR = DateTime.now().year;
 
@@ -16,21 +15,28 @@ const isCurrentYear = (date: DateTime) => {
 
 const ListView = () => {
 	const idsByDates = useSelector(subIdsByDatesSelector);
+	const ids = useMemo(() => {
+		const entries = Object.entries(idsByDates);
+
+		const reversed = [...entries].reverse();
+
+		return reversed;
+	}, [idsByDates]);
 
 	return (
 		<Root>
-			{Object.entries(idsByDates).map(([date, ids]) => {
+			{ids.map(([date, ids]) => {
 				const luxonDate = DateTime.fromISO(date);
 				const isCurrent = isCurrentYear(luxonDate);
 
 				return (
-					<div key={date}>
-						<H3>{luxonDate.toFormat(isCurrent ? 'dd MMMM' : 'dd MMMM yyyy')}</H3>
+					<DateSlice key={date}>
+						<DateTitle>{luxonDate.toFormat(isCurrent ? 'dd MMMM' : 'dd MMMM yyyy')}</DateTitle>
 
 						{ids.map((id) => (
 							<SubCard key={id} id={id} />
 						))}
-					</div>
+					</DateSlice>
 				);
 			})}
 		</Root>
