@@ -42,9 +42,7 @@ pub async fn get_subscriptions(
         FROM
             subscriptions
         WHERE
-            user_id = $1
-        ORDER BY
-            next_payment ASC;
+            user_id = $1;
         "#,
     )
     .bind(&session_user_id)

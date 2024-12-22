@@ -1,5 +1,6 @@
-import { createFileRoute, redirect } from '@tanstack/react-router';
+import React from 'react';
 import { DateTime } from 'luxon';
+import { createFileRoute, redirect } from '@tanstack/react-router';
 
 import MainPage from '@pages/main';
 
@@ -20,7 +21,7 @@ export const Route = createFileRoute('/_auth-guard')({
 			});
 		}
 	},
-	component: MainPage,
+	component: () => <IndexPage />,
 	validateSearch: (search: SearchParams) => {
 		if ('day' in search) {
 			search.day = Number.parseInt(search.day as string, 10);
@@ -48,3 +49,8 @@ export const Route = createFileRoute('/_auth-guard')({
 		return search;
 	}
 });
+
+const IndexPage = () => {
+	const { action } = Route.useSearch();
+	return <MainPage action={action} />;
+};
