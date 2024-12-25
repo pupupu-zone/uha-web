@@ -52,5 +52,6 @@ export const Route = createFileRoute('/_auth-guard')({
 
 const IndexPage = () => {
 	const { action } = Route.useSearch();
+
 	return <MainPage action={action} />;
 };

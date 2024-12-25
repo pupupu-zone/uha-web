@@ -18,6 +18,7 @@ import { Route as AuthGuardRouteImport } from './core/routes/_auth-guard/route'
 import { Route as IndexImport } from './core/routes/index'
 import { Route as IdLoginImport } from './core/routes/_id/login'
 import { Route as AuthGuardLibraryRouteImport } from './core/routes/_auth-guard/library/route'
+import { Route as AuthGuardAddRouteImport } from './core/routes/_auth-guard/_add/route'
 
 // Create Virtual Routes
 
@@ -35,6 +36,16 @@ const AuthGuardLibraryCategoriesLazyImport = createFileRoute(
 const AuthGuardLibraryApplicationsLazyImport = createFileRoute(
   '/_auth-guard/library/applications',
 )()
+const AuthGuardAddSubscriptionLazyImport = createFileRoute(
+  '/_auth-guard/_add/subscription',
+)()
+const AuthGuardAddPaymentLazyImport = createFileRoute(
+  '/_auth-guard/_add/payment',
+)()
+const AuthGuardAddCategoryLazyImport = createFileRoute(
+  '/_auth-guard/_add/category',
+)()
+const AuthGuardAddAppLazyImport = createFileRoute('/_auth-guard/_add/app')()
 
 // Create/Update Routes
 
@@ -92,6 +103,11 @@ const AuthGuardLibraryRouteRoute = AuthGuardLibraryRouteImport.update({
   getParentRoute: () => AuthGuardRouteRoute,
 } as any)
 
+const AuthGuardAddRouteRoute = AuthGuardAddRouteImport.update({
+  id: '/_add',
+  getParentRoute: () => AuthGuardRouteRoute,
+} as any)
+
 const AuthGuardLibraryPaymentsLazyRoute =
   AuthGuardLibraryPaymentsLazyImport.update({
     id: '/payments',
@@ -125,6 +141,41 @@ const AuthGuardLibraryApplicationsLazyRoute =
     ),
   )
 
+const AuthGuardAddSubscriptionLazyRoute =
+  AuthGuardAddSubscriptionLazyImport.update({
+    id: '/subscription',
+    path: '/subscription',
+    getParentRoute: () => AuthGuardAddRouteRoute,
+  } as any).lazy(() =>
+    import('./core/routes/_auth-guard/_add/subscription.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthGuardAddPaymentLazyRoute = AuthGuardAddPaymentLazyImport.update({
+  id: '/payment',
+  path: '/payment',
+  getParentRoute: () => AuthGuardAddRouteRoute,
+} as any).lazy(() =>
+  import('./core/routes/_auth-guard/_add/payment.lazy').then((d) => d.Route),
+)
+
+const AuthGuardAddCategoryLazyRoute = AuthGuardAddCategoryLazyImport.update({
+  id: '/category',
+  path: '/category',
+  getParentRoute: () => AuthGuardAddRouteRoute,
+} as any).lazy(() =>
+  import('./core/routes/_auth-guard/_add/category.lazy').then((d) => d.Route),
+)
+
+const AuthGuardAddAppLazyRoute = AuthGuardAddAppLazyImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => AuthGuardAddRouteRoute,
+} as any).lazy(() =>
+  import('./core/routes/_auth-guard/_add/app.lazy').then((d) => d.Route),
+)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -149,6 +200,13 @@ declare module '@tanstack/react-router' {
       fullPath: ''
       preLoaderRoute: typeof IdRouteImport
       parentRoute: typeof rootRoute
+    }
+    '/_auth-guard/_add': {
+      id: '/_auth-guard/_add'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthGuardAddRouteImport
+      parentRoute: typeof AuthGuardRouteImport
     }
     '/_auth-guard/library': {
       id: '/_auth-guard/library'
@@ -185,6 +243,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthGuardSubscriptionsLazyImport
       parentRoute: typeof AuthGuardRouteImport
     }
+    '/_auth-guard/_add/app': {
+      id: '/_auth-guard/_add/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AuthGuardAddAppLazyImport
+      parentRoute: typeof AuthGuardAddRouteImport
+    }
+    '/_auth-guard/_add/category': {
+      id: '/_auth-guard/_add/category'
+      path: '/category'
+      fullPath: '/category'
+      preLoaderRoute: typeof AuthGuardAddCategoryLazyImport
+      parentRoute: typeof AuthGuardAddRouteImport
+    }
+    '/_auth-guard/_add/payment': {
+      id: '/_auth-guard/_add/payment'
+      path: '/payment'
+      fullPath: '/payment'
+      preLoaderRoute: typeof AuthGuardAddPaymentLazyImport
+      parentRoute: typeof AuthGuardAddRouteImport
+    }
+    '/_auth-guard/_add/subscription': {
+      id: '/_auth-guard/_add/subscription'
+      path: '/subscription'
+      fullPath: '/subscription'
+      preLoaderRoute: typeof AuthGuardAddSubscriptionLazyImport
+      parentRoute: typeof AuthGuardAddRouteImport
+    }
     '/_auth-guard/library/applications': {
       id: '/_auth-guard/library/applications'
       path: '/applications'
@@ -211,6 +297,23 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
+interface AuthGuardAddRouteRouteChildren {
+  AuthGuardAddAppLazyRoute: typeof AuthGuardAddAppLazyRoute
+  AuthGuardAddCategoryLazyRoute: typeof AuthGuardAddCategoryLazyRoute
+  AuthGuardAddPaymentLazyRoute: typeof AuthGuardAddPaymentLazyRoute
+  AuthGuardAddSubscriptionLazyRoute: typeof AuthGuardAddSubscriptionLazyRoute
+}
+
+const AuthGuardAddRouteRouteChildren: AuthGuardAddRouteRouteChildren = {
+  AuthGuardAddAppLazyRoute: AuthGuardAddAppLazyRoute,
+  AuthGuardAddCategoryLazyRoute: AuthGuardAddCategoryLazyRoute,
+  AuthGuardAddPaymentLazyRoute: AuthGuardAddPaymentLazyRoute,
+  AuthGuardAddSubscriptionLazyRoute: AuthGuardAddSubscriptionLazyRoute,
+}
+
+const AuthGuardAddRouteRouteWithChildren =
+  AuthGuardAddRouteRoute._addFileChildren(AuthGuardAddRouteRouteChildren)
+
 interface AuthGuardLibraryRouteRouteChildren {
   AuthGuardLibraryApplicationsLazyRoute: typeof AuthGuardLibraryApplicationsLazyRoute
   AuthGuardLibraryCategoriesLazyRoute: typeof AuthGuardLibraryCategoriesLazyRoute
@@ -229,6 +332,7 @@ const AuthGuardLibraryRouteRouteWithChildren =
   )
 
 interface AuthGuardRouteRouteChildren {
+  AuthGuardAddRouteRoute: typeof AuthGuardAddRouteRouteWithChildren
   AuthGuardLibraryRouteRoute: typeof AuthGuardLibraryRouteRouteWithChildren
   AuthGuardLogoutLazyRoute: typeof AuthGuardLogoutLazyRoute
   AuthGuardProfileLazyRoute: typeof AuthGuardProfileLazyRoute
@@ -236,6 +340,7 @@ interface AuthGuardRouteRouteChildren {
 }
 
 const AuthGuardRouteRouteChildren: AuthGuardRouteRouteChildren = {
+  AuthGuardAddRouteRoute: AuthGuardAddRouteRouteWithChildren,
   AuthGuardLibraryRouteRoute: AuthGuardLibraryRouteRouteWithChildren,
   AuthGuardLogoutLazyRoute: AuthGuardLogoutLazyRoute,
   AuthGuardProfileLazyRoute: AuthGuardProfileLazyRoute,
@@ -259,12 +364,16 @@ const IdRouteRouteWithChildren =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '': typeof IdRouteRouteWithChildren
+  '': typeof AuthGuardAddRouteRouteWithChildren
   '/library': typeof AuthGuardLibraryRouteRouteWithChildren
   '/login': typeof IdLoginRoute
   '/logout': typeof AuthGuardLogoutLazyRoute
   '/profile': typeof AuthGuardProfileLazyRoute
   '/subscriptions': typeof AuthGuardSubscriptionsLazyRoute
+  '/app': typeof AuthGuardAddAppLazyRoute
+  '/category': typeof AuthGuardAddCategoryLazyRoute
+  '/payment': typeof AuthGuardAddPaymentLazyRoute
+  '/subscription': typeof AuthGuardAddSubscriptionLazyRoute
   '/library/applications': typeof AuthGuardLibraryApplicationsLazyRoute
   '/library/categories': typeof AuthGuardLibraryCategoriesLazyRoute
   '/library/payments': typeof AuthGuardLibraryPaymentsLazyRoute
@@ -272,12 +381,16 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '': typeof IdRouteRouteWithChildren
+  '': typeof AuthGuardAddRouteRouteWithChildren
   '/library': typeof AuthGuardLibraryRouteRouteWithChildren
   '/login': typeof IdLoginRoute
   '/logout': typeof AuthGuardLogoutLazyRoute
   '/profile': typeof AuthGuardProfileLazyRoute
   '/subscriptions': typeof AuthGuardSubscriptionsLazyRoute
+  '/app': typeof AuthGuardAddAppLazyRoute
+  '/category': typeof AuthGuardAddCategoryLazyRoute
+  '/payment': typeof AuthGuardAddPaymentLazyRoute
+  '/subscription': typeof AuthGuardAddSubscriptionLazyRoute
   '/library/applications': typeof AuthGuardLibraryApplicationsLazyRoute
   '/library/categories': typeof AuthGuardLibraryCategoriesLazyRoute
   '/library/payments': typeof AuthGuardLibraryPaymentsLazyRoute
@@ -288,11 +401,16 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_auth-guard': typeof AuthGuardRouteRouteWithChildren
   '/_id': typeof IdRouteRouteWithChildren
+  '/_auth-guard/_add': typeof AuthGuardAddRouteRouteWithChildren
   '/_auth-guard/library': typeof AuthGuardLibraryRouteRouteWithChildren
   '/_id/login': typeof IdLoginRoute
   '/_auth-guard/logout': typeof AuthGuardLogoutLazyRoute
   '/_auth-guard/profile': typeof AuthGuardProfileLazyRoute
   '/_auth-guard/subscriptions': typeof AuthGuardSubscriptionsLazyRoute
+  '/_auth-guard/_add/app': typeof AuthGuardAddAppLazyRoute
+  '/_auth-guard/_add/category': typeof AuthGuardAddCategoryLazyRoute
+  '/_auth-guard/_add/payment': typeof AuthGuardAddPaymentLazyRoute
+  '/_auth-guard/_add/subscription': typeof AuthGuardAddSubscriptionLazyRoute
   '/_auth-guard/library/applications': typeof AuthGuardLibraryApplicationsLazyRoute
   '/_auth-guard/library/categories': typeof AuthGuardLibraryCategoriesLazyRoute
   '/_auth-guard/library/payments': typeof AuthGuardLibraryPaymentsLazyRoute
@@ -308,6 +426,10 @@ export interface FileRouteTypes {
     | '/logout'
     | '/profile'
     | '/subscriptions'
+    | '/app'
+    | '/category'
+    | '/payment'
+    | '/subscription'
     | '/library/applications'
     | '/library/categories'
     | '/library/payments'
@@ -320,6 +442,10 @@ export interface FileRouteTypes {
     | '/logout'
     | '/profile'
     | '/subscriptions'
+    | '/app'
+    | '/category'
+    | '/payment'
+    | '/subscription'
     | '/library/applications'
     | '/library/categories'
     | '/library/payments'
@@ -328,11 +454,16 @@ export interface FileRouteTypes {
     | '/'
     | '/_auth-guard'
     | '/_id'
+    | '/_auth-guard/_add'
     | '/_auth-guard/library'
     | '/_id/login'
     | '/_auth-guard/logout'
     | '/_auth-guard/profile'
     | '/_auth-guard/subscriptions'
+    | '/_auth-guard/_add/app'
+    | '/_auth-guard/_add/category'
+    | '/_auth-guard/_add/payment'
+    | '/_auth-guard/_add/subscription'
     | '/_auth-guard/library/applications'
     | '/_auth-guard/library/categories'
     | '/_auth-guard/library/payments'
@@ -372,6 +503,7 @@ export const routeTree = rootRoute
     "/_auth-guard": {
       "filePath": "_auth-guard/route.tsx",
       "children": [
+        "/_auth-guard/_add",
         "/_auth-guard/library",
         "/_auth-guard/logout",
         "/_auth-guard/profile",
@@ -382,6 +514,16 @@ export const routeTree = rootRoute
       "filePath": "_id/route.tsx",
       "children": [
         "/_id/login"
+      ]
+    },
+    "/_auth-guard/_add": {
+      "filePath": "_auth-guard/_add/route.tsx",
+      "parent": "/_auth-guard",
+      "children": [
+        "/_auth-guard/_add/app",
+        "/_auth-guard/_add/category",
+        "/_auth-guard/_add/payment",
+        "/_auth-guard/_add/subscription"
       ]
     },
     "/_auth-guard/library": {
@@ -408,6 +550,22 @@ export const routeTree = rootRoute
     "/_auth-guard/subscriptions": {
       "filePath": "_auth-guard/subscriptions.lazy.tsx",
       "parent": "/_auth-guard"
+    },
+    "/_auth-guard/_add/app": {
+      "filePath": "_auth-guard/_add/app.lazy.tsx",
+      "parent": "/_auth-guard/_add"
+    },
+    "/_auth-guard/_add/category": {
+      "filePath": "_auth-guard/_add/category.lazy.tsx",
+      "parent": "/_auth-guard/_add"
+    },
+    "/_auth-guard/_add/payment": {
+      "filePath": "_auth-guard/_add/payment.lazy.tsx",
+      "parent": "/_auth-guard/_add"
+    },
+    "/_auth-guard/_add/subscription": {
+      "filePath": "_auth-guard/_add/subscription.lazy.tsx",
+      "parent": "/_auth-guard/_add"
     },
     "/_auth-guard/library/applications": {
       "filePath": "_auth-guard/library/applications.lazy.tsx",
