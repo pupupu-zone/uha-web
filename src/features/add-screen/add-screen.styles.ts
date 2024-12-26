@@ -35,6 +35,10 @@ export const AdderRoot = styled.a`
 	&:focus-visible {
 		transform: scale(0.95);
 	}
+
+	& > h2 {
+		align-self: end;
+	}
 `;
 
 export const ItemsWrap = styled.div`

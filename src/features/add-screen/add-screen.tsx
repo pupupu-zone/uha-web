@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useTransition, animated } from '@react-spring/web';
 import { useNavigate, useLocation } from '@tanstack/react-router';
 
-import { H3, Icon } from '@ui';
+import { H2, Icon } from '@ui';
 import { Link } from '@tanstack/react-router';
 import Root, { Background, ItemsWrap, AdderRoot, AddIcon } from './add-screen.styles';
 
@@ -23,7 +23,7 @@ const Adder = ({ to, children, onBeforeNavigate }: AdderProps) => {
 				<Icon name="add" width={28} height={28} />
 			</AddIcon>
 
-			<H3>{children}</H3>
+			<H2>{children}</H2>
 		</AdderRoot>
 	);
 };
@@ -37,14 +37,14 @@ const AddScreen = () => {
 		from: { opacity: 0 },
 		enter: { opacity: 1 },
 		leave: { opacity: 0 },
-		config: { tension: 350, friction: 20 }
+		config: { tension: 280, friction: 20 }
 	});
 
 	const itemsTransition = useTransition(isVisible, {
 		from: { transform: 'translateY(100%)' },
 		enter: { transform: 'translateY(0%)' },
 		leave: { transform: 'translateY(100%)' },
-		config: { tension: 350, friction: 24 }
+		config: { tension: 280, friction: 24 }
 	});
 
 	const handleClose = (targetPath?: string) => {
@@ -62,7 +62,7 @@ const AddScreen = () => {
 					search: searchParams
 				});
 			}
-		}, 150);
+		}, 300);
 	};
 
 	const handleAdderClick = (to: string) => {
@@ -83,19 +83,19 @@ const AddScreen = () => {
 
 					return (
 						<AnimatedItems style={style}>
-							<Adder to="/subscription" onBeforeNavigate={handleAdderClick}>
+							<Adder to="/entities/subscriptions/add" onBeforeNavigate={handleAdderClick}>
 								Subscription
 							</Adder>
 
-							<Adder to="/category" onBeforeNavigate={handleAdderClick}>
+							<Adder to="/entities/categories/add" onBeforeNavigate={handleAdderClick}>
 								Category
 							</Adder>
 
-							<Adder to="/app" onBeforeNavigate={handleAdderClick}>
+							<Adder to="/entities/apps/add" onBeforeNavigate={handleAdderClick}>
 								Application
 							</Adder>
 
-							<Adder to="/payment" onBeforeNavigate={handleAdderClick}>
+							<Adder to="/entities/payments/add" onBeforeNavigate={handleAdderClick}>
 								Payment method
 							</Adder>
 						</AnimatedItems>
