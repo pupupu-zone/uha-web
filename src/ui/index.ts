@@ -6,3 +6,5 @@ export { default as Textarea, calcLines, resetLineStyle } from './textarea';
 export { default as CustomToaster } from './toaster';
 export { default as Select } from './select';
 export * from './typography';
+export { default as EmojiField } from './emoji-field';
+export { default as ColorField } from './color-field';

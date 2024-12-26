@@ -4,9 +4,9 @@ import { useNavigate, useLocation } from '@tanstack/react-router';
 
 import { H2, Icon } from '@ui';
 import { Link } from '@tanstack/react-router';
-import Root, { Background, ItemsWrap, AdderRoot, AddIcon } from './add-screen.styles';
+import Root, { Background, ItemsWrap, AdderRoot, AddIcon } from './crossroad.styles';
 
-import type { AdderProps } from './add-screen.d';
+import type { AdderProps } from './crossroad.d';
 
 const AnimatedBackground = animated(Background);
 const AnimatedItems = animated(ItemsWrap);
@@ -28,7 +28,7 @@ const Adder = ({ to, children, onBeforeNavigate }: AdderProps) => {
 	);
 };
 
-const AddScreen = () => {
+const Crossroad = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [isVisible, setIsVisible] = useState(true);
@@ -106,4 +106,4 @@ const AddScreen = () => {
 	);
 };
 
-export default AddScreen;
+export default Crossroad;

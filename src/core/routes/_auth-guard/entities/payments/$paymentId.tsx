@@ -9,7 +9,7 @@ function TargetComponent({ action, paymentId }: SearchParams) {
 	return `Hello /_auth-guard/entities/apps/$paymentId! (${action}) (${paymentId})`;
 }
 
-const Crossroad = () => {
+const PaymentCrossroad = () => {
 	const { action } = Route.useSearch();
 	const { paymentId } = Route.useParams();
 
@@ -17,7 +17,7 @@ const Crossroad = () => {
 };
 
 export const Route = createFileRoute('/_auth-guard/entities/payments/$paymentId')({
-	component: Crossroad,
+	component: PaymentCrossroad,
 	validateSearch: (search: SearchParams) => {
 		if (!('action' in search)) {
 			search.action = 'view';

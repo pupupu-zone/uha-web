@@ -11,8 +11,8 @@ import { ScrollRestoration, Outlet } from '@tanstack/react-router';
 import { isAuthorizedSelector } from '@pages/auth-flows/_redux/selectors';
 
 import Root from './main.styles';
-import AddScreen from '@features/add-screen';
-import Navigation from '@features/navigation';
+import Crossroad from '@features/crossroad';
+import Navbar from '@features/navbar';
 
 import type { Props } from './main.d';
 
@@ -50,9 +50,9 @@ const MainPage = ({ action }: Props) => {
 			<ScrollRestoration getKey={(location) => location.pathname} />
 			<Outlet />
 
-			{action === 'add' && <AddScreen />}
+			{action === 'add' && <Crossroad />}
 
-			<Navigation />
+			<Navbar />
 		</Root>
 	);
 };

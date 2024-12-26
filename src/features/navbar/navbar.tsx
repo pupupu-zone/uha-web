@@ -6,9 +6,9 @@ import { Link } from '@tanstack/react-router';
 import { Icon } from '@ui';
 import { useScrollDirection } from '@hooks';
 import { useLocation } from '@tanstack/react-router';
-import Root, { AddButton, NavButton } from './navigation.styles';
+import Root, { AddButton, NavButton } from './navbar.styles';
 
-const Navigation = () => {
+const Navbar = () => {
 	const search = useSearch({ from: '/_auth-guard' });
 	const location = useLocation();
 	const scrollDirection = useScrollDirection();
@@ -68,4 +68,4 @@ const Navigation = () => {
 	);
 };
 
-export default Navigation;
+export default Navbar;
