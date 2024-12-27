@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import useGetColors from './use-get-colors';
 import { useIsTextDark } from '@hooks';
@@ -15,6 +15,12 @@ const ColorField = ({ label, value, onChange }: Props) => {
 	const [isVisible, setIsVisible] = useState(false);
 	const [customColor, setCustomColor] = useState(value || '#e0e0e0');
 	const isTextDark = useIsTextDark(customColor, 1);
+
+	useEffect(() => {
+		if (value) return;
+
+		onChange(colors[0]);
+	}, [value, onChange, colors]);
 
 	const toggleColorful = () => {
 		setIsVisible((prev) => !prev);

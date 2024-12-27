@@ -4,7 +4,7 @@ import { H1, Button, TextField, EmojiField, ColorField } from '@ui';
 import Root, { Main } from './add-category.styles';
 
 const AddCategory = () => {
-	const [color, setColor] = React.useState<string>('#efe1e1');
+	const [color, setColor] = React.useState<string>('');
 	const [emoji, setEmoji] = React.useState<string>('');
 
 	return (

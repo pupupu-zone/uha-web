@@ -6,7 +6,42 @@ export const PickerWrap = styled.div`
 
 		--border-radius: 0 0 8px 8px;
 		--shadow: none;
+		--rgb-background: 247, 247, 248;
 	}
+`;
+
+export const PredefinedEmoji = styled.button`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 42px;
+	min-width: 42px;
+	max-width: 42px;
+	height: 42px;
+	min-height: 42px;
+	max-height: 42px;
+	font-size: 24px;
+	line-height: 42px;
+	aspect-ratio: 1;
+	background-color: var(--input-border);
+	border: none;
+	border-radius: 50%;
+	transition: transform 100ms ease-in;
+	user-select: none;
+	will-change: transform;
+
+	&:active,
+	&:focus-visible {
+		transform: scale(0.95);
+	}
+`;
+
+export const EmojiSuggestions = styled.div`
+	display: grid;
+	grid-auto-columns: min-content;
+	grid-auto-flow: column;
+	gap: 12px;
+	padding: 12px 24px;
 `;
 
 export const Emoji = styled.p`

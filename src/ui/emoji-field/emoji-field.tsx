@@ -1,16 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import data from '@emoji-mart/data';
-import useDefaultEmoji from './use-default-emoji';
+import useGetEmojis from './use-get-emojis';
 
+import Icon from '../icon';
 import Picker from '@emoji-mart/react';
-import Root, { Emoji, Label, PickerWrap } from './emoji-field.styles';
+import { Button as AriaButton } from 'react-aria-components';
+import Root, { Emoji, Label, PickerWrap, EmojiSuggestions, PredefinedEmoji } from './emoji-field.styles';
 
 import type { Props } from './emoji-field.d';
 
 const EmojiField = ({ label, value, onChange }: Props) => {
-	useDefaultEmoji(value, onChange);
-	const [isVisible, setIsVisible] = useState(true);
+	const predefinedEmojis = useGetEmojis();
+	const [isVisible, setIsVisible] = useState(false);
+
+	useEffect(() => {
+		if (value) return;
+
+		onChange(predefinedEmojis[0]);
+	}, [value, onChange, predefinedEmojis]);
 
 	return (
 		<Root>
@@ -18,10 +26,24 @@ const EmojiField = ({ label, value, onChange }: Props) => {
 				{label || 'Emoji'} <Emoji>{value}</Emoji>
 			</Label>
 
-			{/*
-			<DefaultEmojis>
-				<
-			</DefaultEmojis> */}
+			<EmojiSuggestions>
+				{predefinedEmojis.map((emoji) => {
+					const onSelectEmoji = () => {
+						onChange(emoji);
+						setIsVisible(false);
+					};
+
+					return (
+						<PredefinedEmoji key={emoji} as={AriaButton} onPress={onSelectEmoji}>
+							{emoji}
+						</PredefinedEmoji>
+					);
+				})}
+
+				<PredefinedEmoji as={AriaButton} onPress={() => setIsVisible((prev) => !prev)}>
+					<Icon name="add" />
+				</PredefinedEmoji>
+			</EmojiSuggestions>
 
 			{isVisible && (
 				<PickerWrap>
