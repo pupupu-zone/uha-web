@@ -4,14 +4,14 @@ import useGetColors from './use-get-colors';
 import { useIsTextDark } from '@hooks';
 
 import Icon from '../icon';
-import { Button as AriaButton } from 'react-aria-components';
 import { HexColorPicker } from 'react-colorful';
+import { Button as AriaButton } from 'react-aria-components';
 import Root, { Swatches, SwatchPreview, OwnSwatch, Label, ReactColorful } from './color-field.styles';
 
 import type { Props } from './color-field.d';
 
-const ColorField = ({ value, onChange }: Props) => {
-	const colors = useGetColors(6);
+const ColorField = ({ label, value, onChange }: Props) => {
+	const colors = useGetColors();
 	const [isVisible, setIsVisible] = useState(false);
 	const [customColor, setCustomColor] = useState(value || '#e0e0e0');
 	const isTextDark = useIsTextDark(customColor, 1);
@@ -27,7 +27,7 @@ const ColorField = ({ value, onChange }: Props) => {
 
 	return (
 		<Root>
-			<Label $color={value}>Color</Label>
+			<Label $color={value}>{label || 'Color'}</Label>
 
 			<Swatches>
 				{colors.map((color) => {
@@ -50,4 +50,4 @@ const ColorField = ({ value, onChange }: Props) => {
 	);
 };
 
-export default ColorField;
+export default React.memo(ColorField);

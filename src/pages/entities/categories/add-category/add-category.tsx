@@ -1,21 +1,22 @@
 import React from 'react';
 
-import { H2, Button, TextField, EmojiField, ColorField } from '@ui';
+import { H1, Button, TextField, EmojiField, ColorField } from '@ui';
 import Root, { Main } from './add-category.styles';
 
 const AddCategory = () => {
 	const [color, setColor] = React.useState<string>('#efe1e1');
+	const [emoji, setEmoji] = React.useState<string>('');
 
 	return (
 		<Root>
-			<H2>New Category</H2>
+			<H1>New Category</H1>
 
 			<Main>
-				{/* <TextField type="text" placeholder="name" /> */}
+				<TextField type="text" placeholder="name" />
 				<ColorField value={color} onChange={setColor} />
-				{/* <EmojiField /> */}
+				<EmojiField value={emoji} onChange={setEmoji} />
 
-				<Button>Create</Button>
+				<Button isFullWidth>Create</Button>
 			</Main>
 		</Root>
 	);
