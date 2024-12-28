@@ -7,6 +7,7 @@ export type InternalProps = {
 	to?: FileRoutesByTo;
 	isFullWidth?: boolean;
 	isSecondary?: boolean;
+	isGlowing?: boolean;
 };
 
 export type StyleProps = {
@@ -14,6 +15,7 @@ export type StyleProps = {
 	$size: InternalProps['size'];
 	$isFullWidth: InternalProps['isFullWidth'];
 	$isSecondary: InternalProps['isSecondary'];
+	$isGlowing: InternalProps['isGlowing'];
 };
 
 export type Props = InternalProps & AriaButtonProps;

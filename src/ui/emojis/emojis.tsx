@@ -1,13 +1,21 @@
 import React from 'react';
 
-import Root from './emojis.styles';
+import Root, { Emoji } from './emojis.styles';
+import { Button as AriaButton } from 'react-aria-components';
 
+import useEmojis from './use-emojis';
 import type { Props } from './emojis.d';
 
-const Emojis = ({}: Props) => {
+const Emojis = ({ color, onChange }: Props) => {
+	const emojis = useEmojis();
+
 	return (
 		<Root>
-			<h1>Emojis</h1>
+			{emojis.map((emoji) => (
+				<Emoji as={AriaButton} key={emoji} $color={color || '#fff'} onPress={() => onChange(emoji)}>
+					{emoji}
+				</Emoji>
+			))}
 		</Root>
 	);
 };

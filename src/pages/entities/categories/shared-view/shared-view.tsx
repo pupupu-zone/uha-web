@@ -46,6 +46,16 @@ const CategorySharedView = ({ form }: Props) => {
 				</form.Field>
 
 				<Main>
+					<form.Field name="emoji">
+						{(field) => {
+							const onChangeHd = (nextEmoji: string) => {
+								field.handleChange(nextEmoji);
+							};
+
+							return <Emojis onChange={onChangeHd} color={color} />;
+						}}
+					</form.Field>
+
 					<form.Field name="color">
 						{(field) => {
 							const onChangeHd = (nextColor: string) => {
@@ -55,19 +65,11 @@ const CategorySharedView = ({ form }: Props) => {
 							return <Swatches onChange={onChangeHd} />;
 						}}
 					</form.Field>
-
-					<form.Field name="emoji">
-						{(field) => {
-							const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
-								field.handleChange(e.target.value);
-							};
-
-							return <Emojis onChange={onChangeHd} />;
-						}}
-					</form.Field>
 				</Main>
 
-				<Button isFullWidth>Create</Button>
+				<Button isFullWidth isGlowing type="submit">
+					Create
+				</Button>
 			</Root>
 		</>
 	);

@@ -58,6 +58,10 @@ const fitWidth = css`
 	width: fit-content;
 `;
 
+const gloving = css`
+	box-shadow: 0 2px 20px 8px rgba(255, 255, 255, 0.1);
+`;
+
 export default styled.button<StyleProps>`
 	display: inline-flex;
 	justify-content: center;
@@ -87,4 +91,5 @@ export default styled.button<StyleProps>`
 	}}
 	${({ $size }) => sizes[$size || 'medium']}
 	${({ $isFullWidth }) => ($isFullWidth ? fullWidth : fitWidth)}
+	${({ $isGlowing }) => ($isGlowing ? gloving : '')}
 `;

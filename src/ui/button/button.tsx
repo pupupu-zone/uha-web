@@ -15,6 +15,7 @@ const Button = React.forwardRef(
 			to,
 			isFullWidth = false,
 			isSecondary = false,
+			isGlowing = false,
 			onPress = noop,
 			variant = 'primary',
 			size = 'medium',
@@ -40,6 +41,7 @@ const Button = React.forwardRef(
 				$size={size}
 				$isFullWidth={isFullWidth}
 				$isSecondary={isSecondary}
+				$isGlowing={isGlowing}
 				onPress={onPressHd}
 				{...restProps}
 			>
