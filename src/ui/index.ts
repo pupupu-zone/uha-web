@@ -8,3 +8,5 @@ export { default as Select } from './select';
 export * from './typography';
 export { default as EmojiField } from './emoji-field';
 export { default as ColorField } from './color-field';
+export { default as Swatches } from './swatches';
+export { default as Emojis } from './emojis';

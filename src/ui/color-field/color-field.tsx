@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-import useGetColors from './use-get-colors';
 import { useIsTextDark } from '@hooks';
+import useGetColors from './use-get-colors';
 
 import Icon from '../icon';
 import { HexColorPicker } from 'react-colorful';

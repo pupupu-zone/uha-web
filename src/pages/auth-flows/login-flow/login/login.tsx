@@ -52,7 +52,7 @@ const LoginPage = () => {
 							id={field.name}
 							type="password"
 							label="Password"
-							placeholder="●●●●●●●●"
+							placeholder="••••••••"
 							name={field.name}
 							autoComplete="current-password"
 							onChange={onChangeHd}

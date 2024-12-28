@@ -6,7 +6,7 @@ export const Main = styled.main`
 	gap: 36px;
 `;
 
-export default styled.div`
+export default styled.div<{ $color: string }>`
 	display: grid;
 	grid-auto-flow: row;
 	gap: 24px;
