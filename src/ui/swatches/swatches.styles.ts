@@ -1,18 +1,12 @@
 import styled, { createGlobalStyle } from 'styled-components';
 
 export const ReactColorful = createGlobalStyle`
-	/* stylelint-disable selector-class-pattern */
 	.react-colorful {
 		width: 100% !important;
-
-		& .react-colorful__saturation {
-			border-top-left-radius: 0;
-			border-top-right-radius: 0;
-		}
 	}
 `;
 
-export const SwatchPreview = styled.button<{ $color: string }>`
+export const Swatch = styled.button<{ $color: string }>`
 	justify-self: center;
 	height: 36px;
 	aspect-ratio: 2/1;
@@ -30,8 +24,15 @@ export const SwatchPreview = styled.button<{ $color: string }>`
 	}
 `;
 
-export default styled.div`
+export const SwatchesList = styled.div`
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
 	gap: 12px;
+`;
+
+export default styled.div`
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	isolation: isolate;
 `;

@@ -1,9 +1,11 @@
 import React from 'react';
 
+import Icon from '../icon';
 import Root, { Emoji } from './emojis.styles';
 import { Button as AriaButton } from 'react-aria-components';
 
 import useEmojis from './use-emojis';
+
 import type { Props } from './emojis.d';
 
 const Emojis = ({ color, onChange }: Props) => {
@@ -16,6 +18,10 @@ const Emojis = ({ color, onChange }: Props) => {
 					{emoji}
 				</Emoji>
 			))}
+
+			<Emoji as={AriaButton} $color="#fff">
+				<Icon name="add" />
+			</Emoji>
 		</Root>
 	);
 };
