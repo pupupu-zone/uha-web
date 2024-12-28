@@ -20,6 +20,7 @@ export const PredefinedEmoji = styled.button`
 	height: 42px;
 	min-height: 42px;
 	max-height: 42px;
+	padding: 0;
 	font-size: 24px;
 	line-height: 42px;
 	aspect-ratio: 1;

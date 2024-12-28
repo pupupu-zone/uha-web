@@ -4,6 +4,7 @@ const swatchesCommon = css`
 	width: 36px;
 	height: 36px;
 	aspect-ratio: 1;
+	padding: 0;
 	border: none;
 	border-radius: 50%;
 	transition: transform 100ms ease-in;
