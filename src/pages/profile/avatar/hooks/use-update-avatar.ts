@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { useAppDispatch } from '@store';
 import { useSelector } from 'react-redux';
+import { useStore } from '@tanstack/react-form';
 
 import yup from '@yup';
 import { useForm } from '@tanstack/react-form';
@@ -50,7 +51,7 @@ const useUpdateAvatar = () => {
 		}
 	});
 
-	const errors = form.useStore((store) => store.errors);
+	const errors = useStore(form.store, (store) => store.errors);
 
 	useEffect(() => {
 		if (!result.isSuccess || result.isFetching) return;

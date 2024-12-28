@@ -1,4 +1,5 @@
 import React from 'react';
+import { useStore } from '@tanstack/react-form';
 
 import { useUpdateName } from './hooks';
 
@@ -6,7 +7,9 @@ import Root, { NameInput } from './username.styles';
 
 const UserName = () => {
 	const { form } = useUpdateName();
-	const isValid = form.useStore((store) => store.isValid && !store.isPristine);
+	const isValid = useStore(form.store, (store) => {
+		return store.isValid && !store.isPristine;
+	});
 
 	const onSubmitHd = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

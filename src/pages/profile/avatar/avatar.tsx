@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
 import { useBrokenImg } from '@hooks';
+import { useStore } from '@tanstack/react-form';
 import { useInitials, useGradientId, useUpdateAvatar } from './hooks';
 
 import { selectors as userSelectors } from '@data/user';
@@ -10,11 +11,14 @@ import { Icon } from '@ui';
 import Root, { ImageWrap, ImageSelector, Initials, Image, Edit } from './avatar.styles';
 
 const Avatar = () => {
-	const avatarInputRef = useRef<HTMLInputElement>(null);
 	const { form, result } = useUpdateAvatar();
+	const avatarInputRef = useRef<HTMLInputElement>(null);
+
 	const userData = useSelector(userSelectors.userSelector);
-	const avatar = form.useStore((store) => store.values.avatar);
-	const isValid = form.useStore((store) => store.isValid && !store.isPristine);
+	const avatar = useStore(form.store, (store) => store.values.avatar);
+	const isValid = useStore(form.store, (store) => {
+		return store.isValid && !store.isPristine;
+	});
 
 	const initials = useInitials();
 	const gradientId = useGradientId();

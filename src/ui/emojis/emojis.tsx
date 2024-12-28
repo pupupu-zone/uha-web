@@ -11,6 +11,8 @@ import emojiData from '@emoji-mart/data';
 
 import type { Props } from './emojis.d';
 
+const withPicker = import.meta.env.VITE_REACT_WITH_EMOJI_PICKER === 'true';
+
 const Emojis = ({ color, onChange }: Props) => {
 	const drawer = useDrawer();
 	const emojis = useEmojis();
@@ -24,29 +26,33 @@ const Emojis = ({ color, onChange }: Props) => {
 					</Emoji>
 				))}
 
-				<Emoji as={AriaButton} $color="#fff" onPress={drawer.openDrawer}>
-					<Icon name="add" />
-				</Emoji>
+				{withPicker && (
+					<Emoji as={AriaButton} $color="#fff" onPress={drawer.openDrawer}>
+						<Icon name="add" />
+					</Emoji>
+				)}
 			</Root>
 
-			<Drawer {...drawer}>
-				<PickerWrap>
-					<EmojiPicker
-						dynamicWidth
-						maxFrequentRows={0}
-						previewPosition="none"
-						locale="en"
-						data={emojiData}
-						// @ts-ignore
-						onEmojiSelect={(emoji) => {
-							onChange(emoji.native);
-							drawer.closeDrawer();
-						}}
-						emojiSize={28}
-						theme="light"
-					/>
-				</PickerWrap>
-			</Drawer>
+			{withPicker && (
+				<Drawer {...drawer}>
+					<PickerWrap>
+						<EmojiPicker
+							dynamicWidth
+							maxFrequentRows={0}
+							previewPosition="none"
+							locale="en"
+							data={emojiData}
+							// @ts-ignore
+							onEmojiSelect={(emoji) => {
+								onChange(emoji.native);
+								drawer.closeDrawer();
+							}}
+							emojiSize={28}
+							theme="light"
+						/>
+					</PickerWrap>
+				</Drawer>
+			)}
 		</>
 	);
 };

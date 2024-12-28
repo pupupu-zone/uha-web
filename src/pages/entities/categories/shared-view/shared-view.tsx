@@ -1,14 +1,16 @@
 import React from 'react';
+
 import { Button, Swatches, Emojis } from '@ui';
 import Root, { Main, ColorPreview, EmojiPreview, NameInput } from './shared-view.styles';
 
 import { useIsTextDark } from '@hooks';
+import { useStore } from '@tanstack/react-form';
 
 import type { Props } from './shared-view.d';
 
 const CategorySharedView = ({ form }: Props) => {
-	const color = form.useStore((state) => state.values.color);
-	const emoji = form.useStore((state) => state.values.emoji);
+	const color = useStore(form.store, (state) => state.values.color);
+	const emoji = useStore(form.store, (state) => state.values.emoji);
 	const isTextDark = useIsTextDark(color, 1);
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
