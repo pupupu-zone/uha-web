@@ -33,6 +33,9 @@ const CategorySharedView = ({ form }: Props) => {
 
 						return (
 							<NameInput
+								autoCorrect="off"
+								autoCapitalize="off"
+								autoComplete="off"
 								$isTextDark={isTextDark}
 								value={field.state.value}
 								onChange={onChangeHd}
@@ -45,17 +48,11 @@ const CategorySharedView = ({ form }: Props) => {
 				<Main>
 					<form.Field name="color">
 						{(field) => {
-							const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
-								field.handleChange(e.target.value);
+							const onChangeHd = (nextColor: string) => {
+								field.handleChange(nextColor);
 							};
 
-							return (
-								<div>
-									<Swatches />
-
-									{field.state.value}
-								</div>
-							);
+							return <Swatches onChange={onChangeHd} />;
 						}}
 					</form.Field>
 
@@ -65,17 +62,12 @@ const CategorySharedView = ({ form }: Props) => {
 								field.handleChange(e.target.value);
 							};
 
-							return (
-								<div>
-									<Emojis />
-									{field.state.value}
-								</div>
-							);
+							return <Emojis onChange={onChangeHd} />;
 						}}
 					</form.Field>
-
-					<Button isFullWidth>Create</Button>
 				</Main>
+
+				<Button isFullWidth>Create</Button>
 			</Root>
 		</>
 	);

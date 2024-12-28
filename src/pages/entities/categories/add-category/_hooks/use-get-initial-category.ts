@@ -24,7 +24,7 @@ const PREDEFINED_CATEGORIES = [
 	{ emoji: '🏠', name: 'Home', color: '#7bed9f' },
 	{ emoji: '🎯', name: 'Productivity', color: '#2bcbba' },
 	{ emoji: '💰', name: 'Finance', color: '#ffda79' },
-	{ emoji: '📧', name: 'Email', color: '#4b7bec' }
+	{ emoji: '📧', name: 'E-Mail', color: '#4b7bec' }
 ];
 
 const useGetInitialCategory = () => {
