@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 const PREDEFINED_EMOJIS = [
 	'📺',
@@ -33,23 +33,11 @@ const EMOJI_WIDTH = 48;
 const OUTER_PADDING = 48;
 
 const useEmojis = () => {
-	const [maxEmojis, setMaxEmojis] = useState(0);
+	const maxEmojis = useMemo(() => {
+		const maxInRow = Math.floor((window.innerWidth - OUTER_PADDING - GAP) / (EMOJI_WIDTH + GAP / 2));
+		const maxRows = Math.min(Math.floor(PREDEFINED_EMOJIS.length / maxInRow), MAX_ROWS);
 
-	useEffect(() => {
-		const updateMaxSwatches = () => {
-			const maxInRow = Math.floor((window.innerWidth - OUTER_PADDING - GAP) / (EMOJI_WIDTH + GAP / 2));
-			const maxRows = Math.min(Math.floor(PREDEFINED_EMOJIS.length / maxInRow), MAX_ROWS);
-
-			setMaxEmojis(maxRows * maxInRow - 1); // 1 for custom emoji
-		};
-
-		updateMaxSwatches();
-
-		window.addEventListener('resize', updateMaxSwatches);
-
-		return () => {
-			window.removeEventListener('resize', updateMaxSwatches);
-		};
+		return maxRows * maxInRow - 1; // 1 for custom emoji
 	}, []);
 
 	const emojis = useMemo(() => {

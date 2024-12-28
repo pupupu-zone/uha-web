@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 const PREDEFINED_COLORS = [
 	'#f3a683',
@@ -27,23 +27,11 @@ const SWATCH_WIDTH = 72;
 const OUTER_PADDING = 48;
 
 const useSwatches = () => {
-	const [maxSwatches, setMaxSwatches] = useState(0);
+	const maxSwatches = useMemo(() => {
+		const maxInRow = Math.floor((window.innerWidth - OUTER_PADDING - GAP) / (SWATCH_WIDTH + GAP / 2));
+		const maxRows = Math.min(Math.floor(PREDEFINED_COLORS.length / maxInRow), MAX_ROWS);
 
-	useEffect(() => {
-		const updateMaxSwatches = () => {
-			const maxInRow = Math.floor((window.innerWidth - OUTER_PADDING - GAP) / (SWATCH_WIDTH + GAP / 2));
-			const maxRows = Math.min(Math.floor(PREDEFINED_COLORS.length / maxInRow), MAX_ROWS);
-
-			setMaxSwatches(maxRows * maxInRow - 1); // 1 for custom color
-		};
-
-		updateMaxSwatches();
-
-		window.addEventListener('resize', updateMaxSwatches);
-
-		return () => {
-			window.removeEventListener('resize', updateMaxSwatches);
-		};
+		return maxRows * maxInRow - 1; // 1 for custom color
 	}, []);
 
 	const swatches = useMemo(() => {
