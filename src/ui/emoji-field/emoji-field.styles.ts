@@ -56,7 +56,7 @@ export const Emoji = styled.p`
 export const Label = styled.label`
 	position: relative;
 	padding: 12px;
-	color: #333;
+	color: var(--label);
 	font-weight: 500;
 	font-size: 16px;
 	line-height: 1;

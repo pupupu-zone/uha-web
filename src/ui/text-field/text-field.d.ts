@@ -7,8 +7,9 @@ export type InternalProps = {
 };
 
 export type StyleProps = {
-	$withErrors?: boolean;
+	$showErrors?: boolean;
 	$isFullWidth?: boolean;
+	$isFocused?: boolean;
 };
 
 export type Props = InternalProps & AriaTextFieldProps;

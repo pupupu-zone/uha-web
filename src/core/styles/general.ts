@@ -24,7 +24,7 @@ const General = createGlobalStyle`
 		--light-text: #eee;
 
 		/* Inputs */
-		--label: #777;
+		--label: #333;
 		--input-bg: #F7F7F8;
 		--input-border: #E9E9Ea;
 		--placeholder: #A1A1A1;

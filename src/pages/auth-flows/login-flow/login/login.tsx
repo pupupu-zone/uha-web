@@ -29,12 +29,13 @@ const LoginPage = () => {
 							id={field.name}
 							type="text"
 							label="Login"
+							placeholder="root"
 							name={field.name}
 							autoComplete="login"
 							onChange={onChangeHd}
 							value={field.state.value}
 							isFullWidth
-							errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
+							errors={formatError(field.state.meta.errors)}
 						/>
 					);
 				}}
@@ -51,12 +52,13 @@ const LoginPage = () => {
 							id={field.name}
 							type="password"
 							label="Password"
+							placeholder="●●●●●●●●"
 							name={field.name}
 							autoComplete="current-password"
 							onChange={onChangeHd}
 							value={field.state.value}
 							isFullWidth
-							errors={field.state.meta.isDirty ? formatError(field.state.meta.errors) : undefined}
+							errors={formatError(field.state.meta.errors)}
 						/>
 					);
 				}}

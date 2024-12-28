@@ -55,7 +55,7 @@ export const Swatches = styled.div`
 
 export const Label = styled.label<{ $color: string }>`
 	padding: 12px;
-	color: #333;
+	color: var(--label);
 	font-weight: 500;
 	font-size: 16px;
 	line-height: 1;
