@@ -1,5 +1,16 @@
 import styled from 'styled-components';
 
+export const PickerWrap = styled.div`
+	& em-emoji-picker {
+		width: calc(100% + 24px);
+		margin-right: -12px;
+		margin-left: -12px;
+
+		--border-radius: 0 0 8px 8px;
+		--shadow: none;
+	}
+`;
+
 export const Emoji = styled.div<{ $color: string }>`
 	display: flex;
 	align-items: center;
@@ -8,6 +19,7 @@ export const Emoji = styled.div<{ $color: string }>`
 	min-width: 48px;
 	height: 48px;
 	min-height: 48px;
+	padding: 0;
 	overflow: hidden;
 	font-size: 24px;
 	line-height: 48px;

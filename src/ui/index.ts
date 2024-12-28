@@ -8,3 +8,4 @@ export { default as Select } from './select';
 export * from './typography';
 export { default as Swatches } from './swatches';
 export { default as Emojis } from './emojis';
+export { default as Drawer } from './drawer';

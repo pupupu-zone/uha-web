@@ -28,9 +28,9 @@ const PREDEFINED_EMOJIS = [
 ];
 
 const GAP = 12;
+const MAX_ROWS = 4;
 const EMOJI_WIDTH = 48;
 const OUTER_PADDING = 48;
-const MAX_ROWS = 3;
 
 const useEmojis = () => {
 	const [maxEmojis, setMaxEmojis] = useState(0);

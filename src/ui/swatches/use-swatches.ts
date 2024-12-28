@@ -22,9 +22,9 @@ const PREDEFINED_COLORS = [
 ];
 
 const GAP = 12;
+const MAX_ROWS = 4;
 const SWATCH_WIDTH = 72;
 const OUTER_PADDING = 48;
-const MAX_ROWS = 3;
 
 const useSwatches = () => {
 	const [maxSwatches, setMaxSwatches] = useState(0);

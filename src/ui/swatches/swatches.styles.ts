@@ -6,7 +6,16 @@ export const ReactColorful = createGlobalStyle`
 	}
 `;
 
+export const DrawerContent = styled.div`
+	display: grid;
+	grid-auto-flow: rows;
+	gap: 36px;
+`;
+
 export const Swatch = styled.button<{ $color: string }>`
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	justify-self: center;
 	height: 36px;
 	aspect-ratio: 2/1;
