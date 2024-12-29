@@ -22,16 +22,15 @@ const PREDEFINED_COLORS = [
 ];
 
 const GAP = 12;
-const MAX_ROWS = 4;
 const SWATCH_WIDTH = 72;
 const OUTER_PADDING = 48;
 
-const useSwatches = () => {
+const useSwatches = (maxRows: number = 4) => {
 	const maxSwatches = useMemo(() => {
 		const maxInRow = Math.floor((window.innerWidth - OUTER_PADDING - GAP) / (SWATCH_WIDTH + GAP / 2));
-		const maxRows = Math.min(Math.floor(PREDEFINED_COLORS.length / maxInRow), MAX_ROWS);
+		const rows = Math.min(Math.floor(PREDEFINED_COLORS.length / maxInRow), maxRows);
 
-		return maxRows * maxInRow - 1; // 1 for custom color
+		return rows * maxInRow - 1; // 1 for custom color
 	}, []);
 
 	const swatches = useMemo(() => {

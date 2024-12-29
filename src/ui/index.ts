@@ -5,6 +5,4 @@ export { default as Textarea, calcLines, resetLineStyle } from './textarea';
 export { default as CustomToaster } from './toaster';
 export { default as Select } from './select';
 export * from './typography';
-export { default as Swatches } from './swatches';
-export { default as Emojis } from './emojis';
-export { default as Drawer } from './drawer';
+export { default as Drawer, useDrawer } from './drawer';

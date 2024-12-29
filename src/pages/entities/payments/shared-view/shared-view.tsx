@@ -3,7 +3,8 @@ import React from 'react';
 import { Button } from '@ui';
 import Emojis from '@features/emojis';
 import Swatches from '@features/swatches';
-import Root, { Main, ColorPreview, EmojiPreview, NameInput } from './shared-view.styles';
+import { Input as AriaInput } from 'react-aria-components';
+import Root, { Main, ColorPreview, EmojiPreview, NameInput, CommentInput } from './shared-view.styles';
 
 import { useIsTextDark } from '@hooks';
 import { useStore } from '@tanstack/react-form';
@@ -43,7 +44,7 @@ const CategorySharedView = ({ form }: Props) => {
 								$isTextDark={isTextDark}
 								value={field.state.value}
 								onChange={onChangeHd}
-								placeholder="Category name"
+								placeholder="Payment method name"
 							/>
 						);
 					}}
@@ -56,7 +57,7 @@ const CategorySharedView = ({ form }: Props) => {
 								field.handleChange(nextEmoji);
 							};
 
-							return <Emojis onChange={onChangeHd} color={color} set="categories" />;
+							return <Emojis onChange={onChangeHd} color={color} set="methods" maxRows={3} />;
 						}}
 					</form.Field>
 
@@ -66,7 +67,29 @@ const CategorySharedView = ({ form }: Props) => {
 								field.handleChange(nextColor);
 							};
 
-							return <Swatches onChange={onChangeHd} />;
+							return <Swatches onChange={onChangeHd} maxRows={3} />;
+						}}
+					</form.Field>
+
+					<form.Field name="comment">
+						{(field) => {
+							const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
+								field.handleChange(e.target.value);
+							};
+
+							return (
+								<CommentInput
+									as={AriaInput}
+									autoCorrect="off"
+									autoCapitalize="off"
+									autoComplete="off"
+									$isTextDark={isTextDark}
+									type="text"
+									placeholder="Comment"
+									onChange={onChangeHd}
+									value={field.state.value}
+								/>
+							);
 						}}
 					</form.Field>
 				</Main>

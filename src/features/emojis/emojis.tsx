@@ -1,8 +1,7 @@
 import React from 'react';
 
-import Icon from '../icon';
 import EmojiPicker from '@emoji-mart/react';
-import Drawer, { useDrawer } from '../drawer';
+import { Icon, Drawer, useDrawer } from '@ui';
 import Root, { Emoji, PickerWrap } from './emojis.styles';
 import { Button as AriaButton } from 'react-aria-components';
 
@@ -13,9 +12,9 @@ import type { Props } from './emojis.d';
 
 const withPicker = import.meta.env.VITE_REACT_WITH_EMOJI_PICKER === 'true';
 
-const Emojis = ({ color, onChange }: Props) => {
+const Emojis = ({ set, maxRows, color, onChange }: Props) => {
 	const drawer = useDrawer();
-	const emojis = useEmojis();
+	const emojis = useEmojis(set, maxRows);
 
 	return (
 		<>
