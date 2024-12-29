@@ -44,7 +44,7 @@ const CategorySharedView = ({ form }: Props) => {
 								$isTextDark={isTextDark}
 								value={field.state.value}
 								onChange={onChangeHd}
-								placeholder="Payment method name"
+								placeholder="Method name"
 							/>
 						);
 					}}
