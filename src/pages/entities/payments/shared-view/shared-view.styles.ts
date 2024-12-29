@@ -7,6 +7,7 @@ export const CommentInput = styled.input<{ $isTextDark: boolean }>`
 	background-color: transparent;
 	border: none;
 	border-left: 1px solid ${({ $isTextDark }) => ($isTextDark ? 'var(--primary-text)' : 'var(--bg-color)')};
+	border-radius: 0;
 
 	&:focus-visible {
 		box-shadow: none;

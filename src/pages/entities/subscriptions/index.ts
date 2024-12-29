@@ -1,1 +1,1 @@
-export { default as AddSubscription } from './add-subscription';
+export { default as AddSubscription } from './add-sub';
