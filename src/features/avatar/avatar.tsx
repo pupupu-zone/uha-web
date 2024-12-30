@@ -82,6 +82,7 @@ const Avatar = ({ name, url, onChange, isFetching, withError }: Props) => {
 				<CropRoot>
 					<CropperWrap>
 						<Cropper
+							objectFit="cover"
 							image={realAvatarUrl}
 							crop={crop}
 							zoom={zoom}
