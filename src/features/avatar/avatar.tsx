@@ -2,55 +2,39 @@ import React, { useRef, useId, useState, useEffect } from 'react';
 
 import toast from 'react-hot-toast';
 import { useBrokenImg } from '@hooks';
-import { getCroppedImg, getRotatedImage } from './get-cropped-image';
 import { useInitials, useGradientId } from './_hooks';
 
-import Cropper from 'react-easy-crop';
-import { Icon, Button, Modal, useModal } from '@ui';
-import Root, {
-	ImageWrap,
-	Image,
-	Initials,
-	ImageSelector,
-	Delete,
-	CropRoot,
-	CropperWrap,
-	Actions,
-	Rotations,
-	RotateBtn
-} from './avatar.styles';
+import Cropper from './cropper';
+import { Icon, Modal, useModal } from '@ui';
+import Root, { ImageWrap, Image, Initials, ImageSelector, Delete } from './avatar.styles';
 
 import type { Props } from './avatar.d';
 
 const Avatar = ({ name, url, onChange, isFetching, withError }: Props) => {
-	const [crop, setCrop] = useState({ x: 0, y: 0 });
-	const [rotation, setRotation] = useState(0);
-	const [zoom, setZoom] = useState(1);
-	const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+	const id = useId();
 	const modal = useModal();
 
-	const [realAvatarUrl, setRealAvatarUrl] = useState<string>(url);
+	const initials = useInitials(name);
+	const gradientId = useGradientId(name);
+
+	const avatarRef = useRef<HTMLInputElement>(null);
+	const [avatarUrl, setAvatarUrl] = useState<string>(url);
+	const [avatarPreview, setAvatarPreview] = useState<string>(''); // url from blob only
+	const { imageRef, isImageBroken, isImageLoading } = useBrokenImg();
 
 	useEffect(() => {
-		setRealAvatarUrl(url);
+		setAvatarUrl(url);
 	}, [url]);
 
 	useEffect(() => {
 		if (!onChange) return;
 
-		onChange(realAvatarUrl);
-	}, [realAvatarUrl]);
-
-	const id = useId();
-
-	const avatarRef = useRef<HTMLInputElement>(null);
-
-	const initials = useInitials(name);
-	const gradientId = useGradientId(name);
-	const { imageRef, isImageBroken, isImageLoading } = useBrokenImg();
+		onChange(avatarUrl);
+	}, [avatarUrl]);
 
 	const clearImageBlob = () => {
-		setRealAvatarUrl('');
+		setAvatarUrl('');
+		setAvatarPreview('');
 
 		if (avatarRef.current) {
 			avatarRef.current.value = '';
@@ -59,103 +43,39 @@ const Avatar = ({ name, url, onChange, isFetching, withError }: Props) => {
 		if (onChange) onChange();
 	};
 
-	const onCropComplete = (_, value) => {
-		setCroppedAreaPixels(value);
+	const loadImageHd = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const files = e.target.files || [];
+		const file = files[0];
+		if (!file) return;
+
+		if (!file.type.startsWith('image/')) {
+			toast.error(`File type is not supported (${file.type})`);
+
+			return;
+		}
+
+		setAvatarPreview(URL.createObjectURL(file));
+		modal.openModal();
+	};
+
+	const openImageDialog = () => {
+		avatarRef.current?.click();
 	};
 
 	return (
 		<Root>
-			<ImageSelector
-				ref={avatarRef}
-				id={id}
-				type="file"
-				hidden
-				onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-					const files = e.target.files || [];
-					const file = files[0];
-					if (!file) return;
-
-					if (!file.type.startsWith('image/')) {
-						toast.error(`File type is not supported (${file.type})`);
-
-						return;
-					}
-
-					setRealAvatarUrl(URL.createObjectURL(file));
-					// if (onChange) onChange(file);
-					modal.openModal();
-				}}
-			/>
+			<ImageSelector ref={avatarRef} id={id} type="file" hidden onChange={loadImageHd} />
 
 			<Modal title="Crop image" {...modal}>
-				<CropRoot>
-					<CropperWrap>
-						<Cropper
-							objectFit="cover"
-							image={realAvatarUrl}
-							crop={crop}
-							zoom={zoom}
-							rotation={rotation}
-							aspect={1 / 1}
-							onCropChange={setCrop}
-							onZoomChange={setZoom}
-							onCropComplete={onCropComplete}
-							onMediaLoaded={() => {
-								setCrop({ x: 0, y: 0 });
-								setRotation(0);
-								setZoom(1);
-							}}
-						/>
-					</CropperWrap>
-
-					<Rotations>
-						<RotateBtn onPress={() => setRotation((prev) => (prev + 270) % 360)}>
-							<Icon name="rotate-left" width={24} height={24} />
-						</RotateBtn>
-
-						<RotateBtn
-							onPress={() => {
-								setRotation((prev) => (prev + 90) % 360);
-							}}
-						>
-							<Icon name="rotate-right" width={24} height={24} />
-						</RotateBtn>
-					</Rotations>
-
-					<Actions>
-						<Button isFullWidth isSecondary onPress={modal.closeModal}>
-							Cancel
-						</Button>
-
-						<Button
-							isFullWidth
-							onPress={async () => {
-								const rotatedImage = await getRotatedImage(realAvatarUrl, rotation);
-								const imageBlobUrl = await getCroppedImg(rotatedImage, croppedAreaPixels);
-
-								setRealAvatarUrl(imageBlobUrl);
-								// if (onChange) onChange(imageBlobUrl);
-
-								modal.closeModal();
-							}}
-						>
-							Save
-						</Button>
-					</Actions>
-				</CropRoot>
+				<Cropper avatarPreview={avatarPreview} setAvatarUrl={setAvatarUrl} closeModal={modal.closeModal} />
 			</Modal>
 
-			<ImageWrap
-				$gradientId={gradientId}
-				onPress={() => {
-					avatarRef.current?.click();
-				}}
-			>
-				{realAvatarUrl && !isImageBroken && <Image ref={imageRef} src={realAvatarUrl} alt={name} />}
-				{(!realAvatarUrl || isImageLoading) && <Initials>{initials}</Initials>}
+			<ImageWrap $gradientId={gradientId} onPress={openImageDialog}>
+				{avatarUrl && !isImageBroken && <Image ref={imageRef} src={avatarUrl} alt={name} />}
+				{(!avatarUrl || isImageLoading) && <Initials>{initials}</Initials>}
 			</ImageWrap>
 
-			{realAvatarUrl && (
+			{avatarUrl && (
 				<Delete onPress={clearImageBlob}>
 					<Icon name="close" width={36} height={36} />
 				</Delete>

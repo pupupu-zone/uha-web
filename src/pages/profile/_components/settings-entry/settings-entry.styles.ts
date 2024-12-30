@@ -36,6 +36,12 @@ export default styled(AriaButton)`
 	cursor: pointer;
 	transition: background-color 150ms ease-in-out;
 
+	&[data-disabled] {
+		cursor: not-allowed;
+		opacity: 0.6;
+		pointer-events: none;
+	}
+
 	&:focus-visible,
 	&:focus,
 	&[data-pressed],

@@ -3,7 +3,7 @@ export type Props = {
 	url: string;
 	withError: boolean;
 	isFetching: boolean;
-	onChange: (file: File) => void;
+	onChange: (blobUrl?: string) => void;
 };
 
 export type AvatarStyledProps = {

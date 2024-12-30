@@ -1,30 +1,8 @@
 import styled from 'styled-components';
-import { Button as AriaButton } from 'react-aria-components';
 import gradients from './gradients';
+import { Button as AriaButton } from 'react-aria-components';
+
 import type { AvatarStyledProps } from './avatar.d';
-
-export const Rotations = styled.div``;
-
-export const RotateBtn = styled(AriaButton)``;
-
-export const CropperWrap = styled.div`
-	position: relative;
-	width: 100%;
-	aspect-ratio: 1 / 1;
-`;
-
-export const Actions = styled.div`
-	display: grid;
-	grid-auto-columns: 1fr 1fr;
-	grid-auto-flow: column;
-	gap: 24px;
-`;
-
-export const CropRoot = styled.div`
-	display: grid;
-	grid-auto-flow: row;
-	gap: 24px;
-`;
 
 export const Delete = styled(AriaButton)`
 	position: absolute;
@@ -41,7 +19,7 @@ export const Delete = styled(AriaButton)`
 	background-color: var(--input-bg);
 	border: none;
 	border-radius: 50%;
-	transition: transform 0.2s ease-in-out;
+	transition: transform 100ms ease-in-out;
 
 	&:focus-visible {
 		transform: scale(0.9);

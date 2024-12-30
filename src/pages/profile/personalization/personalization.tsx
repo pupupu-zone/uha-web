@@ -15,9 +15,9 @@ const THEMES = [
 ];
 
 const LANGUAGES = [
-	{ value: 'en', label: 'English' },
-	{ value: 'ru', label: 'Русский' },
-	{ value: 'kz', label: 'Қазақша' }
+	{ value: 'En', label: 'English' },
+	{ value: 'Ru', label: 'Русский' },
+	{ value: 'Kz', label: 'Қазақша' }
 ];
 
 const Personalization = () => {
@@ -30,8 +30,8 @@ const Personalization = () => {
 
 	return (
 		<SettingsBlock title="Personalization">
-			<SettingsEntry onPress={theme.open} left="Theme" right={themeView?.label ?? ''} />
-			<SettingsEntry onPress={language.open} left="Language" right={langView?.label ?? ''} />
+			<SettingsEntry isDisabled onPress={theme.open} left="Theme" right={themeView?.label ?? ''} />
+			<SettingsEntry isDisabled onPress={language.open} left="Language" right={langView?.label ?? ''} />
 
 			{theme.isOpen && <Select values={THEMES} close={theme.close} onSelect={theme.select} />}
 			{language.isOpen && <Select values={LANGUAGES} close={language.close} onSelect={language.select} />}
