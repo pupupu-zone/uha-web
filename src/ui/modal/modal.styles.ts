@@ -17,6 +17,7 @@ export const Content = styled.div`
 	gap: 24px;
 	width: 100%;
 	min-height: 40vh;
+	max-height: 100vh;
 	padding: 20px;
 	background-color: var(--popup-bg);
 	border-radius: 8px;
