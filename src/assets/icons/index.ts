@@ -12,3 +12,4 @@ export { default as StopIcon } from './stop.svg?react';
 export { default as ArrowLeft } from './arrow-left.svg?react';
 export { default as ArrowRight } from './arrow-right.svg?react';
 export { default as SearchIcon } from './search.svg?react';
+export { default as CloseIcon } from './close.svg?react';

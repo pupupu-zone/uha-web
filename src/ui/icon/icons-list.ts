@@ -14,7 +14,8 @@ const allIconsList = {
 	stop: icons.StopIcon,
 	'arrow-left': icons.ArrowLeft,
 	'arrow-right': icons.ArrowRight,
-	search: icons.SearchIcon
+	search: icons.SearchIcon,
+	close: icons.CloseIcon
 };
 
 export default allIconsList;

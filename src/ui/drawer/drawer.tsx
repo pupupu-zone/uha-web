@@ -6,7 +6,7 @@ import { Animated, Backdrop, DragHandle } from './drawer.styles';
 import type { Props } from './drawer.d';
 
 const Portal = ({ children }: React.PropsWithChildren<unknown>) => {
-	return createPortal(children, document.getElementById('drawers')!);
+	return createPortal(children, document.getElementById('drawer')!);
 };
 
 const Drawer = ({ children, y, backdropSpring, closeDrawer, isOpen }: Props) => {
