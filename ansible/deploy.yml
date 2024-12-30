@@ -12,7 +12,7 @@
       register: env_files
       with_items:
         - "{{ web_env_path }}"
-      
+
     - name: Fail if env file don't exist
       fail:
         msg: "Required .env file not found. Please ensure {{ web_env_path }} exists."
@@ -31,9 +31,9 @@
         password: "{{ docker_password }}"
         reauthorize: true
 
-    - name: Deploy frontend (PUPUPU-WEB)
+    - name: Deploy frontend (UHA-WEB)
       community.docker.docker_container:
-        name: PUPUPU-WEB
+        name: UHA-WEB
         image: registry.keireira.com/subsawwy-web:latest
         state: started
         restart_policy: always

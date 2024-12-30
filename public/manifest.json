@@ -1,14 +1,14 @@
 {
-  "name": "PuPuPu",
-  "short_name": "PuPuPu",
+  "name": "Uha",
+  "short_name": "Uha",
   "start_url": "/?source=pwa",
   "display": "standalone",
   "background_color": "#EDE8E1",
   "lang": "en",
   "scope": "/",
-  "description": "PuPuPu is a subscription manager that helps you keep track of all your subscriptions in one place.",
+  "description": "Uha is a subscription manager that helps you keep track of all your subscriptions in one place.",
   "theme_color": "#EDE8E1",
-  "id": "pupupu-5702b80f-4bcc-4efe-8403-85f7febf90a0",
+  "id": "uha-5702b80f-4bcc-4efe-8403-85f7febf90a0",
   "icons": [
     {
       "src": "/favicon.ico",
