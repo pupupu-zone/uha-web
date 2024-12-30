@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useId, useState, useEffect } from 'react';
+import React, { useRef, useId, useState, useEffect } from 'react';
 
 import toast from 'react-hot-toast';
 import { useBrokenImg } from '@hooks';
@@ -34,6 +34,12 @@ const Avatar = ({ name, url, onChange, isFetching, withError }: Props) => {
 	useEffect(() => {
 		setRealAvatarUrl(url);
 	}, [url]);
+
+	useEffect(() => {
+		if (!onChange) return;
+
+		onChange(realAvatarUrl);
+	}, [realAvatarUrl]);
 
 	const id = useId();
 
@@ -76,7 +82,7 @@ const Avatar = ({ name, url, onChange, isFetching, withError }: Props) => {
 					}
 
 					setRealAvatarUrl(URL.createObjectURL(file));
-					if (onChange) onChange(file);
+					// if (onChange) onChange(file);
 					modal.openModal();
 				}}
 			/>
@@ -96,6 +102,7 @@ const Avatar = ({ name, url, onChange, isFetching, withError }: Props) => {
 							onCropComplete={onCropComplete}
 							onMediaLoaded={() => {
 								setCrop({ x: 0, y: 0 });
+								setRotation(0);
 								setZoom(1);
 							}}
 						/>
@@ -127,6 +134,7 @@ const Avatar = ({ name, url, onChange, isFetching, withError }: Props) => {
 								const imageBlobUrl = await getCroppedImg(rotatedImage, croppedAreaPixels);
 
 								setRealAvatarUrl(imageBlobUrl);
+								// if (onChange) onChange(imageBlobUrl);
 
 								modal.closeModal();
 							}}

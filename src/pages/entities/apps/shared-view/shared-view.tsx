@@ -31,6 +31,8 @@ const AppSharedView = ({ form }: Props) => {
 
 			return;
 		}
+
+		form.setFieldValue('avatar', newBlob);
 	};
 
 	return (

@@ -4,7 +4,7 @@ import yup from '@yup';
 type Fields = {
 	name: string;
 	color: string;
-	avatar: string; // either avatar_url or logo_url
+	avatar: string;
 	logo_url: string;
 	aliases: string[];
 };
