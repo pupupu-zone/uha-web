@@ -12,12 +12,14 @@ export const Backdrop = styled(animated.div)`
 export const Content = styled.div`
 	position: relative;
 	z-index: 10000;
-	width: calc(100% - 48px);
-	height: fit-content;
+	display: grid;
+	grid-auto-flow: row;
+	gap: 24px;
+	width: 100%;
 	min-height: 40vh;
 	padding: 20px;
 	background-color: var(--popup-bg);
-	border-radius: 12px;
+	border-radius: 8px;
 	box-shadow: 0 -2px 10px rgba(0 0 0 / 0.1);
 `;
 

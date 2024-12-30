@@ -9,6 +9,19 @@ export const CropperWrap = styled.div`
 	aspect-ratio: 1 / 1;
 `;
 
+export const Actions = styled.div`
+	display: grid;
+	grid-auto-columns: 1fr 1fr;
+	grid-auto-flow: column;
+	gap: 24px;
+`;
+
+export const CropRoot = styled.div`
+	display: grid;
+	grid-auto-flow: row;
+	gap: 24px;
+`;
+
 export const Delete = styled(AriaButton)`
 	position: absolute;
 	top: 0;
