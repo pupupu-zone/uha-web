@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Button } from '@ui';
-import Emojis from '@features/emojis';
-import Swatches from '@features/swatches';
+import Emojis from '@shared/emojis';
+import Swatches from '@shared/swatches';
 import Root, { Main, ColorPreview, EmojiPreview, NameInput } from './shared-view.styles';
 
 import { useIsTextDark } from '@hooks';

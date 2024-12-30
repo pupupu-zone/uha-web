@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { colorizeWord } from '@utils';
 import { categorySelector } from '@data/categories/selectors';
 
-import LogoContent from '@features/logotype';
+import LogoContent from '@shared/logotype';
 import Root, { Name, LogoWrap, Info, Category } from './list-item.styles';
 
 import type { Props } from './list-item.d';

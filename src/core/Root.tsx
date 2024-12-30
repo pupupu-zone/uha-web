@@ -8,7 +8,7 @@ import { Settings } from 'luxon';
 import { useLocale } from '@utils/hooks';
 
 import { CustomToaster } from '@ui';
-import ProgressiveUnit from '@features/pwa';
+import ProgressiveUnit from '@shared/pwa';
 import { AuthProvider, useAuth } from './auth';
 import { FontStyles, ResetStyles, GeneralStyles } from '@core/styles';
 

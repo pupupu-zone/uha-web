@@ -10,7 +10,7 @@ import { settingsSelector } from '@data/settings/selectors';
 import { subscriptionByIdSelector } from '@data/subscriptions/selectors';
 
 import { H2, H3, SmallText } from '@ui';
-import LogoContent from '@features/logotype';
+import LogoContent from '@shared/logotype';
 import Root, { LogoWrap, Information } from './sub-card.styles';
 
 import type { Subscription } from '@data/subscriptions';

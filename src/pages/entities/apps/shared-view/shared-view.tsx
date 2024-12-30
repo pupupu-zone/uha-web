@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Button } from '@ui';
-import Avatar from '@features/avatar';
-import Swatches from '@features/swatches';
+import Avatar from '@shared/avatar';
+import Swatches from '@shared/swatches';
 import Root, { Main, ColorPreview, NameInput } from './shared-view.styles';
 
 import { useIsTextDark } from '@hooks';

@@ -11,8 +11,8 @@ import { ScrollRestoration, Outlet } from '@tanstack/react-router';
 import { isAuthorizedSelector } from '@pages/auth-flows/_redux/selectors';
 
 import Root from './main.styles';
-import Crossroad from '@features/crossroad';
-import Navbar from '@features/navbar';
+import Navbar from '@shared/navbar';
+import Crossroad from '@shared/crossroad';
 
 import type { Props } from './main.d';
 
