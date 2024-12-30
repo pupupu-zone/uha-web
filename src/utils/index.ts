@@ -10,3 +10,4 @@ export { default as sortBy } from './sort-by';
 export { default as formatBytes } from './format-bytes';
 export { default as purgeIndexedDB } from './purge-db';
 export { default as purgeSWCache } from './purge-sw-cache';
+export { default as blobUrlToFile } from './blob-to-file';

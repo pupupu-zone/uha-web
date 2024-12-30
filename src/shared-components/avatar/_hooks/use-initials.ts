@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-const useInitials = (name: string) => {
+const useInitials = (name: string = '') => {
 	const initials = useMemo(() => {
 		if (!name) return '';
 

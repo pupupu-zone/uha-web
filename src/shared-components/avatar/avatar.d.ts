@@ -1,8 +1,9 @@
 export type Props = {
-	name: string;
+	name?: string;
 	url: string;
-	withError: boolean;
-	isFetching: boolean;
+	withError?: boolean;
+	isFetching?: boolean;
+	withDelete?: boolean;
 	onChange: (blobUrl?: string) => void;
 };
 

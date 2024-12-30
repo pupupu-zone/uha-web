@@ -5,8 +5,8 @@ type Fields = {
 	name: string;
 	color: string;
 	avatar: string;
-	logo_url: string;
 	aliases: string[];
+	category_id: string;
 };
 
 export type Props = {

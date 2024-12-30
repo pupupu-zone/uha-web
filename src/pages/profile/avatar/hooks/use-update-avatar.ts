@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { useStore } from '@tanstack/react-form';
 
 import yup from '@yup';
+import { blobUrlToFile } from '@utils';
 import { useForm } from '@tanstack/react-form';
 import { yupValidator } from '@tanstack/yup-form-adapter';
 
@@ -13,18 +14,8 @@ import { actions as userActions } from '@data/user';
 import { selectors as userSelectors } from '@data/user';
 import { useLazyUpdateUserQuery } from '@data/user/api';
 
-const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/jfif', 'image/png'];
-
 const formSchema = yup.object({
-	avatar: yup
-		.mixed<File>()
-		.required()
-		.test('fileSize', 'File too large. Maximum size is 5MB.', (value) => {
-			return value && value.size <= 5 * 1024 * 1024; // 5MB
-		})
-		.test('fileFormat', 'Unsupported Format. Allowed formats: JPG, JPEG, GIF, PNG.', (value) => {
-			return value && SUPPORTED_FORMATS.includes(value.type);
-		})
+	avatar: yup.string()
 });
 
 const useUpdateAvatar = () => {
@@ -38,16 +29,16 @@ const useUpdateAvatar = () => {
 			onChange: formSchema
 		},
 		defaultValues: {
-			avatar: userData.avatar_url
+			avatar: userData.avatar_url || ''
 		},
-		onSubmit: ({ value }) => {
+		onSubmit: async ({ value }) => {
 			const formData = new FormData();
+			const avatar = await blobUrlToFile(value.avatar, 'avatar');
 
-			if (value.avatar) {
-				formData.append('avatar', value.avatar);
+			if (avatar) {
+				formData.append('avatar', avatar);
+				request(formData);
 			}
-
-			request(formData);
 		}
 	});
 

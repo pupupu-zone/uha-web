@@ -1,23 +1,15 @@
-import mime from 'mime-types';
 import { useForm } from '@tanstack/react-form';
 import { yupValidator } from '@tanstack/yup-form-adapter';
 
 import yup from '@yup';
+import { blobUrlToFile } from '@utils';
 import useGetInitialApp from './use-get-initial-app';
 
-const blobUrlToFile = async (blobUrl: string, fileName = 'image') => {
-	const response = await fetch(blobUrl);
-	const blob = await response.blob();
-	const extension = mime.extension(blob.type);
-
-	return new File([blob], `${fileName}.${extension}`, { type: blob.type });
-};
-
 const formSchema = yup.object({
-	name: yup.string().min(2, 'Minimum 2 characters').required('Mandatory Field'),
-	color: yup.string().hex('Use HEX').required('Mandatory Field'),
-	avatar: yup.string(), // avatar is internal and is blob url
-	logo_url: yup.string(), // logo_url is external, not blob url
+	name: yup.string().min(2).required(),
+	color: yup.string().hex().required(),
+	avatar: yup.string(),
+	category_id: yup.string().required(),
 	aliases: yup.array().of(yup.string())
 });
 

@@ -4,6 +4,25 @@ import { Button as AriaButton } from 'react-aria-components';
 
 import type { AvatarStyledProps } from './avatar.d';
 
+export const Loader = styled.div<{ $isFetching: boolean }>`
+	/* stylelint-disable declaration-block-no-redundant-longhand-properties */
+
+	position: absolute;
+	top: ${({ $isFetching }) => ($isFetching ? '0' : '100%')};
+	right: 0;
+	bottom: 0;
+	left: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--light-text);
+	background-color: oklch(var(--primary-button) / 0.8);
+	opacity: ${({ $isFetching }) => ($isFetching ? '1' : '0')};
+	transition-timing-function: ease-in-out;
+	transition-duration: 200ms;
+	transition-property: top, opacity;
+`;
+
 export const Delete = styled(AriaButton)`
 	position: absolute;
 	top: 0;

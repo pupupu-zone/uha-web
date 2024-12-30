@@ -13,7 +13,6 @@ import type { Props } from './shared-view.d';
 const AppSharedView = ({ form }: Props) => {
 	const color = useStore(form.store, (state) => state.values.color);
 	const appName = useStore(form.store, (state) => state.values.name);
-	const logoUrl = useStore(form.store, (state) => state.values.logo_url);
 
 	const isTextDark = useIsTextDark(color, 1);
 
@@ -24,23 +23,20 @@ const AppSharedView = ({ form }: Props) => {
 		form.handleSubmit();
 	};
 
-	const onAvatarChange = (newBlob?: File) => {
-		if (!newBlob) {
-			form.setFieldValue('logo_url', '');
-			form.setFieldValue('avatar', '');
-
-			return;
-		}
-
-		form.setFieldValue('avatar', newBlob);
-	};
-
 	return (
 		<>
 			<ColorPreview $color={color} />
 
 			<Root onSubmit={onSubmit} noValidate>
-				<Avatar name={appName} url={logoUrl} onChange={onAvatarChange} />
+				<form.Field name="avatar">
+					{(field) => {
+						const onAvatarChange = (newBlob: string = '') => {
+							field.handleChange(newBlob);
+						};
+
+						return <Avatar name={appName} url={field.state.value} onChange={onAvatarChange} />;
+					}}
+				</form.Field>
 
 				<form.Field name="name">
 					{(field) => {
@@ -63,13 +59,25 @@ const AppSharedView = ({ form }: Props) => {
 				</form.Field>
 
 				<Main>
-					<form.Field name="color">
+					<form.Field name="category_id">
 						{(field) => {
-							const onChangeHd = (nextColor: string) => {
-								field.handleChange(nextColor);
+							const onChangeHd = (e: React.ChangeEvent<HTMLSelectElement>) => {
+								field.handleChange(e.target.value);
 							};
 
-							return <Swatches onChange={onChangeHd} />;
+							return (
+								<select value={field.state.value} onChange={onChangeHd}>
+									<option value="">Select a category</option>
+									<option value="1">Category 1</option>
+									<option value="2">Category 2</option>
+								</select>
+							);
+						}}
+					</form.Field>
+
+					<form.Field name="color">
+						{(field) => {
+							return <Swatches onChange={field.handleChange} />;
 						}}
 					</form.Field>
 				</Main>
