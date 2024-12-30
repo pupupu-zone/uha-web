@@ -15,7 +15,9 @@ const allIconsList = {
 	'arrow-left': icons.ArrowLeft,
 	'arrow-right': icons.ArrowRight,
 	search: icons.SearchIcon,
-	close: icons.CloseIcon
+	close: icons.CloseIcon,
+	'rotate-right': icons.RotateRightIcon,
+	'rotate-left': icons.RotateLeftIcon
 };
 
 export default allIconsList;

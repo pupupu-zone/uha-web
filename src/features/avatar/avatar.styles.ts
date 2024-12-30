@@ -3,6 +3,10 @@ import { Button as AriaButton } from 'react-aria-components';
 import gradients from './gradients';
 import type { AvatarStyledProps } from './avatar.d';
 
+export const Rotations = styled.div``;
+
+export const RotateBtn = styled(AriaButton)``;
+
 export const CropperWrap = styled.div`
 	position: relative;
 	width: 100%;

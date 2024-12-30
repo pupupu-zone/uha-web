@@ -2,7 +2,7 @@ import React, { useMemo, useRef, useId, useState, useEffect } from 'react';
 
 import toast from 'react-hot-toast';
 import { useBrokenImg } from '@hooks';
-import { getCroppedImg } from './get-cropped-image';
+import { getCroppedImg, getRotatedImage } from './get-cropped-image';
 import { useInitials, useGradientId } from './_hooks';
 
 import Cropper from 'react-easy-crop';
@@ -15,13 +15,16 @@ import Root, {
 	Delete,
 	CropRoot,
 	CropperWrap,
-	Actions
+	Actions,
+	Rotations,
+	RotateBtn
 } from './avatar.styles';
 
 import type { Props } from './avatar.d';
 
 const Avatar = ({ name, url, onChange, isFetching, withError }: Props) => {
 	const [crop, setCrop] = useState({ x: 0, y: 0 });
+	const [rotation, setRotation] = useState(0);
 	const [zoom, setZoom] = useState(1);
 	const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 	const modal = useModal();
@@ -86,6 +89,7 @@ const Avatar = ({ name, url, onChange, isFetching, withError }: Props) => {
 							image={realAvatarUrl}
 							crop={crop}
 							zoom={zoom}
+							rotation={rotation}
 							aspect={1 / 1}
 							onCropChange={setCrop}
 							onZoomChange={setZoom}
@@ -97,6 +101,20 @@ const Avatar = ({ name, url, onChange, isFetching, withError }: Props) => {
 						/>
 					</CropperWrap>
 
+					<Rotations>
+						<RotateBtn onPress={() => setRotation((prev) => (prev + 270) % 360)}>
+							<Icon name="rotate-left" width={24} height={24} />
+						</RotateBtn>
+
+						<RotateBtn
+							onPress={() => {
+								setRotation((prev) => (prev + 90) % 360);
+							}}
+						>
+							<Icon name="rotate-right" width={24} height={24} />
+						</RotateBtn>
+					</Rotations>
+
 					<Actions>
 						<Button isFullWidth isSecondary onPress={modal.closeModal}>
 							Cancel
@@ -105,7 +123,8 @@ const Avatar = ({ name, url, onChange, isFetching, withError }: Props) => {
 						<Button
 							isFullWidth
 							onPress={async () => {
-								const imageBlobUrl = await getCroppedImg(realAvatarUrl, croppedAreaPixels);
+								const rotatedImage = await getRotatedImage(realAvatarUrl, rotation);
+								const imageBlobUrl = await getCroppedImg(rotatedImage, croppedAreaPixels);
 
 								setRealAvatarUrl(imageBlobUrl);
 
