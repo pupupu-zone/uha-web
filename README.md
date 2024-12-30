@@ -6,7 +6,7 @@
 * **[@tanstack/form@0](https://tanstack.com/form/latest)**
 * **[Styled Components@6](https://styled-components.com/)**
 * **[Redux Toolkit@2](https://redux-toolkit.js.org/)**
-* **[Vite@5](https://vite.dev/)**
+* **[Vite@6](https://vite.dev/)**
 * **[PNPM](https://pnpm.io/)**
 * **[NodeJS@20](https://nodejs.org/)**
 * **[Typescript@5](https://www.typescriptlang.org/)**
