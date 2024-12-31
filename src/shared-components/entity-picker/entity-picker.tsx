@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
 import useEntity from './use-entity';
+import Fuse from 'fuse.js';
 
-import Root, { Select, SelectWrapper } from './entity-picker.styles';
+import { H1 } from '@ui';
+import Root, { Entities } from './entity-picker.styles';
 import EntityPreview from './entity-preview';
-import { ListBox, ListBoxItem, Popover, SelectValue } from 'react-aria-components';
+import { TextField, Input, Popover, SelectValue } from 'react-aria-components';
 
 import type { Props, EntityT } from './entity-picker.d';
 
@@ -16,36 +18,57 @@ const ENTITIES_NAMES = {
 
 const EntityPicker = ({ entity, entityId, onChange }: Props) => {
 	const entities = useEntity(entity);
+	const [search, setSearch] = useState('');
+	const [isSearchMode, setSearchMode] = useState(false);
+
+	const selectedEntity = useMemo(() => {
+		return entities.find((entity) => entity.id === entityId);
+	}, [entityId, entities]);
+
+	const filteredEntities = useMemo(() => {
+		if (!search) return entities;
+
+		const fuse = new Fuse(entities, {
+			keys: ['name', 'aliases'],
+			threshold: 0.3
+		});
+
+		return fuse.search(search).map((result) => result.item);
+	}, [search, entities]);
 
 	return (
 		<Root>
-			<Select aria-label={ENTITIES_NAMES[entity] || ''} onSelectionChange={console.log}>
-				<SelectWrapper>
-					<SelectValue>
-						{({ selectedItem }) => {
-							const item = selectedItem as EntityT;
+			{!isSearchMode && <H1 onClick={() => setSearchMode(true)}>{selectedEntity?.name || 'Select...'}</H1>}
 
-							if (!item) {
-								return <div>select</div>;
-							}
-
-							return <EntityPreview name={item.name} emoji={item.emoji} logoUrl={item.logo_url} color={item.color} />;
+			{isSearchMode && (
+				<TextField>
+					<Input
+						value={search}
+						onInput={(e) => {
+							setSearch(e.target.value);
 						}}
-					</SelectValue>
-				</SelectWrapper>
+						onBlur={() => setSearchMode(false)}
+					/>
+				</TextField>
+			)}
 
-				<Popover>
-					<ListBox>
-						{entities.map((entity) => {
-							return (
-								<ListBoxItem key={entity.id} id={entity.id} textValue={entity.name} value={entity}>
-									{entity.name}
-								</ListBoxItem>
-							);
-						})}
-					</ListBox>
-				</Popover>
-			</Select>
+			{isSearchMode && (
+				<Entities>
+					{filteredEntities.map((entity) => {
+						return (
+							<H1
+								key={entity.id}
+								onClick={() => {
+									onChange(entity.id);
+									setSearch('');
+								}}
+							>
+								{entity.name}
+							</H1>
+						);
+					})}
+				</Entities>
+			)}
 		</Root>
 	);
 };

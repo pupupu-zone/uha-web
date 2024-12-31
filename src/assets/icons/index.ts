@@ -11,6 +11,7 @@ export { default as InfinityIcon } from './infinity.svg?react';
 export { default as StopIcon } from './stop.svg?react';
 export { default as ArrowLeft } from './arrow-left.svg?react';
 export { default as ArrowRight } from './arrow-right.svg?react';
+export { default as ArrowDown } from './arrow-down.svg?react';
 export { default as SearchIcon } from './search.svg?react';
 export { default as CloseIcon } from './close.svg?react';
 export { default as RotateLeftIcon } from './rotate-left.svg?react';

@@ -9,6 +9,8 @@ import Root, { ImageWrap, Image, Initials, ImageSelector, Delete, Loader } from 
 
 import type { Props } from './avatar-picker.d';
 
+// @TODO: add support of FileTrigger from 'react-aria-components';
+
 const Avatar = ({ name, url, onChange, isFetching, withError, withDelete = true }: Props) => {
 	const id = useId();
 	const modal = useModal();

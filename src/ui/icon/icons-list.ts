@@ -14,6 +14,7 @@ const allIconsList = {
 	stop: icons.StopIcon,
 	'arrow-left': icons.ArrowLeft,
 	'arrow-right': icons.ArrowRight,
+	'arrow-down': icons.ArrowDown,
 	search: icons.SearchIcon,
 	close: icons.CloseIcon,
 	'rotate-right': icons.RotateRightIcon,

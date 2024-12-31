@@ -62,8 +62,8 @@ const AppSharedView = ({ form }: Props) => {
 				<Main>
 					<form.Field name="category_id">
 						{(field) => {
-							const onChangeHd = (e: React.ChangeEvent<HTMLSelectElement>) => {
-								field.handleChange(e.target.value);
+							const onChangeHd = (nextCategoryId: string) => {
+								field.handleChange(nextCategoryId);
 							};
 
 							return <EntityPicker entity="categories" entityId={field.state.value} onChange={onChangeHd} />;
