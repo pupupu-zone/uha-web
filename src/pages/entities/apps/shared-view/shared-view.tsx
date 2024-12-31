@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { Button } from '@ui';
-import Avatar from '@shared/avatar';
 import Swatches from '@shared/swatches';
+import AvatarPicker from '@shared/avatar-picker';
+import EntityPicker from '@shared/entity-picker';
 import Root, { Main, ColorPreview, NameInput } from './shared-view.styles';
 
 import { useIsTextDark } from '@hooks';
@@ -34,7 +35,7 @@ const AppSharedView = ({ form }: Props) => {
 							field.handleChange(newBlob);
 						};
 
-						return <Avatar name={appName} url={field.state.value} onChange={onAvatarChange} />;
+						return <AvatarPicker name={appName} url={field.state.value} onChange={onAvatarChange} />;
 					}}
 				</form.Field>
 
@@ -52,7 +53,7 @@ const AppSharedView = ({ form }: Props) => {
 								$isTextDark={isTextDark}
 								value={field.state.value}
 								onChange={onChangeHd}
-								placeholder="Application name"
+								placeholder="App name"
 							/>
 						);
 					}}
@@ -65,13 +66,7 @@ const AppSharedView = ({ form }: Props) => {
 								field.handleChange(e.target.value);
 							};
 
-							return (
-								<select value={field.state.value} onChange={onChangeHd}>
-									<option value="">Select a category</option>
-									<option value="1">Category 1</option>
-									<option value="2">Category 2</option>
-								</select>
-							);
+							return <EntityPicker entity="categories" entityId={field.state.value} onChange={onChangeHd} />;
 						}}
 					</form.Field>
 

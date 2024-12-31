@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useUpdateAvatar } from './hooks';
 import { userNameSelector } from '@data/user/selectors';
 
-import Avatar from '@shared/avatar';
+import AvatarPicker from '@shared/avatar-picker';
 import Root from './avatar.styles';
 
 const AvatarUpload = () => {
@@ -21,7 +21,7 @@ const AvatarUpload = () => {
 					};
 
 					return (
-						<Avatar
+						<AvatarPicker
 							name={userName}
 							url={field.state.value}
 							onChange={onAvatarChange}

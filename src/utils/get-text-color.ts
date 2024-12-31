@@ -1,5 +1,5 @@
 function getTextColor(
-	backgroundColor: string,
+	backgroundColor: string = '',
 	opacity: number = 1,
 	baseBackground: string = '#FFFFFF'
 ): 'black' | 'white' {

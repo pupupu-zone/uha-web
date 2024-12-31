@@ -40,6 +40,10 @@ const SubCard = ({ id }: Props) => {
 		return result;
 	}, [price, currency, locale]);
 
+	if (!app) {
+		return null;
+	}
+
 	return (
 		<Root>
 			<LogoWrap>

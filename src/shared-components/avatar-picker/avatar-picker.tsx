@@ -6,9 +6,9 @@ import { useInitials, useGradientId } from './_hooks';
 
 import Cropper from './cropper';
 import { Icon, Modal, useModal } from '@ui';
-import Root, { ImageWrap, Image, Initials, ImageSelector, Delete, Loader } from './avatar.styles';
+import Root, { ImageWrap, Image, Initials, ImageSelector, Delete, Loader } from './avatar-picker.styles';
 
-import type { Props } from './avatar.d';
+import type { Props } from './avatar-picker.d';
 
 const Avatar = ({ name, url, onChange, isFetching, withError, withDelete = true }: Props) => {
 	const id = useId();

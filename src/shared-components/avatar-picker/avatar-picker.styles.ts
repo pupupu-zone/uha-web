@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import gradients from './gradients';
 import { Button as AriaButton } from 'react-aria-components';
 
-import type { AvatarStyledProps } from './avatar.d';
+import type { AvatarStyledProps } from './avatar-picker.d';
 
 export const Loader = styled.div<{ $isFetching: boolean }>`
 	/* stylelint-disable declaration-block-no-redundant-longhand-properties */
