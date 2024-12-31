@@ -9,8 +9,7 @@ import { categorySelector } from '@data/categories/selectors';
 import { settingsSelector } from '@data/settings/selectors';
 import { subscriptionByIdSelector } from '@data/subscriptions/selectors';
 
-import { H2, H3, SmallText } from '@ui';
-import LogoContent from '@shared/logotype';
+import { H2, H3, SmallText, LogoView } from '@ui';
 import Root, { LogoWrap, Information } from './sub-card.styles';
 
 import type { Subscription } from '@data/subscriptions';
@@ -47,7 +46,7 @@ const SubCard = ({ id }: Props) => {
 	return (
 		<Root>
 			<LogoWrap>
-				<LogoContent logoUrl={app.logo_url} emoji={category.emoji} name={app.name} size={48} />
+				<LogoView logoUrl={app.logo_url} emoji={category.emoji} name={app.name} size={48} />
 			</LogoWrap>
 
 			<Information>

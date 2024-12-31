@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { colorizeWord } from '@utils';
 import { categorySelector } from '@data/categories/selectors';
 
-import LogoContent from '@shared/logotype';
+import { LogoView } from '@ui';
 import Root, { Name, LogoWrap, Info, Category } from './list-item.styles';
 
 import type { Props } from './list-item.d';
@@ -15,7 +15,7 @@ const ListItem = (props: Props) => {
 	return (
 		<Root>
 			<LogoWrap $color={props.color || colorizeWord(props.name)}>
-				<LogoContent logoUrl={props.logo_url} emoji={props.emoji} name={props.name} size={48} />
+				<LogoView logoUrl={props.logo_url} emoji={props.emoji} name={props.name} size={48} />
 			</LogoWrap>
 
 			<Info>

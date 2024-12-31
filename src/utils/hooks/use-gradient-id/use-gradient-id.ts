@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 
-import gradients from '../gradients';
-import useInitials from './use-initials';
+import gradients from './gradients';
+import useInitials from '../use-initials';
 
 const createHash = (text: string = '') => {
 	let hash = 0;

@@ -28,6 +28,7 @@ export const CropperWrap = styled.div`
 	position: relative;
 	width: 100%;
 	aspect-ratio: 1 / 1;
+	max-height: 60vh;
 `;
 
 export const Actions = styled.div`

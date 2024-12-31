@@ -1,8 +1,7 @@
 import React, { useRef, useId, useState, useEffect } from 'react';
 
 import toast from 'react-hot-toast';
-import { useBrokenImg } from '@hooks';
-import { useInitials, useGradientId } from './_hooks';
+import { useBrokenImg, useInitials, useGradientId } from '@hooks';
 
 import Cropper from './cropper';
 import { Icon, Modal, useModal } from '@ui';

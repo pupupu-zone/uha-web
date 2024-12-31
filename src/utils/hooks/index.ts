@@ -4,3 +4,5 @@ export { default as useIsTextDark } from './use-is-text-dark';
 export { default as useBrokenImg } from './use-broken-image';
 export { default as useStorage } from './use-storage';
 export { default as useShallFill } from './use-shall-fill';
+export { default as useInitials } from './use-initials';
+export { default as useGradientId } from './use-gradient-id';

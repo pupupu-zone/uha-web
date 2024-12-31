@@ -3,7 +3,6 @@ export type Category = {
 	name: string;
 	emoji?: string;
 	color: string;
-	is_public: boolean;
 };
 
 export type CategoriesSlice = {

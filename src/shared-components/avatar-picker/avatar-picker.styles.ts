@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import gradients from './gradients';
+import { gradients } from '@hooks/use-gradient-id';
 import { Button as AriaButton } from 'react-aria-components';
 
 import type { AvatarStyledProps } from './avatar-picker.d';
