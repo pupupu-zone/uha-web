@@ -3,21 +3,21 @@ import { useSelector } from 'react-redux';
 
 import { previewSelector } from '@data/applications/selectors';
 
-import ShowMore from '@pages/library/show-more';
+import { HorizontalScroll } from '@ui';
 import PreviewItem from './preview-item';
-import Root from './previews.styles';
+import ShowMore from '@pages/library/show-more';
 
 const CategoryPreview = () => {
 	const apps = useSelector(previewSelector);
 
 	return (
-		<Root>
+		<HorizontalScroll>
 			{apps.map((preview) => (
 				<PreviewItem key={preview.id} {...preview} />
 			))}
 
 			{apps.length >= 6 && <ShowMore to="/library/applications" />}
-		</Root>
+		</HorizontalScroll>
 	);
 };
 

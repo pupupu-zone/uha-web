@@ -3,21 +3,21 @@ import { useSelector } from 'react-redux';
 
 import { previewSelector } from '@data/payments/selectors';
 
-import ShowMore from '@pages/library/show-more';
+import { HorizontalScroll } from '@ui';
 import PreviewItem from './preview-item';
-import Root from './previews.styles';
+import ShowMore from '@pages/library/show-more';
 
 const PaymentPreviews = () => {
 	const payments = useSelector(previewSelector);
 
 	return (
-		<Root>
+		<HorizontalScroll>
 			{payments.map((preview) => (
 				<PreviewItem key={preview.id} {...preview} />
 			))}
 
 			{payments.length >= 6 && <ShowMore to="/library/payments" />}
-		</Root>
+		</HorizontalScroll>
 	);
 };
 

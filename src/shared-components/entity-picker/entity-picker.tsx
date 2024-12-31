@@ -3,7 +3,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import useEntity from './use-entity';
 import Fuse from 'fuse.js';
 
-import { H1 } from '@ui';
+import { H1, HorizontalScroll } from '@ui';
 import Root, { Entities } from './entity-picker.styles';
 import EntityPreview from './entity-preview';
 import { TextField, Input, Popover, SelectValue } from 'react-aria-components';
@@ -25,16 +25,18 @@ const EntityPicker = ({ entity, entityId, onChange }: Props) => {
 		return entities.find((entity) => entity.id === entityId);
 	}, [entityId, entities]);
 
-	const filteredEntities = useMemo(() => {
-		if (!search) return entities;
-
-		const fuse = new Fuse(entities, {
+	const fuse = useMemo(() => {
+		return new Fuse(entities, {
 			keys: ['name', 'aliases'],
 			threshold: 0.3
 		});
+	}, [entities]);
+
+	const filteredEntities = useMemo(() => {
+		if (!search) return entities;
 
 		return fuse.search(search).map((result) => result.item);
-	}, [search, entities]);
+	}, [fuse, search, entities]);
 
 	return (
 		<Root>
@@ -44,6 +46,7 @@ const EntityPicker = ({ entity, entityId, onChange }: Props) => {
 				<TextField>
 					<Input
 						value={search}
+						placeholder={selectedEntity?.name || 'Search...'}
 						onInput={(e) => {
 							setSearch(e.target.value);
 						}}
@@ -53,7 +56,7 @@ const EntityPicker = ({ entity, entityId, onChange }: Props) => {
 			)}
 
 			{isSearchMode && (
-				<Entities>
+				<HorizontalScroll as={Entities}>
 					{filteredEntities.map((entity) => {
 						return (
 							<H1
@@ -61,13 +64,14 @@ const EntityPicker = ({ entity, entityId, onChange }: Props) => {
 								onClick={() => {
 									onChange(entity.id);
 									setSearch('');
+									setSearchMode(false);
 								}}
 							>
 								{entity.name}
 							</H1>
 						);
 					})}
-				</Entities>
+				</HorizontalScroll>
 			)}
 		</Root>
 	);

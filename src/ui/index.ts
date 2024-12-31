@@ -8,3 +8,4 @@ export * from './typography';
 export { default as Drawer, useDrawer } from './drawer';
 export { default as Modal, useModal } from './modal';
 export { default as LogoView } from './logo-view';
+export { default as HorizontalScroll } from './horizontal-scroll';
