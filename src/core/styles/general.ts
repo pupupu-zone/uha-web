@@ -92,10 +92,20 @@ const General = createGlobalStyle`
 		justify-content: center;
 	}
 
-	button, input, textarea, a {
+	input, textarea, a {
 		outline: none;
 
 		&:focus-visible {
+			box-shadow: 0 0 0 3px oklch(var(--blue-focus) / 0.5);
+		}
+	}
+
+	/* show outline on focus via anything but touches */
+	button {
+		outline: none;
+
+		/* we use it in hope to use button from react-aria-components everywhere */
+		&:not([data-pressed='true'])[data-focus-visible='true'] {
 			box-shadow: 0 0 0 3px oklch(var(--blue-focus) / 0.5);
 		}
 	}

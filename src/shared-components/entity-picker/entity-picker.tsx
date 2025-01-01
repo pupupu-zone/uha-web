@@ -1,25 +1,30 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 
 import useEntity from './use-entity';
 import Fuse from 'fuse.js';
+import { useOnClickOutside } from '@hooks';
 
-import { H1, HorizontalScroll } from '@ui';
-import Root, { Entities } from './entity-picker.styles';
-import EntityPreview from './entity-preview';
-import { TextField, Input, Popover, SelectValue } from 'react-aria-components';
+import { HorizontalScroll } from '@ui';
+import Root, { Entities, Input, Button } from './entity-picker.styles';
+import { TextField as AriaTextField } from 'react-aria-components';
 
-import type { Props, EntityT } from './entity-picker.d';
+import type { Props } from './entity-picker.d';
 
-const ENTITIES_NAMES = {
-	apps: 'Apps', // rename to services
-	categories: 'Categories',
-	payment_methods: 'Payment methods'
+const ENTITY_NAMES = {
+	categories: 'category',
+	apps: 'app',
+	payment_methods: 'method'
 };
 
-const EntityPicker = ({ entity, entityId, onChange }: Props) => {
+const EntityPicker = ({ isTextDark, entity, entityId, onChange }: Props) => {
 	const entities = useEntity(entity);
 	const [search, setSearch] = useState('');
 	const [isSearchMode, setSearchMode] = useState(false);
+	const ref = useRef(null);
+
+	useOnClickOutside([ref], () => {
+		setSearchMode(false);
+	});
 
 	const selectedEntity = useMemo(() => {
 		return entities.find((entity) => entity.id === entityId);
@@ -39,38 +44,49 @@ const EntityPicker = ({ entity, entityId, onChange }: Props) => {
 	}, [fuse, search, entities]);
 
 	return (
-		<Root>
-			{!isSearchMode && <H1 onClick={() => setSearchMode(true)}>{selectedEntity?.name || 'Select...'}</H1>}
-
-			{isSearchMode && (
-				<TextField>
-					<Input
-						value={search}
-						placeholder={selectedEntity?.name || 'Search...'}
-						onInput={(e) => {
-							setSearch(e.target.value);
-						}}
-						onBlur={() => setSearchMode(false)}
-					/>
-				</TextField>
+		<Root ref={ref}>
+			{!isSearchMode && (
+				<Button $isTextDark={isTextDark} onPress={() => setSearchMode(true)}>
+					{selectedEntity?.name || `Select ${ENTITY_NAMES[entity]}`}
+				</Button>
 			)}
 
 			{isSearchMode && (
+				<AriaTextField
+					value={search}
+					onInput={(e) => {
+						setSearch(e.target.value);
+					}}
+				>
+					<Input $isTextDark={isTextDark} placeholder={selectedEntity?.name || `Search for ${ENTITY_NAMES[entity]}`} />
+				</AriaTextField>
+			)}
+
+			{isSearchMode && filteredEntities.length > 0 && (
 				<HorizontalScroll as={Entities}>
 					{filteredEntities.map((entity) => {
 						return (
-							<H1
+							<Button
+								$isTextDark={isTextDark}
 								key={entity.id}
-								onClick={() => {
+								onPress={(e) => {
 									onChange(entity.id);
 									setSearch('');
 									setSearchMode(false);
 								}}
 							>
 								{entity.name}
-							</H1>
+							</Button>
 						);
 					})}
+				</HorizontalScroll>
+			)}
+
+			{isSearchMode && !filteredEntities.length && (
+				<HorizontalScroll as={Entities}>
+					<Button $isTextDark={isTextDark} isDisabled>
+						No results found
+					</Button>
 				</HorizontalScroll>
 			)}
 		</Root>

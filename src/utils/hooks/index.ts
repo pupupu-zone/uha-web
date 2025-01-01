@@ -6,3 +6,4 @@ export { default as useStorage } from './use-storage';
 export { default as useShallFill } from './use-shall-fill';
 export { default as useInitials } from './use-initials';
 export { default as useGradientId } from './use-gradient-id';
+export { default as useOnClickOutside } from './use-on-click-outside';

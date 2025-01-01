@@ -14,7 +14,6 @@ import type { Props } from './shared-view.d';
 const AppSharedView = ({ form }: Props) => {
 	const color = useStore(form.store, (state) => state.values.color);
 	const appName = useStore(form.store, (state) => state.values.name);
-
 	const isTextDark = useIsTextDark(color, 1);
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -66,7 +65,14 @@ const AppSharedView = ({ form }: Props) => {
 								field.handleChange(nextCategoryId);
 							};
 
-							return <EntityPicker entity="categories" entityId={field.state.value} onChange={onChangeHd} />;
+							return (
+								<EntityPicker
+									isTextDark={isTextDark}
+									entity="categories"
+									entityId={field.state.value}
+									onChange={onChangeHd}
+								/>
+							);
 						}}
 					</form.Field>
 
