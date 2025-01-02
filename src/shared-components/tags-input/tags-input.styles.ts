@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Button as AriaButton, Input as AriaInput } from 'react-aria-components';
+import { Input as AriaInput } from 'react-aria-components';
 
 const h1Styles = css`
 	padding: 0;
@@ -8,6 +8,11 @@ const h1Styles = css`
 	font-family: 'Nunito Sans', sans-serif;
 	line-height: 32px;
 	text-align: left;
+`;
+
+export const Tag = styled.h1<{ $isTextDark: boolean }>`
+	${h1Styles}
+	color: ${({ $isTextDark }) => ($isTextDark ? 'var(--primary-text)' : 'var(--bg-color)')};
 `;
 
 export const Input = styled(AriaInput)<{ $isTextDark: boolean }>`
@@ -22,22 +27,7 @@ export const Input = styled(AriaInput)<{ $isTextDark: boolean }>`
 	}
 `;
 
-export const Button = styled(AriaButton)<{ $isTextDark: boolean; $isSelected: boolean }>`
-	${h1Styles}
-	width: fit-content;
-	margin: 0;
-	padding: 0;
-	color: ${({ $isTextDark }) => ($isTextDark ? 'var(--primary-text)' : 'var(--bg-color)')};
-	background-color: transparent;
-	border: none;
-	opacity: ${({ $isSelected }) => ($isSelected ? 1 : 0.6)};
-
-	&[data-disabled] {
-		opacity: 0.6;
-	}
-`;
-
-export const Entities = styled.div`
+export const Tags = styled.div`
 	white-space: nowrap;
 `;
 

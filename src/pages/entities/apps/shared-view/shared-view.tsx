@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Button } from '@ui';
 import Swatches from '@shared/swatches';
+import TagsInput from '@shared/tags-input';
 import AvatarPicker from '@shared/avatar-picker';
 import EntityPicker from '@shared/entity-picker';
 import Root, { Main, ColorPreview, NameInput } from './shared-view.styles';
@@ -73,6 +74,16 @@ const AppSharedView = ({ form }: Props) => {
 									onChange={onChangeHd}
 								/>
 							);
+						}}
+					</form.Field>
+
+					<form.Field name="aliases">
+						{(field) => {
+							const onAliasesChange = (tags: string[]) => {
+								field.handleChange(tags);
+							};
+
+							return <TagsInput isTextDark={isTextDark} tags={field.state.value} onChange={onAliasesChange} />;
 						}}
 					</form.Field>
 

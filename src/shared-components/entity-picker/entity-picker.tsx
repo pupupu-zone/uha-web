@@ -1,7 +1,7 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 
-import useEntity from './use-entity';
 import Fuse from 'fuse.js';
+import useEntity from './use-entity';
 import { useOnClickOutside } from '@hooks';
 
 import { HorizontalScroll } from '@ui';
@@ -21,6 +21,7 @@ const EntityPicker = ({ isTextDark, entity, entityId, onChange }: Props) => {
 	const [search, setSearch] = useState('');
 	const [isSearchMode, setSearchMode] = useState(false);
 	const ref = useRef(null);
+	const inputRef = useRef(null);
 
 	useOnClickOutside([ref], () => {
 		setSearchMode(false);
@@ -43,10 +44,18 @@ const EntityPicker = ({ isTextDark, entity, entityId, onChange }: Props) => {
 		return fuse.search(search).map((result) => result.item);
 	}, [fuse, search, entities]);
 
+	useEffect(() => {
+		if (!isSearchMode) return;
+
+		inputRef.current?.focus();
+	}, [isSearchMode]);
+
+	const isSelected = Boolean(selectedEntity?.name);
+
 	return (
 		<Root ref={ref}>
 			{!isSearchMode && (
-				<Button $isTextDark={isTextDark} onPress={() => setSearchMode(true)}>
+				<Button $isTextDark={isTextDark} $isSelected={isSelected} onPress={() => setSearchMode(true)}>
 					{selectedEntity?.name || `Select ${ENTITY_NAMES[entity]}`}
 				</Button>
 			)}
@@ -55,10 +64,14 @@ const EntityPicker = ({ isTextDark, entity, entityId, onChange }: Props) => {
 				<AriaTextField
 					value={search}
 					onInput={(e) => {
-						setSearch(e.target.value);
+						setSearch(e.target.value.trim());
 					}}
 				>
-					<Input $isTextDark={isTextDark} placeholder={selectedEntity?.name || `Search for ${ENTITY_NAMES[entity]}`} />
+					<Input
+						ref={inputRef}
+						$isTextDark={isTextDark}
+						placeholder={selectedEntity?.name || `Search for ${ENTITY_NAMES[entity]}`}
+					/>
 				</AriaTextField>
 			)}
 
@@ -67,6 +80,7 @@ const EntityPicker = ({ isTextDark, entity, entityId, onChange }: Props) => {
 					{filteredEntities.map((entity) => {
 						return (
 							<Button
+								$isSelected
 								$isTextDark={isTextDark}
 								key={entity.id}
 								onPress={(e) => {

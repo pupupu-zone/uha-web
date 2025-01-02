@@ -23,9 +23,19 @@ const useAddApp = () => {
 		},
 		defaultValues: initialApp,
 		onSubmit: async ({ value }) => {
-			const avatar = await blobUrlToFile(value.avatar, value.name || 'logo');
+			const formData = new FormData();
+			const avatar = await blobUrlToFile(value.avatar, 'logo');
 
-			console.log(avatar);
+			if (avatar) {
+				formData.append('avatar', avatar);
+			}
+
+			formData.append('name', value.name);
+			formData.append('color', value.color);
+			formData.append('category_id', value.category_id);
+			formData.append('aliases', JSON.stringify(value.aliases));
+
+			console.log('formData', Array.from(formData));
 		}
 	});
 
