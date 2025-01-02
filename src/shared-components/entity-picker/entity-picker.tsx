@@ -54,27 +54,6 @@ const EntityPicker = ({ isTextDark, entity, entityId, onChange }: Props) => {
 
 	return (
 		<Root ref={ref}>
-			{!isSearchMode && (
-				<Button $isTextDark={isTextDark} $isSelected={isSelected} onPress={() => setSearchMode(true)}>
-					{selectedEntity?.name || `Select ${ENTITY_NAMES[entity]}`}
-				</Button>
-			)}
-
-			{isSearchMode && (
-				<AriaTextField
-					value={search}
-					onInput={(e) => {
-						setSearch(e.target.value.trim());
-					}}
-				>
-					<Input
-						ref={inputRef}
-						$isTextDark={isTextDark}
-						placeholder={selectedEntity?.name || `Search for ${ENTITY_NAMES[entity]}`}
-					/>
-				</AriaTextField>
-			)}
-
 			{isSearchMode && filteredEntities.length > 0 && (
 				<HorizontalScroll as={Entities}>
 					{filteredEntities.map((entity) => {
@@ -102,6 +81,27 @@ const EntityPicker = ({ isTextDark, entity, entityId, onChange }: Props) => {
 						No results found
 					</Button>
 				</HorizontalScroll>
+			)}
+
+			{!isSearchMode && (
+				<Button $isTextDark={isTextDark} $isSelected={isSelected} onPress={() => setSearchMode(true)}>
+					{selectedEntity?.name || `Select ${ENTITY_NAMES[entity]}`}
+				</Button>
+			)}
+
+			{isSearchMode && (
+				<AriaTextField
+					value={search}
+					onInput={(e) => {
+						setSearch(e.target.value.trim());
+					}}
+				>
+					<Input
+						ref={inputRef}
+						$isTextDark={isTextDark}
+						placeholder={selectedEntity?.name || `Search for ${ENTITY_NAMES[entity]}`}
+					/>
+				</AriaTextField>
 			)}
 		</Root>
 	);

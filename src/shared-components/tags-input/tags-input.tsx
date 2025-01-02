@@ -28,8 +28,8 @@ const TagsInput = ({ isTextDark, tags, onChange }: Props) => {
 					if (e.key !== 'Enter') return;
 
 					e.preventDefault();
-					const set = new Set(tags);
-					set.add(alias);
+					const aliases = [alias, ...tags];
+					const set = new Set(aliases);
 					onChange(Array.from(set));
 					setAlias('');
 				}}
