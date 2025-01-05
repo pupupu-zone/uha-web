@@ -90,7 +90,7 @@ const AppSharedView = ({ form }: Props) => {
 
 							return (
 								<EntityRoot>
-									<EntityCaption isTextDark={isTextDark} title="Aliases" />
+									<EntityCaption isTextDark={isTextDark} title="Search Aliases" />
 
 									<TagsInput isTextDark={isTextDark} tags={field.state.value} onChange={onAliasesChange} />
 								</EntityRoot>
@@ -101,7 +101,7 @@ const AppSharedView = ({ form }: Props) => {
 					<form.Field name="color">
 						{(field) => (
 							<EntityRoot>
-								<EntityCaption isTextDark={isTextDark} title="Color" />
+								<EntityCaption isTextDark={isTextDark} title="Primary Color" />
 
 								<Swatches onChange={field.handleChange} />
 							</EntityRoot>

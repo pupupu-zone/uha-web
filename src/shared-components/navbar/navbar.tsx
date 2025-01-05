@@ -41,7 +41,7 @@ const Navbar = () => {
 				</NavButton>
 			</Link>
 
-			<Link to="/subscriptions" search={{ view: 'calendar', action: search.action }}>
+			<Link to="/subscriptions" disabled search={{ view: 'calendar', action: search.action }}>
 				<NavButton>
 					<Icon name="calendar" />
 				</NavButton>

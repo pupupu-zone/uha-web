@@ -60,7 +60,7 @@ const CategorySharedView = ({ form }: Props) => {
 
 							return (
 								<EntityRoot>
-									<EntityCaption isTextDark={isTextDark} title="Emoji" />
+									<EntityCaption isTextDark={isTextDark} title="Logo Emoji" />
 
 									<Emojis onChange={onChangeHd} color={color} set="categories" />
 								</EntityRoot>
@@ -76,7 +76,7 @@ const CategorySharedView = ({ form }: Props) => {
 
 							return (
 								<EntityRoot>
-									<EntityCaption isTextDark={isTextDark} title="Color" />
+									<EntityCaption isTextDark={isTextDark} title="Support Color" />
 
 									<Swatches onChange={onChangeHd} />
 								</EntityRoot>
