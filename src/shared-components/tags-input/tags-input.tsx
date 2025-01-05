@@ -6,7 +6,7 @@ import { TextField as AriaTextField } from 'react-aria-components';
 
 import type { Props } from './tags-input.d';
 
-const TagsInput = ({ isTextDark, tags, onChange }: Props) => {
+const TagsInput = ({ isTextDark, tags = [], onChange }: Props) => {
 	const [alias, setAlias] = useState('');
 
 	return (

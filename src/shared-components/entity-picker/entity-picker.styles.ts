@@ -22,11 +22,12 @@ export const Input = styled(AriaInput)<{ $isTextDark: boolean }>`
 	}
 `;
 
-export const Button = styled(AriaButton)<{ $isTextDark: boolean; $isSelected: boolean }>`
+export const Button = styled(AriaButton)<{ $isTextDark: boolean; $isSelected: boolean; $isSearchMode: boolean }>`
 	${h1Styles}
 	width: fit-content;
 	margin: 0;
 	padding: 0;
+	padding-top: ${({ $isSearchMode }) => ($isSearchMode ? '0' : '4px')};
 	color: ${({ $isTextDark }) => ($isTextDark ? 'var(--primary-text)' : 'var(--bg-color)')};
 	background-color: transparent;
 	border: none;

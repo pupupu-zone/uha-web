@@ -4,7 +4,8 @@ export type Props = {
 	withError?: boolean;
 	isFetching?: boolean;
 	withDelete?: boolean;
-	onChange: (blobUrl?: string) => void;
+	isReadOnly?: boolean;
+	onChange?: (blobUrl?: string) => void;
 };
 
 export type AvatarStyledProps = {

@@ -11,7 +11,7 @@ import type { Props } from './avatar-picker.d';
 
 // @TODO: add support of FileTrigger from 'react-aria-components';
 
-const Avatar = ({ name, url, onChange, isFetching, withError, withDelete = true }: Props) => {
+const Avatar = ({ isReadOnly, name, url, onChange, isFetching, withError, withDelete = true }: Props) => {
 	const id = useId();
 	const modal = useModal();
 
@@ -28,6 +28,8 @@ const Avatar = ({ name, url, onChange, isFetching, withError, withDelete = true 
 	}, [url]);
 
 	const clearImageBlob = () => {
+		if (isReadOnly) return;
+
 		setAvatarUrl('');
 		setAvatarPreview('');
 
@@ -39,6 +41,8 @@ const Avatar = ({ name, url, onChange, isFetching, withError, withDelete = true 
 	};
 
 	const loadImageHd = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (isReadOnly) return;
+
 		const files = e.target.files || [];
 		const file = files[0];
 		if (!file) return;
@@ -54,6 +58,8 @@ const Avatar = ({ name, url, onChange, isFetching, withError, withDelete = true 
 	};
 
 	const openImageDialog = () => {
+		if (isReadOnly) return;
+
 		avatarRef.current?.click();
 	};
 
@@ -82,7 +88,7 @@ const Avatar = ({ name, url, onChange, isFetching, withError, withDelete = true 
 				</Loader>
 			</ImageWrap>
 
-			{avatarUrl && withDelete && (
+			{avatarUrl && withDelete && !isReadOnly && (
 				<Delete onPress={clearImageBlob}>
 					<Icon name="close" width={36} height={36} />
 				</Delete>

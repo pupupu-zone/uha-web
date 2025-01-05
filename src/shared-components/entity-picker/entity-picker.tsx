@@ -13,7 +13,9 @@ import type { Props } from './entity-picker.d';
 const ENTITY_NAMES = {
 	categories: 'category',
 	apps: 'app',
-	payment_methods: 'method'
+	payment_methods: 'method',
+	intervals: 'interval',
+	currencies: 'currency'
 };
 
 const EntityPicker = ({ isTextDark, entity, entityId, onChange }: Props) => {
@@ -61,6 +63,7 @@ const EntityPicker = ({ isTextDark, entity, entityId, onChange }: Props) => {
 							<Button
 								$isSelected
 								$isTextDark={isTextDark}
+								$isSearchMode
 								key={entity.id}
 								onPress={(e) => {
 									onChange(entity.id);
@@ -77,14 +80,19 @@ const EntityPicker = ({ isTextDark, entity, entityId, onChange }: Props) => {
 
 			{isSearchMode && !filteredEntities.length && (
 				<HorizontalScroll as={Entities}>
-					<Button $isTextDark={isTextDark} isDisabled>
+					<Button $isTextDark={isTextDark} isDisabled $isSearchMode>
 						No results found
 					</Button>
 				</HorizontalScroll>
 			)}
 
 			{!isSearchMode && (
-				<Button $isTextDark={isTextDark} $isSelected={isSelected} onPress={() => setSearchMode(true)}>
+				<Button
+					$isTextDark={isTextDark}
+					$isSelected={isSelected}
+					$isSearchMode={false}
+					onPress={() => setSearchMode(true)}
+				>
 					{selectedEntity?.name || `Select ${ENTITY_NAMES[entity]}`}
 				</Button>
 			)}

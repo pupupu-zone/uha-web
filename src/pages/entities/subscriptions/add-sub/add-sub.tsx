@@ -1,7 +1,12 @@
 import React from 'react';
 
-const AddSubscription = () => {
-	return <div>Add Subscription</div>;
+import { useAddSub } from './_hooks';
+import SubSharedView from '@pages/entities/subscriptions/shared-view';
+
+const AddSub = () => {
+	const { form } = useAddSub();
+
+	return <SubSharedView form={form} />;
 };
 
-export default AddSubscription;
+export default AddSub;

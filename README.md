@@ -1,4 +1,4 @@
-# PU-PU-PU (Web FE)
+# Uha (Web FE)
 
 ### Primary Stack
 * **[React@18](https://react.dev/)**
