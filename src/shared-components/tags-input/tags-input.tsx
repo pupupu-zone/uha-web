@@ -11,13 +11,15 @@ const TagsInput = ({ isTextDark, tags = [], onChange }: Props) => {
 
 	return (
 		<Root>
-			<HorizontalScroll as={Tags}>
-				{tags.map((tag) => (
-					<Tag key={tag} $isTextDark={isTextDark}>
-						{tag}
-					</Tag>
-				))}
-			</HorizontalScroll>
+			{tags.length > 0 && (
+				<HorizontalScroll as={Tags}>
+					{tags.map((tag) => (
+						<Tag key={tag} $isTextDark={isTextDark}>
+							{tag}
+						</Tag>
+					))}
+				</HorizontalScroll>
+			)}
 
 			<AriaTextField
 				value={alias}
@@ -34,7 +36,7 @@ const TagsInput = ({ isTextDark, tags = [], onChange }: Props) => {
 					setAlias('');
 				}}
 			>
-				<Input $isTextDark={isTextDark} placeholder="Aliases" />
+				<Input $isTextDark={isTextDark} placeholder="Red tag" />
 			</AriaTextField>
 		</Root>
 	);

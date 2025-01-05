@@ -8,5 +8,5 @@ export type Props = {
 	entity: 'categories' | 'apps' | 'payment_methods' | 'intervals' | 'currencies';
 	entityId: string;
 	onChange: (entityId: string) => void;
-	isTextDark?: boolean;
+	isTextDark: boolean;
 };

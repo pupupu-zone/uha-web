@@ -3,7 +3,8 @@ import React from 'react';
 import { Button } from '@ui';
 import Emojis from '@shared/emojis';
 import Swatches from '@shared/swatches';
-import Root, { Main, ColorPreview, EmojiPreview, NameInput } from './shared-view.styles';
+import { EntityRoot, EntityInput, EntityCaption } from '@shared/entities';
+import Root, { Main, ColorPreview, EmojiPreview } from './shared-view.styles';
 
 import { useIsTextDark } from '@hooks';
 import { useStore } from '@tanstack/react-form';
@@ -36,11 +37,12 @@ const CategorySharedView = ({ form }: Props) => {
 						};
 
 						return (
-							<NameInput
+							<EntityInput
+								isTextDark={isTextDark}
+								align="center"
 								autoCorrect="off"
 								autoCapitalize="off"
 								autoComplete="off"
-								$isTextDark={isTextDark}
 								value={field.state.value}
 								onChange={onChangeHd}
 								placeholder="Category name"
@@ -56,7 +58,13 @@ const CategorySharedView = ({ form }: Props) => {
 								field.handleChange(nextEmoji);
 							};
 
-							return <Emojis onChange={onChangeHd} color={color} set="categories" />;
+							return (
+								<EntityRoot>
+									<EntityCaption isTextDark={isTextDark} title="Emoji" />
+
+									<Emojis onChange={onChangeHd} color={color} set="categories" />
+								</EntityRoot>
+							);
 						}}
 					</form.Field>
 
@@ -66,7 +74,13 @@ const CategorySharedView = ({ form }: Props) => {
 								field.handleChange(nextColor);
 							};
 
-							return <Swatches onChange={onChangeHd} />;
+							return (
+								<EntityRoot>
+									<EntityCaption isTextDark={isTextDark} title="Color" />
+
+									<Swatches onChange={onChangeHd} />
+								</EntityRoot>
+							);
 						}}
 					</form.Field>
 				</Main>

@@ -65,7 +65,7 @@ const EntityPicker = ({ isTextDark, entity, entityId, onChange }: Props) => {
 								$isTextDark={isTextDark}
 								$isSearchMode
 								key={entity.id}
-								onPress={(e) => {
+								onPress={() => {
 									onChange(entity.id);
 									setSearch('');
 									setSearchMode(false);
@@ -80,7 +80,7 @@ const EntityPicker = ({ isTextDark, entity, entityId, onChange }: Props) => {
 
 			{isSearchMode && !filteredEntities.length && (
 				<HorizontalScroll as={Entities}>
-					<Button $isTextDark={isTextDark} isDisabled $isSearchMode>
+					<Button $isTextDark={isTextDark} $isSearchMode isDisabled>
 						No results found
 					</Button>
 				</HorizontalScroll>

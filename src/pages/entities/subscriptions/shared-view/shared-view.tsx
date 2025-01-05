@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-import { Text, Button } from '@ui';
+import { Button } from '@ui';
 import AvatarPicker from '@shared/avatar-picker';
-import EntityPicker from '@shared/entity-picker';
-import Root, { Main, ColorPreview, NameInput, FieldCaption } from './shared-view.styles';
+import Root, { Main, ColorPreview } from './shared-view.styles';
+import { EntityRoot, EntityInput, EntityPicker, EntityCaption } from '@shared/entities';
 
 import { useIsTextDark } from '@hooks';
 import { useStore } from '@tanstack/react-form';
@@ -47,11 +47,12 @@ const AppSharedView = ({ form }: Props) => {
 						};
 
 						return (
-							<NameInput
+							<EntityInput
+								isTextDark={isTextDark}
+								align="center"
 								autoCorrect="off"
 								autoCapitalize="off"
 								autoComplete="off"
-								$isTextDark={isTextDark}
 								value={field.state.value}
 								onChange={onChangeHd}
 								placeholder="App name"
@@ -68,15 +69,16 @@ const AppSharedView = ({ form }: Props) => {
 							};
 
 							return (
-								<div>
-									<FieldCaption $isTextDark={isTextDark}>Application</FieldCaption>
+								<EntityRoot>
+									<EntityCaption isTextDark={isTextDark} title="Application" />
+
 									<EntityPicker
 										isTextDark={isTextDark}
 										entity="apps"
 										entityId={field.state.value}
 										onChange={onChangeHd}
 									/>
-								</div>
+								</EntityRoot>
 							);
 						}}
 					</form.Field>
@@ -88,8 +90,8 @@ const AppSharedView = ({ form }: Props) => {
 							};
 
 							return (
-								<div>
-									<FieldCaption $isTextDark={isTextDark}>Category</FieldCaption>
+								<EntityRoot>
+									<EntityCaption isTextDark={isTextDark} title="Category" />
 
 									<EntityPicker
 										isTextDark={isTextDark}
@@ -97,7 +99,7 @@ const AppSharedView = ({ form }: Props) => {
 										entityId={field.state.value}
 										onChange={onChangeHd}
 									/>
-								</div>
+								</EntityRoot>
 							);
 						}}
 					</form.Field>
@@ -109,8 +111,8 @@ const AppSharedView = ({ form }: Props) => {
 							};
 
 							return (
-								<div>
-									<FieldCaption $isTextDark={isTextDark}>Payment Method</FieldCaption>
+								<EntityRoot>
+									<EntityCaption isTextDark={isTextDark} title="Payment Method" />
 
 									<EntityPicker
 										isTextDark={isTextDark}
@@ -118,7 +120,7 @@ const AppSharedView = ({ form }: Props) => {
 										entityId={field.state.value}
 										onChange={onChangeHd}
 									/>
-								</div>
+								</EntityRoot>
 							);
 						}}
 					</form.Field>
@@ -130,8 +132,8 @@ const AppSharedView = ({ form }: Props) => {
 							};
 
 							return (
-								<div>
-									<FieldCaption $isTextDark={isTextDark}>Interval</FieldCaption>
+								<EntityRoot>
+									<EntityCaption isTextDark={isTextDark} title="Interval" />
 
 									<EntityPicker
 										isTextDark={isTextDark}
@@ -139,14 +141,16 @@ const AppSharedView = ({ form }: Props) => {
 										entityId={field.state.value}
 										onChange={onChangeHd}
 									/>
-								</div>
+								</EntityRoot>
 							);
 						}}
 					</form.Field>
 
-					<div>
-						<FieldCaption $isTextDark={isTextDark}>Price</FieldCaption>
-					</div>
+					<EntityRoot>
+						<EntityCaption isTextDark={isTextDark} title="Price" />
+
+						<EntityInput isTextDark={isTextDark} type="number" placeholder="100" />
+					</EntityRoot>
 
 					<form.Field name="currency">
 						{(field) => {
@@ -155,8 +159,8 @@ const AppSharedView = ({ form }: Props) => {
 							};
 
 							return (
-								<div>
-									<FieldCaption $isTextDark={isTextDark}>Currency</FieldCaption>
+								<EntityRoot>
+									<EntityCaption isTextDark={isTextDark} title="Currency" />
 
 									<EntityPicker
 										isTextDark={isTextDark}
@@ -164,18 +168,18 @@ const AppSharedView = ({ form }: Props) => {
 										entityId={field.state.value}
 										onChange={onChangeHd}
 									/>
-								</div>
+								</EntityRoot>
 							);
 						}}
 					</form.Field>
 
-					<div>
-						<FieldCaption $isTextDark={isTextDark}>First Payment</FieldCaption>
-					</div>
+					<EntityRoot>
+						<EntityCaption isTextDark={isTextDark} title="First Payment" />
+					</EntityRoot>
 
-					<div>
-						<FieldCaption $isTextDark={isTextDark}>Next Payment</FieldCaption>
-					</div>
+					<EntityRoot>
+						<EntityCaption isTextDark={isTextDark} title="Next Payment" />
+					</EntityRoot>
 				</Main>
 
 				<Button isFullWidth isGlowing type="submit">

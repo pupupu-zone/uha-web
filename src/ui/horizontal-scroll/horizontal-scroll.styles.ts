@@ -9,7 +9,6 @@ export default styled.div`
 	grid-auto-flow: column;
 	gap: 24px;
 	width: 100%;
-	padding-top: 4px;
 	overflow-x: auto;
 	scroll-snap-type: x mandatory;
 

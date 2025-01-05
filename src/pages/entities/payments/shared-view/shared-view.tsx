@@ -3,8 +3,8 @@ import React from 'react';
 import { Button } from '@ui';
 import Emojis from '@shared/emojis';
 import Swatches from '@shared/swatches';
-import { Input as AriaInput } from 'react-aria-components';
-import Root, { Main, ColorPreview, EmojiPreview, NameInput, CommentInput } from './shared-view.styles';
+import { EntityRoot, EntityInput, EntityCaption } from '@shared/entities';
+import Root, { Main, ColorPreview, EmojiPreview } from './shared-view.styles';
 
 import { useIsTextDark } from '@hooks';
 import { useStore } from '@tanstack/react-form';
@@ -37,11 +37,12 @@ const CategorySharedView = ({ form }: Props) => {
 						};
 
 						return (
-							<NameInput
+							<EntityInput
+								isTextDark={isTextDark}
+								align="center"
 								autoCorrect="off"
 								autoCapitalize="off"
 								autoComplete="off"
-								$isTextDark={isTextDark}
 								value={field.state.value}
 								onChange={onChangeHd}
 								placeholder="Method name"
@@ -57,7 +58,13 @@ const CategorySharedView = ({ form }: Props) => {
 								field.handleChange(nextEmoji);
 							};
 
-							return <Emojis onChange={onChangeHd} color={color} set="methods" maxRows={3} />;
+							return (
+								<EntityRoot>
+									<EntityCaption isTextDark={isTextDark} title="Emoji" />
+
+									<Emojis onChange={onChangeHd} color={color} set="methods" maxRows={3} />
+								</EntityRoot>
+							);
 						}}
 					</form.Field>
 
@@ -67,7 +74,13 @@ const CategorySharedView = ({ form }: Props) => {
 								field.handleChange(nextColor);
 							};
 
-							return <Swatches onChange={onChangeHd} maxRows={3} />;
+							return (
+								<EntityRoot>
+									<EntityCaption isTextDark={isTextDark} title="Color" />
+
+									<Swatches onChange={onChangeHd} maxRows={3} />
+								</EntityRoot>
+							);
 						}}
 					</form.Field>
 
@@ -78,17 +91,20 @@ const CategorySharedView = ({ form }: Props) => {
 							};
 
 							return (
-								<CommentInput
-									as={AriaInput}
-									autoCorrect="off"
-									autoCapitalize="off"
-									autoComplete="off"
-									$isTextDark={isTextDark}
-									type="text"
-									placeholder="Comment"
-									onChange={onChangeHd}
-									value={field.state.value}
-								/>
+								<EntityRoot>
+									<EntityCaption isTextDark={isTextDark} title="Commentary" />
+
+									<EntityInput
+										isTextDark={isTextDark}
+										autoCorrect="off"
+										autoCapitalize="off"
+										autoComplete="off"
+										type="text"
+										placeholder="*2080"
+										onChange={onChangeHd}
+										value={field.state.value}
+									/>
+								</EntityRoot>
 							);
 						}}
 					</form.Field>

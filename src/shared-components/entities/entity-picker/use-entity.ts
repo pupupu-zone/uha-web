@@ -4,9 +4,11 @@ import { useSelector } from 'react-redux';
 import { allCategoriesSelector } from '@data/categories/selectors';
 import { allPaymentsSelector } from '@data/payments/selectors';
 import { allAppsSelector } from '@data/applications/selectors';
+
 import type { Props } from './entity-picker.d';
 
-const intervals = [
+// @TODO: Make it dynamic
+const INTERVALS = [
 	{ id: 'day', name: 'Day' },
 	{ id: 'week', name: 'Week' },
 	{ id: 'fortnight', name: 'Fortnight' },
@@ -15,7 +17,9 @@ const intervals = [
 	{ id: 'annual', name: 'Annual' },
 	{ id: 'biennial', name: 'Biennial' }
 ];
-const currencies = [
+
+// @TODO: Make it dynamic
+const CURRENCIES = [
 	{ id: 'USD', name: 'USD' },
 	{ id: 'RUB', name: 'RUB' },
 	{ id: 'KZT', name: 'KZT' }
@@ -25,8 +29,8 @@ const ENTITY_SELECTORS = {
 	categories: allCategoriesSelector,
 	payment_methods: allPaymentsSelector,
 	apps: allAppsSelector,
-	intervals: () => intervals,
-	currencies: () => currencies
+	intervals: () => INTERVALS,
+	currencies: () => CURRENCIES
 };
 
 const useEntity = (entity: Props['entity']) => {

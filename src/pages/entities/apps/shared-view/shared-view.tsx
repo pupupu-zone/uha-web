@@ -4,8 +4,8 @@ import { Button } from '@ui';
 import Swatches from '@shared/swatches';
 import TagsInput from '@shared/tags-input';
 import AvatarPicker from '@shared/avatar-picker';
-import EntityPicker from '@shared/entity-picker';
-import Root, { Main, ColorPreview, NameInput } from './shared-view.styles';
+import Root, { Main, ColorPreview } from './shared-view.styles';
+import { EntityRoot, EntityInput, EntityPicker, EntityCaption } from '@shared/entities';
 
 import { useIsTextDark } from '@hooks';
 import { useStore } from '@tanstack/react-form';
@@ -46,11 +46,12 @@ const AppSharedView = ({ form }: Props) => {
 						};
 
 						return (
-							<NameInput
+							<EntityInput
+								isTextDark={isTextDark}
+								align="center"
 								autoCorrect="off"
 								autoCapitalize="off"
 								autoComplete="off"
-								$isTextDark={isTextDark}
 								value={field.state.value}
 								onChange={onChangeHd}
 								placeholder="App name"
@@ -67,12 +68,16 @@ const AppSharedView = ({ form }: Props) => {
 							};
 
 							return (
-								<EntityPicker
-									isTextDark={isTextDark}
-									entity="categories"
-									entityId={field.state.value}
-									onChange={onChangeHd}
-								/>
+								<EntityRoot>
+									<EntityCaption isTextDark={isTextDark} title="Category" />
+
+									<EntityPicker
+										isTextDark={isTextDark}
+										entity="categories"
+										entityId={field.state.value}
+										onChange={onChangeHd}
+									/>
+								</EntityRoot>
 							);
 						}}
 					</form.Field>
@@ -83,14 +88,24 @@ const AppSharedView = ({ form }: Props) => {
 								field.handleChange(tags);
 							};
 
-							return <TagsInput isTextDark={isTextDark} tags={field.state.value} onChange={onAliasesChange} />;
+							return (
+								<EntityRoot>
+									<EntityCaption isTextDark={isTextDark} title="Aliases" />
+
+									<TagsInput isTextDark={isTextDark} tags={field.state.value} onChange={onAliasesChange} />
+								</EntityRoot>
+							);
 						}}
 					</form.Field>
 
 					<form.Field name="color">
-						{(field) => {
-							return <Swatches onChange={field.handleChange} />;
-						}}
+						{(field) => (
+							<EntityRoot>
+								<EntityCaption isTextDark={isTextDark} title="Color" />
+
+								<Swatches onChange={field.handleChange} />
+							</EntityRoot>
+						)}
 					</form.Field>
 				</Main>
 
