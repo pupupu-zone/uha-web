@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Provider } from 'react-redux';
 import { Toaster } from 'react-hot-toast';
 import { RouterProvider } from '@tanstack/react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
-import { Settings } from 'luxon';
-import { useLocale } from '@utils/hooks';
+// import { useLocale } from '@utils/hooks';
 
 import { CustomToaster } from '@ui';
 import ProgressiveUnit from '@shared/pwa';
@@ -28,11 +27,7 @@ const InnerApp = ({ router }: Props) => {
 };
 
 const Root = ({ router }: Props) => {
-	const locale = useLocale();
-
-	useEffect(() => {
-		Settings.defaultLocale = locale;
-	}, [locale]);
+	// const locale = useLocale();
 
 	return (
 		<>

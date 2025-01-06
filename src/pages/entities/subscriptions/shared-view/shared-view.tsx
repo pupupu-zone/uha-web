@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
 import { Button } from '@ui';
 import AvatarPicker from '@shared/avatar-picker';
 import Root, { Main, ColorPreview } from './shared-view.styles';
-import { EntityRoot, EntityInput, EntityPicker, EntityCaption } from '@shared/entities';
+import { EntityRoot, EntityInput, EntityDate, EntityPicker, EntityCaption } from '@shared/entities';
 
 import { useIsTextDark } from '@hooks';
 import { useStore } from '@tanstack/react-form';
@@ -17,6 +17,7 @@ const AppSharedView = ({ form }: Props) => {
 	const application = useSelector((store) => appSelector(store, appId)) || { color: '#fafafa' };
 
 	const appTitle = useStore(form.store, (state) => state.values.name);
+	const interval = useStore(form.store, (state) => state.values.interval_type);
 	const isTextDark = useIsTextDark(application.color, 1);
 
 	useEffect(() => {
@@ -25,6 +26,19 @@ const AppSharedView = ({ form }: Props) => {
 		form.setFieldValue('category_id', application.category_id);
 		form.setFieldValue('name', application.name);
 	}, [appId]);
+
+	const intervalCaption = useMemo(() => {
+		switch (interval) {
+			case 'day':
+				return 'day';
+			case 'week':
+				return 'week';
+			case 'month':
+				return 'month';
+			case 'year':
+				return 'year';
+		}
+	}, [interval]);
 
 	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -55,7 +69,7 @@ const AppSharedView = ({ form }: Props) => {
 								autoComplete="off"
 								value={field.state.value}
 								onChange={onChangeHd}
-								placeholder="App name"
+								placeholder="Title"
 							/>
 						);
 					}}
@@ -140,17 +154,37 @@ const AppSharedView = ({ form }: Props) => {
 										entity="intervals"
 										entityId={field.state.value}
 										onChange={onChangeHd}
+										withSearch={false}
 									/>
 								</EntityRoot>
 							);
 						}}
 					</form.Field>
 
-					<EntityRoot>
-						<EntityCaption isTextDark={isTextDark} title="Price" />
+					<form.Field name="interval_value">
+						{(field) => {
+							const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
+								const value = Number.parseInt(e.target.value, 10);
 
-						<EntityInput isTextDark={isTextDark} type="number" placeholder="100" />
-					</EntityRoot>
+								field.handleChange(value || '');
+							};
+
+							return (
+								<EntityRoot>
+									<EntityCaption isTextDark={isTextDark} title={`Each N ${intervalCaption}`} />
+
+									<EntityInput
+										isTextDark={isTextDark}
+										type="number"
+										placeholder="100"
+										value={field.state.value}
+										onInput={onChangeHd}
+										min="0"
+									/>
+								</EntityRoot>
+							);
+						}}
+					</form.Field>
 
 					<form.Field name="currency">
 						{(field) => {
@@ -173,13 +207,62 @@ const AppSharedView = ({ form }: Props) => {
 						}}
 					</form.Field>
 
-					<EntityRoot>
-						<EntityCaption isTextDark={isTextDark} title="First Payment" />
-					</EntityRoot>
+					<form.Field name="price">
+						{(field) => {
+							const onChangeHd = (e: React.ChangeEvent<HTMLInputElement>) => {
+								const value = Number.parseInt(e.target.value, 10);
 
-					<EntityRoot>
-						<EntityCaption isTextDark={isTextDark} title="Next Payment" />
-					</EntityRoot>
+								field.handleChange(value || '');
+							};
+
+							return (
+								<EntityRoot>
+									<EntityCaption isTextDark={isTextDark} title="Price" />
+
+									<EntityInput
+										isTextDark={isTextDark}
+										type="number"
+										placeholder="100"
+										value={field.state.value}
+										onInput={onChangeHd}
+										min="0"
+									/>
+								</EntityRoot>
+							);
+						}}
+					</form.Field>
+
+					<form.Field name="first_payment">
+						{(field) => {
+							const onChangeHd = (nextDate) => {
+								field.handleChange(nextDate);
+							};
+
+							return (
+								<EntityRoot>
+									<EntityCaption isTextDark={isTextDark} title="First Payment" />
+
+									<EntityDate isTextDark={isTextDark} value={field.state.value} onChange={onChangeHd} />
+								</EntityRoot>
+							);
+						}}
+					</form.Field>
+
+					<form.Field name="next_payment">
+						{(field) => {
+							const onChangeHd = (nextDate) => {
+								field.handleChange(nextDate);
+							};
+
+							return (
+								<EntityRoot>
+									<EntityCaption isTextDark={isTextDark} title="Next Payment" />
+
+									<EntityDate isTextDark={isTextDark} value={field.state.value} onChange={onChangeHd} />
+								</EntityRoot>
+							);
+						}}
+					</form.Field>
 				</Main>
 
 				<Button isFullWidth isGlowing type="submit">

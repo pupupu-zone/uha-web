@@ -1,5 +1,4 @@
 import React from 'react';
-import { DateTime } from 'luxon';
 import { createFileRoute, redirect } from '@tanstack/react-router';
 
 import MainPage from '@pages/main';
@@ -33,17 +32,6 @@ export const Route = createFileRoute('/_auth-guard')({
 
 		if ('year' in search) {
 			search.year = Number.parseInt(search.year as string, 10);
-		}
-
-		if (search.view === 'calendar') {
-			const now = DateTime.now();
-
-			if (!search.month) search.month = now.month;
-			if (!search.year) search.year = now.year;
-
-			if (search.month === now.month && search.year === now.year && !search.day) {
-				search.day = now.day;
-			}
 		}
 
 		return search;

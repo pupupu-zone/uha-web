@@ -5,7 +5,7 @@ import useEntity from './use-entity';
 import { useOnClickOutside } from '@hooks';
 
 import { HorizontalScroll } from '@ui';
-import { TextField as AriaTextField } from 'react-aria-components';
+import { SearchField as AriaSearchField } from 'react-aria-components';
 import Root, { Entities, Input, Button } from './entity-picker.styles';
 
 import type { Props } from './entity-picker.d';
@@ -18,7 +18,7 @@ const ENTITY_NAMES = {
 	currencies: 'currency'
 };
 
-const EntityPicker = ({ isTextDark, entity, entityId, onChange }: Props) => {
+const EntityPicker = ({ isTextDark, withSearch = true, entity, entityId, onChange }: Props) => {
 	const ref = useRef(null);
 	const entities = useEntity(entity);
 	const [search, setSearch] = useState('');
@@ -87,12 +87,14 @@ const EntityPicker = ({ isTextDark, entity, entityId, onChange }: Props) => {
 						</HorizontalScroll>
 					)}
 
-					<AriaTextField value={search} onInput={onSearch}>
-						<Input
-							$isTextDark={isTextDark}
-							placeholder={selectedEntity?.name || `Search for ${ENTITY_NAMES[entity]}`}
-						/>
-					</AriaTextField>
+					{withSearch && (
+						<AriaSearchField value={search} onInput={onSearch} inputMode="text">
+							<Input
+								$isTextDark={isTextDark}
+								placeholder={selectedEntity?.name || `Search for ${ENTITY_NAMES[entity]}`}
+							/>
+						</AriaSearchField>
+					)}
 				</>
 			)}
 

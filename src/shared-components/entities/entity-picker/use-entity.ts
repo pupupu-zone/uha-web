@@ -11,18 +11,15 @@ import type { Props } from './entity-picker.d';
 const INTERVALS = [
 	{ id: 'day', name: 'Day' },
 	{ id: 'week', name: 'Week' },
-	{ id: 'fortnight', name: 'Fortnight' },
 	{ id: 'month', name: 'Month' },
-	{ id: 'biannual', name: 'Biannual' },
-	{ id: 'annual', name: 'Annual' },
-	{ id: 'biennial', name: 'Biennial' }
+	{ id: 'year', name: 'Year' }
 ];
 
 // @TODO: Make it dynamic
 const CURRENCIES = [
-	{ id: 'USD', name: 'USD' },
-	{ id: 'RUB', name: 'RUB' },
-	{ id: 'KZT', name: 'KZT' }
+	{ id: 'USD', name: 'US Dollars' },
+	{ id: 'RUB', name: 'Roubles' },
+	{ id: 'KZT', name: 'Tenge' }
 ];
 
 const ENTITY_SELECTORS = {

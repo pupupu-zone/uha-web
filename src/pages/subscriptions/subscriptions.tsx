@@ -3,7 +3,6 @@ import React, { useEffect, useState, useRef } from 'react';
 import useLoadSubs from './use-load-subs';
 import ListView from './list-view';
 import { useNavigate } from '@tanstack/react-router';
-import CalendarView from './calendar-view';
 import InfographCard from './infograph-card';
 import Root, { ViewPort } from './subscriptions.styles';
 
@@ -61,13 +60,7 @@ const Subscriptions = ({ view, action }: Props) => {
 				</div>
 			)}
 
-			{!isLoading && (
-				<ViewPort $shouldFill={shouldFill}>
-					{view === 'list' && <ListView />}
-
-					{view === 'calendar' && <CalendarView />}
-				</ViewPort>
-			)}
+			{!isLoading && <ViewPort $shouldFill={shouldFill}>{view === 'list' && <ListView />}</ViewPort>}
 		</Root>
 	);
 };

@@ -9,4 +9,5 @@ export type Props = {
 	entityId: string;
 	onChange: (entityId: string) => void;
 	isTextDark: boolean;
+	withSearch?: boolean;
 };

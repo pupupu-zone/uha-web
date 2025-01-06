@@ -1,8 +1,11 @@
-import { DateTime } from 'luxon';
+import { today, getLocalTimeZone } from '@internationalized/date';
+
 import { useForm } from '@tanstack/react-form';
 import { yupValidator } from '@tanstack/yup-form-adapter';
 
 import yup from '@yup';
+
+const timezone = getLocalTimeZone();
 
 const formSchema = yup.object({
 	name: yup.string().min(2).required(),
@@ -28,12 +31,12 @@ const useAddApp = () => {
 			category_id: '',
 			app_id: '',
 			payment_method_id: '',
-			interval_value: undefined,
-			interval_type: '',
+			interval_value: 1,
+			interval_type: 'month',
 			price: undefined,
-			currency: '',
-			first_payment: DateTime.now().toISODate(),
-			next_payment: DateTime.now().toISODate()
+			currency: 'USD',
+			first_payment: today(timezone),
+			next_payment: today(timezone).add({ months: 1 })
 		},
 		onSubmit: ({ value }) => {
 			console.log('SUBMIT:', value);

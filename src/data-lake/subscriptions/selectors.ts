@@ -1,4 +1,5 @@
-import { DateTime } from 'luxon';
+import { fromDate, getLocalTimeZone } from '@internationalized/date';
+
 import * as TimSort from 'timsort';
 import { createSelector } from '@reduxjs/toolkit';
 
@@ -11,8 +12,14 @@ export const subsSelector = createSelector(
 
 export const allSubsSelector = createSelector(subsSelector, (subs) => {
 	const allEntries = subs.allIds.map((id) => subs.byId[id]);
+	const timezone = getLocalTimeZone();
 
-	TimSort.sort(allEntries, (a, b) => (DateTime.fromISO(a.next_payment) < DateTime.fromISO(b.next_payment) ? -1 : 1));
+	TimSort.sort(allEntries, (a, b) => {
+		const dateA = fromDate(new Date(a.next_payment), timezone);
+		const dateB = fromDate(new Date(b.next_payment), timezone);
+
+		return dateA.compare(dateB);
+	});
 
 	return allEntries;
 });

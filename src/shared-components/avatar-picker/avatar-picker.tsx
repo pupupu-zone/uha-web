@@ -81,7 +81,7 @@ const Avatar = ({ isReadOnly, name, url, onChange, isFetching, withError, withDe
 
 			<ImageWrap $gradientId={gradientId} onPress={openImageDialog}>
 				{avatarUrl && <Image ref={imageRef} src={avatarUrl} alt={name} />}
-				{(!avatarUrl || isImageLoading) && <Initials>{initials}</Initials>}
+				{(!avatarUrl || (avatarUrl && isImageLoading)) && <Initials>{initials}</Initials>}
 
 				<Loader $isFetching={Boolean(isFetching)}>
 					<Icon name="infinity" width={36} height={36} />

@@ -52,6 +52,7 @@ export const ImageSelector = styled.input`
 
 export const Image = styled.img`
 	position: absolute;
+	z-index: 10000;
 	inset: 0;
 	width: 100%;
 	height: 100%;
@@ -64,6 +65,7 @@ export const Initials = styled.h1`
 `;
 
 export const ImageWrap = styled(AriaButton)<AvatarStyledProps>`
+	position: relative;
 	display: grid;
 	width: 100%;
 	height: 100%;

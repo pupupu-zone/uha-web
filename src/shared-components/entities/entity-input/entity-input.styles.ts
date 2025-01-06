@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Input as AriaInput } from 'react-aria-components';
 
 export default styled(AriaInput)<{ $isTextDark: boolean; $align: string }>`
+	width: 100%;
 	padding: 0;
 	color: ${({ $isTextDark }) => ($isTextDark ? 'var(--primary-text)' : 'var(--bg-color)')};
 	font-weight: 700;
