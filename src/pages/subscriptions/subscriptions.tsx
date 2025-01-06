@@ -14,9 +14,10 @@ import { allSubsSelector } from '@data/subscriptions/selectors';
 import { filteredSelector as catSelector } from '@data/categories/selectors';
 import { filteredSelector as appSelector } from '@data/applications/selectors';
 import { useSelector } from 'react-redux';
+
 const useIsLoading = () => {
-	const categories = useSelector(catSelector);
 	const apps = useSelector(appSelector);
+	const categories = useSelector(catSelector);
 	const subsList = useSelector(allSubsSelector);
 
 	return !categories.length || !apps.length || !subsList.length;
@@ -60,7 +61,11 @@ const Subscriptions = ({ view, action }: Props) => {
 				</div>
 			)}
 
-			{!isLoading && <ViewPort $shouldFill={shouldFill}>{view === 'list' && <ListView />}</ViewPort>}
+			{!isLoading && (
+				<ViewPort $shouldFill={shouldFill}>
+					<ListView />
+				</ViewPort>
+			)}
 		</Root>
 	);
 };

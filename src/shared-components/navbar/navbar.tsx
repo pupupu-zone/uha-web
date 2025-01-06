@@ -42,7 +42,7 @@ const Navbar = () => {
 			</Link>
 
 			<Link to="/subscriptions" disabled search={{ view: 'calendar', action: search.action }}>
-				<NavButton>
+				<NavButton $isDisabled>
 					<Icon name="calendar" />
 				</NavButton>
 			</Link>

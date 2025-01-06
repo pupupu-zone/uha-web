@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const NavButton = styled.p`
+export const NavButton = styled.p<{ $isDisabled?: boolean }>`
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -8,6 +8,7 @@ export const NavButton = styled.p`
 	height: 48px;
 	color: var(--primary-text);
 	border-radius: 50%;
+	opacity: ${({ $isDisabled }) => ($isDisabled ? 0.3 : 1)};
 `;
 
 export const AddButton = styled.p`

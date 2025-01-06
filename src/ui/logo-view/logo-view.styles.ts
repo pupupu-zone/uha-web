@@ -18,7 +18,6 @@ export const TextLogo = styled.div<{ $size: number }>`
 export default styled.div<{ $gradientId: number; $size: number; $color?: string }>`
 	display: grid;
 	width: ${({ $size }) => $size}px;
-	height: 100%;
 	margin: 0;
 	padding: 0;
 	border: none;

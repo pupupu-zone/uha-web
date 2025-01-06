@@ -1,12 +1,15 @@
 import styled from 'styled-components';
 
-export const Information = styled.div`
+export const TextRow = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+`;
+
+export const TextInfo = styled.div`
 	display: grid;
-	grid-auto-rows: 1fr 1fr;
 	grid-auto-flow: row;
-	align-items: end;
-	overflow: hidden;
-	white-space: nowrap;
+	gap: 4px;
 `;
 
 export const LogoWrap = styled.div`
@@ -18,7 +21,7 @@ export const LogoWrap = styled.div`
 
 export default styled.div`
 	display: grid;
-	grid-auto-columns: min-content 1fr min-content;
+	grid-auto-columns: min-content 1fr;
 	grid-auto-flow: column;
 	gap: 16px;
 	align-items: center;
