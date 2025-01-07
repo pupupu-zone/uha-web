@@ -9,6 +9,7 @@ const About = () => {
 	return (
 		<SettingsBlock title="About">
 			{isSupported && <SettingsEntry left="Space used" right={storage.usage} />}
+			<SettingsEntry left="Built time" right={import.meta.env.VITE_BUILD_TIME} />
 		</SettingsBlock>
 	);
 };

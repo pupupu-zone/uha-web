@@ -25,12 +25,13 @@ export const RightEntry = styled.div`
 export default styled(AriaButton)`
 	display: grid;
 	grid-auto-rows: max-content;
-	grid-auto-columns: 1fr 1fr;
+	grid-auto-columns: min-content 1fr;
 	grid-auto-flow: column;
 	justify-content: space-between;
 	width: 100%;
 	padding: 16px;
 	color: var(--primary-text);
+	white-space: nowrap;
 	background: none;
 	border: none;
 	cursor: pointer;

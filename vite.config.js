@@ -11,9 +11,11 @@ import { dependencies } from './package.json';
 import manifest from './public/manifest.json';
 
 const buildTime = new Date().toLocaleDateString('ru-RU', {
-	timeZoneName: 'short',
 	hour: '2-digit',
-	minute: '2-digit'
+	minute: '2-digit',
+	year: '2-digit',
+	month: '2-digit',
+	day: '2-digit'
 });
 
 const globalVendorPackages = ['react', 'react-dom', '@tanstack/react-router', 'styled-components', 'typescript'];
