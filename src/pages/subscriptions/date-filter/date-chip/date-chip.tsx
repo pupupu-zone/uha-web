@@ -1,17 +1,18 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 
 import { useLocale } from '@hooks';
 import { DateFormatter } from '@internationalized/date';
 
 import { LargeText, Text } from '@ui';
 import { Button as AriaButton } from 'react-aria-components';
-import Root, { Caption, Input } from './date-chip.styles';
+import Root, { Caption, Input, CrippledInput } from './date-chip.styles';
 
 import type { Props } from './date-chip.d';
 
 const DateChip = ({ caption, date, onChange }: Props) => {
 	const ref = useRef<HTMLInputElement>(null);
 	const formatter = useFormatter();
+	const [isCrippled] = useState(!('showPicker' in HTMLInputElement.prototype));
 
 	const formattedDate = useMemo(() => {
 		if (!date) return '';
@@ -20,16 +21,21 @@ const DateChip = ({ caption, date, onChange }: Props) => {
 	}, [date]);
 
 	const showPicker = () => {
-		if ('showPicker' in HTMLInputElement.prototype) {
-			ref.current?.showPicker();
-		} else {
-			ref.current?.focus(); // Fallback for ios
-		}
+		ref.current?.showPicker();
 	};
 
 	const changeDate = (e: React.ChangeEvent<HTMLInputElement>) => {
 		onChange(e.target.value);
 	};
+
+	if (isCrippled) {
+		return (
+			<Root>
+				<Caption>{caption}:</Caption>
+				<CrippledInput ref={ref} type="date" value={date} onChange={changeDate} />
+			</Root>
+		);
+	}
 
 	return (
 		<Root as={AriaButton} onPress={showPicker}>

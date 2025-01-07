@@ -1,6 +1,30 @@
 import styled from 'styled-components';
 import { H3 } from '@ui';
 
+export const CrippledInput = styled.input`
+	padding: 0;
+	color: var(--primary-text);
+	font-weight: 500;
+	font-size: 16px;
+	font-family: 'Nunito Sans', sans-serif;
+	line-height: 20px;
+	background-color: transparent;
+	border: none;
+
+	&::-webkit-datetime-edit {
+		max-width: fit-content;
+	}
+
+	&::-webkit-calendar-picker-indicator {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-image: none;
+		content: '';
+		inset: 0;
+	}
+`;
+
 export const Caption = styled(H3)`
 	color: var(--primary-text);
 	font-variant: all-small-caps;
