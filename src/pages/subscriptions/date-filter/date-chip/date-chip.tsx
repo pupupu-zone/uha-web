@@ -20,7 +20,11 @@ const DateChip = ({ caption, date, onChange }: Props) => {
 	}, [date]);
 
 	const showPicker = () => {
-		ref.current?.showPicker();
+		try {
+			ref.current?.showPicker();
+		} catch {
+			ref.current?.focus(); // Fallback for ios
+		}
 	};
 
 	const changeDate = (e: React.ChangeEvent<HTMLInputElement>) => {
