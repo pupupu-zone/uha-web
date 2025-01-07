@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { UAParser } from 'ua-parser-js';
 
 import { useLocale } from '@hooks';
@@ -48,7 +48,7 @@ const DateChip = ({ caption, date, onChange }: Props) => {
 			<Caption>{caption}:</Caption>
 			{date ? <Text $shade="regular">{formattedDate}</Text> : <LargeText $shade="regular">∞</LargeText>}
 
-			<Input ref={ref} type="date" value={date} onChange={changeDate} />
+			<Input ref={ref} aria-hidden="true" tabIndex={-1} type="date" value={date} onChange={changeDate} />
 		</Root>
 	);
 };

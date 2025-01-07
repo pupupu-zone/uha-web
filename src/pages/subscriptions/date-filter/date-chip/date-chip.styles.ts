@@ -4,7 +4,7 @@ import { H3 } from '@ui';
 export const CrippledInput = styled.input`
 	padding: 0;
 	color: var(--primary-text);
-	font-weight: 500;
+	font-weight: 400;
 	font-size: 16px;
 	font-family: 'Nunito Sans', sans-serif;
 	line-height: 20px;
