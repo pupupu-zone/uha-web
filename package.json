@@ -46,6 +46,7 @@
     "styled-components": "^6.1.13",
     "timsort": "^0.3.0",
     "typescript": "^5.7.2",
+    "ua-parser-js": "^2.0.0",
     "yup": "^1.6.1"
   },
   "devDependencies": {

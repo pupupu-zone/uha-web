@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useRef } from 'react';
+import { UAParser } from 'ua-parser-js';
 
 import { useLocale } from '@hooks';
 import { DateFormatter } from '@internationalized/date';
@@ -12,13 +13,18 @@ import type { Props } from './date-chip.d';
 const DateChip = ({ caption, date, onChange }: Props) => {
 	const ref = useRef<HTMLInputElement>(null);
 	const formatter = useFormatter();
-	const [isCrippled] = useState(!('showPicker' in HTMLInputElement.prototype));
 
 	const formattedDate = useMemo(() => {
 		if (!date) return '';
 
 		return formatter.format(new Date(date));
 	}, [date]);
+
+	const isCrippled = useMemo(() => {
+		const ua = UAParser(window.navigator.userAgent);
+
+		return ua.device.is('mobile') && ua.os.is('ios');
+	}, []);
 
 	const showPicker = () => {
 		ref.current?.showPicker();
