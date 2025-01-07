@@ -9,10 +9,15 @@ export const Caption = styled(H3)`
 `;
 
 export const Input = styled.input`
-	display: none;
+	position: absolute;
+	width: 1px;
+	margin: 0;
+	padding: 0;
+	opacity: 0;
 `;
 
 export default styled.div`
+	position: relative;
 	display: flex;
 	gap: 6px;
 	align-items: center;
