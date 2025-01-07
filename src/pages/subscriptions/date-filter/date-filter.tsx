@@ -1,55 +1,38 @@
-import React, { useMemo, useState } from 'react';
-import { parseDate } from '@internationalized/date';
-import { I18nProvider } from 'react-aria';
+import React from 'react';
+import { useSearch, useNavigate } from '@tanstack/react-router';
 
-import { useLocale } from '@utils/hooks';
-import { getRouteApi } from '@tanstack/react-router';
-
-import { DateInput, DateRangePicker, DateSegment, Group } from 'react-aria-components';
-import Root, { DateFilterStyles } from './date-filter.styles';
-
-import type { CalendarDate } from '@internationalized/date';
-
-const useSearch = () => {
-	const route = useMemo(() => {
-		return getRouteApi('/_auth-guard/subscriptions');
-	}, []);
-
-	const searchParams = route.useSearch();
-
-	return searchParams;
-};
+import { H3 } from '@ui';
+import DateChip from './date-chip';
+import Root, { Main } from './date-filter.styles';
 
 const DateFilter = () => {
-	const locale = useLocale();
-	const search = useSearch();
-	const [from, setFrom] = useState(parseDate(search.from || ''));
-	const [to, setTo] = useState(parseDate(search.to || ''));
+	const navigate = useNavigate();
+	const search = useSearch({ from: '/_auth-guard/subscriptions' });
 
-	const onDatesChange = ({ start, end }: Record<string, CalendarDate>) => {
-		setFrom(start);
-		setTo(end);
+	const navigateTo = (key: string, value: string) => {
+		navigate({
+			to: '/subscriptions',
+			search: { ...search, [key]: value },
+			replace: true
+		});
+	};
+
+	const changeFromDate = (nextDate: string) => {
+		navigateTo('from', nextDate);
+	};
+
+	const changeToDate = (nextDate: string) => {
+		navigateTo('to', nextDate);
 	};
 
 	return (
 		<Root>
-			<I18nProvider locale={locale}>
-				<DateRangePicker
-					value={{ start: from, end: to }}
-					// @ts-ignore
-					onChange={onDatesChange}
-					shouldForceLeadingZeros
-					granularity="day"
-					hideTimeZone
-				>
-					<Group>
-						From: <DateInput slot="start">{(segment) => <DateSegment segment={segment} />}</DateInput>
-						To: <DateInput slot="end">{(segment) => <DateSegment segment={segment} />}</DateInput>
-					</Group>
-				</DateRangePicker>
-			</I18nProvider>
+			<H3>Filters</H3>
 
-			<DateFilterStyles />
+			<Main>
+				<DateChip caption="from" date={search.from} onChange={changeFromDate} />
+				<DateChip caption="to" date={search.to} onChange={changeToDate} />
+			</Main>
 		</Root>
 	);
 };
