@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from '@tanstack/react-router';
+import { useSelector } from 'react-redux';
 
 import useLoadSubs from './use-load-subs';
+
 import ListView from './list-view';
-import { useNavigate } from '@tanstack/react-router';
-import InfographCard from './infograph-card';
+import DateFilter from './date-filter';
 import Root, { ViewPort } from './subscriptions.styles';
 
 import type { SearchParams } from '@core/routes/_auth-guard/route';
@@ -13,7 +15,6 @@ type Props = SearchParams;
 import { allSubsSelector } from '@data/subscriptions/selectors';
 import { filteredSelector as catSelector } from '@data/categories/selectors';
 import { filteredSelector as appSelector } from '@data/applications/selectors';
-import { useSelector } from 'react-redux';
 
 const useIsLoading = () => {
 	const apps = useSelector(appSelector);
@@ -26,10 +27,9 @@ const useIsLoading = () => {
 const Subscriptions = ({ view, action }: Props) => {
 	useLoadSubs();
 	const navigate = useNavigate();
+	const isLoading = useIsLoading();
 	const rootRef = useRef<HTMLDivElement>(null);
 	const [shouldFill, setShouldFill] = useState(false);
-
-	const isLoading = useIsLoading();
 
 	useEffect(() => {
 		if (view) return;
@@ -53,7 +53,7 @@ const Subscriptions = ({ view, action }: Props) => {
 
 	return (
 		<Root ref={rootRef}>
-			<InfographCard />
+			<DateFilter />
 
 			{isLoading && (
 				<div>

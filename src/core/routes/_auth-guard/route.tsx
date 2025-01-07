@@ -1,16 +1,17 @@
 import React from 'react';
 import { createFileRoute, redirect } from '@tanstack/react-router';
+import { today, getLocalTimeZone, parseDate } from '@internationalized/date';
 
 import MainPage from '@pages/main';
 
 export type SearchParams = {
 	view?: 'list' | 'calendar'; // for subscriptions view
 	action?: 'add' | 'edit'; // edit for subscriptions view, add for any
-
-	day?: string | number; // for calendar view
-	month?: string | number; // for calendar view
-	year?: string | number; // for calendar view
+	from?: string; // ISO8601
+	to?: string; // ISO8601
 };
+
+const timezone = getLocalTimeZone();
 
 export const Route = createFileRoute('/_auth-guard')({
 	beforeLoad: ({ context }) => {
@@ -22,16 +23,12 @@ export const Route = createFileRoute('/_auth-guard')({
 	},
 	component: () => <IndexPage />,
 	validateSearch: (search: SearchParams) => {
-		if ('day' in search) {
-			search.day = Number.parseInt(search.day as string, 10);
+		if (!('from' in search)) {
+			search.from = today(timezone).toString();
 		}
 
-		if ('month' in search) {
-			search.month = Number.parseInt(search.month as string, 10);
-		}
-
-		if ('year' in search) {
-			search.year = Number.parseInt(search.year as string, 10);
+		if (!('to' in search) && search.from) {
+			search.to = parseDate(search.from).add({ months: 3 }).toString();
 		}
 
 		return search;
