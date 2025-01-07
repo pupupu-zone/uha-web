@@ -20,9 +20,9 @@ const DateChip = ({ caption, date, onChange }: Props) => {
 	}, [date]);
 
 	const showPicker = () => {
-		try {
+		if ('showPicker' in HTMLInputElement.prototype) {
 			ref.current?.showPicker();
-		} catch {
+		} else {
 			ref.current?.focus(); // Fallback for ios
 		}
 	};
